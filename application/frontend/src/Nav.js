@@ -12,6 +12,7 @@ function Nav() {
             <NavLink className="nav-link" to="/Em" >Em</NavLink>
             <NavLink className="nav-link" to="/Sabrina" >Sabrina</NavLink>
             <NavLink className="nav-link" to="/Wenjie" >Wenjie</NavLink>
+            <NavLink className="nav-link" to="/Cameron" > Cameron</NavLink>
         </div>
     )
 }

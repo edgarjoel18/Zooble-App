@@ -1,6 +1,7 @@
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import Home from './components/Home'
 import Edgar from './components/Edgar'
+import Cameron from './components/Cameron'
 import Daniel from './components/Daniel'
 import Em from './components/Em'
 import Sabrina from './components/Sabrina'
@@ -19,6 +20,7 @@ function App() {
         <Route path="/Em" component={Em}/>
         <Route path="/Sabrina" component={Sabrina}/>
         <Route path="/Wenjie" component={Wenjie}/>
+        <Route path="/Cameron" component={Cameron}/>
       </Switch>
     </Router>
   );
