@@ -12,7 +12,7 @@ function Edgar() {
           learning about technology or computer science. I enjoy hanging out
           friends or going on hikes
         </div>
-        <img className="about-me-img" src={} />
+        <img className="about-me-img"/>
       </div>
     </div>
   );

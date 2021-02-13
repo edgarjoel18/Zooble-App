@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './Daniel.css'
+import './AboutMe.css'
 
 import DanielJpg from '../images/Daniel.jpg'
 
