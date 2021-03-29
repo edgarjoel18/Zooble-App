@@ -1,18 +1,20 @@
 import React from 'react'
+import HeroContainer from './HeroContainer.js'
+import SiteDemo1 from './SiteDemo1.js'
+import SiteDemo2 from './SiteDemo2.js'
+import Footer from './Footer.js'
 
 import "./Home.css"
 
 function Home() {
     return (
-        <div className="assignment-info">
-            <div>
-                CSC648 Software Engineering<br/>
-                Spring 2021<br/>
-                Section 4<br/>
-                Team 2
-            </div>
+        <div>
+            <HeroContainer/>
+            <SiteDemo1/>
+            <SiteDemo2/>
+            <Footer/>
         </div>
     )
 }
 
-export default Home
+export default Home;
