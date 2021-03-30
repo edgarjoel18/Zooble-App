@@ -8,6 +8,7 @@ import Sabrina from './components/Sabrina'
 import Wenjie from './components/Wenjie'
 import Footer from './components/Footer'
 import NavBar from './components/NavBar'
+import SearchResults from './components/SearchResults'
 
 import Nav from './Nav'
 
