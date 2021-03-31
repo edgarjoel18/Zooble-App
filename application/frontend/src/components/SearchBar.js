@@ -4,10 +4,11 @@ import { NavLink } from 'react-router-dom';
 
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('')
+  const [searchResults, setSearchResults] = useState('');
   
   const onClickHandler = (e) =>{
     Axios.get('/search-results',{params: {searchTerm}}).then(response =>{
-      console.log(response.data)
+      console.log(response.data.searchResults)
     })
   }
 
@@ -16,6 +17,7 @@ function SearchBar() {
       {searchTerm}
       <input type="text" placeholder="Search" onChange={e => setSearchTerm(e.target.value)} />
       <button onClick={onClickHandler} >Search</button>
+      {searchResults}
     </span>
   );
 }

@@ -25,6 +25,7 @@ app.get("/search-results", (req,res) =>{
     console.log("/search-results");
     var name = req.query.searchTerm.toLowerCase();
     console.log(name);
+    var searchResults = {searchResults:[]}
 
     connection.query(`SELECT * FROM Pet WHERE LOWER(name) LIKE '%${name}%'`, function(err, result) {
         if(err){
@@ -38,13 +39,18 @@ app.get("/search-results", (req,res) =>{
                 console.log(row.name);
                 console.log(row.size_id);
                 console.log(row.age_id);
-                
+                searchResults.searchResults.push({
+                    "pet_id":row.pet_id,
+                    "name": row.name,
+                    "size_id": row.size_id,
+                    "age_id": row.age_id
+                });
               });
-            
+            console.log(searchResults);
+            res.json(searchResults);
         }
     });
-    
-    res.json({route: 'search-results'});
+
 });
 
 //start express server on port 5000
