@@ -18,6 +18,7 @@ function App() {
       <NavBar/>
        <Switch>
         <Route path="/" exact component={Home}/>
+        <Route path="/search-results" exact component={SearchResults}/>
         {/* <Route path="/Edgar" component={Edgar}/>
         <Route path="/Daniel" component={Daniel}/>
         <Route path="/Em" component={Em}/>

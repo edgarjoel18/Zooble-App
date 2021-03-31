@@ -21,8 +21,8 @@ app.get("/", (req,res) =>{
     res.json({route: '/'})
 });
 
-app.get("/search-results", (req,res) =>{
-    console.log("/search-results");
+app.get("/search", (req,res) =>{
+    console.log("/search");
     var name = req.query.searchTerm.toLowerCase();
     console.log(name);
     var searchResults = {searchResults:[]}
@@ -35,10 +35,10 @@ app.get("/search-results", (req,res) =>{
             // [ TextRow { pet_id: 1, name: 'Max', size_id: 1, age_id: 1 } ]
             Object.keys(result).forEach(function(key) {
                 var row = result[key];
-                console.log(row);
-                console.log(row.name);
-                console.log(row.size_id);
-                console.log(row.age_id);
+                // console.log(row);
+                // console.log(row.name);
+                // console.log(row.size_id);
+                // console.log(row.age_id);
                 searchResults.searchResults.push({
                     "pet_id":row.pet_id,
                     "name": row.name,
