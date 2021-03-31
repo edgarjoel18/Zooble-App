@@ -25,7 +25,7 @@ app.get("/search", (req,res) =>{
     console.log("/search");
     var name = req.query.searchTerm.toLowerCase();
     console.log(name);
-    var searchResults = {searchResults:[]}
+    var requestedSearchResults = {searchResults:[]}
 
     connection.query(`SELECT * FROM Pet WHERE LOWER(name) LIKE '%${name}%'`, function(err, result) {
         if(err){
@@ -39,15 +39,15 @@ app.get("/search", (req,res) =>{
                 // console.log(row.name);
                 // console.log(row.size_id);
                 // console.log(row.age_id);
-                searchResults.searchResults.push({
+                requestedSearchResults.searchResults.push({
                     "pet_id":row.pet_id,
                     "name": row.name,
                     "size_id": row.size_id,
                     "age_id": row.age_id
                 });
               });
-            console.log(searchResults);
-            res.json(searchResults);
+            console.log(requestedSearchResults);
+            res.json(requestedSearchResults);
         }
     });
 
