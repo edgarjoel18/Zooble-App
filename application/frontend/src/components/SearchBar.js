@@ -1,19 +1,21 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Axios from "axios";
 import { NavLink } from 'react-router-dom';
 
 function SearchBar() {
+  const [searchTerm, setSearchTerm] = useState('')
   
   const onClickHandler = (e) =>{
-    Axios.get('/search-results').then(response =>{
+    Axios.get('/search-results',{params: {searchTerm}}).then(response =>{
       console.log(response.data)
     })
   }
 
   return (
     <span className="navbar-searchbar">
-      Searchbar
-      <button onClick={onClickHandler}>Search</button>
+      {searchTerm}
+      <input type="text" placeholder="Search" onChange={e => setSearchTerm(e.target.value)} />
+      <button onClick={onClickHandler} >Search</button>
     </span>
   );
 }

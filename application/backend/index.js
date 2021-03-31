@@ -23,9 +23,10 @@ app.get("/", (req,res) =>{
 
 app.get("/search-results", (req,res) =>{
     console.log("/search-results");
-    var name = "Max";
+    var name = req.query.searchTerm.toLowerCase();
+    console.log(name);
 
-    connection.query(`SELECT * FROM Pet WHERE name = '${name}'`, function(err, result) {
+    connection.query(`SELECT * FROM Pet WHERE LOWER(name) LIKE '%${name}%'`, function(err, result) {
         if(err){
             throw err;
         } else {
@@ -33,6 +34,7 @@ app.get("/search-results", (req,res) =>{
             // [ TextRow { pet_id: 1, name: 'Max', size_id: 1, age_id: 1 } ]
             Object.keys(result).forEach(function(key) {
                 var row = result[key];
+                console.log(row);
                 console.log(row.name);
                 console.log(row.size_id);
                 console.log(row.age_id);
