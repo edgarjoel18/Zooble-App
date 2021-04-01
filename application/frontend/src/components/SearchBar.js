@@ -36,8 +36,13 @@ function SearchBar() {
           <option value="Shelter">Shelters</option>
         </select>
       </span>
+      <span className="navbar-searchbar">
+        <input type="text" placeholder="Search" onChange={e => setSearchTerm(e.target.value)} />
+        <button onClick={OnClickHandler} >Search</button>
+      </span>
       <div style={overlayStyle} className="search-results-overlay">
         <div className = "modal-main">
+
         <ul>
           {recievedSearchResults && searchCategory == 'Pet' &&
            recievedSearchResults.map((searchResult) => (

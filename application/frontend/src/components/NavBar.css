@@ -2,6 +2,9 @@
     display: grid;
     grid-template-columns: 3;
     justify-items: center;
+    height: 100px;
+    align-items: center;
+    border-bottom:5px solid black;
 }
 .navbar-left{
     justify-self: center;
