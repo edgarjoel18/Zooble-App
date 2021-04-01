@@ -23,7 +23,6 @@
 .right-side-text {
     margin-left: 50px;
     position: relative;
-    font-family: Montserrat;
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
@@ -43,6 +42,7 @@
     background-color: black;
     outline: none;
     cursor: pointer;
+    z-index: 0;
 }
 
 .find-friend-button {
@@ -55,10 +55,10 @@
     background-color: black;
     outline: none;
     cursor: pointer;
+    z-index: 0;
 }
 
 button span {
-    font-family: Roboto Condensed;
     font-style: normal;
     font-weight: bold;
     font-size: 24px;

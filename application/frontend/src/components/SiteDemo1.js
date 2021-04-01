@@ -1,5 +1,5 @@
 import React from "react";
-import './Home.css';
+import './SiteDemo1.css';
 import testImage from '../images/testImages/vertical-testImage.jpg';
 
 
@@ -7,11 +7,10 @@ function SiteDemo1() {
   return (
     <div className='site-demo1-container'>
       <div className='site-demo1-leftSideBox'>
-        <p className='site-demo1-textBox'> Build a profile and connect 
-        <br/>with other pet owners <br/>
-        <br/>OR <br/>
-        <br/>Find a pet by connecting with
-        <br/>a local shelter
+        <p className='site-demo1-textBox'> 
+        Build a profile and connect with other pet owners
+        <br/>OR<br/>
+        Find a pet by connecting with a local shelter
         </p>
       </div>
 
@@ -20,7 +19,7 @@ function SiteDemo1() {
       <div className = 'site-demo1-columnContainer'>
         <div className='site-demo1-column'>
           <div className='site-demo1-columnCard'>
-          <img className='site-demo2-container-img' src={testImage}/>
+            Site Demo Image
           </div>
         </div>
       </div>
@@ -29,8 +28,7 @@ function SiteDemo1() {
       <div className = 'site-demo1-columnContainer'>
         <div className='site-demo1-column'>
           <div className='site-demo1-columnCard'>
-          <img className='site-demo2-container-img' src={testImage}/>
-
+            Site Demo Image
           </div>
 
 

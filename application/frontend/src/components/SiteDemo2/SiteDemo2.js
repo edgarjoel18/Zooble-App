@@ -15,7 +15,7 @@ function SiteDemo2() {
         </button>
       </div>
       <div className='site-demo2-box2'> 
-        <img className='site-demo2-container-img' src={testImg}/>
+        Map Search UI Image
       </div>
     </div>
   );

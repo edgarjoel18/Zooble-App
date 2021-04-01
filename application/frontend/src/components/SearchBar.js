@@ -42,8 +42,9 @@ function SearchBar() {
       </span>
       <div style={overlayStyle} className="search-results-overlay">
         <div className = "modal-main">
-
+        Search Results
         <ul>
+          {recievedSearchResults.length == 0 && <li>No Results</li>}
           {recievedSearchResults && searchCategory == 'Pet' &&
            recievedSearchResults.map((searchResult) => (
               <li key={searchResult.pet_id}>{searchResult.name} {searchResult.age_name} {searchResult.size_name}</li>

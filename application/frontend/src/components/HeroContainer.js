@@ -5,7 +5,7 @@ function HeroContainer() {
   return (
     <div className='hero-container'>
       <div className='left-side'> 
-        <img className='left-side-img'/> 
+        <div>Hero Image</div>
       </div>
       <div className='right-side'>
         <div className='right-side-text'>The Social Network for furry (or not so furry) friends</div>
