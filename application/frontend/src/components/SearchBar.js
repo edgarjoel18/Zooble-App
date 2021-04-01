@@ -46,7 +46,8 @@ function SearchBar() {
         <ul>
           {recievedSearchResults && searchCategory == 'Pet' &&
            recievedSearchResults.map((searchResult) => (
-              <li key={searchResult.pet_id}>{searchResult.name} {searchResult.size_name} {searchResult.age_name}</li>
+              <li key={searchResult.pet_id}>{searchResult.name} {searchResult.age_name} {searchResult.size_name}</li>
+              
           ))}
           {recievedSearchResults && searchCategory == 'Business' &&
            recievedSearchResults.map((searchResult) => (
@@ -58,9 +59,11 @@ function SearchBar() {
           ))}
 
         </ul>
+        <div className="center">
         <button onClick= {() => {
                       setOverlayDisplay('none');
                       }} className="overlay-button">Close</button>
+        </div>
         </div>
       </div>
     </div>

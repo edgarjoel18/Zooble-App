@@ -19,6 +19,8 @@
   
   .modal-main {
     position:fixed;
+    box-sizing: border-box;
+    padding: 20px;
     background: white;
     width: 80%;
     height: auto;
@@ -32,6 +34,15 @@
     list-style: none;
 }
 
-.search-results-overlay button{
+.center {
+    margin: 0;
+    position: absolute;
+    background-color: rgb(0, 0, 0.6);
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+/* .search-results-overlay button{
     justify-self: center;
-}
+      
+} */
