@@ -36,12 +36,8 @@ function SearchBar() {
           <option value="Shelter">Shelters</option>
         </select>
       </span>
-      <span className="navbar-searchbar">
-        <input type="text" placeholder="Search" onChange={e => setSearchTerm(e.target.value)} />
-        <button onClick={OnClickHandler} >Search</button>
-      </span>
- 
-      <span style={overlayStyle} className="search-results-overlay">
+      <div style={overlayStyle} className="search-results-overlay">
+        <div className = "modal-main">
         <ul>
           {recievedSearchResults && searchCategory == 'Pet' &&
            recievedSearchResults.map((searchResult) => (
@@ -60,7 +56,8 @@ function SearchBar() {
         <button onClick= {() => {
                       setOverlayDisplay('none');
                       }} className="overlay-button">Close</button>
-      </span>
+        </div>
+      </div>
     </div>
   );
 }
