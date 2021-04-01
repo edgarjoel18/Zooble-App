@@ -50,7 +50,8 @@ app.get("/search", (req,res) =>{
                         "pet_id":row.pet_id,
                         "name": row.name,
                         "size_name": row.size_name,
-                        "age_name": row.age_name
+                        "age_name": row.age_name,
+                        "profile_pic": row.profile_pic
                     });
                   });
                 console.log(requestedSearchResults);
@@ -79,7 +80,8 @@ app.get("/search", (req,res) =>{
                     requestedSearchResults.searchResults.push({
                         "reg_business_id":row.reg_business_id,
                         "reg_user_id":row.reg_user_id,
-                        "name": row.name
+                        "name": row.name,
+                        "profile_pic": row.profile_pic
                     });
                   });
                 console.log(requestedSearchResults);
@@ -108,7 +110,8 @@ app.get("/search", (req,res) =>{
                     requestedSearchResults.searchResults.push({
                         "reg_shelter_id":row.reg_shelter_id,
                         "reg_user_id":row.reg_user_id,
-                        "name": row.name
+                        "name": row.name,
+                        "profile_pic": row.profile_pic
                     });
                   });
                 console.log(requestedSearchResults);

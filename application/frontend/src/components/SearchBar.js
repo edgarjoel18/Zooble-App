@@ -47,16 +47,16 @@ function SearchBar() {
           {recievedSearchResults.length == 0 && <li>No Results</li>}
           {recievedSearchResults && searchCategory == 'Pet' &&
            recievedSearchResults.map((searchResult) => (
-              <li key={searchResult.pet_id}>{searchResult.name} {searchResult.age_name} {searchResult.size_name}</li>
+              <li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span>{searchResult.name}</span></li>
               
           ))}
           {recievedSearchResults && searchCategory == 'Business' &&
            recievedSearchResults.map((searchResult) => (
-              <li key={searchResult.pet_id}>{searchResult.name} {searchResult.reg_business_id} {searchResult.reg_user_id}</li>
+              <li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span>{searchResult.name}</span></li>
           ))}
           {recievedSearchResults && searchCategory == 'Shelter' &&
            recievedSearchResults.map((searchResult) => (
-              <li key={searchResult.pet_id}>{searchResult.name} {searchResult.reg_shelter_id} {searchResult.reg_user_id}</li>
+              <li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span>{searchResult.name}</span></li>
           ))}
 
         </ul>
@@ -72,3 +72,7 @@ function SearchBar() {
 }
 
 export default SearchBar;
+
+// {searchResult.age_name} {searchResult.size_name}
+// {searchResult.reg_business_id} {searchResult.reg_user_id}
+// {searchResult.reg_shelter_id} {searchResult.reg_user_id}
