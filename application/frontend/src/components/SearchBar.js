@@ -43,6 +43,8 @@ function SearchBar() {
         </select>
       </span>
       <div style={overlayStyle} className="search-results-overlay">
+        <div className = "modal-main">
+
         <ul>
           {recievedSearchResults && searchCategory == 'Pet' &&
            recievedSearchResults.map((searchResult) => (
@@ -61,6 +63,7 @@ function SearchBar() {
         <button onClick= {() => {
                       setOverlayDisplay('none');
                       }} className="overlay-button">Close</button>
+        </div>
       </div>
     </div>
   );
