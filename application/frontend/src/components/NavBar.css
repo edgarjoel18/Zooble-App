@@ -1,6 +1,7 @@
 .navbar{
     display: grid;
     grid-template-columns: 3;
+    justify-items: center;
 }
 .navbar-left{
     justify-self: center;

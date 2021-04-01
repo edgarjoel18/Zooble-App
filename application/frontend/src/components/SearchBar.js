@@ -28,21 +28,20 @@ function SearchBar() {
   const overlayStyle = {display: overlayDisplay};
 
   return (
-    <div>
-      <span className="navbar-searchbar">
-        {searchTerm}
-        <input type="text" placeholder="Search" onChange={e => setSearchTerm(e.target.value)} />
-        <button onClick={OnClickHandler} >Search</button>
-      </span>
+    <div className="search_and_search_results_container">
       <span className="search-category-dropdown">
-        {searchCategory}
         <select name="search-category" id="search-category" onChange= {e => setSearchCategory(e.target.value)}>
           <option value="Pet">Pets</option>
           <option value="Business">Businesses</option>
           <option value="Shelter">Shelters</option>
         </select>
       </span>
-      <div style={overlayStyle} className="search-results-overlay">
+      <span className="navbar-searchbar">
+        <input type="text" placeholder="Search" onChange={e => setSearchTerm(e.target.value)} />
+        <button onClick={OnClickHandler} >Search</button>
+      </span>
+ 
+      <span style={overlayStyle} className="search-results-overlay">
         <ul>
           {recievedSearchResults && searchCategory == 'Pet' &&
            recievedSearchResults.map((searchResult) => (
@@ -61,7 +60,7 @@ function SearchBar() {
         <button onClick= {() => {
                       setOverlayDisplay('none');
                       }} className="overlay-button">Close</button>
-      </div>
+      </span>
     </div>
   );
 }
