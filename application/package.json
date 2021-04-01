@@ -9,7 +9,7 @@
     "client": "cd ./frontend && npm start",
     "client_build": "cd ./frontend && npm run build",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "deploy": "concurrently \"npm run server\" \"npm run client_build\" \"npm run client\""
+    "deploy": "concurrently \"npm run server\" \"npm run client_build\""
   },
   "author": "",
   "license": "ISC",

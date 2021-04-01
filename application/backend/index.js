@@ -16,11 +16,6 @@ connection.connect(function(err){
     console.log("Connected!");
 })
 
-app.get("/", (req,res) =>{
-    console.log("/");
-    res.json({route: '/'})
-});
-
 app.get("/search", (req,res) =>{
     console.log("/search");
     var name = req.query.searchTerm.toLowerCase();
