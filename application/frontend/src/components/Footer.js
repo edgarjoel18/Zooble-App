@@ -13,6 +13,7 @@ function Footer() {
           <NavLink className="nav-link" to="/Sabrina" >Sabrina</NavLink>
           <NavLink className="nav-link" to="/Wenjie" >Wenjie</NavLink>
           <NavLink className="nav-link" to="/Cameron" > Cameron</NavLink>
+          <NavLink className="nav-link" to="/Wameedh" > Wameedh</NavLink>
         </div>
     </div>
   );

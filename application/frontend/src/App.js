@@ -2,6 +2,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import Home from './components/Home'
 import Edgar from './components/Edgar'
 import Cameron from './components/Cameron'
+import Wameedh from './components/Wameedh'
 import Daniel from './components/Daniel'
 import Em from './components/Em'
 import Sabrina from './components/Sabrina'
@@ -30,6 +31,7 @@ function App() {
         <Route path="/Sabrina" component={Sabrina}/>
         <Route path="/Wenjie" component={Wenjie}/>
         <Route path="/Cameron" component={Cameron}/>
+        <Route path="/Wameedh" component={Wameedh}/>
       </Switch>
     </Router>
   );
