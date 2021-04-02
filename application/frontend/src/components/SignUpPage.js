@@ -5,7 +5,7 @@ function SignUpPage() {
     return (
         <form>
             <div className='container'>
-                <h3>Sign Up</h3>
+                <h1>Sign Up</h1>
 
                 <label for='email'>Email</label>
                 <input
@@ -14,18 +14,18 @@ function SignUpPage() {
                     name='email'
                 />
 
-                <label for='fname'>First name</label>
-                <input
-                    type='text'
-                    placeholder='First name'
-                    name='fname'
-                />
-
                 <label for='uname'>Username</label>
                 <input
                     type='text'
                     placeholder='Enter username'
                     name='uname'
+                />
+
+                <label for='fname'>First name</label>
+                <input
+                    type='text'
+                    placeholder='First name'
+                    name='fname'
                 />
 
                 <label for='Lname'>Last name</label>
@@ -41,21 +41,22 @@ function SignUpPage() {
                     placeholder='Enter password'
                     name='psw'
                 />
-                <label for='psw-repeat'>Password</label>
+                <label for='psw-repeat'>Repeat password</label>
                 <input
                     type='password'
                     placeholder='Repeat password'
                     name='psw-repeat'
                 />
 
-                <label>
-                    <input
-                        type='checkbox'
-                        checked='checked'
-                        name='remember'
-                    />
-                </label>
-                <p>By creating an account you agree to our <a href='#'>Terms & Privacy</a>.</p>
+                <p>By creating an account you agree to our <a href='#'>Terms & Privacy</a>
+                    <label>
+                        <input
+                            type='checkbox'
+                            name='remember'
+                        />
+                    </label>
+                </p>
+
 
                 <button type='submit' className='submit-btn'>Sign Up</button>
             </div>
