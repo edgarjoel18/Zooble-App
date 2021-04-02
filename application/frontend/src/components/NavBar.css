@@ -1,0 +1,22 @@
+.navbar{
+    display: grid;
+    grid-template-columns: 3;
+    justify-items: center;
+    height: 100px;
+    align-items: center;
+    border-bottom:5px solid black;
+}
+.navbar-left{
+    justify-self: center;
+    grid-column: 1 / span 1;
+}
+
+.navbar-right{
+    justify-self: center;
+    grid-column: 3 / span 1;
+}
+
+.navbar-searchbar{
+    justify-self: center;
+    grid-column: 2/ span 1;
+}

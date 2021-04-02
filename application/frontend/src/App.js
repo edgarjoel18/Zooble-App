@@ -6,21 +6,25 @@ import Daniel from './components/Daniel'
 import Em from './components/Em'
 import Sabrina from './components/Sabrina'
 import Wenjie from './components/Wenjie'
+import Footer from './components/Footer'
+import NavBar from './components/NavBar'
+import SearchResults from './components/SearchResults'
 
 import Nav from './Nav'
 
 function App() {
   return (
     <Router>
-      <Nav/>
-      <Switch>
+      <NavBar/>
+       <Switch>
         <Route path="/" exact component={Home}/>
-        <Route path="/Edgar" component={Edgar}/>
+        <Route path="/search-results" exact component={SearchResults}/>
+        {/* <Route path="/Edgar" component={Edgar}/>
         <Route path="/Daniel" component={Daniel}/>
         <Route path="/Em" component={Em}/>
         <Route path="/Sabrina" component={Sabrina}/>
         <Route path="/Wenjie" component={Wenjie}/>
-        <Route path="/Cameron" component={Cameron}/>
+        <Route path="/Cameron" component={Cameron}/> */}
       </Switch>
     </Router>
   );
