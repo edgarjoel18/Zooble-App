@@ -51,9 +51,10 @@ function SearchBar() {
           <option value="Shelter">Shelters</option>
         </select>
     </span>   
-
+      
       <span className="navbar-searchbar">
-        <input type="text" placeholder="Search pets, Businesses and Shelters around you" onChange={e => setSearchTerm(e.target.value)} 
+      
+        <input type="text" placeholder= {"Search " + searchCategory.toLowerCase() + "s near you"} onChange={e => setSearchTerm(e.target.value)} 
         onKeyPress={event => {
           if (event.key === 'Enter') {
             OnClickHandler();
