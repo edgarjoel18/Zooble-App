@@ -4,6 +4,19 @@ import {useHistory } from 'react-router-dom';
 
 import './SearchBar.css'
 
+// componentWillMount() and componentWillUnmount() functions work toghther
+// to unable and disble srolling on the main page
+
+// change the scroll bar behavior when component mount  
+function componentWillMount() {
+  document.body.style.overflow = "hidden";
+};
+// change the scroll bar behavior when component unmount  
+function componentWillUnmount() {
+  document.body.style.overflow = "auto"; // or restore the original value
+};
+
+
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchCategory, setSearchCategory] = useState('Pet');
@@ -23,23 +36,26 @@ function SearchBar() {
       setRecievedSearchResults(response.data.searchResults)
       console.log(recievedSearchResults)
     })
+    componentWillMount();
   }
 
   const overlayStyle = {display: overlayDisplay};
 
   return (
     <div className="search_and_search_results_container">
+
       <span className="search-category-dropdown">
         <select name="search-category" id="search-category" onChange= {e => setSearchCategory(e.target.value)}>
           <option value="Pet">Pets</option>
           <option value="Business">Businesses</option>
           <option value="Shelter">Shelters</option>
         </select>
-      </span>
-      <span className="navbar-searchbar">
-        <input type="text" placeholder="Search" onChange={e => setSearchTerm(e.target.value)} />
+    </span>   
 
-        <button onClick={OnClickHandler} >Search</button>
+      <span className="navbar-searchbar">
+        <input type="text" placeholder="Search pets, Businesses and Shelters around you" onChange={e => setSearchTerm(e.target.value)} />
+
+        <button onClick={OnClickHandler} ></button>
         
       </span>
       <div style={overlayStyle} className="search-results-overlay">
@@ -65,6 +81,7 @@ function SearchBar() {
         <div className="center">
         <button onClick= {() => {
                       setOverlayDisplay('none');
+                      componentWillUnmount();
                       }} className="overlay-button">Close</button>
         </div>
         </div>
