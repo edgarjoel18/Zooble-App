@@ -13,17 +13,21 @@ input[type=email], input[type=password] {
 }
 
 button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
+    background-color: #4CAF50; /* Green */
     border: none;
-    cursor: pointer;
-    width: 100%;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    text-align: center;
+    width: 200px;
 }
 
 button:hover {
     opacity: 0.8;
+}
+
+.btn-container {
+    text-align: center;
 }
 
 .container {

@@ -20,13 +20,15 @@ function LoginPage() {
                     placeholder='Enter password'
                     name='psw'
                 />
-                <button type='submit' className='submit-btn'>Login</button>
+                <div className='btn-container'>
+                    <button type='submit' className='submit-btn'>Login</button>
+                </div>
                 <p className='forgot-password'>
                     Forgot <a href='#'>password?</a>
                 </p>
 
                 <p className='create-account'>
-                    Not registered? <a href='/SignUpPage'>Create an account</a> 
+                    Not registered? <a href='/SignUp-Page'>Create an account</a>
                 </p>
             </div>
         </form>
