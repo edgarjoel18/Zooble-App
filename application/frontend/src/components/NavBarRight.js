@@ -1,9 +1,10 @@
 import React from "react";
+import {NavLink} from "react-router-dom";
 
 function NavBarRight() {
   return (
     <span className="navbar-right">
-        Login
+        <NavLink to="/login-page">Login</NavLink>
     </span>
   );
 }

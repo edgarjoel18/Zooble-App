@@ -1,7 +1,20 @@
-import React from "react";
+import React, {useState} from "react";
+import { NavLink } from "react-router-dom";
 import './HeroContainer.css';
 
 function HeroContainer() {
+
+  const [text, setText] = useState('Find a Friend');
+
+
+  function onMouseover(e){
+    setText('Coming Soon');
+  }
+
+  function onMouseout(e){
+    setText('Find a Friend');
+  }
+
   return (
     <div className='hero-container'>
       <div className='left-side'> 
@@ -10,11 +23,11 @@ function HeroContainer() {
       <div className='right-side'>
         <div className='right-side-text'>The Social Network for furry (or not so furry) friends</div>
         <div className='button-container'>
-          <button className='signup-button'>
-            <span>Sign Up</span>
-          </button>
-          <button className='find-friend-button'>
-            <span>Find a Friend</span>
+          <NavLink to="/sign-up">
+          <button className='signup-button'><span>Sign Up</span></button>
+          </NavLink>
+          <button className='find-friend-button' onMouseEnter={onMouseover} onMouseLeave={onMouseout}>
+            <span>{text}</span>
           </button>
         </div>
       </div>
