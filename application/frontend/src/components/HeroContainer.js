@@ -24,6 +24,7 @@ function HeroContainer() {
       </div>
       <div className='right-side'>
         <div className='right-side-text'>The Social Network for your furry (or not so furry) friends</div>
+        <div className='right-side-subtext'>Sign Up or Search for a Pet to Get Started</div>
         <div className='button-container'>
           <NavLink to="/signup-page">
           <button className='signup-button'><span>Sign Up</span></button>

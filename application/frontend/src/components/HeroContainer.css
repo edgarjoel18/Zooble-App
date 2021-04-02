@@ -33,6 +33,19 @@
     margin-bottom: 25px;
 }
 
+.right-side-subtext {
+    margin-left: 50px;
+    position: relative;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-bottom: 25px;
+    color:rgba(29, 10, 10, 0.9);
+}
+
 .signup-button {
     margin-left: 50px;
     position: relative;
