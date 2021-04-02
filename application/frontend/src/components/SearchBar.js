@@ -43,17 +43,19 @@ function SearchBar() {
 
   return (
     <div className="search_and_search_results_container">
+
       <span className="search-category-dropdown">
         <select name="search-category" id="search-category" onChange= {e => setSearchCategory(e.target.value)}>
           <option value="Pet">Pets</option>
           <option value="Business">Businesses</option>
           <option value="Shelter">Shelters</option>
         </select>
-      </span>
+    </span>   
+
       <span className="navbar-searchbar">
         <input type="text" placeholder="Search pets, Businesses and Shelters around you" onChange={e => setSearchTerm(e.target.value)} />
 
-        <button onClick={OnClickHandler} >Search</button>
+        <button onClick={OnClickHandler} ></button>
         
       </span>
       <div style={overlayStyle} className="search-results-overlay">
