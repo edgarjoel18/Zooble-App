@@ -6,28 +6,25 @@ function LoginPage() {
         <form>
             <h3>Zooble!</h3>
 
-            <div className='form-group'>
-                <label>Email address</label>
-                <input 
-                    type='email' 
-                    className='form-control'
-                    placeholder='Enter email' 
+            <div className='container'>
+                <label for='email'>Email address</label>
+                <input
+                    type='email'
+                    placeholder='Enter Username'
+                    name='email'
                 />
-            </div>
 
-            <div className='form-group'>
-                <label>Password</label>
-                <input 
-                    type='password' 
-                    className='form-control'
-                    placeholder='Enter password' 
+                <label for='psw'>Password</label>
+                <input
+                    type='password'
+                    placeholder='Enter password'
+                    name='psw'
                 />
+                <button type='submit' className='submit-btn'>Login</button>
+                <p className='forgot-password'>
+                    Forgot <a href='#'>password?</a>
+                </p>
             </div>
-
-            <button type='submit' className='submit-btn'>Sign Up</button>
-            <p className='forgot-password'>
-                Forgot <a href='#'>password?</a>
-            </p>
         </form>
     );
 }

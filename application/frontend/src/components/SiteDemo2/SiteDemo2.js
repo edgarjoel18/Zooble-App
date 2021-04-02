@@ -25,8 +25,7 @@ function SiteDemo2() {
             <span>{text}</span>
         </button>
       </div>
-      <div className='site-demo2-box2'> 
-        Map Search UI Image
+      <div className='site-demo2-box2'>
       </div>
     </div>
   );
