@@ -1,7 +1,31 @@
-import React from "react";
+import React, {useState} from "react";
+import Axios from "axios";
 import './SignUpPage.css';
 
 function SignUpPage() {
+    const [email, setEmail] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+
+    function OnClickHandler(e){
+        console.log(email)
+        console.log(firstName)
+        console.log(lastName)
+        // Axios.get('/sign-up',{
+        //   params: {
+        //     email: email,
+        //     firstName:firstName,
+        //     lastName: lastName
+        //     }})
+        //   .then(response =>{
+        //   console.log(response)
+        //   console.log(response.data)
+        //   console.log(response.data.searchResults)
+        // //   setRecievedSearchResults(response.data.searchResults)
+        // //   console.log(recievedSearchResults)
+        // })
+      }
+
     return (
         <form>
             <div className='container'>
@@ -12,6 +36,7 @@ function SignUpPage() {
                     type='email'
                     placeholder='Enter email'
                     name='email'
+                    onChange= {e => setEmail(e.target.value)}
                 />
 
                 <label for='uname'>Username</label>
@@ -19,6 +44,7 @@ function SignUpPage() {
                     type='text'
                     placeholder='Enter username'
                     name='uname'
+                    
                 />
 
                 <label for='fname'>First name</label>
@@ -26,6 +52,7 @@ function SignUpPage() {
                     type='text'
                     placeholder='First name'
                     name='fname'
+                    onChange= {e => setFirstName(e.target.value)}
                 />
 
                 <label for='Lname'>Last name</label>
@@ -33,6 +60,7 @@ function SignUpPage() {
                     type='text'
                     placeholder='Last name'
                     name='lname'
+                    onChange= {e => setLastName(e.target.value)}
                 />
 
                 <label for='psw'>Password</label>
@@ -57,9 +85,8 @@ function SignUpPage() {
                     </label>
                 </p>
 
-                <div className='btn-container'>
-                    <button type='submit' className='submit-btn'>Sign Up</button>
-                </div>
+
+                <button onClick={OnClickHandler}>Sign Up</button>
             </div>
         </form>
     );
