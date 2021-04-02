@@ -49,7 +49,7 @@ function SearchBar() {
           {recievedSearchResults.length == 0 && <li>No Results</li>}
           {recievedSearchResults && searchCategory == 'Pet' &&
            recievedSearchResults.map((searchResult) => (
-              <li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span>{searchResult.name}</span></li>
+              <li key={searchResult.pet_id}><div class="clearfix"><img src={searchResult.profile_pic}/><span>Name: {searchResult.name}<br></br>Age: {searchResult.age_name}<br></br>Size: {searchResult.size_name}</span></div></li>
               
           ))}
           {recievedSearchResults && searchCategory == 'Business' &&
