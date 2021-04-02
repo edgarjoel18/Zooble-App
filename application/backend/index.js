@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 // const db = require('./database.js')
 const mysql = require('mysql2');
+const { copyFileSync } = require("fs");
 
 const connection = mysql.createConnection({
     host:'csc648project-database.ceh0a99r5rym.us-west-2.rds.amazonaws.com',
@@ -14,6 +15,25 @@ const connection = mysql.createConnection({
 connection.connect(function(err){
     if(err) throw err;
     console.log("Connected!");
+})
+
+app.get("/sign-up", (req,res) =>{
+    console.log("/sign-up");
+    const givenEmail = req.query.email;
+    const givenFirstName = req.query.firstName;
+    const givenLastName = req.query.lastName;
+    console.log(givenEmail)
+    console.log(givenFirstName)
+    console.log(givenLastName)
+    connection.query(`INSERT INTO User (email, first_name, last_name)
+                      VALUES ('${givenEmail}','${givenFirstName}', '${givenLastName}')`,
+                      function(err, result){
+                          if(err){
+                              throw err;
+                          } else{
+                              res.json("success");
+                          }
+                      })
 })
 
 app.get("/search", (req,res) =>{
