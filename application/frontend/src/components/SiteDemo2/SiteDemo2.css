@@ -10,10 +10,11 @@
     height: 576px;
   }
   .site-demo2-box2 {
-    width: 70%;
+    max-width: 70%;
     height: 576px;
-    background-image: url('../../images/testImages/homepageSideDemo2.png');
-    background-repeat:no-repeat
+    float: right;
+    right:0%;
+    position: absolute;
   }
   
 .site-demo2-text {

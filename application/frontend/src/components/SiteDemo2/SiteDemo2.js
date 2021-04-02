@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 
 import testImg from '../../images/testImages/test.jpg';
+import mapSearchDemo from '../../images/testImages/homepageSideDemo2.png'
 
 import './SiteDemo2.css';
 
@@ -25,8 +26,7 @@ function SiteDemo2() {
             <span>{text}</span>
         </button>
       </div>
-      <div className='site-demo2-box2'>
-      </div>
+      <img className='site-demo2-box2' src={mapSearchDemo} />
     </div>
   );
 }

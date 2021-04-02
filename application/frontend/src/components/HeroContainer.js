@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import { NavLink } from "react-router-dom";
 import './HeroContainer.css';
 
+import CatDogHero from '../images/cat_dog_image.jpg'
+
 function HeroContainer() {
 
   const [text, setText] = useState('Find a Friend');
@@ -18,12 +20,12 @@ function HeroContainer() {
   return (
     <div className='hero-container'>
       <div className='left-side'> 
-        <div>Hero Image</div>
+        <div><img src={CatDogHero}></img></div>
       </div>
       <div className='right-side'>
-        <div className='right-side-text'>The Social Network for furry (or not so furry) friends</div>
+        <div className='right-side-text'>The Social Network for your furry (or not so furry) friends</div>
         <div className='button-container'>
-          <NavLink to="/sign-up">
+          <NavLink to="/signup-page">
           <button className='signup-button'><span>Sign Up</span></button>
           </NavLink>
           <button className='find-friend-button' onMouseEnter={onMouseover} onMouseLeave={onMouseout}>
