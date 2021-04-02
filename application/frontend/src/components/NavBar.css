@@ -11,6 +11,11 @@
     grid-column: 1 / span 1;
 }
 
+.logo-img{
+    justify-self: center;
+    height:80px;
+}
+
 .navbar-right{
     justify-self: center;
     grid-column: 3 / span 1;
