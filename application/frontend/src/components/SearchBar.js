@@ -53,7 +53,13 @@ function SearchBar() {
     </span>   
 
       <span className="navbar-searchbar">
-        <input type="text" placeholder="Search pets, Businesses and Shelters around you" onChange={e => setSearchTerm(e.target.value)} />
+        <input type="text" placeholder="Search pets, Businesses and Shelters around you" onChange={e => setSearchTerm(e.target.value)} 
+        onKeyPress={event => {
+          if (event.key === 'Enter') {
+            OnClickHandler();
+          }
+        }}
+        />
 
         <button onClick={OnClickHandler} ></button>
         
