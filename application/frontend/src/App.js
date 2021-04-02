@@ -10,6 +10,9 @@ import Footer from './components/Footer'
 import NavBar from './components/NavBar'
 import SearchResults from './components/SearchResults'
 
+import LoginPage from './components/LoginPage.js'
+import SignUpPage from './components/SignUpPage.js'
+
 import Nav from './Nav'
 
 function App() {
@@ -19,12 +22,14 @@ function App() {
        <Switch>
         <Route path="/" exact component={Home}/>
         <Route path="/search-results" exact component={SearchResults}/>
-        {/* <Route path="/Edgar" component={Edgar}/>
+        <Route path="/login-page" exact component={LoginPage}/>
+        <Route path="/signup-page" exact component={SignUpPage}/>
+        <Route path="/Edgar" component={Edgar}/>
         <Route path="/Daniel" component={Daniel}/>
         <Route path="/Em" component={Em}/>
         <Route path="/Sabrina" component={Sabrina}/>
         <Route path="/Wenjie" component={Wenjie}/>
-        <Route path="/Cameron" component={Cameron}/> */}
+        <Route path="/Cameron" component={Cameron}/>
       </Switch>
     </Router>
   );
