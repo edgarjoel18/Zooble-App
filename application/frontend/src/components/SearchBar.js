@@ -4,6 +4,19 @@ import {useHistory } from 'react-router-dom';
 
 import './SearchBar.css'
 
+// componentWillMount() and componentWillUnmount() functions work toghther
+// to unable and disble srolling on the main page
+
+// change the scroll bar behavior when component mount  
+function componentWillMount() {
+  document.body.style.overflow = "hidden";
+};
+// change the scroll bar behavior when component unmount  
+function componentWillUnmount() {
+  document.body.style.overflow = "auto"; // or restore the original value
+};
+
+
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchCategory, setSearchCategory] = useState('Pet');
@@ -23,6 +36,7 @@ function SearchBar() {
       setRecievedSearchResults(response.data.searchResults)
       console.log(recievedSearchResults)
     })
+    componentWillMount();
   }
 
   const overlayStyle = {display: overlayDisplay};
@@ -37,7 +51,7 @@ function SearchBar() {
         </select>
       </span>
       <span className="navbar-searchbar">
-        <input type="text" placeholder="Search" onChange={e => setSearchTerm(e.target.value)} />
+        <input type="text" placeholder="Search pets, Businesses and Shelters around you" onChange={e => setSearchTerm(e.target.value)} />
 
         <button onClick={OnClickHandler} >Search</button>
         
@@ -65,6 +79,7 @@ function SearchBar() {
         <div className="center">
         <button onClick= {() => {
                       setOverlayDisplay('none');
+                      componentWillUnmount();
                       }} className="overlay-button">Close</button>
         </div>
         </div>
