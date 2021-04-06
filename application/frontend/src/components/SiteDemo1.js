@@ -11,7 +11,8 @@ function SiteDemo1() {
       <div className='site-demo1-leftSideBox'>
         <p className='site-demo1-textBox'> 
         Build a profile and connect with other pet owners
-        <br/>OR<br/>
+        
+        <span><br/>OR<br/></span>
         Find a pet by connecting with a local shelter
         </p>
       </div>

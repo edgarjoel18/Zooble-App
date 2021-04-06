@@ -24,7 +24,7 @@ function SearchBar() {
   const [recievedSearchResults, setRecievedSearchResults] = useState([])
   
   function OnClickHandler(e){
-    Axios.get('/search',{
+    Axios.get('/search', {
       params: {
         searchTerm: searchTerm,
         searchCategory:searchCategory}})

@@ -4,8 +4,10 @@
     height: 576px;
     border: black solid 0.2px;
     align-items: center;
-    background-color: #683B30;
+    background-color: #7F9489; 
+  /* 683B30 */
 }
+
 
 .site-demo1-leftSideBox {
     width: 50%;
@@ -39,7 +41,11 @@
     line-height: 29px;
     letter-spacing: 0em;
     text-align: left;
-    max-width: 250px;
+    color: #bbc8ba;
+    /* max-width: 350px; */
+}
+.site-demo1-textBox span {
+    color: #fab73d;
 }
 
   .site-demo1-testImage {

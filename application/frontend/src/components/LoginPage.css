@@ -12,15 +12,15 @@ input[type=email], input[type=password] {
     background: #f1f1f1;
 }
 
-button {
-    background-color: #4CAF50; /* Green */
+/* button {
+    background-color: #4CAF50;
     border: none;
     color: white;
     text-decoration: none;
     font-size: 16px;
     text-align: center;
     width: 200px;
-}
+} */
 
 button:hover {
     opacity: 0.8;

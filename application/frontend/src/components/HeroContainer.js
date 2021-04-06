@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { NavLink } from "react-router-dom";
 import './HeroContainer.css';
 
-import CatDogHero from '../images/cat_dog_image.jpg'
+import CatDogHero from '../images/cat_dog_image.png'
 
 function HeroContainer() {
 
@@ -20,7 +20,7 @@ function HeroContainer() {
   return (
     <div className='hero-container'>
       <div className='left-side'> 
-        <div><img src={CatDogHero}></img></div>
+        {/* <div><img src={CatDogHero}></img></div> */}
       </div>
       <div className='right-side'>
         <div className='right-side-text'>The Social Network for your furry (or not so furry) friends</div>
@@ -30,7 +30,7 @@ function HeroContainer() {
           <button className='signup-button'><span>Sign Up</span></button>
           </NavLink>
           <button className='find-friend-button' onMouseEnter={onMouseover} onMouseLeave={onMouseout}>
-            <span>{text}</span>
+           <span>{text}</span> 
           </button>
         </div>
       </div>

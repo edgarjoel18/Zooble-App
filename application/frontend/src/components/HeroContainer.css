@@ -4,7 +4,7 @@
     height: 576px;
     align-content: center;
     text-align: center;
-    align-items: center
+    align-items: center;
 }
 
 .left-side {
@@ -31,6 +31,7 @@
     letter-spacing: 0em;
     text-align: left;
     margin-bottom: 25px;
+    color: black;
 }
 
 .right-side-subtext {
@@ -43,7 +44,8 @@
     letter-spacing: 0em;
     text-align: left;
     margin-bottom: 25px;
-    color:rgba(29, 10, 10, 0.9);
+    /* color:rgba(29, 10, 10, 0.9); */
+    color: #7F9489;
 }
 
 .signup-button {
@@ -51,12 +53,12 @@
     position: relative;
     width: 195px;
     height: 62px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
-    background-color: black;
-    outline: none;
-    border: none;
-    cursor: pointer;
+    /* border-radius: 10px; */
+    /* box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.12); */
+    background-color: #7E6572;
+    /* outline: none;
+    border: none; */
+    /* cursor: pointer; */
     z-index: 0;
 }
 
@@ -65,12 +67,12 @@
     position: relative;
     width: 195px;
     height: 62px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
-    background-color: black;
-    outline: none;
-    border: none;
-    cursor: default;
+    /* border-radius: 10px; */
+    /* box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.12);*/
+    /* background-color: #325342;  */
+    /* outline: none;
+    border: none; */
+    /* cursor: default; */
     z-index: 0;
 }
 
@@ -79,7 +81,7 @@ button span {
     font-weight: bold;
     font-size: 24px;
     line-height: 28px;
-    color: #FFFFFF;
+    color: #e4eaed;
 }
 
 .button-container{

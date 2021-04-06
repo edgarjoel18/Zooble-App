@@ -53,33 +53,34 @@ select:focus {
     display: inline-block;
     width: 7%;
     height: 50%;
-    /* border: 3px solid #a9845c; */
     border: none;
  
-    background: #FFF8F8;
+    background-color: #AFBCB5;
     text-align: center;
     color: #6d6e41;
     border-radius: 0 5px 5px 0;
-    padding: 17px;
-    /* margin-top: 8px; */
+    padding: 16px;
     cursor: pointer;
     font-size: 17px;
-    background: url("../images/icons8-search-location-96\(1\)\ 1.png")  50% no-repeat #FFF8F8;
+    background: url("../images/icons8-search-location-96\(1\)\ 1.png")  50% no-repeat #AFBCB5;
 }
 .search_and_search_results_container input[type=text] {
     display: inline-block;
     width: 70%;
     height: 50%;
-    border-right: 3px solid black;
+    /* border-bottom: 1px solid #546747; */
     border-top: none;
-    border-left: 3px solid black;;
-    border-bottom: none;
+    border-radius: 0;
+    /* border-left: 3px solid #546747;; */
+    /* border-bottom: none; */
     outline: none;
-    color: #a9845c;
+    color: #546747;
+    background-color: #AFBCB5;
     padding: 6px;
     margin: 8px 0 auto 0;
     font-size: 17px;
-    background: url("../images/Vector.png")  99% no-repeat #FFF8F8;
+    /* FFF8F8 */
+    /* background: url("../images/Vector.png")  99% no-repeat #FFF8F8; */
   }
 
 
