@@ -11,7 +11,7 @@ import Footer from './components/Footer'
 import NavBar from './components/NavBar'
 import SearchResults from './components/SearchResults'
 
-import LoginPage from './components/LoginPage.js'
+import LoginPage from './components/Login/LoginPage.js'
 import SignUpPage from './components/SignUpPage.js'
 
 import Nav from './Nav'

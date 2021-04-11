@@ -1,8 +1,7 @@
 import React from "react";
 import './SiteDemo1.css';
-import testImage from '../images/testImages/vertical-testImage.jpg';
-import siteDemo1Img from '../images/siteDemo1.png'
-import siteDemo2Img from '../images/siteDemo2.png'
+import siteDemo1Img from '../../images/siteDemo1.png'
+import siteDemo2Img from '../../images/siteDemo2.png'
 
 
 function SiteDemo1() {

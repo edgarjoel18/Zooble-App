@@ -1,6 +1,6 @@
 import React from 'react'
 import HeroContainer from './HeroContainer.js'
-import SiteDemo1 from './SiteDemo1.js'
+import SiteDemo1 from './SiteDemo1/SiteDemo1.js'
 import SiteDemo2 from './SiteDemo2/SiteDemo2'
 import Footer from './Footer.js'
 

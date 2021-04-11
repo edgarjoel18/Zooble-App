@@ -4,7 +4,7 @@ import './LoginPage.css';
 function LoginPage() {
     return (
         <form>
-            <h1>Zooble!</h1>
+            <h1>Zooble</h1>
 
             <div className='container'>
                 <label for='email'>Email address</label>
