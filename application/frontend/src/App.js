@@ -1,20 +1,18 @@
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import Home from './components/Home'
-import Edgar from './components/Edgar'
-import Cameron from './components/Cameron'
-import Wameedh from './components/Wameedh'
-import Daniel from './components/Daniel'
-import Em from './components/Em'
-import Sabrina from './components/Sabrina'
-import Wenjie from './components/Wenjie'
+import Edgar from './components/About/Edgar'
+import Cameron from './components/About/Cameron'
+import Wameedh from './components/About/Wameedh'
+import Daniel from './components/About/Daniel'
+import Em from './components/About/Em'
+import Sabrina from './components/About/Sabrina'
+import Wenjie from './components/About/Wenjie'
 import Footer from './components/Footer'
 import NavBar from './components/NavBar'
 import SearchResults from './components/SearchResults'
 
 import LoginPage from './components/Login/LoginPage.js'
 import SignUpPage from './components/SignUpPage.js'
-
-import Nav from './Nav'
 
 function App() {
   return (

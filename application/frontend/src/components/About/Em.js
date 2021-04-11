@@ -2,7 +2,7 @@ import React from 'react'
 
 import './AboutMe.css'
 
-import EmJPG from '../images/Em.jpg'
+import EmJPG from '../../images/Em.jpg'
 
 function Em() {
     return (

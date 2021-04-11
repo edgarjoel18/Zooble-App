@@ -2,7 +2,7 @@ import React from 'react'
 
 import './AboutMe.css'
 
-import SabrinaJPG from '../images/Sabrina.jpg'
+import SabrinaJPG from '../../images/Sabrina.jpg'
 
 function Sabrina() {
     return (

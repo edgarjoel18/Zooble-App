@@ -2,7 +2,7 @@ import React from 'react'
 
 import './AboutMe.css'
 
-import WameedhJpg from '../images/IMG_0109.JPG'
+import WameedhJpg from '../../images/IMG_0109.JPG'
 
 
 

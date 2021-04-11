@@ -36,6 +36,9 @@ function SearchBar() {
       setRecievedSearchResults(response.data.searchResults)
       console.log(recievedSearchResults)
     })
+    .catch(error =>{
+      console.log("Error");
+    })
     componentWillMount();
   }
 

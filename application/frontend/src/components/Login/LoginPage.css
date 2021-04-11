@@ -1,9 +1,12 @@
 form {
     border:3px solid #f1f1f1;
+    display: grid;
+    grid-template-columns: 3;
+    grid-template-rows: 2;
 }
 
 /*Full width for inputs */
-input[type=email], input[type=password] {
+input[type=username], input[type=password] {
     width: 100%;
     padding: 15px;
     margin: 5px 0 22px 0;
@@ -32,6 +35,11 @@ button:hover {
 
 .container {
     padding: 16px;
+    background-color: red;
+    z-index: 1;
+    width: 50%;
+    grid-column: 2/span 1;
+    grid-row: 2/span 1;
 }
 
 h1 {

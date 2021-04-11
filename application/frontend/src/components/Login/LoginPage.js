@@ -4,14 +4,13 @@ import './LoginPage.css';
 function LoginPage() {
     return (
         <form>
-            <h1>Zooble</h1>
-
             <div className='container'>
-                <label for='email'>Email address</label>
+                <h1>Zooble</h1>
+                <label for='email'>Username</label>
                 <input
-                    type='email'
+                    type='username'
                     placeholder='Enter Username'
-                    name='email'
+                    name='username'
                 />
 
                 <label for='psw'>Password</label>

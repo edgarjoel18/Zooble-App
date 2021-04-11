@@ -1,6 +1,6 @@
 import React from 'react';
 import './AboutMe.css';
-import WenjieJng from '../images/Wenjie.jpg';
+import WenjieJng from '../../images/Wenjie.jpg';
 
 
 function Wenjie() {
