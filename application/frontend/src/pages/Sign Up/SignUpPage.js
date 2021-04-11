@@ -6,6 +6,7 @@ function SignUpPage() {
     const [email, setEmail] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
+    const [password, setPassword] = useState('')
 
     function OnClickHandler(e){
         console.log(email)
@@ -68,6 +69,7 @@ function SignUpPage() {
                     type='password'
                     placeholder='Enter password'
                     name='psw'
+                    onChange= {e => setLastName(e.target.value)}
                 />
                 <label for='psw-repeat'>Repeat password</label>
                 <input

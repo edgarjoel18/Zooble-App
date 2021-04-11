@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { NavLink } from "react-router-dom";
 import './HeroContainer.css';
 
-import CatDogHero from '../images/cat_dog_image.png'
+import CatDogHero from '../../images/cat_dog_image.png'
 
 function HeroContainer() {
 

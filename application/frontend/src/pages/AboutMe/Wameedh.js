@@ -12,7 +12,7 @@ function Cameron() {
             <div className="about-me-card">
                 <span style={{fontSize: '2rem'}}> Hello! My name is Wameedh :)</span><br></br>
                 <div className="about-me-body">
-                    <p class="wamPara">
+                    <p className="wamPara">
                         I am senior Computer Science major student at SFSU. God willing, I will be graduating this semester.
                         People who know me say I am a passionate person. I am an outdoor person. I like hiking and playing soccer.
                         <br></br><br></br>
@@ -26,9 +26,9 @@ function Cameron() {
                         
                     </p>
                     
-                        <a href="https://www.linkedin.com/in/wameedh/" class="fa fa-linkedin"></a>
-                        <a href="https://www.instagram.com/wameedh.f/" class="fa fa-instagram"></a>
-                        <a href="https://twitter.com/Wameedh_F" class="fa fa-twitter"></a>
+                        <a href="https://www.linkedin.com/in/wameedh/" className="fa fa-linkedin"></a>
+                        <a href="https://www.instagram.com/wameedh.f/" className="fa fa-instagram"></a>
+                        <a href="https://twitter.com/Wameedh_F" cl="fa fa-twitter"></a>
                     
                 </div>
                 <img className="about-me-img" src={WameedhJpg}/>

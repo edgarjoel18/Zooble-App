@@ -46,7 +46,7 @@ select:focus {
     text-align: center;
     color: #6d6e41;
     padding-left: 5px;
-    background: url("../images/PNGIX.com_north-arrow-png_562032.png")  96% / 10% no-repeat #FFF8F8;
+    background: url("../../images/PNGIX.com_north-arrow-png_562032.png")  96% / 10% no-repeat #FFF8F8;
 }
 
 .navbar-searchbar button {
@@ -62,7 +62,7 @@ select:focus {
     padding: 16px;
     cursor: pointer;
     font-size: 17px;
-    background: url("../images/icons8-search-location-96\(1\)\ 1.png")  50% no-repeat #AFBCB5;
+    background: url("../../images/icons8-search-location-96\(1\)\ 1.png")  50% no-repeat #AFBCB5;
 }
 .search_and_search_results_container input[type=text] {
     display: inline-block;

@@ -1,6 +1,6 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
-import parrotPng from '../images/parrot.png';
+import parrotPng from '../../images/parrot.png';
 
 function NavBarRight() {
   return (
