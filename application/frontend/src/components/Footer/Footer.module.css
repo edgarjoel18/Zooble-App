@@ -19,5 +19,6 @@
     font-weight: normal;
 }
 
-.our-team-footer a:hover{
+.nav-link{
+    margin-left: 5px;
 }

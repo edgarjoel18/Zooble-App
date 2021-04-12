@@ -14,12 +14,13 @@
   box-shadow: var(--elevation-1);
   border-radius:10px;
   text-align: center;
-  height: 50px;
+  align-items: center;
+  font-family: var(--ff-primary);
 }
 
 .searchbar input{
+  border: none;
   flex-grow:2;
-  border:none;
   font-size: 1.5em;
 }
 
@@ -36,11 +37,16 @@ select {
   border-radius:10px;
   font-size: 2em;
   margin-left:10px;
+  background: url("../../images/Created\ Icons/Dropdown.svg") no-repeat right;
+  margin-right: 10px;
+  cursor: pointer;
 }
 
 .searchbar button{
   width: 50px;
+  height: 50px;
   background: url("../../images/Third\ Party\ Icons/icons8-search-location-48.png") 100% no-repeat;
+  transform: none;
 }
 
 /*.search_and_search_results_container {
