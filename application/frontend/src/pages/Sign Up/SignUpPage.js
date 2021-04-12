@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import Axios from "axios";
-import './SignUpPage.css';
+import styles from './SignUpPage.module.css';
 
 function SignUpPage() {
     const [email, setEmail] = useState('')
@@ -29,7 +29,7 @@ function SignUpPage() {
 
     return (
         <form>
-            <div className='container'>
+            <div className={styles['container']}>
                 <h1>Sign Up</h1>
 
                 <label for='email'>Email</label>

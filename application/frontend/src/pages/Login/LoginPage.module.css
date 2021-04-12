@@ -1,0 +1,78 @@
+.login-form {
+    display: grid;
+    grid-template-columns: 3;
+}
+
+/*Full width for inputs */
+
+.username-input-label, .password-input-label{
+    display: block;
+}
+
+.username-input-container, .password-input-container{
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.username-input-container input{
+    padding: 15px;
+    display: inline-block;
+    border: none;
+    background:var(--inset-txt-field-clr);
+}
+
+/* input{
+    width: 50%;
+} */
+
+
+.password-input-container input{
+    padding: 15px;
+    display: inline-block;
+    border: 1px solid;
+    border-color: var(--inactive-txt-clr);
+    border-radius: 5px;
+    background:white;
+}
+
+/* button:hover {
+    opacity: 0.8;
+} */
+
+.btn-container {
+    text-align: center;
+}
+
+.login-container {
+    margin-top: 20%;
+    border-radius: 10px;
+    z-index: 1;
+    width: 50%;
+    grid-column: 2/span 1;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20);
+}
+
+/* h1 {
+    text-align: center;
+} */
+
+.forgot-password {
+    margin-left: 15px;
+    float: left;
+}
+
+.create-account {
+    margin-right: 15px;
+    float: right;
+}
+
+.submit-btn{
+    width: 25%;
+    text-justify: center;
+    text-align: center;
+    color: white;
+    background-color: var(--primary-clr);
+
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20);
+}
+

@@ -4,11 +4,11 @@ import NavBarLeft from '../Nav/NavBarLeft'
 import NavBarRight from '../Nav/NavBarRight'
 import { NavLink } from 'react-router-dom';
 
-import './NavBar.css'
+import styles from './NavBar.module.css'
 
 function NavBar() {
     return (
-        <div className="navbar">
+        <div className={styles["navbar"]}>
             <NavBarLeft />
             <SearchBar/>
             <NavBarRight/>

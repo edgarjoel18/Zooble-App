@@ -4,7 +4,7 @@ import SiteDemo1 from '../../components/SiteDemo1/SiteDemo1.js'
 import SiteDemo2 from '../../components/SiteDemo2/SiteDemo2'
 import Footer from '../../components/Footer/Footer.js'
 
-import "./Home.css"
+import styles from "./Home.module.css"
 
 function Home() {
     return (

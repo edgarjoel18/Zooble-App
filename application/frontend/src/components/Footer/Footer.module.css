@@ -1,5 +1,5 @@
 .footer{
-    background-color: #2b331f;
+    background-color: var(--primary-txt-clr);
     height:200px;
     color: white;
     display: grid;
@@ -15,11 +15,9 @@
 
 .our-team-footer a{
     text-decoration: none;
-    color: #e4eaed;
+    color: var(--reversed-txt-clr);
     font-weight: normal;
 }
 
 .our-team-footer a:hover{
-    /* opacity: .5; */
-    color: #fab73d;
 }

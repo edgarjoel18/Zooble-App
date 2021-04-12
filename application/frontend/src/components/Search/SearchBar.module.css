@@ -1,46 +1,65 @@
 @import url('https://www.w3schools.com/w3css/4/w3.css');
 
-button, select, height{
+/* button, select, height{
   height:35px;
+} */
+
+/* * {
+    box-sizing: border-box;
+} */
+
+.searchbar{
+  display:flex;
+  flex-direction: row;
+  box-shadow: var(--elevation-1);
+  border-radius:10px;
+  text-align: center;
+  height: 50px;
 }
 
-* {
-    box-sizing: border-box;
+.searchbar input{
+  flex-grow:2;
+  border:none;
+  font-size: 1.5em;
 }
-.search_and_search_results_container {
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  
+}
+
+.search-category-dropdown select{
+  background-color: var(--reversed-txt-clr);
+  border: none;
+  border-radius:10px;
+  font-size: 2em;
+  margin-left:10px;
+}
+
+.searchbar button{
+  width: 50px;
+  background: url("../../images/Third\ Party\ Icons/icons8-search-location-48.png") 100% no-repeat;
+}
+
+/*.search_and_search_results_container {
     text-align: center;
     width: 100%;
-    height: 90px; /* Need to be changed to be flexable - note by Wameedh*/
+    height: 90px; 
     padding: 0 0 0 0;
 }
 
-.search-category-dropdown {
-    display: inline-block;
-    width: 23%;
-    height: 50%;
-} 
 
 
-/* TESTING*/
-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    /* background-image: &#9660; */
-  }
 
-/* END------------*/
 
-select:focus {
-    outline: none; 
-  }
 
 #search-category {
     width: 100%;
     height: 100%;
     font-size: 17px;
     margin-top: 8px;
-    /* border-right: 3px solid black; */
     border: none;
     background: #FFF8F8;
     text-align: center;
@@ -64,23 +83,20 @@ select:focus {
     font-size: 17px;
     background: url("../../images/icons8-search-location-96\(1\)\ 1.png")  50% no-repeat #AFBCB5;
 }
+
 .search_and_search_results_container input[type=text] {
     display: inline-block;
     width: 70%;
     height: 50%;
-    /* border-bottom: 1px solid #546747; */
-    border-top: none;
-    border-radius: 0;
-    /* border-left: 3px solid #546747;; */
-    /* border-bottom: none; */
     outline: none;
-    color: #546747;
-    background-color: #AFBCB5;
+    border: none;
+    color: var(--inactive-txt-clr);
+    background-color: var(--reversed-txt-clr);
     padding: 6px;
     margin: 8px 0 auto 0;
     font-size: 17px;
-    /* FFF8F8 */
-    /* background: url("../images/Vector.png")  99% no-repeat #FFF8F8; */
+    box-shadow: var(--elevation-1);
+    border-radius: 10px;
   }
 
 
@@ -167,4 +183,4 @@ select:focus {
     border-radius: 5px;
     padding: 6px;
     font-size: 17px;
-}
+} */

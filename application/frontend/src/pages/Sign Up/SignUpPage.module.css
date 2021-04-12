@@ -1,15 +1,17 @@
-input[type=email], input[type=password], input[type=text] {
-    width: 100%;
+
+
+/* input[type=email], input[type=password], input[type=text] {
+    width: 0%;
     padding: 15px;
     margin: 5px 0 22px 0;
     display: inline-block;
     border: none;
     background: #f1f1f1;
-}
+} */
 
-h1 {
+/* h1 {
     text-align: center;
-}
+} */
 
 /* button {
     background-color: #4CAF50;
@@ -21,9 +23,9 @@ h1 {
     width: 200px;
 } */
 
-button:hover {
+/* button:hover {
     opacity: 1;
-}
+} */
 
 .btn-container {
     text-align: center;
@@ -33,6 +35,6 @@ button:hover {
     padding: 16px;
 }
 
-p {
+/* p {
     text-align: center;
-}
+} */

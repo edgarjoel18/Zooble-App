@@ -1,0 +1,63 @@
+.hero-container {
+    display: flex;
+    width: 100%;
+    height: 576px;
+}
+
+.left-side {
+    width: 50%;
+}
+
+.left-side-img {
+    width: 100%;
+    height: 100%;
+}
+
+.right-side{
+    width: 50%;
+    display: grid;
+    grid-template-rows: 30% auto auto auto 30%;
+}
+
+
+.right-side-text {
+    color:var(--ff-primary);
+    display: block;
+    grid-row: 2 / span 1;
+}
+
+.right-side-subtext {
+    /* color:rgba(29, 10, 10, 0.9); */
+    color: #7F9489;
+    grid-row: 3 /span 1;
+}
+
+.signup-button {
+    width: 195px;
+    height: 62px;
+    background-color: var(--primary-clr, red);
+    color: var(--reversed-txt-clr);
+    box-shadow: var(--elevation-1);
+    
+}
+
+.find-friend-button {
+    margin-left: 50px;
+    width: 195px;
+    height: 62px;
+    cursor: default;
+    background-color: var(--reversed-txt-clr);
+    color: var(--primary-clr);
+    border: 2px solid var(--primary-clr);
+}
+
+/* button span {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+}*/
+
+.button-container{
+    grid-row: 4 / span 1;
+}

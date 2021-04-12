@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import Axios from "axios";
 import {useHistory } from 'react-router-dom';
 
-import './SearchBar.css'
+import styles from './SearchBar.module.css'
 
 // componentWillMount() and componentWillUnmount() functions work toghther
 // to unable and disble srolling on the main page
@@ -45,17 +45,20 @@ function SearchBar() {
   const overlayStyle = {display: overlayDisplay};
 
   return (
-    <div className="search_and_search_results_container">
+    <div className={styles["search_and_search_results_container"]}>
 
-      <span className="search-category-dropdown">
+      <div className={styles["searchbar"]}>
+      <span className={styles["search-category-dropdown"]}>
         <select name="search-category" id="search-category" onChange= {e => setSearchCategory(e.target.value)}>
+          <optgroup>
           <option value="Pet">Pets</option>
           <option value="Business">Businesses</option>
           <option value="Shelter">Shelters</option>
+          </optgroup>
         </select>
-    </span>   
+      </span>   
       
-      <span className="navbar-searchbar">
+      <span className={styles["searchbar-input"]}>
       
         <input type="text" placeholder= {"Search " + searchCategory.toLowerCase() + "s near you"} onChange={e => setSearchTerm(e.target.value)} 
         onKeyPress={event => {
@@ -65,11 +68,14 @@ function SearchBar() {
         }}
         />
 
-        <button onClick={OnClickHandler} ></button>
+        
         
       </span>
-      <div style={overlayStyle} className="search-results-overlay">
-        <div className = "modal-main">
+      <button onClick={OnClickHandler} ></button>
+      </div>
+
+<div style={overlayStyle} className={styles["search-results-overlay"]}>
+        <div className ={styles["modal-main"]}>
         Search Results
         <ul>
           {recievedSearchResults.length == 0 && <li>No Results</li>}
@@ -88,11 +94,11 @@ function SearchBar() {
           ))}
 
         </ul>
-        <div className="center">
+        <div className={styles["center"]}>
         <button onClick= {() => {
                       setOverlayDisplay('none');
                       componentWillUnmount();
-                      }} className="overlay-button">Close</button>
+                      }} className={styles["overlay-button"]}>Close</button>
         </div>
         </div>
       </div>

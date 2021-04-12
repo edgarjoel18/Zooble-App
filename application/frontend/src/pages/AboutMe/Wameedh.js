@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './AboutMe.css'
+import styles from './AboutMe.module.css'
 
 import WameedhJpg from '../../images/IMG_0109.JPG'
 
@@ -8,11 +8,11 @@ import WameedhJpg from '../../images/IMG_0109.JPG'
 
 function Cameron() {
     return (
-        <div className="about-me-container">
-            <div className="about-me-card">
+        <div className={styles["about-me-container"]}>
+            <div className={styles["about-me-card"]}>
                 <span style={{fontSize: '2rem'}}> Hello! My name is Wameedh :)</span><br></br>
-                <div className="about-me-body">
-                    <p className="wamPara">
+                <div className={styles["about-me-body"]}>
+                    <p className={styles["wamPara"]}>
                         I am senior Computer Science major student at SFSU. God willing, I will be graduating this semester.
                         People who know me say I am a passionate person. I am an outdoor person. I like hiking and playing soccer.
                         <br></br><br></br>
@@ -31,7 +31,7 @@ function Cameron() {
                         <a href="https://twitter.com/Wameedh_F" cl="fa fa-twitter"></a>
                     
                 </div>
-                <img className="about-me-img" src={WameedhJpg}/>
+                <img className={styles["about-me-img"]} src={WameedhJpg}/>
             </div>
             
         </div>

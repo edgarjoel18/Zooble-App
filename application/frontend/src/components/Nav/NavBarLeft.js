@@ -3,11 +3,13 @@ import { NavLink } from "react-router-dom";
 
 import LogoPng from '../../images/ZoobleLogo.png';
 
+import styles from './NavBar.module.css'
+
 function NavBarLeft() {
   return (
-    <span  className="navbar-left">
+    <span  className={styles["navbar-left"]}>
       <NavLink to="/">
-        <img className="logo-img" src={LogoPng}/>
+        <img className={styles["logo-img"]} src={LogoPng}/>
       </NavLink>
     </span>
   );

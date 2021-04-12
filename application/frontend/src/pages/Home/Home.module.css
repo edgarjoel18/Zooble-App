@@ -1,4 +1,4 @@
-.assignment-info{
+/* .assignment-info{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,16 +12,14 @@ body {
     background-color: #f2f5f7;
 }
 button, input[type="button"] {
-    color: #e4eaed;
-    background-color: #325342;
     border-radius: 10px;
     outline: none;
     cursor:pointer;
     border: none;
-}
+} */
 
 
-.find-friend-button:hover, .signup-button:hover, .site-demo2-button:hover {
+/* .find-friend-button:hover, .signup-button:hover, .site-demo2-button:hover {
     transition: 0.25s;
     transform: translateY(4px);
-}
+} */

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { NavLink } from "react-router-dom";
-import './HeroContainer.css';
+import styles from './HeroContainer.module.css';
 
 import CatDogHero from '../../images/cat_dog_image.png'
 
@@ -18,19 +18,19 @@ function HeroContainer() {
   }
 
   return (
-    <div className='hero-container'>
-      <div className='left-side'> 
+    <div className={styles['hero-container']}>
+      <div className={styles['left-side']}> 
         {/* <div><img src={CatDogHero}></img></div> */}
       </div>
-      <div className='right-side'>
-        <div className='right-side-text'>The Social Network for your furry (or not so furry) friends</div>
-        <div className='right-side-subtext'>Sign Up or Search for a Pet to Get Started</div>
-        <div className='button-container'>
+      <div className={styles['right-side']}>
+        <div className={styles['right-side-text']}><h1>The Social Network for your furry (or not so furry) friends</h1></div>
+        <div className={styles['right-side-subtext']}><h2>Sign Up or Search for a Pet to Get Started</h2></div>
+        <div className={styles['button-container']}>
           <NavLink to="/signup-page">
-          <button className='signup-button'><span>Sign Up</span></button>
+          <button className={styles['signup-button']}><span><h3>Sign Up</h3></span></button>
           </NavLink>
-          <button className='find-friend-button' onMouseEnter={onMouseover} onMouseLeave={onMouseout}>
-           <span>{text}</span> 
+          <button className={styles['find-friend-button']} onMouseEnter={onMouseover} onMouseLeave={onMouseout}>
+           <span><h3>{text}</h3></span> 
           </button>
         </div>
       </div>
