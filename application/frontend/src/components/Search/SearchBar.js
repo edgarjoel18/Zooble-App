@@ -10,7 +10,7 @@ import Modal from '../Modals/Modal.js'
 
 
 // componentWillMount() and componentWillUnmount() functions work toghther
-// to unable and disble srolling on the main page
+// to unable and disable scrolling on the main page
 
 // change the scroll bar behavior when component mount  
 function componentWillMount() {
@@ -75,25 +75,30 @@ function SearchBar() {
         
         
       </span>
+
+      
       <button onClick={OnClickHandler} ></button>
       </div>
+      
       <Modal display={overlayDisplay} onClose={() => setOverlayDisplay(false)}>
+      <div className={styles["search-results"]}>
       <ul>
       {recievedSearchResults.length == 0 && <li>No Results</li>}
       {recievedSearchResults && searchCategory == 'Pet' &&
       recievedSearchResults.map((searchResult) => (
-        <li key={searchResult.pet_id}><div class="clearfix"><img /><span>Name: {searchResult.name}<br></br>Age: {searchResult.age_name}<br></br>Size: {searchResult.size_name}</span></div></li>  
+        <li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li>
       ))}
     {recievedSearchResults && searchCategory == 'Business' &&
      recievedSearchResults.map((searchResult) => (
-        <li key={searchResult.pet_id}><div class="clearfix"><img /><span>{searchResult.name}</span></div></li>
+        <li key={searchResult.reg_business_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li>
       ))}
     {recievedSearchResults && searchCategory == 'Shelter' &&
      recievedSearchResults.map((searchResult) => (
-        <li key={searchResult.pet_id}><div class="clearfix"><img/><span>{searchResult.name}</span></div></li>
+        <li key={searchResult.reg_shelter_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li>
       ))}
   </ul>
-      </Modal>
+  </div>
+  </Modal>
   </>
   );
 }
@@ -132,3 +137,5 @@ export default SearchBar;
   </div>
   </div>
 </div>*/
+
+//<br></br>Age: {searchResult.age_name}<br></br>Size: {searchResult.size_name}
