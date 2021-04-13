@@ -13,6 +13,10 @@ import SearchResults from './components/Search/SearchResults'
 import LoginPage from './pages/Login/LoginPage.js'
 import SignUpPage from './pages/Sign Up/SignUpPage.js'
 
+import Feed from './pages/Feed/Feed.js'
+
+import MapSearch from './pages/MapSearch/MapSearch.js'
+
 function App() {
   return (
     <Router>
@@ -29,6 +33,8 @@ function App() {
         <Route path="/Wenjie" component={Wenjie}/>
         <Route path="/Cameron" component={Cameron}/>
         <Route path="/Wameedh" component={Wameedh}/>
+        <Route path="/Feed" component={Feed}/>
+        <Route path="/MapSearch" component={MapSearch}/>
       </Switch>
     </Router>
   );

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useLayoutEffect, useState} from "react";
 import Axios from "axios";
 import {useHistory } from 'react-router-dom';
 
@@ -13,13 +13,10 @@ import Modal from '../Modals/Modal.js'
 // to unable and disable scrolling on the main page
 
 // change the scroll bar behavior when component mount  
-function componentWillMount() {
-  document.body.style.overflow = "hidden";
-};
+
+  
 // change the scroll bar behavior when component unmount  
-function componentWillUnmount() {
-  document.body.style.overflow = "auto"; // or restore the original value
-};
+
 
 
 function SearchBar() {
@@ -27,7 +24,19 @@ function SearchBar() {
   const [searchCategory, setSearchCategory] = useState('Pet');
   const [overlayDisplay, setOverlayDisplay] = useState(false);
   const [recievedSearchResults, setRecievedSearchResults] = useState([])
-  
+
+  useEffect(()=>{
+    console.log('useEffect');
+    if(overlayDisplay){
+      console.log('modal open')
+      document.body.style.overflow = "hidden";
+    }
+    else{
+      console.log('modal closed')
+      document.body.style.overflow = "auto";
+    }
+  },[overlayDisplay])
+
   function OnClickHandler(e){
     Axios.get('/search', {
       params: {
@@ -44,7 +53,6 @@ function SearchBar() {
     .catch(error =>{
       console.log("Error");
     })
-    componentWillMount();
   }
 
   const overlayStyle = {display: overlayDisplay};
@@ -54,11 +62,9 @@ function SearchBar() {
       <div className={styles["searchbar"]}>
       <span className={styles["search-category-dropdown"]}>
         <select name="search-category" id="search-category" onChange= {e => setSearchCategory(e.target.value)}>
-          <optgroup>
           <option value="Pet">Pets</option>
           <option value="Business">Businesses</option>
           <option value="Shelter">Shelters</option>
-          </optgroup>
         </select>
       </span>   
       
@@ -71,9 +77,6 @@ function SearchBar() {
           }
         }}
         />
-
-        
-        
       </span>
 
       

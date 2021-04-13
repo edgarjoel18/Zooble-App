@@ -1,0 +1,58 @@
+.map-search-results-header{
+    padding-left: 36px;   
+}
+
+.map-search-results-header h1{
+    font-family: var(--ff-primary);
+    font-weight: 600;
+}
+
+.map-search-results-container{
+    display:grid;
+    grid-template-areas: 'map map map map search-results search-results';
+    width: 100%;
+    height: calc(100vh - 100px); /*Need to find a better way to make container fill whole screen*/
+}
+
+.map-search-results-map{
+    background-color: var(--site-preview-2-container-color);
+    grid-area: map;
+}
+
+.map-search-results-text{
+    grid-area: search-results;
+    box-shadow: var(--elevation-1);
+    overflow: auto;
+}
+
+.map-search-results-text ul li{
+    list-style: none;
+    display: block;
+    box-shadow: var(--elevation-1);
+    width: 95%;
+    margin-bottom: 25px;
+    padding: 10px 0 10px 10px;
+    border-radius: 10px;
+  }
+  
+  .map-search-results-text li img{
+    width: 100px;
+    height:100px;
+    object-fit: cover;
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 10px;
+  
+  }
+  
+  .map-search-results-text span {
+    display:inline-block;
+    margin:0 15px auto 5px;
+    font-size: 20px;
+    text-align: left;
+    line-height: 1.6;
+    top: 0;
+    font-family: var(--ff-primary);
+    font-weight: 600;
+  }
+

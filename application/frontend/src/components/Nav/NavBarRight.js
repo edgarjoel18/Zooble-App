@@ -7,7 +7,7 @@ import styles from './NavBar.module.css'
 function NavBarRight() {
   return (
     <span className={styles["navbar-right"]}>
-       <img className={styles["parrot-img"]} src={parrotPng}/>
+       {/* <img className={styles["parrot-img"]} src={parrotPng}/> */}
         <NavLink to="/login-page">Login</NavLink>
     </span>
   );
