@@ -1,18 +1,45 @@
+.map-search-results-container{
+    display:grid;
+    grid-template-areas: 'map map map map search-results search-results';
+    grid-template-columns: repeat(4, 1fr) repeat(2, 1fr);
+    width: 100%;
+    height: calc(100vh - 100px); /*Need to find a better way to make container fill whole screen*/
+}
+
 .map-search-results-header{
-    padding-left: 36px;   
+    padding-left: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .map-search-results-header h1{
     font-family: var(--ff-primary);
     font-weight: 600;
+    display: inline;
 }
 
-.map-search-results-container{
-    display:grid;
-    grid-template-areas: 'map map map map search-results search-results';
-    width: 100%;
-    height: calc(100vh - 100px); /*Need to find a better way to make container fill whole screen*/
+.map-search-results-header select{
+    border: none;
+    border-radius: 5px;
+    background-color: var(--reversed-txt-clr);
 }
+
+.map-search-results-header select option{
+    font-weight: 600;
+    color: blue;
+}
+
+.sort-dropdown span h5{
+    font-family: var(--ff-primary);
+    font-weight: 600;
+}
+
+.sort-dropdown img{
+    margin-right: 36px;
+}
+
+
 
 .map-search-results-map{
     background-color: var(--site-preview-2-container-color);
