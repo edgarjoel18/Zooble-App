@@ -1,0 +1,12 @@
+.ProfileInfo {
+    display: flex;
+}
+
+.Image {
+    width: 223px;
+    height: 223px;
+}
+
+.UserName {
+    margin-left: 20px;
+}

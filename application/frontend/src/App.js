@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 import Home from './pages/Home/Home'
 import Edgar from './pages/AboutMe/Edgar'
 import Cameron from './pages/AboutMe/Cameron'
@@ -12,6 +12,7 @@ import SearchResults from './components/Search/SearchResults'
 
 import LoginPage from './pages/Login/LoginPage.js'
 import SignUpPage from './pages/Sign Up/SignUpPage.js'
+import ProfilePage from './pages/Profile/Profile'
 
 import Feed from './pages/Feed/Feed.js'
 
@@ -35,6 +36,8 @@ function App() {
         <Route path="/Wameedh" component={Wameedh}/>
         <Route path="/Feed" component={Feed}/>
         <Route path="/MapSearch" component={MapSearch}/>
+        <Route path="/Profile" component={ProfilePage}/>
+        <Redirect to="/" />
       </Switch>
     </Router>
   );

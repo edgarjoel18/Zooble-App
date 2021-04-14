@@ -1,0 +1,10 @@
+.Profile {
+    max-width: 1440px;
+    margin: 30px auto 0;
+}
+
+@media (max-width: 1600px) {
+    .Profile {
+        margin-left: 60px;
+    }
+}
