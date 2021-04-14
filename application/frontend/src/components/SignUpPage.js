@@ -4,26 +4,33 @@ import './SignUpPage.css';
 
 function SignUpPage() {
     const [email, setEmail] = useState('')
+    const [uname, setUname] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
+    const [password, setPassword] = useState('')
+    const [redonePassword, setRedonePassword] = useState('')
 
     function OnClickHandler(e){
         console.log(email)
+        console.log(uname)
         console.log(firstName)
         console.log(lastName)
-        // Axios.get('/sign-up',{
-        //   params: {
-        //     email: email,
-        //     firstName:firstName,
-        //     lastName: lastName
-        //     }})
-        //   .then(response =>{
-        //   console.log(response)
-        //   console.log(response.data)
-        //   console.log(response.data.searchResults)
-        // //   setRecievedSearchResults(response.data.searchResults)
-        // //   console.log(recievedSearchResults)
-        // })
+        console.log(password)
+        console.log(redonePassword)
+         Axios.get('/sign-up',{
+           params: {
+             email: email,
+             firstName:firstName,
+             lastName: lastName,
+             uname: uname,
+             password: password,
+             redonePassword: redonePassword
+             }})
+           .then(response =>{
+           console.log(response)
+           console.log(response.data)
+           console.log(response.data.searchResults)
+        })
       }
 
     return (
@@ -44,7 +51,7 @@ function SignUpPage() {
                     type='text'
                     placeholder='Enter username'
                     name='uname'
-                    
+                    onChange= {e => setUname(e.target.value)}
                 />
 
                 <label for='fname'>First name</label>
@@ -68,19 +75,21 @@ function SignUpPage() {
                     type='password'
                     placeholder='Enter password'
                     name='psw'
+                    onChange= {e => setPassword(e.target.value)}
                 />
                 <label for='psw-repeat'>Repeat password</label>
                 <input
                     type='password'
                     placeholder='Repeat password'
                     name='psw-repeat'
+                    onChange= {e => setRedonePassword(e.target.value)}
                 />
 
                 <p>By creating an account you agree to our <a href='#'>Terms & Privacy</a>
                     <label>
                         <input
                             type='checkbox'
-                            name='remember'
+                            required name='remember'
                         />
                     </label>
                 </p>

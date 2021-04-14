@@ -1,9 +1,21 @@
 const path = require("path");
 const express = require("express");
 const app = express();
-// const db = require('./database.js')
+//const db = require('./database.js')
 const mysql = require('mysql2');
 const { copyFileSync } = require("fs");
+var passwordValidator = require('password-validator');
+var schema = new passwordValidator();
+const bcrypt = require('bcrypt');
+
+schema
+.is().min(5)                                    // Minimum length 5
+.is().max(50)                                  // Maximum length 50
+.has().uppercase()                              // Must have uppercase letters
+.has().lowercase()                              // Must have lowercase letters
+.has().digits(2)                                // Must have at least 2 digits
+.has().not().spaces()                           // Should not have spaces
+.is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
 
 const connection = mysql.createConnection({
     host:'csc648project-database.ceh0a99r5rym.us-west-2.rds.amazonaws.com',
@@ -17,23 +29,49 @@ connection.connect(function(err){
     console.log("Connected!");
 })
 
+
 app.get("/sign-up", (req,res) =>{
     console.log("/sign-up");
     const givenEmail = req.query.email;
+    const givenUsername = req.query.uname;
     const givenFirstName = req.query.firstName;
     const givenLastName = req.query.lastName;
+    const givenPassword = req.query.password;
+    const givenResubmitted = req.query.redonePassword;
+
     console.log(givenEmail)
     console.log(givenFirstName)
     console.log(givenLastName)
-    connection.query(`INSERT INTO User (email, first_name, last_name)
-                      VALUES ('${givenEmail}','${givenFirstName}', '${givenLastName}')`,
-                      function(err, result){
-                          if(err){
-                              throw err;
-                          } else{
-                              res.json("success");
-                          }
-                      })
+    console.log(givenPassword)
+    console.log(givenResubmitted)
+    console.log(givenUsername)
+
+    connection.query("SELECT user_id, password FROM User WHERE username=? OR email=?", [givenUsername, givenEmail],
+                            function(err, result, field){
+                                if(result.length === 0){
+                                    if(schema.validate(givenPassword)){
+                                        if(givenPassword === givenResubmitted){
+                                            const hash = bcrypt.hashSync(givenPassword, 10);
+                                            connection.query(`INSERT INTO User (email, first_name, last_name, password, username)
+                                                            VALUES ('${givenEmail}','${givenFirstName}', '${givenLastName}', 
+                                                            '${hash}', '${givenUsername}')`,
+                                                            function(err, result){
+                                                                if(err){
+                                                                    throw err;
+                                                                } else{
+                                                                    res.json("success");
+                                                                }
+                                                            })
+                                        }else{
+                                            console.log("Passwords do not match.");
+                                        }
+                                    }else{
+                                        console.log("Password must have SUCH AND SUCH values")
+                                    }
+                                } else{
+                                    console.log("User does exist")
+                                }
+                            })
 })
 
 app.get("/search", (req,res) =>{
@@ -139,7 +177,6 @@ app.get("/search", (req,res) =>{
             }
         });
     }
-
 
 });
 
