@@ -1,0 +1,26 @@
+.ProfileContent {
+
+}
+
+.ImageContainer {
+    display: flex;
+}
+
+.Image {
+    width: 162px;
+    height: 162px;
+    border-radius: 10px;
+}
+
+.ImageContainer p {
+    margin-left: 100px;
+}
+
+.ProfileContent span {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ProfileContent a {
+    text-decoration: none;
+}

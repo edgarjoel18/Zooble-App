@@ -1,0 +1,7 @@
+.Reviews {
+    width: 162px;
+    height: 162px;
+    border-radius: 15px;
+    box-shadow: var(--elevation-1);
+}
+

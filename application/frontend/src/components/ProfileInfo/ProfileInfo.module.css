@@ -5,8 +5,50 @@
 .Image {
     width: 223px;
     height: 223px;
+    border-radius: 10px;
 }
 
 .UserName {
-    margin-left: 20px;
+    font-weight: 600;
+}
+
+.SideContainer {
+    display: flex;
+    margin-left: 40px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ButtonContainer {
+    display: inline;
+    height: 42px;
+    font-weight: 600;
+    font-size: 1.5em;
+}
+
+.Dropdown {
+    background-color: var(--reversed-txt-clr);
+    border: solid var(--primary-clr) 1px;
+    width: 170px;
+    height: 100%;
+    padding-left: 10px;
+    border-radius:7px;
+    color: var(--primary-clr);
+    background: url("../../images/Created\ Icons/Dropdown.svg") no-repeat right;
+    margin-right: 15px;
+    box-sizing: border-box;
+    outline: none;
+    cursor: pointer;
+}
+
+.Button {
+    background-color: var(--primary-clr);
+    color: var(--reversed-txt-clr);
+    width: 250px;
+    height: 100%;
+    padding-left: 10px;
+    border-radius:7px;
+    box-sizing: border-box;
+    outline: none;
+    cursor: pointer;
 }
