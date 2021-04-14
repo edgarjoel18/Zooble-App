@@ -1,11 +1,14 @@
 import React, {useEffect, useLayoutEffect, useState} from "react";
+import {Link, Switch, Route, Redirect} from "react-router-dom";
 import Axios from "axios";
-import {useHistory } from 'react-router-dom';
 
 import styles from './SearchBar.module.css'
 
 //components
 import Modal from '../Modals/Modal.js'
+import MapSearch from "../../pages/MapSearch/MapSearch";
+
+
 
 
 
@@ -23,7 +26,7 @@ function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchCategory, setSearchCategory] = useState('Pet');
   const [overlayDisplay, setOverlayDisplay] = useState(false);
-  const [recievedSearchResults, setRecievedSearchResults] = useState([])
+  const [recievedSearchResults, setRecievedSearchResults] = useState([]);
 
   useEffect(()=>{
     console.log('useEffect');
@@ -38,21 +41,21 @@ function SearchBar() {
   },[overlayDisplay])
 
   function OnClickHandler(e){
-    Axios.get('/search', {
-      params: {
-        searchTerm: searchTerm,
-        searchCategory:searchCategory}})
-      .then(response =>{
-      // console.log(response)
-      // console.log(response.data)
-      // console.log(response.data.searchResults)
-      setRecievedSearchResults(response.data.searchResults)
-      setOverlayDisplay(true);
-      console.log(recievedSearchResults)
-    })
-    .catch(error =>{
-      console.log("Error");
-    })
+  //   Axios.get('/search', {
+  //     params: {
+  //       searchTerm: searchTerm,
+  //       searchCategory:searchCategory}})
+  //     .then(response =>{
+  //     // console.log(response)
+  //     // console.log(response.data)
+  //     // console.log(response.data.searchResults)
+  //     setRecievedSearchResults(response.data.searchResults)
+  //     // setOverlayDisplay(true);
+  //     console.log(recievedSearchResults)
+  //   })
+  //   .catch(error =>{
+  //     console.log("Error");
+  //   })
   }
 
   const overlayStyle = {display: overlayDisplay};
@@ -62,15 +65,15 @@ function SearchBar() {
       <div className={styles["searchbar"]}>
       <span className={styles["search-category-dropdown"]}>
         <select name="search-category" id="search-category" onChange= {e => setSearchCategory(e.target.value)}>
-          <option value="Pet">Pets</option>
-          <option value="Business">Businesses</option>
-          <option value="Shelter">Shelters</option>
+          <option value="Pets">Pets</option>
+          <option value="Businesses">Businesses</option>
+          <option value="Shelters">Shelters</option>
         </select>
       </span>   
       
       <span className={styles["searchbar-input"]}>
       
-        <input type="text" placeholder= {"Search " + searchCategory.toLowerCase() + "s near you"} onChange={e => setSearchTerm(e.target.value)} 
+        <input type="text" placeholder= {"Search " + searchCategory.toLowerCase() + " near you"} onChange={e => setSearchTerm(e.target.value)} 
         onKeyPress={event => {
           if (event.key === 'Enter') {
             OnClickHandler();
@@ -80,9 +83,16 @@ function SearchBar() {
       </span>
 
       
-      <button onClick={OnClickHandler} ></button>
+      <Link className={styles["searchbar-search"]}
+            to={
+              {pathname:"/MapSearch",
+              state:{searchCategoryParam: searchCategory,
+                     searchTermParam: searchTerm}}
+            }
+      />
+      {/* <button onClick={OnClickHandler} ></button> */}
       </div>
-      
+
       <Modal display={overlayDisplay} onClose={() => setOverlayDisplay(false)}>
       <div className={styles["search-results"]}>
       <ul>

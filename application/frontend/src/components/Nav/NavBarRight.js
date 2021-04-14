@@ -8,7 +8,7 @@ function NavBarRight() {
   return (
     <span className={styles["navbar-right"]}>
        {/* <img className={styles["parrot-img"]} src={parrotPng}/> */}
-        <NavLink to="/login-page">Login</NavLink>
+        <NavLink className={styles["login-link"]} to="/login-page"><h2>Login</h2></NavLink>
     </span>
   );
 }

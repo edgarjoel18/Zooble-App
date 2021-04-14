@@ -30,6 +30,13 @@
     color: blue;
 }
 
+.map-search-results-header-filter{
+    color:var(--secondary-txt-clr);
+    display: inline;
+    margin-left: 10px;
+    margin-bottom: 2px;
+}
+
 .sort-dropdown span h5{
     font-family: var(--ff-primary);
     font-weight: 600;
@@ -45,6 +52,14 @@
     background-color: var(--site-preview-2-container-color);
     grid-area: map;
 }
+
+
+.map-search-results-map img{
+    width: 100%;
+    height: calc(100vh - 100px);
+    object-fit: cover;
+}
+
 
 .map-search-results-text{
     grid-area: search-results;

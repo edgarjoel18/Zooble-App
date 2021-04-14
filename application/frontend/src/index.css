@@ -21,6 +21,7 @@ body {
   
   /*text colors*/
   --primary-txt-clr: #000;
+  --secondary-txt-clr: #7d7d7d;
   --inactive-txt-clr: #B3B3B3;
   --reversed-txt-clr: #fff;
 

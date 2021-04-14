@@ -25,13 +25,18 @@
 .navbar-right{
     justify-self: center;
     grid-column: 3 / span 1;
-    float: right;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 700;
-    color: #325342;
 }
 
+.navbar-right .login-link{
+    color: var(--primary-txt-clr);
+    text-decoration: none;
+
+}
+
+.navbar-right .login-link h2{
+    font-family: var(--ff-primary);
+    font-weight: 600;
+}
 .navbar-searchbar{
     justify-self: center;
     grid-column: 2/ span 1;

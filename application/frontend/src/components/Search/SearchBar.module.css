@@ -22,6 +22,7 @@
   border: none;
   flex-grow:2;
   font-size: 1.5em;
+  text-overflow: ellipsis;
 }
 
 select {
@@ -37,12 +38,13 @@ select {
   border-radius:10px;
   font-size: 2em;
   margin-left:10px;
+  padding-right: 20px;
   background: url("../../images/Created\ Icons/Dropdown.svg") no-repeat right;
   margin-right: 10px;
   cursor: pointer;
 }
 
-.searchbar button{
+.searchbar .searchbar-search{
   width: 50px;
   height: 50px;
   background: url("../../images/Third\ Party\ Icons/icons8-search-location-48.png") 100% no-repeat;

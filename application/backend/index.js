@@ -9,13 +9,13 @@ var schema = new passwordValidator();
 const bcrypt = require('bcrypt');
 
 schema
-.is().min(5)                                    // Minimum length 5
-.is().max(50)                                  // Maximum length 50
+.is().min(8)                                    // Minimum length 5
+// .is().max(50)                                  // Maximum length 50 //no reason to enforce maximum length
 .has().uppercase()                              // Must have uppercase letters
 .has().lowercase()                              // Must have lowercase letters
-.has().digits(2)                                // Must have at least 2 digits
+.has().digits(1)                                // Must have at least 1 digit
 .has().not().spaces()                           // Should not have spaces
-.is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
+.is().not().oneOf(['password']); // Blacklist these values
 
 const connection = mysql.createConnection({
     host:'csc648project-database.ceh0a99r5rym.us-west-2.rds.amazonaws.com',
