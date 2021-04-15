@@ -29,7 +29,7 @@ function ProfileInfo() {
                         <option value="follow" >Follow</option>
                         <option value="unfollow" >Unfollow</option>
                     </select>
-                    <button className={styles.Button} >Send a Message</button>
+                    <button className={styles.Button} >Message</button>
                 </div>
             </div>
         </div>

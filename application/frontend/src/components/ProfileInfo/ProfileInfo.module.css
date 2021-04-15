@@ -28,7 +28,7 @@
 
 .Dropdown {
     background-color: var(--reversed-txt-clr);
-    border: solid var(--primary-clr) 1px;
+    border: solid var(--primary-clr) 3px;
     width: 170px;
     height: 100%;
     padding-left: 10px;
@@ -44,7 +44,7 @@
 .Button {
     background-color: var(--primary-clr);
     color: var(--reversed-txt-clr);
-    width: 250px;
+    width: 170px;
     height: 100%;
     padding-left: 10px;
     border-radius:7px;
