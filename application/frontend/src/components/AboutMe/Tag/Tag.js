@@ -17,7 +17,7 @@ function Tag(props) {
                 {props.section}
             </p>
         </div>
-    )
+    );
 }
 
 export default Tag;

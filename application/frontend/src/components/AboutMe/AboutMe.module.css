@@ -6,10 +6,8 @@
     outline: none;
 }
 
-.AboutMe textarea:disabled {
+.AboutMe textarea:read-only {
     border: none;
-    color: black;
-    background-color: #ffffff;
 }
 
 .Container {
@@ -36,11 +34,11 @@
     margin-bottom: 7px;
 }
 
-.Content input:disabled {
+.Content input:read-only {
     outline: none;
-    background-color: #ffffff;
 }
 
 .TextArea {
     resize: none;
+    outline: none;
 }

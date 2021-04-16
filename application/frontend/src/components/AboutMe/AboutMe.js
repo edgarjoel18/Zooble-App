@@ -82,7 +82,7 @@ function AboutMe() {
                         className={styles.TextArea} 
                         value={about} 
                         onChange={event => setAbout(event.target.value)}
-                        disabled={!changing || !(labelSelected === 'about')}
+                        readOnly={!changing || !(labelSelected === 'about')}
                         rows='15' 
                         cols='50' 
                     />
@@ -102,7 +102,7 @@ function AboutMe() {
                     <input 
                         type="text" 
                         value={address} 
-                        disabled={!changing || !(labelSelected === 'address')}
+                        readOnly={!changing || !(labelSelected === 'address')}
                         onChange={(event) => setAddress(event.target.value)} 
                     />
                     {
@@ -116,7 +116,7 @@ function AboutMe() {
                     <input 
                         type="text" 
                         value={phone} 
-                        disabled={!changing || !(labelSelected === 'phone number')}
+                        readOnly={!changing || !(labelSelected === 'phone number')}
                         onChange={(event) => setPhone(event.target.value)} 
                     />
                     {
@@ -140,8 +140,11 @@ function AboutMe() {
                 </div>
             );
             break;
+        case 'Recent Posts':
+            content = <p>Coming soon</p>
+            break;
         default:
-            content = null;
+            content = <p>Error</p>;
     }
 
     return (
@@ -155,7 +158,7 @@ function AboutMe() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default AboutMe;

@@ -33,7 +33,7 @@ function ProfileInfo() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default ProfileInfo;

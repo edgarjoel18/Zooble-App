@@ -1,0 +1,54 @@
+.ImageContainer {
+    display: block;
+    margin-right: 20px;
+}
+
+.ImageContainer p {
+    float: right;
+}
+
+.ImageStack {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.Images {
+    display: block;
+    width: 162px;
+    height: 162px;
+    border-radius: 10px;
+    box-shadow: var(--elevation-6);
+}
+
+.TopImage {
+    display: block;
+    width: 162px;
+    height: 162px;
+    border-radius: 10px;
+    margin-right: 120px;
+    box-shadow: var(--elevation-6);
+}
+
+.MiddleImage {
+    width: 162px;
+    height: 162px;
+    border-radius: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+    margin-right: 60px;
+    box-shadow: var(--elevation-4);
+}
+
+.BottomImage {
+    width: 162px;
+    height: 162px;
+    border-radius: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -2;
+    box-shadow: var(--elevation-4);
+}
