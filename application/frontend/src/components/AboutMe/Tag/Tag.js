@@ -11,10 +11,18 @@ function Tag(props) {
         tagStyle = [styles.Tag, styles.ActiveTag].join(' ');
     }
 
+    let tagText = props.section;
+    if (tagText === 'About') {
+        if (props.accountType === 'pet owner' || props.accountType === 'pet')
+            tagText = props.section + ' Me';
+        else 
+        tagText = props.section + ' Us';
+    }
+
     return (
         <div className={tagStyle}  onClick={() => props.clicked(props.id)}>
             <p className={textStyle} >
-                {props.section}
+                {tagText}
             </p>
         </div>
     );

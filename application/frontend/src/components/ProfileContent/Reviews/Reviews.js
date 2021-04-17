@@ -5,37 +5,35 @@ import Box from '@material-ui/core/Box';
 
 import styles from './Reviews.module.css';
 
-
-
-const reviews = [
-    {
-       user_id: 1,
-       review: "I saw this on TV and wanted to give it a try. one of my hobbies is web-browsing. and when i'm browsing the web this works great.",
-       rating: 3 
-    },
-    {
-        user_id: 2,
-        review: 'It\'s a good place',
-        rating: 4 
-    },
-    {
-        user_id: 3,
-        review: 'My neighbor Georgie has one of these. She works as a busboy and she says it looks brown.',
-        rating: 5
-    },
-    {
-        user_id: 4,
-        review: 'I saw one of these in Canada and I bought one. My ant loves to play with it.',
-        rating: 4.5 
-    }
-]
+// const reviews = [
+//     {
+//        user_id: 1,
+//        review: "I saw this on TV and wanted to give it a try. one of my hobbies is web-browsing. and when i'm browsing the web this works great.",
+//        rating: 3 
+//     },
+//     {
+//         user_id: 2,
+//         review: 'It\'s a good place',
+//         rating: 4 
+//     },
+//     {
+//         user_id: 3,
+//         review: 'My neighbor Georgie has one of these. She works as a busboy and she says it looks brown.',
+//         rating: 5
+//     },
+//     {
+//         user_id: 4,
+//         review: 'I saw one of these in Canada and I bought one. My ant loves to play with it.',
+//         rating: 4.5 
+//     }
+// ]
 
 function Reviews(props) {
 
     let displayReviews = null
-    if (reviews.length !== 0) {
+    if (props.reviews.length !== 0) {
         displayReviews = (
-            reviews.slice(0,3).map(ele => (
+            props.reviews.slice(0,3).map(ele => (
                 <Box 
                     key={ele.user_id}
                     className={styles.Reviews} 
