@@ -45,36 +45,34 @@ body {
 
 
 /*add upward animation on hover*/
-button:hover{  
-    transition: 0.15s;
-    transform: translateY(-4px);
-}
 
 label{
   font-family: var(--ff-primary);
 }
 
-button{
+/*button{
   border: none;
   border-radius: 10px;
   cursor:pointer;
-}
+}*/
 
 
-button span{
+/*button span{
   font-family: var(--ff-primary);
   font-weight: 600;
-}
+}*/
 
 
 h1{
   font-family: var(--ff-primary) !important;
-  font-weight: 600;
 }
 
 h2{
   font-family: var(--ff-primary) !important;
-  font-weight: 600;
+}
+
+h3{
+  font-family: var(--ff-primary) !important;
 }
 
 

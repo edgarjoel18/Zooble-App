@@ -2,7 +2,8 @@ import React, {useState} from "react";
 import { NavLink } from "react-router-dom";
 import styles from './HeroContainer.module.css';
 
-import CatDogHero from '../../images/cat_dog_image.png'
+//Import components
+import CallToActionButton from '../Buttons/CallToActionButton'
 
 function HeroContainer() {
 
