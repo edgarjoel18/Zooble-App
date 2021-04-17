@@ -15,7 +15,7 @@
 }
 
 .ActiveText {
-    color: black;
+    color: var(--primary-clr);
 }
 
 .ActiveTag {

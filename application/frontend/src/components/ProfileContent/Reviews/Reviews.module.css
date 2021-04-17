@@ -1,5 +1,6 @@
 .Container {
     display: flex;
+
 }
 
 .Reviews {
@@ -8,9 +9,8 @@
     flex-wrap: wrap;
     width: 162px;
     height: 162px;
-    border-radius: 15px;
+    border-radius: 10px;
     justify-content: space-between;
-    margin-right: 10px;
     box-shadow: var(--elevation-1);
 }
 
@@ -26,4 +26,15 @@
     position: relative;
     width: 100%;
     box-sizing: border-box;
+}
+
+.EmptyReviews {
+    width: 100%;
+    height: 162px;
+    padding: 10px 10px;
+    text-align: center;
+    align-items: center;
+    border-radius: 10px;
+    color: rgba(0, 0, 0, 0.5);
+    box-shadow: var(--elevation-1);
 }

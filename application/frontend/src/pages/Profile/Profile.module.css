@@ -3,6 +3,15 @@
     margin: 30px auto 0;
 }
 
+.SwitchView {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 400;
+    float: right;
+    cursor: pointer;
+}
+
+
 .Bottom {
     display: flex;
     justify-content: space-between;
@@ -15,7 +24,7 @@
     }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 800px) {
     .Bottom {
         flex-direction: column;
     }

@@ -6,10 +6,10 @@ import Reviews from './Reviews/Reviews';
 
 import styles from './ProfileContent.module.css';
 
-function ProfileContent() {
+function ProfileContent(props) {
     return (
         <div className={styles.ProfileContent} >
-            <div style={{display: 'flex'}} >
+            <div style={{display: 'flex', justifyContent: 'space-between', minWidth: '500px'}} >
                 <ImageContainer title='Photo' />
                 <ImageContainer title='Pets' />
                 {/* <div style={{marginRight: "20px"}} >
@@ -23,10 +23,10 @@ function ProfileContent() {
                     <p><Link>See All</Link></p>
                 </div> */}
             </div>
-            <h1>Reviews</h1>
+            <h2>Reviews</h2>
             <Reviews />
-            <Link>Write a Review</Link>
-            <Link style={{marginLeft: '345px'}} >See All</Link>
+            {!props.isSelfView && <Link>Write a Review</Link>}
+            <Link style={{float: 'right'}} >See All</Link>
         </div>
     );
 }

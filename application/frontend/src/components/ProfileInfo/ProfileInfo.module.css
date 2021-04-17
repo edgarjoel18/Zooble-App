@@ -6,10 +6,22 @@
     width: 223px;
     height: 223px;
     border-radius: 10px;
+    box-shadow: var(--elevation-2);
 }
 
 .UserName {
     font-weight: 600;
+}
+
+.UserName input {
+    outline: none;
+    border: solid var(--primary-clr) 3px;
+    border-radius: 10px;
+}
+
+.UserName input:read-only {
+    border: none;
+    outline: none;
 }
 
 .SideContainer {
@@ -28,15 +40,18 @@
 
 .Dropdown {
     background-color: var(--reversed-txt-clr);
-    border: solid var(--primary-clr) 3px;
+    border: solid var(--primary-clr) 2px;
     width: 170px;
     height: 100%;
     padding-left: 10px;
     border-radius:7px;
     color: var(--primary-clr);
-    background: url("../../images/Created\ Icons/Dropdown.svg") no-repeat right;
+    background: url("../../images/PNGIX.com_north-arrow-png_562032.png") no-repeat right;
+    background-size: 20px 15px;
+    background-position-x: 130px;
     margin-right: 15px;
     box-sizing: border-box;
+    box-shadow: var(--elevation-1);
     outline: none;
     cursor: pointer;
 }
@@ -46,9 +61,17 @@
     color: var(--reversed-txt-clr);
     width: 170px;
     height: 100%;
-    padding-left: 10px;
     border-radius:7px;
     box-sizing: border-box;
+    box-shadow: var(--elevation-1);
     outline: none;
     cursor: pointer;
 }
+
+.EditButton {
+    align-self: center;
+    font-size: 1.5em;
+    height: 50%;
+    outline: none;
+}
+

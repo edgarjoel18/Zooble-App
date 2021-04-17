@@ -1,6 +1,5 @@
 .ImageContainer {
     display: block;
-    margin-right: 20px;
 }
 
 .ImageContainer p {
@@ -13,15 +12,19 @@
     box-sizing: border-box;
 }
 
-.Images {
+.EmptyDiv {
     display: block;
     width: 162px;
     height: 162px;
     border-radius: 10px;
-    box-shadow: var(--elevation-6);
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+    background-image: url('../../../images/addIcon.png');
+    background-position: center;
+    box-shadow: var(--elevation-1);
 }
 
-.TopImage {
+/* .TopImage {
     display: block;
     width: 162px;
     height: 162px;
@@ -51,4 +54,4 @@
     top: 0;
     z-index: -2;
     box-shadow: var(--elevation-4);
-}
+} */

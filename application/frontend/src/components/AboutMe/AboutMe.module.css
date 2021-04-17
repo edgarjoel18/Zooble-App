@@ -28,14 +28,16 @@
 }
 
 .Content input {
-    border: none;
-    outline: var(--primary-clr) solid 3px;
+    outline: none;
+    border: var(--primary-clr) solid 3px;
+    border-radius: 10px;
     width: 50%;
     margin-bottom: 7px;
 }
 
 .Content input:read-only {
     outline: none;
+    border: none;
 }
 
 .TextArea {

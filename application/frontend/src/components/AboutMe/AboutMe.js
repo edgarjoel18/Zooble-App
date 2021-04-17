@@ -4,9 +4,9 @@ import Tag from './Tag/Tag';
 
 import styles from './AboutMe.module.css';
 
-const shelterProfile = ["About Us", "Contact Info", "Recent Posts"]
-const bussinessProfile = ["About Us", "Business Info", "Recent Posts"]
-const petOwnerProfile = ["About Us", "Recent Posts"]
+const shelterProfileTags = ["About Us", "Contact Info", "Recent Posts"]
+const businessProfileTags = ["About Us", "Business Info", "Recent Posts"]
+const petOwnerProfileTags = ["About Us", "Recent Posts"]
 const shelterAbout = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. ';
 
 const shelterInfo = {
@@ -23,7 +23,7 @@ const shelterInfo = {
     }
 };
 
-function AboutMe() {
+function AboutMe(props) {
     const [selected, setSelected] = useState('About Us');
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
@@ -34,7 +34,6 @@ function AboutMe() {
 
     useEffect(() => {
         setPhone(shelterInfo.phone);
-        setAddress(shelterInfo.address);
         setHours(shelterInfo.hours);
         setAbout(shelterAbout);
     }, [])
@@ -69,7 +68,22 @@ function AboutMe() {
         console.log('cancel')
     }
 
-    let tags = bussinessProfile.map(tag => (
+    let profileTags = null;
+    switch (props.profile.accountType) {
+        case 'shelter':
+            profileTags = shelterProfileTags;
+            break;
+        case 'business':
+            profileTags = businessProfileTags;
+            break;
+        case 'pet owner': 
+            profileTags = petOwnerProfileTags;
+            break;
+        default:
+            profileTags = null;
+    }
+
+    let tags = profileTags.map(tag => (
         <Tag key={tag} id={tag} section={tag} selected={selected} clicked={onTagClickHandler} />
     ))
 
@@ -86,9 +100,10 @@ function AboutMe() {
                         rows='15' 
                         cols='50' 
                     />
-                    {(labelSelected !== 'about') ? 
+                    { props.isSelfView && ((labelSelected !== 'about') ? 
                         <button onClick={() => changingInfoHandler('about')} >edit</button>:
-                        <button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Confirm</button>
+                        <button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
+                        )
                     }
                 </div>
             );
@@ -97,21 +112,20 @@ function AboutMe() {
         case 'Business Info':
             content = (
                 <div>
-                    {(labelSelected !== 'address') && <button onClick={() => changingInfoHandler('address')} >edit</button>}
+                    {props.isSelfView && (labelSelected !== 'address') && <button onClick={() => changingInfoHandler('address')} >edit</button>}
                     <label>Address: </label>
                     <input 
                         type="text" 
-                        value={address} 
+                        value={props.profile.contactInfo.address} 
                         readOnly={!changing || !(labelSelected === 'address')}
-                        onChange={(event) => setAddress(event.target.value)} 
+                        onChange={(event) => props.setContact('address', event.target.value)} 
                     />
                     {
                         (labelSelected === 'address') && 
-                        <button style={{marginLeft: '5px'}} onClick={cancelEditingHandler} >Confirm</button>
+                        <button style={{marginLeft: '5px'}} onClick={cancelEditingHandler} >Save</button>
                     }
-                    <br 
-                    />
-                    {(labelSelected !== 'phone number') && <button onClick={() => changingInfoHandler('phone number')} >edit</button>}
+                    <br />
+                    {props.isSelfView && (labelSelected !== 'phone number') && <button onClick={() => changingInfoHandler('phone number')} >edit</button>}
                     <label>Phone Number: </label>
                     <input 
                         type="text" 
@@ -121,11 +135,10 @@ function AboutMe() {
                     />
                     {
                         (labelSelected === 'phone number') && 
-                        <button style={{marginLeft: '5px'}} onClick={cancelEditingHandler} >Confirm</button>
+                        <button style={{marginLeft: '5px'}} onClick={cancelEditingHandler} >Save</button>
                     }
-                    <br 
-                    />
-                    {(labelSelected !== 'hours') && <button onClick={() => changingInfoHandler('hours')} >edit</button>}
+                    <br />
+                    {props.isSelfView && (labelSelected !== 'hours') && <button onClick={() => changingInfoHandler('hours')} >edit</button>}
                     <label>Hours: </label>
                     {Object.keys(hours).map(key => (
                         <div key={key} >
@@ -134,8 +147,8 @@ function AboutMe() {
                         </div>
                     ))}
                     {
-                        (labelSelected === 'hours') && 
-                        <button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Confirm</button>
+                        props.isSelfView && (labelSelected === 'hours') && 
+                        <button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
                     }
                 </div>
             );
