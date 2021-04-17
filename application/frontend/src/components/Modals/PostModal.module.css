@@ -5,7 +5,6 @@
 
 .post-image{
     grid-column: 1/span 1;
-    
 }
 
 .post-image img{
@@ -56,4 +55,66 @@
     position:absolute;
     right:50px;
 
+}
+
+
+/* Comments  */
+
+.post-comments{
+    padding-left:0;
+    list-style: none;
+}
+
+.post-comment{
+    display: grid;
+    grid-template-columns: 75px auto 25px;
+    grid-template-rows: repeat(3, 25px) auto;
+    /* grid-template-areas: "comment-pic    comment-name       comment-like "
+                            "comment-pic    *****************  comment-likes"
+                            "comment-pic    comment-timestamp  *************"
+                            "comment-body   comment-body       comment-body "; */
+    box-shadow: var(--elevation-1);
+    border-radius: 7.5px;
+}
+
+.post-comment-name{
+    /* grid-area: 'comment-name'; */
+    padding-left: 10px;
+    grid-area: 1 / 2 / span 1 / span 1;
+}
+
+.post-comment-body{
+    /* grid-area: 'comment-body'; */
+    padding: 10px 0 10px 10px;
+    grid-area: 4 / 1 / span 1/ span 3;
+    font-family: var(--ff-secondary);
+}
+
+.post-comment-timestamp{
+    padding-left: 10px;
+    grid-area: 'comment-timestamp';
+    grid-area: 3 / 2 / span 1/ span 1;
+}
+
+.post-comment-pic{
+
+    width: 75px;
+    height:75px;
+    object-fit: cover;
+    border-radius: 7.5px 0px 0px 0px;
+    /* grid-area: "comment-pic"; */
+    grid-area: 1 / 1 / span 2 / span 2;
+
+}
+
+.post-comment-like{
+    grid-area: 2 / 3 / span 1 / span 1;
+    background-size: fit;
+    border-style: none;
+    background: url('../../images/Third\ Party\ Icons/icons8-thumbs-up-48.png') no-repeat;
+    background-size: 24px 24px;
+}
+
+.post-comment-likes{
+    grid-area: 3 / 3 / span 1 / span 1;
 }

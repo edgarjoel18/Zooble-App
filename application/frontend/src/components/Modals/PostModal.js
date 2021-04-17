@@ -25,7 +25,24 @@ function PostModal({display,onClose}) {
             prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
             name: 'Lily',
             likes : 12,
-            timestamp: '12/25/20 at 11:05 AM'  //need to get real mysql timestamp and convert for final product
+            timestamp: '12/25/20 at 11:05 AM',  //need to get real mysql timestamp and convert for final product
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
+        },
+        {
+            comment_id: 2,            
+            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
+            name: 'Lily',
+            likes : 12,
+            timestamp: '12/25/20 at 11:05 AM',  //need to get real mysql timestamp and convert for final product
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
+        },
+        {
+            comment_id: 3,            
+            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
+            name: 'Lily',
+            likes : 12,
+            timestamp: '12/25/20 at 11:05 AM',  //need to get real mysql timestamp and convert for final product
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         },
     ]);
 
@@ -46,20 +63,27 @@ function PostModal({display,onClose}) {
                             <span className={styles["post-detail-timestamp"]}>{post.timestamp}</span>
                         </div>
                         <div className={styles["post-detail-like-comment"]}>
-                            <button className={styles["post-detail-like"]}/><br/><br/>
+                            
+                            {post.likes}<button className={styles["post-detail-like"]}/><br/><br/>
                             <span className={styles["post-detail-comments-count"]}>{comments.length} comments</span>
                         </div>
                     </div>
                     <ul className={styles["post-comments"]}>
                         {comments.length == 0 && <li>No Comments</li>}
-                        {/* {comments && comments.map((comment)=>(
+                        {comments && comments.map((comment)=>(
                             <li key={comment.id}>
                                 <div className={styles['post-comment']}>
-                                    <img src={comment.prof_pic}/><span>{comment.name}</span>
+                                    <img className={styles['post-comment-pic']} src={comment.prof_pic}/>
+                                    <div className={styles['post-comment-name']}><h4>{comment.name}</h4></div>
+                                    <div className={styles['post-comment-timestamp']}>{comment.timestamp}</div>
+                                    <div className={styles['post-comment-body']}>{comment.body}</div>
+                                    <div className={styles['post-comment-likes']}>{comment.likes}</div>
+                                    <button className={styles['post-comment-like']}/>
                                 </div>
                             </li>
-                        ))} */}
+                        ))}
                     </ul>
+                    <div className={styles["post-leave-comment"]}>Leave Comment</div>
                 </div>
             </div>
         </Modal> 
