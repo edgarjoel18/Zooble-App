@@ -6,11 +6,15 @@ import petOwnerImg from '../../images/petOwnerProfile.jpg';
 import defaultImg from '../../images/noImage.jpg';
 import styles from './ProfileInfo.module.css';
 
+import SendAMessage from '../../components/Modals/SendAMessage';
+
 function ProfileInfo(props) {
     //const [profilePic, setProfilePic] = useState('');
     //const [profileTitle, setProfileTitle] = useState('');
     const [editing, setEditing] = useState(false);
     const [follow, setFollow] = useState('')
+
+    const [sendAMessageDisplay,setSendAMessageDisplay] = useState(false);
 
     useEffect(() => {
         //setProfileTitle('Burgsdale Pet Shelter');
@@ -19,6 +23,10 @@ function ProfileInfo(props) {
 
     function cancelEditHandler() {
         setEditing(false);
+    }
+
+    function sendAMessage(){
+        setSendAMessageDisplay(true);
     }
 
     // function uploadPhotoHandler(rowFiles) {
@@ -63,7 +71,7 @@ function ProfileInfo(props) {
                         <option value="follow" >Follow</option>
                         <option value="unfollow" >Followers</option>
                     </select>
-                    {!props.isSelfView && <button className={styles.Button} >Message</button>}
+                    {!props.isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
                 </div>
             )
             break;
@@ -79,8 +87,9 @@ function ProfileInfo(props) {
                         <option value="follow" >Follow</option>
                         <option value="unfollow" >Followers</option>
                     </select>
-                    {!props.isSelfView && <button className={styles.Button} >Message</button>}
+                    {!props.isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
                 </div>
+                
             )
             break;
         case 'pet owner' :
@@ -91,7 +100,7 @@ function ProfileInfo(props) {
                         <button className={styles.FristButton} >Followers</button> :
                         <button className={styles.FristButton} >Follow</button>
                     }
-                    {!props.isSelfView && <button className={styles.Button} >Message</button>}
+                    {!props.isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
                 </div>
             )
             break;
@@ -147,6 +156,7 @@ function ProfileInfo(props) {
                 </div> */}
                 {displayAccountInfo}
             </div>
+            <SendAMessage display={sendAMessageDisplay} onClose={()=> setSendAMessageDisplay(false)}/>
         </div>
     );
 }
