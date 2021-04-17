@@ -25,10 +25,10 @@ function ImageContainer(props) {
     //         profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg' 
     //     }
     // ]);
-    const[imageStack, setImgaeStack] = useState();
+    const[imageStack, setImageStack] = useState();
 
     useEffect (() => {
-        setImgaeStack(displayImageStack(props.image.length));
+        setImageStack(displayImageStack(props.image.length));
     }, [])
 
     //display a given number of pictures
@@ -67,6 +67,7 @@ function ImageContainer(props) {
                         border-radius: 15px;
                         z-index: 0;
                         box-shadow: var(--elevation-${index < 6 ? 6-index : 1});
+                        object-fit: cover;
                         `;
                     return (
                         <a href={props.image[index].profile_pic} key={props.image[index].pet_id} >

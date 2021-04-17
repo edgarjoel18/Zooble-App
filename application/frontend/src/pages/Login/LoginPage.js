@@ -1,7 +1,16 @@
 import React from "react";
 import styles from './LoginPage.module.css';
+import {useHistory} from "react-router-dom";
 
 function LoginPage() {
+
+    let history = useHistory();
+
+    function loginHandler(e){
+        history.push('/feed')
+    }
+
+
     return (
         <form className={styles['login-form']}>
             <div className={styles['login-container']}>
@@ -23,7 +32,7 @@ function LoginPage() {
                     />
                 </div>
                 <div className={styles['btn-container']}>
-                    <button type='submit' className={styles['submit-btn']}>Login</button>
+                    <button type='submit' className={styles['submit-btn']} onClick={loginHandler}>Login</button>
                 </div>
                 <p className={styles['forgot-password']}>
                     Forgot <a href='#'>password?</a>
