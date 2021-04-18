@@ -47,8 +47,6 @@ function PostModal({display,onClose}) {
         },
     ]);
 
-    console.log(post.prof_pic);
-
     if(!display) return null
     return (
         <Modal display={display} onClose={onClose}>
