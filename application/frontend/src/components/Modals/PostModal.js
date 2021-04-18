@@ -15,7 +15,8 @@ function PostModal({display,onClose}) {
             prof_pic: '../../images/businessProfile.jpg', //CHANGE LATER //NOT WORKING
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
             likes: 20,
-            timestamp: '12/25/20 at 11:05 AM'
+            timestamp: '12/25/20 at 11:05 AM',
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         }
     )
 
@@ -57,16 +58,13 @@ function PostModal({display,onClose}) {
                 </div>
                 <div className={styles["post-content"]}>
                     <div className={styles["post-detail"]}>
-                        <img src={prof_pic}/>
-                        <div className={styles["post-detail-text"]}>
-                            <span className={styles["post-detail-name"]}><h3>{post.user_display_name}</h3></span>
-                            <span className={styles["post-detail-timestamp"]}>{post.timestamp}</span>
-                        </div>
-                        <div className={styles["post-detail-like-comment"]}>
-                            
-                            {post.likes}<button className={styles["post-detail-like"]}/><br/><br/>
-                            <span className={styles["post-detail-comments-count"]}>{comments.length} comments</span>
-                        </div>
+                        <img className={styles["post-detail-pic"]} src={prof_pic}/>
+                        <div className={styles["post-detail-name"]}><h3>{post.user_display_name}</h3></div>
+                        <div className={styles["post-detail-timestamp"]}>{post.timestamp}</div>
+                        <button className={styles["post-detail-like"]}/>
+                        <div className={styles["post-detail-likes"]}>{post.likes}</div>
+                        {/* <div className={styles["post-detail-comments-count"]}>{comments.length} comments</div>  */} 
+                        <div className={styles["post-detail-body"]}>{post.body} comments</div>
                     </div>
                     <ul className={styles["post-comments"]}>
                         {comments.length == 0 && <li>No Comments</li>}
@@ -83,7 +81,10 @@ function PostModal({display,onClose}) {
                             </li>
                         ))}
                     </ul>
-                    <div className={styles["post-leave-comment"]}>Leave Comment</div>
+                    <div className={styles["post-leave-comment"]}>
+                        <input placeholder="Write a Comment..."/>
+                        <button><span>Comment</span></button>
+                    </div>
                 </div>
             </div>
         </Modal> 
