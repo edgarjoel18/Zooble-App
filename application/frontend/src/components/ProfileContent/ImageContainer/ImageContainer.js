@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import styles from './ImageContainer.module.css';
 import styled from 'styled-components';
@@ -7,8 +7,8 @@ import styled from 'styled-components';
 import PostModal from '../../Modals/PostModal'
 
 function ImageContainer(props) {
-
     const [postModalDisplay, setPostModalDisplay] = useState(true);
+    let history = useHistory();
     
     function presentPostModal(postImage){
         console.log('clicked on image');
@@ -38,11 +38,12 @@ function ImageContainer(props) {
     const[imageStack, setImageStack] = useState();
 
     useEffect (() => {
-        setImageStack(displayImageStack(props.image.length));
+        setImageStack(displayImageStack(props.image.length, props.accountType));
+        console.log(props.profile)
     }, [])
 
     //display a given number of pictures
-    const displayImageStack = val => {
+    const displayImageStack = (val, accountType) => {
         console.log('displayImageStack');
         if (props.image.length === 0)
             return (
@@ -51,6 +52,8 @@ function ImageContainer(props) {
                     </div>
                 </Link>
             );
+        let marginToRight = null;
+        accountType === 'shelter' ? marginToRight = 40 : marginToRight = 67.6;
         let imageStack = [];
         for (let i = 0; i < val; i++) {
             imageStack.push(i);
@@ -73,7 +76,7 @@ function ImageContainer(props) {
                         top: ${top};
                         right: ${right};
                         position: ${position};
-                        margin-right: ${(val-index-1) * 35  + 'px'};
+                        margin-right: ${(val-index-1) * marginToRight  + 'px'};
                         border-radius: 15px;
                         z-index: 0;
                         box-shadow: var(--elevation-${index < 6 ? 6-index : 1});
@@ -95,13 +98,33 @@ function ImageContainer(props) {
         );
     }
 
+    function seeAllImageHandler() {
+        const queryParams = (
+            encodeURIComponent('id') + '=' + encodeURIComponent(props.profile.id) + '&' 
+            + encodeURIComponent('name') + '=' + encodeURIComponent(props.profile.userName)
+            );
+        history.push({
+            pathname: '/Photo',
+            search: '?' + queryParams
+        });
+
+    }
+    
+    let seeAll = null;
+    if (props.title === 'Photos' || props.title === 'My Photos') {
+        seeAll = <p style={{cursor: 'pointer'}} onClick={() => seeAllImageHandler()} >See All</p>;
+    }
+    else {
+        seeAll = <p style={{cursor: 'pointer'}} onClick={() => alert('coming soon')} >See All</p>
+    }
+
     return (
         <>
         <PostModal display={postModalDisplay} onClose={()=> setPostModalDisplay(false)}/>
         <div className={styles.ImageContainer} >
             <h2>{props.title}</h2>
             {imageStack}
-            <p><Link>See All</Link></p>
+            {seeAll}
         </div>
         </>
     );
