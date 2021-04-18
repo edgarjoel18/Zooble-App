@@ -1,12 +1,14 @@
-.navbar-right .login-link{
+/* .navbar-right .login-link{
     color: var(--primary-txt-clr);
     text-decoration: none;
 
-}
+} */
 
-.navbar-right .login-link h2{
-    font-family: var(--ff-primary);
+.login-link{
+    font-family: 'Nunito', sans-serif;
     font-weight: 600;
+    text-decoration: none;
+    font-size: var(--h2);
 }
 
 

@@ -33,7 +33,12 @@ function App() {
        <Switch>
         <Route path="/" exact component={Home}/>
         <Route path="/search-results" exact component={SearchResults}/>
-        <Route path="/login-page" exact component={LoginPage}/>
+        <Route 
+          path="/login-page" 
+          exact component={LoginPage}
+          appUser={appUser} 
+          setAppUser={setAppUser}
+        />
         <Route path="/signup-page" exact component={SignUpPage}/>
         <Route path="/Edgar" component={Edgar}/>
         <Route path="/Daniel" component={Daniel}/>
