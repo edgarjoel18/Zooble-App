@@ -7,6 +7,7 @@ const { copyFileSync } = require("fs");
 const bcrypt = require('bcrypt');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 schema
 .is().min(8)                                    // Minimum length 5
 // .is().max(50)                                  // Maximum length 50 //no reason to enforce maximum length
@@ -16,6 +17,8 @@ schema
 .has().not().spaces()                           // Should not have spaces
 .is().not().oneOf(['password']); // Blacklist these values
 
+=======
+>>>>>>> master
 =======
 >>>>>>> master
 const connection = mysql.createConnection({
