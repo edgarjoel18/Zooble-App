@@ -46,6 +46,7 @@ app.get("/sign-up", (req,res) =>{
                re.digit   .test(password) && 
                re.digit   .test(password) &&
                re.full    .test(password);
+               
     }
 
     connection.query("SELECT user_id, password FROM User WHERE username=? OR email=?", [givenUsername, givenEmail],
