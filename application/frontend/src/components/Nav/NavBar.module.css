@@ -4,40 +4,15 @@
 
 
 .navbar{
-    display: grid;
-    grid-template-columns: 3;
-    justify-items: center;
+    display: flex;
+    justify-content: space-between;
     height: 100px;
     align-items: center;
     /* box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20); */
 }
-.navbar-left{
-    justify-self: center;
-    grid-column: 1 / span 1;
-}
 
 .logo-img{
-    justify-self: center;
     height:80px;
-    margin-bottom:30px;
+    margin-bottom:20px;
 }
 
-.navbar-right{
-    justify-self: center;
-    grid-column: 3 / span 1;
-}
-
-.navbar-right .login-link{
-    color: var(--primary-txt-clr);
-    text-decoration: none;
-
-}
-
-.navbar-right .login-link h2{
-    font-family: var(--ff-primary);
-    font-weight: 600;
-}
-.navbar-searchbar{
-    justify-self: center;
-    grid-column: 2/ span 1;
-}

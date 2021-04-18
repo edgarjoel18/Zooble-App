@@ -4,8 +4,8 @@
    left: 50%;
    transform: translate(-50%, -50%);
    z-index: 3;
-   height:65%;
-   width:65%;
+   height:80%;
+   width:80%;
    background-color: var(--reversed-txt-clr);
    box-shadow: var(--elevation-10);
    border-radius: 10px;
