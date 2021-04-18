@@ -4,7 +4,16 @@ import { Link } from 'react-router-dom';
 import styles from './ImageContainer.module.css';
 import styled from 'styled-components';
 
+import PostModal from '../../Modals/PostModal'
+
 function ImageContainer(props) {
+
+    const [postModalDisplay, setPostModalDisplay] = useState(true);
+    
+    function presentPostModal(postImage){
+        setPostModalDisplay(true);
+    }
+
     // const[pets, setPets] = useState([
     //     { pet_id: 1,
     //         name: 'Mimi',
@@ -25,10 +34,10 @@ function ImageContainer(props) {
     //         profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg' 
     //     }
     // ]);
-    const[imageStack, setImgaeStack] = useState();
+    const[imageStack, setImageStack] = useState();
 
     useEffect (() => {
-        setImgaeStack(displayImageStack(props.image.length));
+        setImageStack(displayImageStack(props.image.length));
     }, [])
 
     //display a given number of pictures
@@ -67,15 +76,17 @@ function ImageContainer(props) {
                         border-radius: 15px;
                         z-index: 0;
                         box-shadow: var(--elevation-${index < 6 ? 6-index : 1});
+                        object-fit: cover;
                         `;
                     return (
-                        <a href={props.image[index].profile_pic} key={props.image[index].pet_id} >
+                        // <a href={props.image[index].profile_pic} key={props.image[index].pet_id} > //Removed to test post modal functionality
                             <Img 
                                 key={props.image[index].pet_id}
                                 src={props.image[index].profile_pic} 
-                                alt="No Image Found" 
+                                alt="No Image Found"
+                                // onClick={presentPostModal(props.image[index].profile_pic)}
                             />
-                        </a>
+                        // </a>
                     );
                 })}
             </div>
@@ -83,11 +94,14 @@ function ImageContainer(props) {
     }
 
     return (
+        <>
+        <PostModal display={postModalDisplay} onClose={()=> setPostModalDisplay(false)}/>
         <div className={styles.ImageContainer} >
             <h2>{props.title}</h2>
             {imageStack}
             <p><Link>See All</Link></p>
         </div>
+        </>
     );
 }
 

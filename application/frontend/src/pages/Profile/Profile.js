@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
+// Import components
 import ProfileInfo from '../../components/ProfileInfo/ProfileInfo'
 import ProfileContent from '../../components/ProfileContent/ProfileContent';
 import AboutMe from '../../components/AboutMe/AboutMe';
+import SendAMessage from '../../components/Modals/SendAMessage';
 
 
 import styles from './Profile.module.css'

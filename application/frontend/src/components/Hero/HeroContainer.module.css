@@ -38,7 +38,12 @@
     background-color: var(--primary-clr, red);
     color: var(--reversed-txt-clr);
     box-shadow: var(--elevation-1);
-    
+    border: none;
+    border-radius: 7.5px;
+}
+
+.signup-button span h3{
+    font-weight: 600;
 }
 
 .find-friend-button {
@@ -49,6 +54,12 @@
     background-color: var(--reversed-txt-clr);
     color: var(--primary-clr);
     border: 2px solid var(--primary-clr);
+    border-radius: 7.5px;
+}
+
+.signup-button:hover, .find-friend-button:hover{  
+    transition: 0.15s;
+    transform: translateY(-4px);
 }
 
 /* button span {
