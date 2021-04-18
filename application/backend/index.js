@@ -82,7 +82,7 @@ app.get("/search", (req,res) =>{
     console.log(category);
     var requestedSearchResults = {searchResults:[]}
 
-    if(category == 'Pet'){
+    if(category == 'Pets'){
         connection.query(
             `SELECT * 
             FROM ((Pet
@@ -117,7 +117,7 @@ app.get("/search", (req,res) =>{
             }
         });
     }
-    else if(category == 'Business'){
+    else if(category == 'Businesses'){
         connection.query(
             `SELECT * 
             FROM RegisteredBusiness
@@ -147,7 +147,7 @@ app.get("/search", (req,res) =>{
             }
         });
     }
-    else if(category == 'Shelter'){
+    else if(category == 'Shelters'){
         connection.query(
             `SELECT * 
             FROM RegisteredShelter

@@ -2,14 +2,13 @@ import React from "react";
 import styles from './LoginPage.module.css';
 import {useHistory} from "react-router-dom";
 
-function LoginPage() {
+function LoginPage({appUser, setAppUser}) {
 
     let history = useHistory();
 
     function loginHandler(e){
         history.push('/feed')
     }
-
 
     return (
         <form className={styles['login-form']}>

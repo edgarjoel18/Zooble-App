@@ -6,19 +6,39 @@
 
 .left-side {
     width: 50%;
+    /* display: grid;
+    grid-template-rows: repeat(2, 288px);
+    grid-template-columns: repeat(2, 1fr); */
+    /* grid-template-areas: "left-side-dog left-side-cat"
+                         "............. left-side-cat"; */
 }
 
-.left-side-img {
-    width: 100%;
-    height: 100%;
+
+.left-side-cat{
+    height: 576px;
+    float: left;
+    grid-area: 1 / 1 / span 1 / span 1;
+}
+
+.left-side-dog{
+    height: 576px;
+    float: right;
+    margin-right: 50px;
+    grid-area: 1 / 2 / span 2 / span 1;
 }
 
 .right-side{
     width: 50%;
     display: grid;
     grid-template-rows: 30% auto auto auto 30%;
+    grid-template-columns: auto;
 }
 
+.right-side-dog{
+    float: right;
+    margin-right: 50px;
+    height: 576px;
+}
 
 .right-side-text {
     color:var(--ff-primary);
