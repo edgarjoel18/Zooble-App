@@ -10,9 +10,11 @@ import Wenjie from './pages/AboutMe/Wenjie'
 import NavBar from './components/Nav/NavBar'
 import SearchResults from './components/Search/SearchResults'
 
+
 import LoginPage from './pages/Login/LoginPage.js'
 import SignUpPage from './pages/Sign Up/SignUpPage.js'
 import ProfilePage from './pages/Profile/Profile'
+import Messages from './pages/Messages/Messages'
 
 import Feed from './pages/Feed/Feed.js'
 
@@ -37,6 +39,7 @@ function App() {
         <Route path="/Feed" component={Feed}/>
         <Route path="/MapSearch" component={MapSearch}/>
         <Route path="/Profile" component={ProfilePage}/>
+        <Route path="/Messages" component={Messages}/>
         <Redirect to="/" />
       </Switch>
     </Router>
