@@ -1,15 +1,26 @@
 import React from "react";
 import styles from './LoginPage.module.css';
-import {useHistory} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 
 function LoginPage({appUser, setAppUser}) {
+
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
     let history = useHistory();
 
     function loginHandler(e){
-        history.push('/feed')
+        // setIsLoggedIn(true);
+        setAppUser(username);
+        console.log(appUser);
+        console.log(isLoggedIn);
     }
 
+    if (isLoggedIn){
+        console.log(isLoggedIn);
+        return <Redirect to="/Feed"/>
+    }
     return (
         <form className={styles['login-form']}>
             <div className={styles['login-container']}>
@@ -20,6 +31,8 @@ function LoginPage({appUser, setAppUser}) {
                         type='username'
                         placeholder='Enter Username'
                         name='username'
+                        value={username}
+                        onChange={e =>setUsername(e.target.value)}
                     />
                 </div>
                 <div className={styles['password-input-container']}>
@@ -28,6 +41,8 @@ function LoginPage({appUser, setAppUser}) {
                         type='password'
                         placeholder='Enter password'
                         name='password'
+                        value={password}
+                        onChange={e =>setPassword(e.target.value)}
                     />
                 </div>
                 <div className={styles['btn-container']}>
