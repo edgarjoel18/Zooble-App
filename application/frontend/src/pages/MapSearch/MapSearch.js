@@ -29,13 +29,13 @@ function MapSearch(props) {
             // console.log(response.data.searchResults)
             setRecievedSearchResults(response.data.searchResults)
             // setOverlayDisplay(true);
-            console.log("Recieved Search Results: " +recievedSearchResults)
+            console.log("Recieved Search Results: " + recievedSearchResults)
             
           })
           .catch(error =>{
             console.log("Error");
           })
-    },[]);
+    },[state]);
 
     return (
         <>
