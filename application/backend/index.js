@@ -4,18 +4,7 @@ const app = express();
 //const db = require('./database.js')
 const mysql = require('mysql2');
 const { copyFileSync } = require("fs");
-var passwordValidator = require('password-validator');
-var schema = new passwordValidator();
 const bcrypt = require('bcrypt');
-
-schema
-.is().min(8)                                    // Minimum length 5
-// .is().max(50)                                  // Maximum length 50 //no reason to enforce maximum length
-.has().uppercase()                              // Must have uppercase letters
-.has().lowercase()                              // Must have lowercase letters
-.has().digits(1)                                // Must have at least 1 digit
-.has().not().spaces()                           // Should not have spaces
-.is().not().oneOf(['password']); // Blacklist these values
 
 const connection = mysql.createConnection({
     host:'csc648project-database.ceh0a99r5rym.us-west-2.rds.amazonaws.com',
@@ -46,10 +35,24 @@ app.get("/sign-up", (req,res) =>{
     console.log(givenResubmitted)
     console.log(givenUsername)
 
+    function passwordValidate(password) {
+        var re = {
+            'capital' : /[A-Z]/,
+            'digit'   : /[0-9]/,
+            'special' : /[!@#$%^&*]/,
+            'full'    : /^[A-Za-z0-9]{5,50}$/
+        };
+        return re.capital .test(password) && 
+               re.digit   .test(password) && 
+               re.digit   .test(password) &&
+               re.full    .test(password);
+               
+    }
+
     connection.query("SELECT user_id, password FROM User WHERE username=? OR email=?", [givenUsername, givenEmail],
                             function(err, result, field){
                                 if(result.length === 0){
-                                    if(schema.validate(givenPassword)){
+                                    if(passwordValidate(givenPassword)){
                                         if(givenPassword === givenResubmitted){
                                             const hash = bcrypt.hashSync(givenPassword, 10);
                                             connection.query(`INSERT INTO User (email, first_name, last_name, password, username)
@@ -82,7 +85,7 @@ app.get("/search", (req,res) =>{
     console.log(category);
     var requestedSearchResults = {searchResults:[]}
 
-    if(category == 'Pet'){
+    if(category == 'Pets'){
         connection.query(
             `SELECT * 
             FROM ((Pet
@@ -117,7 +120,7 @@ app.get("/search", (req,res) =>{
             }
         });
     }
-    else if(category == 'Business'){
+    else if(category == 'Businesses'){
         connection.query(
             `SELECT * 
             FROM RegisteredBusiness
@@ -147,7 +150,7 @@ app.get("/search", (req,res) =>{
             }
         });
     }
-    else if(category == 'Shelter'){
+    else if(category == 'Shelters'){
         connection.query(
             `SELECT * 
             FROM RegisteredShelter

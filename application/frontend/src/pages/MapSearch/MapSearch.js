@@ -29,13 +29,13 @@ function MapSearch(props) {
             // console.log(response.data.searchResults)
             setRecievedSearchResults(response.data.searchResults)
             // setOverlayDisplay(true);
-            console.log("Recieved Search Results: " +recievedSearchResults)
+            console.log("Recieved Search Results: " + recievedSearchResults)
             
           })
           .catch(error =>{
             console.log("Error");
           })
-    },[]);
+    },[state]);
 
     return (
         <>
@@ -58,7 +58,14 @@ function MapSearch(props) {
                 <div className={styles['map-search-results-text-list']}>
                 <ul>
                 {recievedSearchResults.length == 0 && <li>No Results</li>}
-                {recievedSearchResults && searchCategory == 'Pet' && recievedSearchResults.map((searchResult) => (
+                {recievedSearchResults && searchCategory == 'Pets' && recievedSearchResults.map((searchResult) => (
+                    <li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li>
+                
+                ))}
+                {recievedSearchResults && searchCategory == 'Businesses' && recievedSearchResults.map((searchResult) => (
+                    <li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li>
+                ))}
+                {recievedSearchResults && searchCategory == 'Shelters' && recievedSearchResults.map((searchResult) => (
                     <li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li>
                 ))}
                 </ul>

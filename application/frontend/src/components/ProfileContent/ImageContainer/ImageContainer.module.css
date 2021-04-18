@@ -24,6 +24,15 @@
     box-shadow: var(--elevation-1);
 }
 
+.ImageStack_pic{
+    cursor:pointer;
+}
+
+.ImageStack_pic:hover{
+    z-index: 1;
+
+}
+
 /* .TopImage {
     display: block;
     width: 162px;

@@ -24,7 +24,7 @@ import MapSearch from "../../pages/MapSearch/MapSearch";
 
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [searchCategory, setSearchCategory] = useState('Pet');
+  const [searchCategory, setSearchCategory] = useState('Pets');
   const [overlayDisplay, setOverlayDisplay] = useState(false);
   const [recievedSearchResults, setRecievedSearchResults] = useState([]);
 
@@ -92,26 +92,6 @@ function SearchBar() {
       />
       {/* <button onClick={OnClickHandler} ></button> */}
       </div>
-
-      <Modal display={overlayDisplay} onClose={() => setOverlayDisplay(false)}>
-      <div className={styles["search-results"]}>
-      <ul>
-      {recievedSearchResults.length == 0 && <li>No Results</li>}
-      {recievedSearchResults && searchCategory == 'Pet' &&
-      recievedSearchResults.map((searchResult) => (
-        <li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li>
-      ))}
-    {recievedSearchResults && searchCategory == 'Business' &&
-     recievedSearchResults.map((searchResult) => (
-        <li key={searchResult.reg_business_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li>
-      ))}
-    {recievedSearchResults && searchCategory == 'Shelter' &&
-     recievedSearchResults.map((searchResult) => (
-        <li key={searchResult.reg_shelter_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li>
-      ))}
-  </ul>
-  </div>
-  </Modal>
   </>
   );
 }

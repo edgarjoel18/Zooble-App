@@ -11,6 +11,7 @@ function ImageContainer(props) {
     let history = useHistory();
     
     function presentPostModal(postImage){
+        console.log('clicked on image');
         setPostModalDisplay(true);
     }
 
@@ -87,7 +88,8 @@ function ImageContainer(props) {
                                 key={props.image[index].pet_id}
                                 src={props.image[index].profile_pic} 
                                 alt="No Image Found"
-                                // onClick={presentPostModal(props.image[index].profile_pic)}
+                                onClick={presentPostModal(props.image[index].profile_pic)}
+                                className={styles.ImageStack_pic}
                             />
                         // </a>
                     );

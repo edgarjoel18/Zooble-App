@@ -1,0 +1,71 @@
+.follower-feed-container{
+    height: auto;
+}
+.follower-feed-header h1{
+    margin-left: 15px;
+    font-weight: 600;
+}
+
+.follower-feed-post{
+    padding: 15px;
+    display: grid;
+    width: 50%;
+    grid-template-areas:"follower-feed-post-prof_pic follower-feed-post-name follower-feed-post-like"
+                        "follower-feed-post-prof_pic            .            follower-feed-post-likes"
+                        "follower-feed-post-prof-pic follower-feed-post-timestamp follower-feed-post-comments"
+                        "follower-feed-post-body follower-feed-post-body follower-feed-post-body"
+                        "follower-feed-post-pic  follower-feed-post-pic follower-feed-post-pic";
+    grid-template-columns: 100px auto 34px;
+    grid-template-rows: repeat(3,34px) auto;
+    box-shadow: var(--elevation-1);
+    border-radius: 7.5px;
+    margin: auto;
+}
+
+.follower-feed-post-prof_pic{
+    
+    width:100px;
+    height:100px;
+    object-fit: cover;
+    grid-area: 1/ 1/ span 3 / span 1;
+    border-radius: 7.5px;
+}
+
+.follower-feed-post-name{
+    margin-left: 15px;
+    grid-area: 1/ 2/ span 1 / span 1;
+}
+
+.follower-feed-post-timestamp{
+    margin-left: 15px;
+    grid-area: 3/ 2 /span 1 / span 1;
+}
+
+.follower-feed-post-likes{
+    grid-area: 2 / 3 / span 1 / span 1;
+}
+
+.follower-feed-post-like{
+    border:none;
+    background: url('../../images/Third\ Party\ Icons/icons8-thumbs-up-48.png') no-repeat;
+    background-size: 34px 34px;
+    grid-area: 1 / 3 / span 1 / span 1; 
+
+}
+
+/* .follower-feed-post-comments{
+    grid-area: 3 /  3 / span 1 / span 1;
+} */
+
+.follower-feed-post-body{
+    margin-top: 10px;
+    grid-area: 4 / 1 / span 1 / span 3;
+}
+
+.follower-feed-post-pic{
+    margin-top: 15px;
+    width:100%;
+    height: calc(100%-15px);
+    object-fit: cover;
+    grid-area: 5 / 1 / span 1 / span 3;
+}

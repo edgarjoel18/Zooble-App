@@ -1,7 +1,7 @@
 .post-container{
     display: grid;
     grid-template-columns: 50% 50%;
-    height: 75%;
+    height: 80%;
 }
 
 /* Image Half */
@@ -11,13 +11,14 @@
 
 /* Post and Comments Half */
 .post-content{
-    height: 75%;
+    margin-top: 30px;
+    height: calc(80% - 30px);
     grid-column: 2 /span 1;
 }
 
 .post-image img{
-    height: 75%;
-    width: 75%;
+    height: calc(80% - 10px);
+    width: 100%;
     object-fit: contain;
     border-radius: 7.5px;
 }
@@ -33,7 +34,8 @@
                             "post-detail-pic         .              post-detail-likes"
                             "post-detail-pic  post-detail-timestamp "
                             "post-detail-body post-detail-body      post-detail-body"; */
-    margin-right:15px;
+    margin-right:35px;
+
 }
 
 /* Profile Pic */
@@ -157,13 +159,13 @@
 
 .post-leave-comment input{
     margin-left: 15px;
-    width:75%;
+    width:73%;
 }
 
 .post-leave-comment button{
     float: right;
     background-color: var(--primary-clr);
-    width: 24%;
+    width: 100px;
     line-height: 32px;
     padding:0px;
     color: white;
@@ -171,7 +173,7 @@
     border-radius: 7.5px;
     box-shadow: var(--elevation-1);
     cursor: pointer;
-    margin-right: 15px;
+    margin-right: 37px;
 }
 
 .post-leave-comment span {

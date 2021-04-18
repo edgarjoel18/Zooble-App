@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 
 import styles from './NavBar.module.css'
 
-function NavBar() {
+function NavBar({appUser}) {
     return (
         <div className={styles["navbar"]}>
             <NavBarLeft />
