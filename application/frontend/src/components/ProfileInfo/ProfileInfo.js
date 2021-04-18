@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
 
+import { Link } from 'react-router-dom';
+
 import shelterImg from '../../images/shelterProfile.jpg';
 import businessImg from '../../images/businessProfile.jpg';
 import petOwnerImg from '../../images/petOwnerProfile.jpg';
 import defaultImg from '../../images/noImage.jpg';
+import arrow from '../../images/Arrow.png';
 import styles from './ProfileInfo.module.css';
 
 import SendAMessage from '../../components/Modals/SendAMessage';
+import Backdrop from '../UI/Backdrop/Backdrop';
 
 function ProfileInfo(props) {
     //const [profilePic, setProfilePic] = useState('');
     //const [profileTitle, setProfileTitle] = useState('');
     const [editing, setEditing] = useState(false);
-    const [follow, setFollow] = useState('')
+    const [follow, setFollow] = useState(false); // update this from backend
+    const [showBackdrop, setShowBackdrop] = useState(false);
 
     const [sendAMessageDisplay,setSendAMessageDisplay] = useState(false);
 
@@ -41,6 +46,18 @@ function ProfileInfo(props) {
     //     console.log(files);
     // }
 
+    function showDropdown() {
+        setShowBackdrop(true);
+        let dropDownContent = document.getElementById('dropDownContent');
+        dropDownContent.className = styles.DropdownContent;
+    }
+
+    function closeDropdown() {
+        setShowBackdrop(false);
+        let dropDownContent = document.getElementById('dropDownContent');
+        dropDownContent.className = styles.DropdownHidden;
+    }
+
     console.log('[Image] is ' + props.profile.userPicture);
     let img = null;
     switch(props.profile.userPicture) {
@@ -65,15 +82,36 @@ function ProfileInfo(props) {
         case 'shelter' :
             displayAccountInfo = (
                 <div className={styles.ButtonContainer} >
-                    <select 
-                        name="search-category" 
-                        value={follow}
-                        className={styles.Dropdown} 
-                        onChange= {event => setFollow(event.target.value)}
-                    >
-                        <option value="follow" >Follow</option>
-                        <option value="followers" >Followers</option>
-                    </select>
+                    {!props.isSelfView ? (
+                        // <select 
+                        //     name="search-category" 
+                        //     value='Follow'
+                        //     className={styles.Dropdown} 
+                        // >
+                        //     <option >Followers</option>
+                        // </select>
+                        // ) :
+                        <React.Fragment>
+                            <Backdrop show={showBackdrop} clicked={closeDropdown} />
+                            <button className={styles.DropdownButton} >
+                                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                    <span className={styles.DropdownText} onClick={() => setFollow(!follow)} >
+                                        {follow ? 'Following' : 'Follow'}
+                                    </span>
+                                    <div className={styles.threeDots} onClick={showDropdown} >
+                                        <img src={arrow} />
+                                    </div>
+                                </div>
+                            </button>
+                            <div className={styles.DropdownHidden} id='dropDownContent' > 
+                                <Link className={styles.DropdownItem} >Followers</Link>
+                            </div>
+                        </React.Fragment>
+                        ):
+                        (
+                            <button className={styles.FristButton} >Followers</button>
+                        )
+                    }
                     {!props.isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
                 </div>
             )
@@ -81,15 +119,28 @@ function ProfileInfo(props) {
         case 'business' :
             displayAccountInfo = (
                 <div className={styles.ButtonContainer} >
-                    <select 
-                        name="search-category" 
-                        value={follow}
-                        className={styles.Dropdown} 
-                        onChange= {event => setFollow(event.target.value)}
-                    >
-                        <option value="follow" >Follow</option>
-                        <option value="unfollow" >Followers</option>
-                    </select>
+                    {!props.isSelfView ? (
+                        <React.Fragment>
+                            <Backdrop show={showBackdrop} clicked={closeDropdown} />
+                            <button className={styles.DropdownButton} >
+                                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                    <span className={styles.DropdownText} onClick={() => setFollow(!follow)} >
+                                        {follow ? 'Following' : 'Follow'}
+                                    </span>
+                                    <div className={styles.threeDots} onClick={showDropdown} >
+                                        <img src={arrow} />
+                                    </div>
+                                </div>
+                            </button>
+                            <div className={styles.DropdownHidden} id='dropDownContent' > 
+                                <Link className={styles.DropdownItem} >Followers</Link>
+                            </div>
+                        </React.Fragment>
+                        ):
+                        (
+                            <button className={styles.FristButton} >Followers</button>
+                        )
+                    }
                     {!props.isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
                 </div>
                 
@@ -99,10 +150,32 @@ function ProfileInfo(props) {
         case 'pet':
             displayAccountInfo = (
                 <div className={styles.ButtonContainer} >
-                    {
+                    {/* {
                         props.isSelfView ? 
                         <button className={styles.FristButton} >Followers</button> :
                         <button className={styles.FristButton} >Follow</button>
+                    } */}
+                    {!props.isSelfView ? (
+                        <React.Fragment>
+                            <Backdrop show={showBackdrop} clicked={closeDropdown} />
+                            <button className={styles.DropdownButton} >
+                                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                    <span className={styles.DropdownText} onClick={() => setFollow(!follow)} >
+                                        {follow ? 'Following' : 'Follow'}
+                                    </span>
+                                    <div className={styles.threeDots} onClick={showDropdown} >
+                                        <img src={arrow} />
+                                    </div>
+                                </div>
+                            </button>
+                            <div className={styles.DropdownHidden} id='dropDownContent' > 
+                                <Link className={styles.DropdownItem} >Followers</Link>
+                            </div>
+                        </React.Fragment>
+                        ):
+                        (
+                            <button className={styles.FristButton} >Followers</button>
+                        )
                     }
                     {!props.isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
                 </div>
