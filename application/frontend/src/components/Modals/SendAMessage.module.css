@@ -28,6 +28,7 @@
     border: none;
     border-radius: 7.5px;
     box-shadow: var(--elevation-1);
+    cursor: pointer;
 }
 
 .sendAMessage-sendButton span h4{
