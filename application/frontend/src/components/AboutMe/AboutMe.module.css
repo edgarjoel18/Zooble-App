@@ -15,7 +15,7 @@
     height: 585px;
     border-radius: 0px 25px 25px 25px;
     margin-bottom: 20px;
-    overflow: auto;
+    overflow: hidden;
     box-shadow: var(--elevation-2);
     z-index: 1;
 }

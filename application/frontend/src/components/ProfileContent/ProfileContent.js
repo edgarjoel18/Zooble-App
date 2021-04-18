@@ -27,7 +27,7 @@ function ProfileContent(props) {
             break;
         case 'pet owner':
             imageContainer = (
-                <div style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'column'}} >
+                <div style={{display: 'flex', flexDirection: 'column', minWidth: '300px', alignContent: 'center', flexWrap: 'wrap'}} >
                     <ImageContainer title='My Photos' image={props.profile.photos} />
                     <ImageContainer title='My Pets' image={props.profile.petProfiles} />
                 </div>

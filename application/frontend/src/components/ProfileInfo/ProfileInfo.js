@@ -69,7 +69,7 @@ function ProfileInfo(props) {
                         onChange= {event => setFollow(event.target.value)}
                     >
                         <option value="follow" >Follow</option>
-                        <option value="unfollow" >Followers</option>
+                        <option value="followers" >Followers</option>
                     </select>
                     {!props.isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
                 </div>

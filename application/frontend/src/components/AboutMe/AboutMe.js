@@ -83,7 +83,7 @@ function AboutMe(props) {
                         value={props.profile.about} 
                         onChange={event => props.updateProfile('about', event.target.value)}
                         readOnly={!changing || !(labelSelected === 'about')}
-                        rows='15' 
+                        rows='14' 
                         cols='50' 
                     />
                     { props.isSelfView && ((labelSelected !== 'about') ? 

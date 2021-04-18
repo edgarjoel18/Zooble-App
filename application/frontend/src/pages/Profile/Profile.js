@@ -316,8 +316,8 @@ const newPetOwnerProfile = {
 
 
 function Profile() {
-    // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile and petOwnerProfile
-    const [userProfile, setUserProfile] = useState(businessProfile);
+    // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
+    const [userProfile, setUserProfile] = useState(shelterProfile);
     const [selfView, setSelfView] = useState(true);
 
     function updateProfileHandler(type, value) {
@@ -348,9 +348,7 @@ function Profile() {
     console.log(userProfile);
     return (
         <div className={styles.Profile} >
-            <div>
-                <ProfileInfo isSelfView={selfView} profile={userProfile} updateProfile={updateProfileHandler} />
-            </div>
+            <ProfileInfo isSelfView={selfView} profile={userProfile} updateProfile={updateProfileHandler} />
             <span 
                 className={styles.SwitchView} 
                 onClick={toggleSelfViewHandler}  >
