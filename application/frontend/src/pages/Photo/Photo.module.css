@@ -1,0 +1,31 @@
+.Photo {
+    max-width: 1440px;
+    margin: 30px auto;
+}
+
+.PhotosContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 25px;
+    row-gap: 20px;
+    padding: 16px;
+    min-height: 719.5px;
+    box-shadow: var(--elevation-2);
+    border-radius: 15px;
+}
+
+.Image {
+    width: 332.75px;
+    height: 332.75px;
+    border-radius: 15px;
+}
+
+.NameDiv {
+    display: flex;
+    justify-content: space-between;
+}
+
+.NameDiv p {
+    align-self: flex-end;
+    cursor: pointer;
+}

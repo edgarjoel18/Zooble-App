@@ -314,10 +314,104 @@ const newPetOwnerProfile = {
     petProfiles: []
 };
 
+const petProfile = {
+    accountType: 'pet',
+    id: '97',
+    userName: 'Sasha',
+    userPicture: 'petImage',
+    about: 'Hello, I\'m Sasha.',
+    photos: [
+        {   pet_id: 3,
+            name: 'Juju',
+            size_name: 'larg',
+            age_name: 'ten',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg' 
+        },
+        {   pet_id: 2,
+            name: 'Max',
+            size_name: 'small',
+            age_name: 'two',
+            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
+        },
+        { pet_id: 1,
+            name: 'Mimi',
+            size_name: 'medium',
+            age_name: 'six',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg' 
+        },
+        {   pet_id: 4,
+            name: 'Juju',
+            size_name: 'larg',
+            age_name: 'ten',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg' 
+        },
+        {   pet_id: 5,
+            name: 'Max',
+            size_name: 'small',
+            age_name: 'two',
+            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
+        },
+        { pet_id: 6,
+            name: 'Mimi',
+            size_name: 'medium',
+            age_name: 'six',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg' 
+        }
+    ],
+    petProfiles: [
+        { pet_id: 1,
+            name: 'Mimi',
+            size_name: 'medium',
+            age_name: 'six',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg' 
+        },
+        {   pet_id: 3,
+            name: 'Juju',
+            size_name: 'larg',
+            age_name: 'ten',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg' 
+        },
+        {   pet_id: 2,
+            name: 'Max',
+            size_name: 'small',
+            age_name: 'two',
+            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
+        },
+        { pet_id: 4,
+            name: 'Mimi',
+            size_name: 'medium',
+            age_name: 'six',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg' 
+        },
+        {   pet_id: 5,
+            name: 'Juju',
+            size_name: 'larg',
+            age_name: 'ten',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg' 
+        },
+        {   pet_id: 6,
+            name: 'Max',
+            size_name: 'small',
+            age_name: 'two',
+            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
+        }
+    ]
+};
+
+const newPetProfile = {
+    accountType: 'pet',
+    id: '108',
+    userName: 'Rex',
+    userPicture: '',
+    about: '',
+    photos: [],
+    petProfiles: []
+};
+
 
 function Profile() {
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
-    const [userProfile, setUserProfile] = useState(shelterProfile);
+    const [userProfile, setUserProfile] = useState(newPetProfile);
     const [selfView, setSelfView] = useState(true);
 
     function updateProfileHandler(type, value) {

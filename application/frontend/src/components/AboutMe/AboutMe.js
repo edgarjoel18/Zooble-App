@@ -62,7 +62,8 @@ function AboutMe(props) {
         case 'business':
             profileTags = businessProfileTags;
             break;
-        case 'pet owner': 
+        case 'pet owner':
+        case 'pet':
             profileTags = petOwnerProfileTags;
             break;
         default:
@@ -100,15 +101,17 @@ function AboutMe(props) {
                 <div>
                     {props.isSelfView && (labelSelected !== 'address') && <button onClick={() => changingInfoHandler('address')} >edit</button>}
                     <label>Address: </label>
-                    <input 
-                        type="text" 
+                    <textarea 
                         value={props.profile.contactInfo.address} 
                         readOnly={!changing || !(labelSelected === 'address')}
                         onChange={event => props.updateProfile('address', event.target.value)} 
+                        style={{resize: 'none', borderColor: 'var(--primary-clr)', outline: 'none'}}
+                        rows='2' 
+                        cols='50' 
                     />
                     {
                         (labelSelected === 'address') && 
-                        <button style={{marginLeft: '5px'}} onClick={cancelEditingHandler} >Save</button>
+                        <button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
                     }
                     <br />
                     {props.isSelfView && (labelSelected !== 'phone number') && <button onClick={() => changingInfoHandler('phone number')} >edit</button>}

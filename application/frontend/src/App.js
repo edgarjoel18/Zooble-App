@@ -15,6 +15,7 @@ import SignUpPage from './pages/Sign Up/SignUpPage.js'
 import ProfilePage from './pages/Profile/Profile'
 
 import Feed from './pages/Feed/Feed.js'
+import Photo from './pages/Photo/Photo';
 
 import MapSearch from './pages/MapSearch/MapSearch.js'
 
@@ -37,6 +38,7 @@ function App() {
         <Route path="/Feed" component={Feed}/>
         <Route path="/MapSearch" component={MapSearch}/>
         <Route path="/Profile" component={ProfilePage}/>
+        <Route path="/Photo" component={Photo}/>
         <Redirect to="/" />
       </Switch>
     </Router>

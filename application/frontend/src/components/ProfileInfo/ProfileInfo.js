@@ -52,6 +52,9 @@ function ProfileInfo(props) {
             break;
         case 'petOwnerImage' :
             img = petOwnerImg;
+            break;
+        case 'petImage' :
+            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg';
             break
         default:
             img = defaultImg;
@@ -93,6 +96,7 @@ function ProfileInfo(props) {
             )
             break;
         case 'pet owner' :
+        case 'pet':
             displayAccountInfo = (
                 <div className={styles.ButtonContainer} >
                     {
