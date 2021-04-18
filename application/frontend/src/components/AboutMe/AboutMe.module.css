@@ -1,0 +1,46 @@
+.AboutMe {
+    display: flex;
+}
+
+.AboutMe button {
+    outline: none;
+}
+
+.AboutMe textarea:read-only {
+    border: none;
+}
+
+.Container {
+    width: 733px;
+    height: 585px;
+    border-radius: 0px 25px 25px 25px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: var(--elevation-2);
+    z-index: 1;
+}
+
+.Content {
+    margin-top: 20px;
+    margin-left: 30px;
+    max-width: 660px;
+    font-size: 1.5em;
+}
+
+.Content input {
+    outline: none;
+    border: var(--primary-clr) solid 3px;
+    border-radius: 10px;
+    width: 50%;
+    margin-bottom: 7px;
+}
+
+.Content input:read-only {
+    outline: none;
+    border: none;
+}
+
+.TextArea {
+    resize: none;
+    outline: none;
+}

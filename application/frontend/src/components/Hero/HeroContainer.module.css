@@ -1,0 +1,94 @@
+.hero-container {
+    display: flex;
+    width: 100%;
+    height: 576px;
+}
+
+.left-side {
+    width: 50%;
+    /* display: grid;
+    grid-template-rows: repeat(2, 288px);
+    grid-template-columns: repeat(2, 1fr); */
+    /* grid-template-areas: "left-side-dog left-side-cat"
+                         "............. left-side-cat"; */
+}
+
+
+.left-side-cat{
+    height: 576px;
+    float: left;
+    grid-area: 1 / 1 / span 1 / span 1;
+}
+
+.left-side-dog{
+    height: 576px;
+    float: right;
+    margin-right: 50px;
+    grid-area: 1 / 2 / span 2 / span 1;
+}
+
+.right-side{
+    width: 50%;
+    display: grid;
+    grid-template-rows: 30% auto auto auto 30%;
+    grid-template-columns: auto;
+}
+
+.right-side-dog{
+    float: right;
+    margin-right: 50px;
+    height: 576px;
+}
+
+.right-side-text {
+    color:var(--ff-primary);
+    display: block;
+    grid-row: 2 / span 1;
+}
+
+.right-side-subtext {
+    /* color:rgba(29, 10, 10, 0.9); */
+    color: #7F9489;
+    grid-row: 3 /span 1;
+}
+
+.signup-button {
+    width: 195px;
+    height: 62px;
+    background-color: var(--primary-clr, red);
+    color: var(--reversed-txt-clr);
+    box-shadow: var(--elevation-1);
+    border: none;
+    border-radius: 7.5px;
+}
+
+.signup-button span h3{
+    font-weight: 600;
+}
+
+.find-friend-button {
+    margin-left: 50px;
+    width: 195px;
+    height: 62px;
+    cursor: default;
+    background-color: var(--reversed-txt-clr);
+    color: var(--primary-clr);
+    border: 2px solid var(--primary-clr);
+    border-radius: 7.5px;
+}
+
+.signup-button:hover, .find-friend-button:hover{  
+    transition: 0.15s;
+    transform: translateY(-4px);
+}
+
+/* button span {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+}*/
+
+.button-container{
+    grid-row: 4 / span 1;
+}

@@ -6,6 +6,21 @@ const mysql = require('mysql2');
 const { copyFileSync } = require("fs");
 const bcrypt = require('bcrypt');
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+schema
+.is().min(8)                                    // Minimum length 5
+// .is().max(50)                                  // Maximum length 50 //no reason to enforce maximum length
+.has().uppercase()                              // Must have uppercase letters
+.has().lowercase()                              // Must have lowercase letters
+.has().digits(1)                                // Must have at least 1 digit
+.has().not().spaces()                           // Should not have spaces
+.is().not().oneOf(['password']); // Blacklist these values
+
+=======
+>>>>>>> master
+=======
+>>>>>>> master
 const connection = mysql.createConnection({
     host:'csc648project-database.ceh0a99r5rym.us-west-2.rds.amazonaws.com',
     user:'admin',
@@ -85,7 +100,7 @@ app.get("/search", (req,res) =>{
     console.log(category);
     var requestedSearchResults = {searchResults:[]}
 
-    if(category == 'Pet'){
+    if(category == 'Pets'){
         connection.query(
             `SELECT * 
             FROM ((Pet
@@ -120,7 +135,7 @@ app.get("/search", (req,res) =>{
             }
         });
     }
-    else if(category == 'Business'){
+    else if(category == 'Businesses'){
         connection.query(
             `SELECT * 
             FROM RegisteredBusiness
@@ -150,7 +165,7 @@ app.get("/search", (req,res) =>{
             }
         });
     }
-    else if(category == 'Shelter'){
+    else if(category == 'Shelters'){
         connection.query(
             `SELECT * 
             FROM RegisteredShelter

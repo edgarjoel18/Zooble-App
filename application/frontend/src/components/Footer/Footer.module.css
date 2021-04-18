@@ -1,0 +1,24 @@
+.footer{
+    background-color: var(--primary-txt-clr);
+    height:200px;
+    color: white;
+    display: grid;
+    grid-template-columns: 5;
+}
+
+.our-team-footer{
+    margin-top: 25px;
+    margin-left: 50px;
+    grid-column: 1 /span 1;
+    font-weight: bold;
+}
+
+.our-team-footer a{
+    text-decoration: none;
+    color: var(--reversed-txt-clr);
+    font-weight: normal;
+}
+
+.nav-link{
+    margin-left: 5px;
+}

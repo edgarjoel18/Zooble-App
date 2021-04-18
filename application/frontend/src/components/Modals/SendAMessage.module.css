@@ -1,0 +1,36 @@
+.sendAMessage-header{
+    /* margin-left: 30px; */
+    font-weight: 600;
+}
+
+.sendAMessage-body{
+    /* margin: 0 60px 0 30px; */
+    width: 95%;
+    height: 70%;
+    resize: none;
+    border-radius: 7.5px;
+    border: 1px solid var(--inactive-txt-clr);
+}
+
+.sendAMessage-subject{
+    /* margin-left: 30px; */
+    margin-bottom: 20px;
+}
+
+.sendAMessage-sendButton{
+    float: right;
+    /* margin-right: 60px; */
+    background-color: var(--primary-clr);
+    margin-top: 20px;
+    color: white;
+    padding:0 25px 0 25px;
+    border: none;
+    border-radius: 7.5px;
+    box-shadow: var(--elevation-1);
+}
+
+.sendAMessage-sendButton span h4{
+    font-family: var(--ff-primary);
+    text-align: center;
+    font-weight: 600;
+}

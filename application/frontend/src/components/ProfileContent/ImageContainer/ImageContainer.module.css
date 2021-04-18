@@ -1,0 +1,66 @@
+.ImageContainer {
+    display: block;
+}
+
+.ImageContainer p {
+    float: right;
+}
+
+.ImageStack {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.EmptyDiv {
+    display: block;
+    width: 162px;
+    height: 162px;
+    border-radius: 10px;
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+    background-image: url('../../../images/addIcon.png');
+    background-position: center;
+    box-shadow: var(--elevation-1);
+}
+
+.ImageStack_pic{
+    cursor:pointer;
+}
+
+.ImageStack_pic:hover{
+    z-index: 1;
+
+}
+
+/* .TopImage {
+    display: block;
+    width: 162px;
+    height: 162px;
+    border-radius: 10px;
+    margin-right: 120px;
+    box-shadow: var(--elevation-6);
+}
+
+.MiddleImage {
+    width: 162px;
+    height: 162px;
+    border-radius: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+    margin-right: 60px;
+    box-shadow: var(--elevation-4);
+}
+
+.BottomImage {
+    width: 162px;
+    height: 162px;
+    border-radius: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -2;
+    box-shadow: var(--elevation-4);
+} */
