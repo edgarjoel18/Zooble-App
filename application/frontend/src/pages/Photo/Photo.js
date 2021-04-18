@@ -57,7 +57,7 @@ function Photo() {
         <div className={styles.Photo} >
             <div className={styles.NameDiv} >
                 <h1>{name + '\'s Photos'}</h1>
-                <p onClick={() => history.goBack()} >Back to Profile</p>
+                <p onClick={() => history.push('/Profile')} >Back to Profile</p>
             </div>
             <div className={styles.PhotosContainer} >
                 {photos.map((photo) => (
