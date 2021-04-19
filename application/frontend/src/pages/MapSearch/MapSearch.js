@@ -8,20 +8,87 @@ import styles from './MapSearch.module.css'
 
 import DropdownIcon from '../../images/Created Icons/Dropdown.svg'
 
+import Select from 'react-select';
+
+import makeAnimated from 'react-select/animated';
+
 // import {GoogleMap, useLoadScript, Marker, InfoWindow} from '@react-google-maps/api';
 
 function MapSearch(props) {
+    //Only for horizontal prototype, real thing should fetch from db
+    const businessCategoryOptions = [
+        {value: 'Dog', label: 'Dog'},
+        {value: 'Cat', label: 'Cat'},
+        {value: 'Lizard', label:'Lizard'},
+        {value: 'Monkey', label: 'Monkey'},
+    ];
+
+    const dogBreedOptions = [
+        {value: 'German Shepherd', label: 'German Shepherd'},
+        {value: 'Labrador Retriever', label: 'Labrador Retriever'}
+    ];
+
+    const catBreedOptions = [
+        {value: 'Manx', label: 'Manx'},
+        {value: 'Siamese', label: 'Siamese'}
+    ];
+
+    const colorOptions = [
+        {value: 'Black', label: 'Black'},
+        {value: 'White', label: 'White'},
+        {value: 'Brown', label: 'Brown'}
+    ];
+
+    const sizeOptions = [
+        {value: 'Small', label: 'Small'},
+        {value: 'Medium', label: 'Medium'},
+        {value: 'Large', label: 'Large'}
+    ];
+
+    const ageOptions = [
+        {value: 'Young', label: 'Young'},
+        {value: 'Adult', label: 'Adult'},
+        {value: 'Senior', label: 'Senior'}
+    ];
+
+    const typeOptions = [
+        {value: 'Dog', label: 'Dog'},
+        {value: 'Cat', label: 'Cat'},
+        {value: 'Lizard', label:'Lizard'},
+        {value: 'Monkey', label: 'Monkey'},
+    ];
+
+    //Recieve search params for searchbar.js
     let state = props.location.state;
     console.log("Search Category: " + state.searchCategoryParam);
     console.log("Search Term: " + state.searchTermParam);
     const[searchCategory, setSearchCategory] = useState(state.searchCategoryParam);
     const[searchTerm, setSearchTerm] = useState(state.searchTermParam);
     const[resultsSortOption, setResultsSortOption] = useState('');
-    const[recievedSearchResults, setRecievedSearchResults] = useState([]);
+    const[recievedSearchResults, setRecievedSearchResults] = useState([]);  //store search results
+
+
+    //for storing whether filter tab is displaying
+    const [filterOverlayDisplay, setFilterOverlayDisplay] = useState('none');
+    const [searchResultsDisplay, setSearchResultsDisplay] = useState('block')
+
+
+    //For storing filter states
+    const [businessCategoryFilters,setBusinessCategoryFilters] = useState([]);
+    const [petTypeFilters,setPetTypeFilters] = useState([]);
+    const [petBreedFilters, setPetBreedFilters] = useState([]);
+    const [petColorFilters, setPetColorFilters] = useState([]);
+    const [petSizeFilters, setPetSizeFilters] = useState([]);
+    const [petAgeFilters, setPetAgeFilters] = useState([]);
+    const [shelterPetTypeFilters, setShelterPetTypeFilters] = useState([]);
+
+
 
     useEffect(()=>{
         console.log('useEffect');
-        Axios.get('/search', {
+        setSearchCategory(state.searchCategoryParam);
+        setSearchTerm(state.searchTermParam);
+        Axios.get('/search', {  //take in filters here? for final version
             params: {
               searchTerm: state.searchTermParam,
               searchCategory:state.searchCategoryParam}})
@@ -31,51 +98,179 @@ function MapSearch(props) {
             // console.log(response.data.searchResults)
             setRecievedSearchResults(response.data.searchResults)
             // setOverlayDisplay(true);
+            displaySearchResults();
             console.log("Recieved Search Results: " + recievedSearchResults)
             
           })
           .catch(error =>{
             console.log("Error");
           })
-    },[state]);
+    },[state]);  //only fetch and reload when search params change
+
+
+    //toggle display of filter overlay
+    function displayFilterOverlay(){
+        console.log("Filter overlay display turning on")
+        setFilterOverlayDisplay('block');
+        setSearchResultsDisplay('none');
+    }
+
+    function displaySearchResults(){
+        console.log("Filter overlay display turning off")
+        setFilterOverlayDisplay('none');
+        setSearchResultsDisplay('block');
+    }
+
+    function customTheme(theme){
+        return {
+            ... theme,
+            colors:{
+                ... theme.colors,
+                primary25: '#B3B3B3',
+                primary:'#1CB48F',
+            }
+        }
+    }
+
+    const animatedComponents = makeAnimated();
 
     return (
-        <>
-        <div className={styles['map-search-results-container']}>
-            <div className={styles['map-search-results-map']}>
-                {/* <img src={`https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=2048x2048&key=AIzaSyDGz7t7D1PRi8X2Or-SHAie2OgWoFH--Bs`}/> */} {/* Uncomment to see Map*/}
-            </div>
-            <div className={styles['map-search-results-text']}>
-                <div className={styles['map-search-results-header']}>
-                    <span><h1 className={styles['map-search-results-header-text']}>Results</h1><h5 className={styles['map-search-results-header-filter']}>Filter</h5></span>
-                <div className={styles['sort-dropdown']}>
-                    <span><h5>Sort By:</h5></span> 
-                <select name="search-category" id="search-category" onChange= {e => setResultsSortOption(e.target.value)}>
-                        <option value="Account Age">Newly Added</option>
-                        <option value="Distance">Distance</option>
-                </select>
-                <img src={DropdownIcon}/>
-                </div>                
+            <>
+            <div className={styles['map-search-results-container']}>
+                <div className={styles['map-search-results-map']}>
+                    {/* <img src={`https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=2048x2048&key=AIzaSyDGz7t7D1PRi8X2Or-SHAie2OgWoFH--Bs`}/> */} {/* Uncomment to see Map*/}
                 </div>
-                <div className={styles['map-search-results-text-list']}>
-                <ul>
-                {recievedSearchResults.length == 0 && <li>No Results</li>}
-                {recievedSearchResults && searchCategory == 'Pets' && recievedSearchResults.map((searchResult) => (
-                    <Link to="/Profile"><li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li></Link>
-                
-                ))}
-                {recievedSearchResults && searchCategory == 'Businesses' && recievedSearchResults.map((searchResult) => (
-                     <Link to="/Profile"><li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li></Link>
-                ))}
-                {recievedSearchResults && searchCategory == 'Shelters' && recievedSearchResults.map((searchResult) => (
-                    <Link to="/Profile"><li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li></Link>
-                ))}
-                </ul>
+                <div className={styles['map-search-results-text']} style={{display: searchResultsDisplay}}>
+                    <>
+                        <div className={styles['map-search-header']}>
+                            <span><span className={styles['map-search-header-text']}>Results</span><button className={styles['map-search-results-header-action']} onClick={displayFilterOverlay}>Filter</button></span>
+                            <div className={styles['sort-dropdown']}>
+                                <span className={styles['sort-dropdown-label']}>Sort By:</span>
+                                <select className={styles['sort-dropdown-select']}  name="search-category" id="search-category" onChange= {e => setResultsSortOption(e.target.value)}>
+                                    <option value="Account Age">Newly Added</option>
+                                    <option value="Distance">Distance</option>
+                                </select>
+                                <img src={DropdownIcon}/>
+                            </div>                
+                        </div>
+                        <div className={styles['map-search-results-text-list']}>
+                            <ul>
+                                {recievedSearchResults.length == 0 && <li>No Results</li>}
+                                {recievedSearchResults && searchCategory == 'Pets' && recievedSearchResults.map((searchResult) => (
+                                    <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={searchResult.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                ))}
+                                {recievedSearchResults && searchCategory == 'Businesses' && recievedSearchResults.map((searchResult) => (
+                                    <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={searchResult.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                ))}
+                                {recievedSearchResults && searchCategory == 'Shelters' && recievedSearchResults.map((searchResult) => (
+                                    <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={searchResult.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                ))}
+                            </ul>
+                        </div>
+                    </>
+                </div>
+                <div className={styles["map-search-results-filter"]} style={{display: filterOverlayDisplay}}>
+                    <>
+                        <div className={styles['map-search-header']}>
+                        <span><span className={styles['map-search-header-text']}>Filters</span><button className={styles['map-search-results-header-action']} onClick={displaySearchResults}>Back to Results</button></span>
+                        </div>
+                        {searchCategory=="Businesses" && 
+                        <div className={styles['filter-business-categories']}>
+                            <label for="business-categories">Categories</label>
+                                <Select id="business-categories" name="business_categories"
+                                    onChange={setBusinessCategoryFilters}
+                                    options={businessCategoryOptions}
+                                    placeholder="Select Business Categories"
+                                    theme={customTheme}
+                                    isSearchable
+                                    isMulti
+                                    components={animatedComponents}
+                                />
+                        </div>
+                        }
+                        {searchCategory=="Pets" &&
+                        <>
+                            <div className={styles['filter-pet-types']}>
+                            <label for="pet-types">Types</label>
+                                <Select id="pet-types" name="pet_types"
+                                    onChange={setPetTypeFilters}
+                                    options={typeOptions}
+                                    placeholder="Select Pet Type(s)"
+                                    theme={customTheme}
+                                    isSearchable
+                                    isMulti
+                                    components={animatedComponents}
+                                />
+                            </div>
+                            <div className={styles['filter-pet-size']}>
+                                <label for="pet-sizes">Sizes</label>
+                                    <Select id="pet-sizes" name="pet_sizes"
+                                        onChange={setPetSizeFilters}
+                                        options={sizeOptions}
+                                        placeholder="Select Pet Size(s)"
+                                        theme={customTheme}
+                                        isSearchable
+                                        isMulti
+                                        components={animatedComponents}
+                                    />
+                            </div>
+                            <div className={styles['filter-pet-colors']}>
+                                <label for="pet-colors">Colors</label>
+                                    <Select id="pet-colors" name="pet_colors"
+                                        onChange={setPetColorFilters}
+                                        options={colorOptions}
+                                        placeholder="Select Pet Color(s)"
+                                        theme={customTheme}
+                                        isSearchable
+                                        isMulti
+                                        components={animatedComponents}
+                                    />
+                            </div>
+                            <div className={styles['filter-pet-age']}>
+                                <label for="pet-age">Age</label>
+                                    <Select id="pet-age" name="pet_age"
+                                        onChange={setPetAgeFilters}
+                                        options={ageOptions}
+                                        placeholder="Select Pet Age(s)"
+                                        theme={customTheme}
+                                        isSearchable
+                                        isMulti
+                                        components={animatedComponents}
+                                    />
+                            </div>
+                            <div className={styles['filter-pet-breed']}>
+                                <label for="pet-breed">Breed</label>
+                                    <Select id="pet-breed" name="pet_breed"
+                                        onChange={setPetAgeFilters}
+                                        options={ageOptions}
+                                        placeholder="Select Pet Breed(s)"
+                                        theme={customTheme}
+                                        isSearchable
+                                        isMulti
+                                        components={animatedComponents}
+                                    />
+                            </div>
+                        </>
+                        }
+                        {searchCategory=="Shelters" &&
+                            <div className={styles['filter-shelter-pets']}>
+                                <label for="shelter-pet-types">Available Types of Pets</label>
+                                    <Select id="shelter-pet-types" name="shelter_pet_types"
+                                        onChange={setShelterPetTypeFilters}
+                                        options={businessCategoryOptions}
+                                        placeholder="Select Types of Pets"
+                                        theme={customTheme}
+                                        isSearchable
+                                        isMulti
+                                        components={animatedComponents}
+                                    />
+                            </div>
+                        }
+                    </> 
                 </div>
             </div>
-        </div>
-        </>
-    )
+            </>     
+    );
 }
 
-export default MapSearch
+export default MapSearch;

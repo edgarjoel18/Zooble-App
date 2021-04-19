@@ -55,7 +55,6 @@ function EditPetDetails({display, onClose}) {
             }
         }
     }
-
     
     const animatedComponents = makeAnimated();
 

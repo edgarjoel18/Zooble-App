@@ -68,18 +68,24 @@ function SearchBar() {
           <option value="Pets">Pets</option>
           <option value="Businesses">Businesses</option>
           <option value="Shelters">Shelters</option>
+          {/* <option value="Users">Users</option>   need to add db user entities to implement this*/}
         </select>
       </span>   
-      
       <span className={styles["searchbar-input"]}>
-      
-        <input type="text" placeholder= {"Search " + searchCategory.toLowerCase() + " near you"} onChange={e => setSearchTerm(e.target.value)} 
+        {searchCategory=="Users" &&  <input type="text" placeholder= {"Search " + searchCategory.toLowerCase()} onChange={e => setSearchTerm(e.target.value)} 
         onKeyPress={event => {
           if (event.key === 'Enter') {
             OnClickHandler();
           }
         }}
-        />
+        />}
+        {searchCategory != "Users" && <input type="text" placeholder= {"Search " + searchCategory.toLowerCase() + " near you"} onChange={e => setSearchTerm(e.target.value)} 
+        onKeyPress={event => {
+          if (event.key === 'Enter') {
+            OnClickHandler();
+          }
+        }}
+        />}
       </span>
 
       
