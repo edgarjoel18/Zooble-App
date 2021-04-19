@@ -1,6 +1,13 @@
-.login-form {
-    display: grid;
-    grid-template-columns: 3;
+/*Full width for inputs */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 7.5px;
+    z-index: 1;
+    width: 35%;
+    box-shadow: var(--elevation-1);
+    margin: 100px auto auto auto;
 }
 
 .login-form h1 {
@@ -8,40 +15,52 @@
 }
 
 /*Full width for inputs */
+.login-header{
+    font-family: var(--ff-primary);
+    font-weight: 600;
+    font-size: var(--h1);
+    margin-top: 25px;
+}
 
 .username-input-label, .password-input-label{
     display: block;
 }
 
-.username-input-container, .password-input-container{
-    text-align: center;
+.username-input-label,
+.password-input-label{
+    font-size: var(--h3);
+    font-family: var(--ff-primary);
+}
+
+.username-input-container{
     margin-top: 50px;
     margin-bottom: 50px;
 }
-.username-input-container input{
-    padding: 15px;
-    display: inline-block;
-    border: none;
-    background:var(--inset-txt-field-clr);
+
+.password-input-container{
+    margin-bottom: 10px;
 }
 
-/* input{
-    width: 50%;
-} */
+.forgot-password{
+    color: var(--inactive-txt-clr);
+    margin-bottom: 50px;
+}
 
+.create-account-link{
+    color: var(--primary-txt-clr);
+    margin-bottom: 25px;
+    font-family: var(--ff-primary);
+}
 
+.username-input-container input,
 .password-input-container input{
-    padding: 15px;
-    display: inline-block;
-    border: 1px solid;
-    border-color: var(--inactive-txt-clr);
-    border-radius: 5px;
-    background:white;
+    padding: 10px;
+    display: block;
+    border: none;
+    border: 1px solid var(--inactive-txt-clr);
+    border-radius: 7.5px;
+    width: 100%;
 }
-
-/* button:hover {
-    opacity: 0.8;
-} */
 
 .btn-container {
     text-align: center;
@@ -56,9 +75,8 @@
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20);
 }
 
-/* h1 {
-    text-align: center;
-} */
+
+
 
 .forgot-password {
     margin-left: 15px;
@@ -71,13 +89,32 @@
 }
 
 .submit-btn{
-    width: 25%;
+    width: 250px;
+    height: 50px;
     text-justify: center;
     text-align: center;
     color: white;
     background-color: var(--primary-clr);
-    border-radius: 5px;
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20);
+    font-size: var(--h3);
+    font-family: var(--ff-primary);
+
+    box-shadow: var(--elevation-1);
+    border: none;
+    border-radius: 7.5px;
+    margin-bottom: 50px;
+    cursor: pointer;
+}
+
+@media (max-width: 1024px){
+    .login-container {
+        width: 50%;
+    }
+}
+
+@media (max-width: 414px){
+    .login-container{
+        width: 90%;
+    }
 }
 
 

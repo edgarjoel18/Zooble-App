@@ -12,9 +12,10 @@ function LoginPage({appUser, setAppUser}) {
 
     function loginHandler(e){
         // setIsLoggedIn(true);
-        setAppUser(username);
+        // setAppUser(username);
         console.log(appUser);
         console.log(isLoggedIn);
+        history.push('/feed');
     }
 
     if (isLoggedIn){
@@ -22,11 +23,11 @@ function LoginPage({appUser, setAppUser}) {
         return <Redirect to="/Feed"/>
     }
     return (
-        <form className={styles['login-form']}>
+            <>
             <div className={styles['login-container']}>
-                <h1>Zooble</h1>
+                <div className={styles['login-header']}>Zooble</div>
                 <div className={styles['username-input-container']}>
-                    <label className={styles['username-input-label']} for='username'><h3>Username</h3></label>
+                    <label className={styles['username-input-label']} for='username'>Username</label>
                     <input
                         type='username'
                         placeholder='Enter Username'
@@ -36,7 +37,7 @@ function LoginPage({appUser, setAppUser}) {
                     />
                 </div>
                 <div className={styles['password-input-container']}>
-                    <label className={styles['password-input-label']} for='password'><h3>Password</h3></label>
+                    <label className={styles['password-input-label']} for='password'>Password</label>
                     <input
                         type='password'
                         placeholder='Enter password'
@@ -44,6 +45,9 @@ function LoginPage({appUser, setAppUser}) {
                         value={password}
                         onChange={e =>setPassword(e.target.value)}
                     />
+                </div>
+                <div className={styles['forgot-password']}>
+                    <a href='#'> Forgot password?</a>
                 </div>
                 <div className={styles['btn-container']}>
                     <button type='submit' className={styles['submit-btn']} onClick={loginHandler}>Login</button>
@@ -56,7 +60,7 @@ function LoginPage({appUser, setAppUser}) {
                     Not registered? <a href='/account-type'>Create an account</a>
                 </p>
             </div>
-        </form>
+            </>
     );
 }
 

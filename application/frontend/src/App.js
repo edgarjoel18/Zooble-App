@@ -19,10 +19,13 @@ import ShelterSignUpPage from './pages/Sign Up/ShelterSignUp.js'
 import BusinessSignUpPage from './pages/Sign Up/BusinessSignUp.js'
 import ProfilePage from './pages/Profile/Profile'
 import Messages from './pages/Messages/Messages'
+import MyPets from './pages/Pets/MyPets'
 import Pets from './pages/Pets/Pets'
 
 import Feed from './pages/Feed/Feed.js'
 import Photo from './pages/Photo/Photo';
+import Followers from './pages/Followers/Followers';
+import ExploreUsers from './pages/ExploreUsers/ExploreUsers';
 
 import MapSearch from './pages/MapSearch/MapSearch.js'
 
@@ -57,7 +60,10 @@ function App() {
         <Route path="/Profile" component={ProfilePage}/>
         <Route path="/Photo" component={Photo}/>
         <Route path="/Messages" component={Messages}/>
+        <Route path="/MyPets" component={MyPets}/>
         <Route path="/Pets" component={Pets}/>
+        <Route path="/Followers" component={Followers}/>
+        <Route path="/ExploreUsers" component={ExploreUsers}/>
         <Redirect to="/" />
       </Switch>
     </Router>

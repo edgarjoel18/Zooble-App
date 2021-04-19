@@ -120,6 +120,9 @@ function SignUpPage() {
                     <button type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
                 </div>
             </div>
+            <div className={styles['signup-btn-container']}>
+                <button onClick={OnClickHandler} className={styles['sign-up-btn']}>Sign Up</button>
+            </div>
         </form>
     );
 }

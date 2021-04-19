@@ -1,11 +1,11 @@
 import {useState} from 'react'
 
-import styles from './MyPets.module.css'  //same style as my pets without add pet button 
+import styles from './MyPets.module.css'
 
 import AddIcon from '../../images/Created Icons/Add.svg'
-function Pets() {
+function MyPets() {
 
-    const [Pets,setPets] = useState([
+    const [myPets,setMyPets] = useState([
     {
         pet_id: 1,
         pet_name: 'Max',
@@ -56,11 +56,14 @@ function Pets() {
     return (
         <>
         <div className={styles['my-pets-header']}>
-            Pets
+            My Pets
         </div>
         <div className={styles['my-pets-container']}>
-            {Pets.length == 0 && <div className={styles['my-pets-container-no-pets']}>This User has No Pets :(</div>}
-            {Pets && Pets.map((pet) =>(
+            <div className={styles['my-pets-container-add-pet']}>
+                <img className={styles['my-pets-container-add-pet-icon']} src={AddIcon}/>
+                <div className={styles['my-pets-container-add-pet-text']}>Add a Pet</div>
+            </div>
+            {myPets && myPets.map((pet) =>(
                 <div className={styles['my-pets-container-pet']}>
                     <img className={styles['my-pets-container-pet-pic']} src={pet.pet_prof_pic}/>
                     <div className={styles['my-pets-container-pet-name']}>{pet.pet_name}</div>
@@ -71,4 +74,4 @@ function Pets() {
     )
 }
 
-export default Pets
+export default MyPets
