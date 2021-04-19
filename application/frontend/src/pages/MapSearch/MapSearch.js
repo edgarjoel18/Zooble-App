@@ -1,5 +1,7 @@
 import {React, useEffect, useState} from 'react'
 
+import {Link} from "react-router-dom"
+
 import Axios from "axios";
 
 import styles from './MapSearch.module.css'
@@ -59,14 +61,14 @@ function MapSearch(props) {
                 <ul>
                 {recievedSearchResults.length == 0 && <li>No Results</li>}
                 {recievedSearchResults && searchCategory == 'Pets' && recievedSearchResults.map((searchResult) => (
-                    <li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li>
+                    <Link to="/Profile"><li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li></Link>
                 
                 ))}
                 {recievedSearchResults && searchCategory == 'Businesses' && recievedSearchResults.map((searchResult) => (
-                    <li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li>
+                     <Link to="/Profile"><li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li></Link>
                 ))}
                 {recievedSearchResults && searchCategory == 'Shelters' && recievedSearchResults.map((searchResult) => (
-                    <li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li>
+                    <Link to="/Profile"><li key={searchResult.pet_id}><img src={searchResult.profile_pic}/><span><h3>{searchResult.name}</h3></span></li></Link>
                 ))}
                 </ul>
                 </div>

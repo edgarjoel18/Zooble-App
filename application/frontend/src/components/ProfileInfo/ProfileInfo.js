@@ -11,6 +11,7 @@ import styles from './ProfileInfo.module.css';
 
 import SendAMessage from '../../components/Modals/SendAMessage';
 import Backdrop from '../UI/Backdrop/Backdrop';
+import EditPetDetails from '../Modals/EditPetDetails';
 
 function ProfileInfo(props) {
     //const [profilePic, setProfilePic] = useState('');
@@ -21,10 +22,16 @@ function ProfileInfo(props) {
 
     const [sendAMessageDisplay,setSendAMessageDisplay] = useState(false);
 
+    const[editPetDetailsDisplay, setEditPetDetailsDisplay] = useState(false);
+
     useEffect(() => {
         //setProfileTitle('Burgsdale Pet Shelter');
         //setProfilePic(shelterImg);
     },[]);
+
+    function openEditModal(){
+        setEditPetDetailsDisplay(true);
+    }
 
     function cancelEditHandler() {
         setEditing(false);
@@ -197,7 +204,7 @@ function ProfileInfo(props) {
                         props.isSelfView && !editing && 
                         <button 
                         className={styles.EditButton} 
-                        onClick={() => setEditing(true)}  
+                        onClick={() => openEditModal()}  
                         >
                             edit
                         </button>
@@ -234,6 +241,7 @@ function ProfileInfo(props) {
                 {displayAccountInfo}
             </div>
             <SendAMessage display={sendAMessageDisplay} onClose={()=> setSendAMessageDisplay(false)}/>
+            <EditPetDetails display={editPetDetailsDisplay} onClose={()=> setEditPetDetailsDisplay(false)}/>
         </div>
     );
 }
