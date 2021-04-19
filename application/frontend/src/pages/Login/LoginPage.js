@@ -52,10 +52,6 @@ function LoginPage({appUser, setAppUser}) {
                 <div className={styles['btn-container']}>
                     <button type='submit' className={styles['submit-btn']} onClick={loginHandler}>Login</button>
                 </div>
-                <p className={styles['forgot-password']}>
-                    Forgot <a href='#'>password?</a>
-                </p>
-
                 <p className={styles['create-account']}>
                     Not registered? <a href='/account-type'>Create an account</a>
                 </p>
