@@ -21,6 +21,8 @@ import Pets from './pages/Pets/Pets'
 
 import Feed from './pages/Feed/Feed.js'
 import Photo from './pages/Photo/Photo';
+import Followers from './pages/Followers/Followers';
+import ExploreUsers from './pages/ExploreUsers/ExploreUsers';
 
 import MapSearch from './pages/MapSearch/MapSearch.js'
 
@@ -53,6 +55,8 @@ function App() {
         <Route path="/Photo" component={Photo}/>
         <Route path="/Messages" component={Messages}/>
         <Route path="/Pets" component={Pets}/>
+        <Route path="/Followers" component={Followers}/>
+        <Route path="/ExploreUsers" component={ExploreUsers}/>
         <Redirect to="/" />
       </Switch>
     </Router>
