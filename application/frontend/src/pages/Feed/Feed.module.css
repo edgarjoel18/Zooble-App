@@ -9,6 +9,7 @@
 }
 
 .follower-feed-post{
+    cursor: pointer;
     padding: 15px;
     display: grid;
     width: 50%;
@@ -75,6 +76,5 @@
 @media all and (max-width: 834px){
     .follower-feed-post{
         width: 100%;
-        
     }
 }

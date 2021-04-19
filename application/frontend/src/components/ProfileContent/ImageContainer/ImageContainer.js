@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import PostModal from '../../Modals/PostModal'
 
 function ImageContainer(props) {
-    const [postModalDisplay, setPostModalDisplay] = useState(true);
+    const [postModalDisplay, setPostModalDisplay] = useState(false);
     let history = useHistory();
 
     function closePostModal(){
@@ -124,6 +124,7 @@ function ImageContainer(props) {
 
     return (
         <>
+        {/* for debugging  <button onClick={()=>{setPostModalDisplay(true)}}></button> */}
         <PostModal display={postModalDisplay} onClose={closePostModal}/>
         <div className={styles.ImageContainer} >
             <h2>{props.title}</h2>

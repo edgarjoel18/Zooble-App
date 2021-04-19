@@ -18,6 +18,7 @@
     width: 332.75px;
     height: 332.75px;
     border-radius: 15px;
+    object-fit: cover;
 }
 
 .NameDiv {
