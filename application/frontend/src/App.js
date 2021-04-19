@@ -10,7 +10,6 @@ import Em from './pages/AboutMe/Em'
 import Sabrina from './pages/AboutMe/Sabrina'
 import Wenjie from './pages/AboutMe/Wenjie'
 import NavBar from './components/Nav/NavBar'
-import SearchResults from './components/Search/SearchResults'
 
 import AccountTypePage from './pages/AccountType/AccountType.js'
 import LoginPage from './pages/Login/LoginPage.js'
@@ -39,7 +38,6 @@ function App() {
       <NavBar appUser={appUser}/>
        <Switch>
         <Route path="/" exact component={Home}/>
-        <Route path="/search-results" exact component={SearchResults}/>
         <Route 
           path="/login-page" 
           exact component={LoginPage}
@@ -52,13 +50,6 @@ function App() {
         <Route path="/shelter-signup2" exact component={ShelterSignUpPage2}/>
         <Route path="/business-signup" exact component={BusinessSignUpPage}/>
         <Route path="/business-signup2" exact component={BusinessSignUpPage2}/>
-        <Route path="/Edgar" component={Edgar}/>
-        <Route path="/Daniel" component={Daniel}/>
-        <Route path="/Em" component={Em}/>
-        <Route path="/Sabrina" component={Sabrina}/>
-        <Route path="/Wenjie" component={Wenjie}/>
-        <Route path="/Cameron" component={Cameron}/>
-        <Route path="/Wameedh" component={Wameedh}/>
         <Route path="/Feed" component={Feed}/>
         <Route path="/MapSearch" component={MapSearch}/>
         <Route path="/Profile" component={ProfilePage}/>
@@ -68,6 +59,13 @@ function App() {
         <Route path="/Pets" component={Pets}/>
         <Route path="/Followers" component={Followers}/>
         <Route path="/ExploreUsers" component={ExploreUsers}/>
+        <Route path="/Edgar" component={Edgar}/>
+        <Route path="/Daniel" component={Daniel}/>
+        <Route path="/Em" component={Em}/>
+        <Route path="/Sabrina" component={Sabrina}/>
+        <Route path="/Wenjie" component={Wenjie}/>
+        <Route path="/Cameron" component={Cameron}/>
+        <Route path="/Wameedh" component={Wameedh}/>
         <Redirect to="/" />
       </Switch>
     </Router>
