@@ -62,23 +62,24 @@ function ImageContainer(props) {
         return (
             <div className={styles.ImageStack} >
                 {imageStack.map((_, index) => {
-                    let position = '';
+                    let position = 'sticky';
                     let top = '';
-                    let right = '';
+                    //let right = '';
+                    let left = ''
                     if (index > 0) {
                         position = 'absolute';
                         top = '0';
-                        right = '0';
+                        //right = '0';
+                        left = '0';
                     }
                     const Img = styled.img `
                         height: 162px;
                         width: 162px;
                         top: ${top};
-                        right: ${right};
+                        left: ${left};
                         position: ${position};
-                        margin-right: ${(val-index-1) * marginToRight  + 'px'};
+                        margin-left: ${(val-index-1) * marginToRight  + 'px'};
                         border-radius: 15px;
-                        z-index: 0;
                         box-shadow: var(--elevation-${index < 6 ? 6-index : 1});
                         object-fit: cover;
                         `;
