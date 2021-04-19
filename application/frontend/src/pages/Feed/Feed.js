@@ -5,6 +5,8 @@ import shel_prof_pic from '../../images/shelterProfile.jpg'
 import own_prof_pic from '../../images/petOwnerProfile.jpg'
 import PostModal from '../../components/Modals/PostModal'
 
+import ArrowIcon from '../../images/Created Icons/Arrow.svg'
+
 function Feed() {
     const [postModalDisplay,setPostModalDisplay]= useState(false);
     const [feedPosts, setFeedPosts] = useState([
@@ -53,6 +55,12 @@ function Feed() {
     return (
         <>
         <div className={styles["follower-feed-header"]}><h1>Feed</h1></div>
+        <div className={styles["follower-feed-new-post"]}>
+            <textarea className={styles["follower-feed-new-post-body"]} placeholder="Create a Post"/>
+            <button className={styles["follower-feed-new-post-attach-image"]}>Add Image</button>
+            <button className={styles["follower-feed-new-post-submit"]}>Submit</button>
+            <button className={styles["follower-feed-new-post-expand-collapse"]}/>
+        </div>
         <ul className={styles["follower-feed-container"]}>
             {feedPosts.length == 0 && <li>No Feed Posts</li>}
             {feedPosts && feedPosts.map((feedPost)=>(
