@@ -1,5 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
+import { NavLink } from "react-router-dom";
 import styles from './BusinessSignUp.module.css';
 
 function BusinessSignUpPage() {
@@ -78,10 +79,11 @@ function BusinessSignUpPage() {
                         </label>
                     </p>
                 </div>
-
-                <div className={styles['btn-container']}>
-                    <button type='submit' className={styles['submit-btn']}>Next: Business Details</button>
-                </div>
+                <NavLink to="/business-signup2">
+                    <div className={styles['btn-container']}>
+                        <button type='submit' className={styles['submit-btn']}>Next: Business Details</button>
+                    </div>
+                </NavLink>
             </div>
         </form>
     );
