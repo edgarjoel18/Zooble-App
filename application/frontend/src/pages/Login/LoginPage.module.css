@@ -6,7 +6,6 @@
     border-radius: 7.5px;
     z-index: 1;
     width: 35%;
-    grid-column: 2/span 1;
     box-shadow: var(--elevation-1);
     margin: 100px auto auto auto;
 }
@@ -29,6 +28,7 @@
 }
 
 .username-input-container{
+    margin-top: 50px;
     margin-bottom: 50px;
 }
 
@@ -47,13 +47,10 @@
     font-family: var(--ff-primary);
 }
 
-.username-input-container{
-    margin-top: 50px;
-}
 .username-input-container input,
 .password-input-container input{
-    padding: 15px;
-    display: inline-block;
+    padding: 10px;
+    display: block;
     border: none;
     border: 1px solid var(--inactive-txt-clr);
     border-radius: 7.5px;

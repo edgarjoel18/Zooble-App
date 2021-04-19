@@ -34,10 +34,9 @@ function SignUpPage() {
       }
 
     return (
-        <form>
-            <div className={styles['container']}>
-                <h1>Sign Up</h1>
-
+        <div className={styles['sign-up-container']}>
+            <div className={styles['sign-up-header']}>Sign Up</div>
+            <div className={styles['email-input-container']}>
                 <label for='email'>Email</label>
                 <input
                     type='email'
@@ -45,7 +44,8 @@ function SignUpPage() {
                     name='email'
                     onChange= {e => setEmail(e.target.value)}
                 />
-
+            </div>
+            <div className={styles['username-input-container']}>
                 <label for='uname'>Username</label>
                 <input
                     type='text'
@@ -53,7 +53,8 @@ function SignUpPage() {
                     name='uname'
                     onChange= {e => setUname(e.target.value)}
                 />
-
+            </div>
+            <div className={styles['first-name-input-container']}>
                 <label for='fname'>First name</label>
                 <input
                     type='text'
@@ -61,7 +62,8 @@ function SignUpPage() {
                     name='fname'
                     onChange= {e => setFirstName(e.target.value)}
                 />
-
+            </div>
+            <div className={styles['last-name-input-container']}>
                 <label for='Lname'>Last name</label>
                 <input
                     type='text'
@@ -69,7 +71,8 @@ function SignUpPage() {
                     name='lname'
                     onChange= {e => setLastName(e.target.value)}
                 />
-
+            </div>
+            <div className={styles['password-input-container']}>
                 <label for='psw'>Password</label>
                 <input
                     type='password'
@@ -77,14 +80,17 @@ function SignUpPage() {
                     name='psw'
                     onChange= {e => setPassword(e.target.value)}
                 />
-                <label for='psw-repeat'>Repeat password</label>
+            </div>
+            <div className={styles['rpt-password-input-container']}>
+                <label for='psw-repeat'>Confirm password</label>
                 <input
                     type='password'
-                    placeholder='Repeat password'
+                    placeholder='Confirm password'
                     name='psw-repeat'
                     onChange= {e => setRedonePassword(e.target.value)}
                 />
-
+            </div>
+            <div className={styles['checkbox-container']}>
                 <p>By creating an account you agree to our <a href='#'>Terms & Privacy</a>
                     <label>
                         <input
@@ -93,11 +99,11 @@ function SignUpPage() {
                         />
                     </label>
                 </p>
-
-
-                <button onClick={OnClickHandler}>Sign Up</button>
             </div>
-        </form>
+            <div className={styles['signup-btn-container']}>
+                <button onClick={OnClickHandler} className={styles['sign-up-btn']}>Sign Up</button>
+            </div>
+        </div>
     );
 }
 
