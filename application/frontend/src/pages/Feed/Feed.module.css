@@ -131,12 +131,10 @@
 
 .follower-feed-new-post-expand-collapse{
     grid-area: 3 / 3 / span 1 / span 1;
-}
-
-.follower-feed-new-post-expand-collapse{
     border: none;
     background-size: 20px 20px;
     background: url('../../images/Created\ Icons/Arrow.svg') 50% no-repeat;
+    cursor: pointer;
 }
 
 

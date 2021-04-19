@@ -84,7 +84,7 @@ function ImageContainer(props) {
                         position: ${position};
                         margin-left: ${(val-index-1) * marginToRight  + 'px'};
                         border-radius: 15px;
-                        box-shadow: var(--elevation-${index < 6 ? 6-index : 1});
+                        box-shadow: var(--elevation-1); //-${index < 6 ? 6-index : 1}
                         object-fit: cover;
                         `;
                     return (
@@ -128,7 +128,7 @@ function ImageContainer(props) {
     return (
         <>
         {/* for debugging  <button onClick={()=>{setPostModalDisplay(true)}}></button> */}
-        <PostModal display={postModalDisplay} onClose={closePostModal}/>
+        <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={{}}/>
         <div className={styles.ImageContainer} >
             <h2>{props.title}</h2>
             {imageStack}

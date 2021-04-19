@@ -40,6 +40,11 @@ function Feed() {
     ]);
 
     const [selectedPost, setSelectedPost] = useState({});
+    const [createPostOverlayDisplayBool, setCreatePostOverlayDisplayBool] = useState(true);
+    const [createPostOverlayDisplay, setCreatePostOverlayDisplay] = useState({
+        display: 'grid',
+        height: 200
+    });
 
     function openPostModal(feedPost){
         console.log(feedPost);
@@ -52,14 +57,31 @@ function Feed() {
         setPostModalDisplay(false);
     }
 
+    function createPostOverlayToggle(){
+        if(createPostOverlayDisplayBool){
+            setCreatePostOverlayDisplayBool(false);
+            setCreatePostOverlayDisplay({
+                display: 'none',
+                height: 36
+            });
+        }
+        else{
+            setCreatePostOverlayDisplayBool(true);
+            setCreatePostOverlayDisplay({
+                display: 'grid',
+                height: 200
+            });
+        }
+    }
+
     return (
         <>
         <div className={styles["follower-feed-header"]}><h1>Feed</h1></div>
-        <div className={styles["follower-feed-new-post"]}>
-            <textarea className={styles["follower-feed-new-post-body"]} placeholder="Create a Post"/>
-            <button className={styles["follower-feed-new-post-attach-image"]}>Add Image</button>
-            <button className={styles["follower-feed-new-post-submit"]}>Submit</button>
-            <button className={styles["follower-feed-new-post-expand-collapse"]}/>
+        <div className={styles["follower-feed-new-post"]} style={{height:createPostOverlayDisplay.height}}>
+            <textarea className={styles["follower-feed-new-post-body"]} style={{display: createPostOverlayDisplay.display}} placeholder="Create a Post"/>
+            <button className={styles["follower-feed-new-post-attach-image"]} style={{display: createPostOverlayDisplay.display}}>Add Image</button>
+            <button className={styles["follower-feed-new-post-submit"]} style={{display: createPostOverlayDisplay.display}}>Submit</button>
+            <button className={styles["follower-feed-new-post-expand-collapse"]} /> {/* onClick={createPostOverlayToggle} */}
         </div>
         <ul className={styles["follower-feed-container"]}>
             {feedPosts.length == 0 && <li>No Feed Posts</li>}
