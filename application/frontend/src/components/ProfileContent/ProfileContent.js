@@ -51,8 +51,11 @@ function ProfileContent(props) {
             <div className={styles.Reviews} >
                 <h2>Reviews</h2>
                 <Reviews reviews={props.profile.reviews} />
-                {!props.isSelfView && <Link>Write a Review</Link>}
-                {props.profile.reviews.length > 0 && <Link style={{alignSelf: 'flex-end'}} >See All</Link>}
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    {!props.isSelfView && <Link>Write a Review</Link>}
+                    <div></div>
+                    {props.profile.reviews.length > 0 && <Link>See All</Link>}
+                </div>
             </div>
         )
     }

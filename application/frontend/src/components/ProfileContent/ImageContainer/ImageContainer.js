@@ -88,14 +88,16 @@ function ImageContainer(props) {
                         `;
                     return (
                         // <a href={props.image[index].profile_pic} key={props.image[index].pet_id} > //Removed to test post modal functionality
+                        <div onClick={() => presentPostModal(props.image[index].profile_pic)} key={props.image[index].pet_id}>
                             <Img 
-                                key={props.image[index].pet_id}
+                                //key={props.image[index].pet_id}
                                 src={props.image[index].profile_pic} 
                                 alt="No Image Found"
-                                // onClick={presentPostModal(props.image[index].profile_pic)}
+                                //onClick={presentPostModal(props.image[index].profile_pic)}
                                 className={styles.ImageStack_pic}
                             />
-                        // </a>
+                        </div>
+                        //</a>
                     );
                 })}
             </div>

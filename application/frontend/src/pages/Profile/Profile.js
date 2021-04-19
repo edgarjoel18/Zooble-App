@@ -411,7 +411,7 @@ const newPetProfile = {
 
 function Profile() {
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
-    const [userProfile, setUserProfile] = useState(newPetOwnerProfile);
+    const [userProfile, setUserProfile] = useState(petProfile);
     const [selfView, setSelfView] = useState(true);
 
     useEffect(() => {
