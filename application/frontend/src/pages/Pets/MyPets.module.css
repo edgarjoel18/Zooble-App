@@ -10,6 +10,7 @@
     margin-bottom: 25px;
     display: flex;
     flex-wrap: wrap;
+    text-justify: center;
 }
 
 .my-pets-container-add-pet,
@@ -41,4 +42,11 @@
     height: 65px;
     object-fit: cover;
     border-radius: 7.5px;
+}
+
+.my-pets-container-no-pets{
+    margin: 0 auto;
+    color: var(--inactive-txt-clr);
+    font-size: var(--h1);
+    font-family:var(--ff-primary);
 }

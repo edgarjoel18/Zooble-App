@@ -13,7 +13,7 @@ function NavBarRight({appUser}) {
           <button className={styles["account-menu-dropdown-button"]}>Account</button>
           <ul className={styles["account-menu-dropdown-content"]}>
             <li><NavLink className={styles["account-menu-dropdown-link"]} to="/Profile">My Profile</NavLink></li>
-            <li><NavLink className={styles["account-menu-dropdown-link"]} to="/Pets">My Pets</NavLink></li>
+            <li><NavLink className={styles["account-menu-dropdown-link"]} to="/MyPets">My Pets</NavLink></li>
             <li><NavLink className={styles["account-menu-dropdown-link"]} to="/Logout">Logout</NavLink></li>
           </ul>
         </span>}
