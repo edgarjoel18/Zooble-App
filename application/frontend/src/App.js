@@ -17,7 +17,7 @@ import LoginPage from './pages/Login/LoginPage.js'
 import SignUpPage from './pages/Sign Up/SignUpPage.js'
 import ProfilePage from './pages/Profile/Profile'
 import Messages from './pages/Messages/Messages'
-import Pets from './pages/Pets/Pets'
+import MyPets from './pages/Pets/MyPets'
 
 import Feed from './pages/Feed/Feed.js'
 import Photo from './pages/Photo/Photo';
@@ -54,7 +54,7 @@ function App() {
         <Route path="/Profile" component={ProfilePage}/>
         <Route path="/Photo" component={Photo}/>
         <Route path="/Messages" component={Messages}/>
-        <Route path="/Pets" component={Pets}/>
+        <Route path="/Pets" component={MyPets}/>
         <Route path="/Followers" component={Followers}/>
         <Route path="/ExploreUsers" component={ExploreUsers}/>
         <Redirect to="/" />
