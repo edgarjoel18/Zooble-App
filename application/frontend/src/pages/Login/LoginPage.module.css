@@ -7,7 +7,8 @@
     z-index: 1;
     width: 35%;
     box-shadow: var(--elevation-1);
-    margin: 100px auto auto auto;
+    margin: 12% auto auto auto;
+    grid-column: 2/span 1;
 }
 
 .login-form h1 {
@@ -65,18 +66,6 @@
 .btn-container {
     text-align: center;
 }
-
-.login-container {
-    margin-top: 15%;
-    border-radius: 10px;
-    z-index: 1;
-    width: 50%;
-    grid-column: 2/span 1;
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20);
-}
-
-
-
 
 .forgot-password {
     margin-left: 15px;
