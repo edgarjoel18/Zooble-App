@@ -7,9 +7,13 @@ import styled from 'styled-components';
 import PostModal from '../../Modals/PostModal'
 
 function ImageContainer(props) {
-    const [postModalDisplay, setPostModalDisplay] = useState(true);
+    const [postModalDisplay, setPostModalDisplay] = useState(false);
     let history = useHistory();
-    
+
+    function closePostModal(){
+        console.log('exit button clicked')
+        setPostModalDisplay(false);
+    }
     function presentPostModal(postImage){
         console.log('clicked on image');
         setPostModalDisplay(true);
@@ -123,7 +127,8 @@ function ImageContainer(props) {
 
     return (
         <>
-        <PostModal display={postModalDisplay} onClose={()=> setPostModalDisplay(false)}/>
+        {/* for debugging  <button onClick={()=>{setPostModalDisplay(true)}}></button> */}
+        <PostModal display={postModalDisplay} onClose={closePostModal}/>
         <div className={styles.ImageContainer} >
             <h2>{props.title}</h2>
             {imageStack}

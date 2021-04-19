@@ -3,8 +3,10 @@ import styles from './Feed.module.css'
 import bus_prof_pic from '../../images/businessProfile.jpg'
 import shel_prof_pic from '../../images/shelterProfile.jpg'
 import own_prof_pic from '../../images/petOwnerProfile.jpg'
+import PostModal from '../../components/Modals/PostModal'
 
 function Feed() {
+    const [postModalDisplay,setPostModalDisplay]= useState(false);
     const [feedPosts, setFeedPosts] = useState([
         {
             post_id: 1,
@@ -34,13 +36,27 @@ function Feed() {
             body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         }
     ]);
+
+    const [selectedPost, setSelectedPost] = useState({});
+
+    function openPostModal(feedPost){
+        console.log(feedPost);
+        setSelectedPost(feedPost);
+        setPostModalDisplay(true);
+        return 
+    }
+
+    function closePostModal(){
+        setPostModalDisplay(false);
+    }
+
     return (
         <>
         <div className={styles["follower-feed-header"]}><h1>Feed</h1></div>
         <ul className={styles["follower-feed-container"]}>
             {feedPosts.length == 0 && <li>No Feed Posts</li>}
             {feedPosts && feedPosts.map((feedPost)=>(
-                <div className={styles["follower-feed-post"]}>
+            <div className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
                     <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.prof_pic}/>
                     <div className={styles["follower-feed-post-name"]}>{feedPost.user_display_name}</div>
                     <div className={styles["follower-feed-post-timestamp"]}>{feedPost.timestamp}</div>
@@ -52,6 +68,7 @@ function Feed() {
                 </div>
             ))}
         </ul>
+        <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost}/>
         </>
     )
 }
