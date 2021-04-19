@@ -12,9 +12,11 @@ import Wenjie from './pages/AboutMe/Wenjie'
 import NavBar from './components/Nav/NavBar'
 import SearchResults from './components/Search/SearchResults'
 
-
+import AccountTypePage from './pages/AccountType/AccountType.js'
 import LoginPage from './pages/Login/LoginPage.js'
 import SignUpPage from './pages/Sign Up/SignUpPage.js'
+import ShelterSignUpPage from './pages/Sign Up/ShelterSignUp.js'
+import BusinessSignUpPage from './pages/Sign Up/BusinessSignUp.js'
 import ProfilePage from './pages/Profile/Profile'
 import Messages from './pages/Messages/Messages'
 import Pets from './pages/Pets/Pets'
@@ -39,7 +41,10 @@ function App() {
           appUser={appUser} 
           setAppUser={setAppUser}
         />
+        <Route path="/account-type" exact component={AccountTypePage}/>
         <Route path="/signup-page" exact component={SignUpPage}/>
+        <Route path="/shelter-signup" exact component={ShelterSignUpPage}/>
+        <Route path="/business-signup" exact component={BusinessSignUpPage}/>
         <Route path="/Edgar" component={Edgar}/>
         <Route path="/Daniel" component={Daniel}/>
         <Route path="/Em" component={Em}/>

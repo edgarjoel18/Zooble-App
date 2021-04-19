@@ -53,7 +53,7 @@ function LoginPage({appUser, setAppUser}) {
                 </p>
 
                 <p className={styles['create-account']}>
-                    Not registered? <a href='/SignUp-Page'>Create an account</a>
+                    Not registered? <a href='/account-type'>Create an account</a>
                 </p>
             </div>
         </form>

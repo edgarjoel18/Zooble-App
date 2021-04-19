@@ -3,6 +3,10 @@
     grid-template-columns: 3;
 }
 
+.login-form h1 {
+    text-align: center;
+}
+
 /*Full width for inputs */
 
 .username-input-label, .password-input-label{
@@ -44,7 +48,7 @@
 }
 
 .login-container {
-    margin-top: 20%;
+    margin-top: 15%;
     border-radius: 10px;
     z-index: 1;
     width: 50%;
@@ -72,7 +76,8 @@
     text-align: center;
     color: white;
     background-color: var(--primary-clr);
-
+    border-radius: 5px;
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20);
 }
+
 

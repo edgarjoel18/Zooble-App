@@ -1,44 +1,13 @@
-import React, { useState } from "react";
-import Axios from "axios";
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import styles from './SignUpPage.module.css';
+import styles from './ShelterSignUp.module.css';
 
-function SignUpPage() {
-    const [email, setEmail] = useState('')
-    const [uname, setUname] = useState('')
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [password, setPassword] = useState('')
-    const [redonePassword, setRedonePassword] = useState('')
-
-    function OnClickHandler(e) {
-        console.log(email)
-        console.log(uname)
-        console.log(firstName)
-        console.log(lastName)
-        console.log(password)
-        console.log(redonePassword)
-        Axios.get('/sign-up', {
-            params: {
-                email: email,
-                firstName: firstName,
-                lastName: lastName,
-                uname: uname,
-                password: password,
-                redonePassword: redonePassword
-            }
-        })
-            .then(response => {
-                console.log(response)
-                console.log(response.data)
-                console.log(response.data.searchResults)
-            })
-    }
+function ShelterSignUpPage() {
 
     return (
-        <form className={styles['signup-form']}>
-            <div className={styles['signup-container']}>
-                <h1>Sign Up</h1>
+        <form className={styles['shelter-form']}>
+            <div className={styles['shelter-container']}>
+                <h1>Shelter Sign Up</h1>
                 <Grid container>
                     <Grid item xs={6}>
                         <div className={styles['input-container']}>
@@ -47,7 +16,6 @@ function SignUpPage() {
                                 type='email'
                                 placeholder='Enter email'
                                 name='email'
-                                onChange={e => setEmail(e.target.value)}
                             />
                         </div>
 
@@ -57,7 +25,6 @@ function SignUpPage() {
                                 type='username'
                                 placeholder='Enter username'
                                 name='uname'
-                                onChange={e => setUname(e.target.value)}
                             />
                         </div>
 
@@ -67,7 +34,6 @@ function SignUpPage() {
                                 type='password'
                                 placeholder='Enter password'
                                 name='psw'
-                                onChange={e => setPassword(e.target.value)}
                             />
                         </div>
 
@@ -77,7 +43,6 @@ function SignUpPage() {
                                 type='password'
                                 placeholder='Repeat password'
                                 name='psw-repeat'
-                                onChange={e => setRedonePassword(e.target.value)}
                             />
                         </div>
                     </Grid>
@@ -89,7 +54,6 @@ function SignUpPage() {
                                 type='text'
                                 placeholder='First name'
                                 name='fname'
-                                onChange={e => setFirstName(e.target.value)}
                             />
                         </div>
 
@@ -99,7 +63,6 @@ function SignUpPage() {
                                 type='text'
                                 placeholder='Last name'
                                 name='lname'
-                                onChange={e => setLastName(e.target.value)}
                             />
                         </div>
                     </Grid>
@@ -117,11 +80,11 @@ function SignUpPage() {
                 </div>
 
                 <div className={styles['btn-container']}>
-                    <button type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
+                    <button type='submit' className={styles['submit-btn']}>Next: Shelter Details</button>
                 </div>
             </div>
         </form>
     );
 }
 
-export default SignUpPage;
+export default ShelterSignUpPage;
