@@ -4,18 +4,18 @@
 
 
 .navbar{
-    display: flex;
-    justify-content: space-between;
+    display: grid;
     height: 100px;
     align-items: center;
     /* box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20); */
+    grid-template-columns: 225px auto 75px 75px;
+    column-gap: 50px;
     padding-left: 25px;
     padding-right: 25px;
 }
 
 .logo-img{
     height:80px;
-    margin-bottom:20px;
 }
 
 .login-link{
@@ -34,13 +34,22 @@
     font-weight: 600;
     cursor:pointer;
     text-decoration: none;
-    /* background: url('../../images/Created\ Icons/Messages.svg') no-repeat; */
+    grid-column: 3 / span 1;
+    width: 75px;
+    height: 75px;
+    background: url('../../images/Created\ Icons/Messages.svg') 50% no-repeat;
+    background-size: 50px 50px;
 }
 
 .account-menu-dropdown{
+    grid-column: 4 / span 1;
     overflow: hidden;
 }
 .account-menu-dropdown-button{
+    width: 75px;
+    height: 75px;
+    background: url('../../images/Created\ Icons/Account.svg') 50% no-repeat;
+    background-size: 50px 50px;
     border: none;
     background-color: transparent;
     font-size: var(--h2);
@@ -57,6 +66,7 @@
     visibility: hidden;
     transform: translateY(-10px);
     transition: all 0.4s ease;
+    
 
     margin-top: 0px;
     list-style: none;
@@ -64,7 +74,6 @@
     position:absolute;
     right: 10px;
     background-color: white;
-    min-width:160px;
     box-shadow: var(--elevation-1);
     z-index: 1;
 }
@@ -94,7 +103,8 @@
     .navbar{
         height: auto;
         display: grid;
-        grid-template-rows: 100px 75px;
+        grid-template-rows: 110px 75px;
+        grid-template-columns: auto auto 75px 75px;
         /* grid-template-areas: "logo       ......... messages  account  "
                              "searchbar  searchbar searchbar searchbar"; */
     }
@@ -106,11 +116,20 @@
 
     .messages-menu{
         grid-area: 1 / 3 / span 1 / span 1;
+        width: 50px;
+        height: 50px;
         /* grid-area: messages; */
+        background: url('../../images/Created\ Icons/Messages.svg') no-repeat;
     }
+
     .account-menu-dropdown{
         grid-area: 1 / 4 / span 1 / span 1;
-        /* grid-area: account; */
+    }
+
+    .account-menu-dropdown-button{
+        width: 50px;
+        height: 50px;
+        background: url('../../images/Created\ Icons/Account.svg') 50% no-repeat;
     }
 
 
