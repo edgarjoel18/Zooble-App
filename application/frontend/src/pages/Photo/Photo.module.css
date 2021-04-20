@@ -14,6 +14,10 @@
     border-radius: 15px;
 }
 
+.PhotosContainer div{
+    cursor: pointer;
+}
+
 .Image {
     width: 332.75px;
     height: 332.75px;
