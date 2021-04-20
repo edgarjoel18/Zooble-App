@@ -86,17 +86,18 @@ function SearchBar() {
           }
         }}
         />}
-      </span>
+ </span>
 
       
-      <Link className={styles["searchbar-search"]}
+      {/* <Link className={styles["searchbar-search"]}
             to={
               {pathname:"/MapSearch",
               state:{searchCategoryParam: searchCategory,
                      searchTermParam: searchTerm}}
             }
-      />
-      {/* <button onClick={OnClickHandler} ></button> */}
+      /> */}
+      <button className={styles["searchbar-search"]} onClick={OnClickHandler} ></button>
+      
       </div>
   </>
   );
