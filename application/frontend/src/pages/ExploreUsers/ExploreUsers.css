@@ -17,3 +17,10 @@
   margin-bottom: 5px;
 }
 
+.cardColumnContainer {
+  columns: 2;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 80%;
+  height: 50%;
+}
