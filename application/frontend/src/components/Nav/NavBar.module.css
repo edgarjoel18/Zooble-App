@@ -125,14 +125,6 @@ select {
 }
 
 
-/* iphone */
-@media all and (max-device-width: 480px) {
-
- .searchbar {
-     display: block;
- } 
-
-}
 
 /* ipad */
 @media all and (max-width: 1280px){
@@ -195,3 +187,12 @@ select {
 }
 
 
+/* iphone */
+@media all and (max-device-width: 480px) {
+
+    .searchbar {
+        display: block;
+    } 
+   
+}
+   
