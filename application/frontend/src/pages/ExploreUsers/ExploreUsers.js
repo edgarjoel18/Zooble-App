@@ -1,9 +1,17 @@
 import React, { useState } from "react";
-import { Container, Row, Col, CardColumns, Card } from "react-bootstrap";
+import {
+  Tabs,
+  Tab,
+  AppBar,
+  Card,
+  Typography,
+  Grid,
+  StylesProvider,
+} from "@material-ui/core";
 import "./ExploreUsers.css";
 
 const ExploreUsers = (props) => {
-  const [followersList, setFollowersList] = useState([
+  const [exploreList, setExploreList] = useState([
     {
       pet_id: 1,
       name: "Max",
@@ -53,6 +61,7 @@ const ExploreUsers = (props) => {
         "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
     },
   ]);
+
   const EuCard = ({ title, src, thethingyintheplace }) => {
     return (
       <Card className="eu-card" key={`${thethingyintheplace}_Card_Item`}>
@@ -67,38 +76,58 @@ const ExploreUsers = (props) => {
       </Card>
     );
   };
+
+  const Panel = (props) => (
+    <div>
+      <Typography>{props.children}</Typography>
+    </div>
+  );
+
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const onTabClicked = (event, newValue) => {
+    setSelectedTab(newValue);
+  };
+
   return (
-    <>
-      <div style={{ padding: "20px" }}>
-        <Container>
-          <div className="eu-results-title">Results</div>
-          <Row>
-            <Col>
-              {followersList.map((item, index) => (
-                <div style={{ padding: "10px" }}>
-                  <EuCard
-                    thethingyintheplace={index}
-                    title={item.name}
-                    src={item.profile_pic}
-                  />
-                </div>
-              ))}
-            </Col>
-            <Col>
-              {followersList.map((item, index) => (
-                <div style={{ padding: "10px" }}>
-                  <EuCard
-                    thethingyintheplace={index}
-                    title={item.name}
-                    src={item.profile_pic}
-                  />
-                </div>
-              ))}
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    </>
+    <div className="tabContainer" style={{ borderColor: "transparent" }}>
+      <AppBar
+        position="flex"
+        elevation={0}
+        style={{
+          backgroundColor: "transparent",
+          color: "black",
+          width: "1000px",
+          margin: "auto",
+        }}
+      >
+        <Tabs
+          value={selectedTab}
+          onChange={onTabClicked}
+          TabIndicatorProps={{ style: { background: "#00cc99" } }}
+        >
+          <Tab label="Results" />
+        </Tabs>
+      </AppBar>
+      {selectedTab === 0 && (
+        <div className="cardColumnContainer">
+          {" "}
+          {exploreList.map((item, index) => (
+            <div
+              style={{
+                padding: " 10px 0px",
+              }}
+            >
+              <EuCard
+                title={item.name}
+                src={item.profile_pic}
+                thethingyintheplace={index}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 
