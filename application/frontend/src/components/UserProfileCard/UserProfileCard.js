@@ -58,7 +58,7 @@ function UserProfileCard(props) {
   const [followingList, setFollowingList] = useState([
     {
       pet_id: 1,
-      name: "Max Test Follower 1",
+      name: "Max Test Following 1",
       size_name: "small",
       age_name: "two",
       profile_pic:
@@ -66,7 +66,7 @@ function UserProfileCard(props) {
     },
     {
       pet_id: 2,
-      name: "Juju Test Follower 2",
+      name: "Juju Test Following 2",
       size_name: "larg",
       age_name: "ten",
       profile_pic:
@@ -74,7 +74,7 @@ function UserProfileCard(props) {
     },
     {
       pet_id: 3,
-      name: "Mimi Test Follower 3",
+      name: "Mimi Test Following 3",
       size_name: "medium",
       age_name: "six",
       profile_pic:
@@ -82,7 +82,7 @@ function UserProfileCard(props) {
     },
     {
       pet_id: 1,
-      name: "Max Test Follower 4",
+      name: "Max Test Following 4",
       size_name: "small",
       age_name: "two",
       profile_pic:
@@ -90,7 +90,7 @@ function UserProfileCard(props) {
     },
     {
       pet_id: 2,
-      name: "Juju Test Follower 5",
+      name: "Juju Test Following 5",
       size_name: "larg",
       age_name: "ten",
       profile_pic:
@@ -98,7 +98,7 @@ function UserProfileCard(props) {
     },
     {
       pet_id: 3,
-      name: "Mimi Test Follower 6",
+      name: "Mimi Test Following 6",
       size_name: "medium",
       age_name: "six",
       profile_pic:
