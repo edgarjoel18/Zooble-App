@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import LogoPng from '../../images/ZoobleLogo.png';
+import LogoPng from '../../images/Created Icons/Logo.png';
 
 import styles from './NavBar.module.css'
 
