@@ -136,7 +136,7 @@ function UserProfileCard(props) {
   return (
     <div className="tabContainer">
       <AppBar
-        position="flex"
+        position="relative"
         elevation={0}
         style={{
           backgroundColor: "transparent",
@@ -155,8 +155,16 @@ function UserProfileCard(props) {
         </Tabs>
       </AppBar>
       {selectedTab === 0 && (
-        <Card elevation = {0}>
-          <div style={{ columns: "2", width: "1000px", margin: "auto" }}>
+        <Card elevation={0}>
+          <div
+            style={{
+              columns: "2",
+              maxWidth: "1000px",
+              margin: "0 auto",
+              width: "80%",
+              height: "50%",
+            }}
+          >
             {" "}
             {followersList.map((item, index) => (
               <div
@@ -176,7 +184,7 @@ function UserProfileCard(props) {
       )}
 
       {selectedTab === 1 && (
-        <Card elevation = {0}>
+        <Card elevation={0}>
           <div style={{ columns: "2", width: "1000px", margin: "auto" }}>
             {" "}
             {followingList.map((item, index) => (
@@ -200,4 +208,3 @@ function UserProfileCard(props) {
 }
 
 export default UserProfileCard;
-
