@@ -2,7 +2,7 @@ import React, {useEffect, useLayoutEffect, useState} from "react";
 import {Link, Switch, Route, Redirect} from "react-router-dom";
 import Axios from "axios";
 
-import styles from './SearchBar.module.css'
+import styles from '../Nav/NavBar.module.css'
 
 //components
 import Modal from '../Modals/Modal.js'
