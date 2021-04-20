@@ -62,9 +62,12 @@ const ExploreUsers = (props) => {
     },
   ]);
 
-  const EuCard = ({ title, src, thethingyintheplace }) => {
+  const EuCard = ({ title, src, exploreusersthingyintheplace }) => {
     return (
-      <Card className="eu-card" key={`${thethingyintheplace}_Card_Item`}>
+      <Card
+        className="eu-card"
+        key={`${exploreusersthingyintheplace}_Card_Item`}
+      >
         <div style={{ display: "flex", width: "100%", padding: "14px" }}>
           <div style={{ marginRight: "10px" }}>
             <img src={src} className="eu-card-img" />
@@ -92,7 +95,7 @@ const ExploreUsers = (props) => {
   return (
     <div className="tabContainer" style={{ borderColor: "transparent" }}>
       <AppBar
-        position="flex"
+        position="relative"
         elevation={0}
         style={{
           backgroundColor: "transparent",
@@ -121,7 +124,7 @@ const ExploreUsers = (props) => {
               <EuCard
                 title={item.name}
                 src={item.profile_pic}
-                thethingyintheplace={index}
+                exploreusersthingyintheplace={index}
               />
             </div>
           ))}
