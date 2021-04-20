@@ -98,8 +98,43 @@
     transform: translateY(0px);
 }
 
+/*TEST */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  
+}
+
+.search-category-dropdown select{
+  background-color: var(--reversed-txt-clr);
+  border: none;
+  border-radius:10px;
+  font-size: 2em;
+  margin-left:10px;
+  padding-right: 20px;
+  background: url("../../images/Created\ Icons/Dropdown.svg") no-repeat right;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.searchbar-search{
+  width: 50px;
+  height: 50px;
+  background: url("../../images/Third\ Party\ Icons/icons8-search-location-48.png") no-repeat;
+}
 
 
+/* iphone */
+@media all and (max-device-width: 480px) {
+
+ .searchbar {
+     display: block;
+ } 
+
+}
+
+/* ipad */
 @media all and (max-width: 1280px){
     .navbar{
         height: auto;
@@ -154,87 +189,9 @@
   text-overflow: ellipsis;
 }
 
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  
+.searchbar-input {
+    width:70%;
 }
-
-.search-category-dropdown select{
-  background-color: var(--reversed-txt-clr);
-  border: none;
-  border-radius:10px;
-  font-size: 2em;
-  margin-left:10px;
-  padding-right: 20px;
-  background: url("../../images/Created\ Icons/Dropdown.svg") no-repeat right;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.searchbar-search{
-  width: 50px;
-  height: 50px;
-  background: url("../../images/Third\ Party\ Icons/icons8-search-location-48.png") no-repeat;
-}
-
-
-/* iphone */
-@media all and (max-device-width: 480px) {
-
- .searchbar {
-     display: block;
- } 
-
-}
-
-/* ipad */
-@media all and (max-device-width: 1024px) {
-    .navbar{
-        height: auto;
-        display: grid;
-        grid-template-rows: 100px 75px;
-        /* grid-template-areas: "logo       ......... messages  account  "
-                             "searchbar  searchbar searchbar searchbar"; */
-    }
-
-    .logo-img{
-        grid-area: 1 / 1 / span 1 / span 1;
-        /* grid-area: logo; */
-    }
-
-    .messages-menu{
-        grid-area: 1 / 3 / span 1 / span 1;
-        /* grid-area: messages; */
-    }
-    .account-menu-dropdown{
-        grid-area: 1 / 4 / span 1 / span 1;
-        /* grid-area: account; */
-    }
-
-
-
-    .searchbar{
-        width: 100%;
-        height: 50px;
-        grid-area: 2 / 1 / span 1 / span 4;
-      }
-      .search-category-dropdown select{
-          font-size: var(--h5);
-          background-size: 10px 10px;
-          padding-right: 10px;
-      }
-    
-      .searchbar input{
-        font-size: 1em;
-        width:100%;
-        margin: 0;
-      }
-    .searchbar-input {
-        width:70%;
-    }
-
 }
 
 
