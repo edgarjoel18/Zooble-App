@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState} from "react";
+import Axios from "axios";
 import styles from './LoginPage.module.css';
 import {Redirect, useHistory} from "react-router-dom";
 
@@ -11,12 +12,21 @@ function LoginPage({appUser, setAppUser}) {
     let history = useHistory();
 
     function loginHandler(e){
-        // setIsLoggedIn(true);
-        // setAppUser(username);
-        console.log(appUser);
-        console.log(isLoggedIn);
-        history.push('/feed');
-    }
+        console.log(username)
+        console.log(password)
+
+         Axios.get('/login',{
+           params: {
+             username: username,
+             password: password,
+             }})
+           .then(response =>{
+           console.log(response)
+           console.log(response.data)
+           console.log(response.data.searchResults)
+        })
+        history.push('/feed')
+      }
 
     if (isLoggedIn){
         console.log(isLoggedIn);
