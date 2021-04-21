@@ -137,7 +137,7 @@ function SignUpPage() {
                             </p>
                     </div>
                     <div className={styles['btn-container']}>
-                            <button className={styles['policy-button']} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
+                            <button className={styles['submit-btn']} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
                     </div>
             </div>
             {/* Modals */}

@@ -129,3 +129,11 @@
     margin: 0 auto;
 }
 
+.no-results{
+    list-style: none;
+    text-align: center;
+    font-size: var(--h1);
+    color: var(--inactive-txt-clr);
+    font-family: var(--ff-primary);
+}
+
