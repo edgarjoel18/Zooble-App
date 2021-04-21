@@ -37,7 +37,9 @@ function ProfileInfo(props) {
     },[]);
 
     function openEditModal(){
-        setEditPetDetailsDisplay(true);
+        props.profile.accountType === 'pet' ?
+        setEditPetDetailsDisplay(true) :
+        setEditing(true);
     }
 
     function cancelEditHandler() {
@@ -218,10 +220,20 @@ function ProfileInfo(props) {
                 //         onChange={event => props.updateProfile('userName', event.target.value)} 
                 //     />
                 // </h1> 
-                <div style={{display: 'flex'}} >
-                    <h1 className={styles.UserName}>{props.profile.userName}</h1>
-                    <h3>{petType.value}/{petBreeds[0].value}</h3>
-                </div>
+                <React.Fragment>
+                    <div style={{display: 'flex'}} >
+                        <h1 className={styles.UserName}>{props.profile.userName}</h1>
+                        <h3>{petType.value}/{petBreeds[0].value}</h3>
+                    </div>
+                    <EditPetDetails 
+                    display={editPetDetailsDisplay} 
+                    updateProfile={props.updateProfile} 
+                    profile={props.profile} 
+                    onClose={()=> setEditPetDetailsDisplay(false)}
+                    updatePetType={setPetType}
+                    updatePetBreed={setPetBreed}
+                    />
+                </React.Fragment>
             )
             displayAccountInfo = (
                 <div className={styles.ButtonContainer} >
@@ -266,8 +278,8 @@ function ProfileInfo(props) {
                     {
                         props.isSelfView && !editing && 
                         <button 
-                        className={styles.EditButton} 
-                        onClick={() => openEditModal()}  
+                            className={styles.EditButton} 
+                            onClick={() => openEditModal()}  
                         >
                             edit
                         </button>
@@ -276,8 +288,8 @@ function ProfileInfo(props) {
                     {
                         props.isSelfView && editing && 
                         <button 
-                        className={styles.EditButton} 
-                        onClick={cancelEditHandler}  
+                            className={styles.EditButton} 
+                            onClick={cancelEditHandler}  
                         >
                             confirm
                         </button>
@@ -286,14 +298,6 @@ function ProfileInfo(props) {
                 {displayAccountInfo}
             </div>
             <SendAMessage display={sendAMessageDisplay} onClose={()=> setSendAMessageDisplay(false)}/>
-            <EditPetDetails 
-            display={editPetDetailsDisplay} 
-            updateProfile={props.updateProfile} 
-            profile={props.profile} 
-            onClose={()=> setEditPetDetailsDisplay(false)}
-            updatePetType={setPetType}
-            updatePetBreed={setPetBreed}
-            />
         </div>
     );
 }
