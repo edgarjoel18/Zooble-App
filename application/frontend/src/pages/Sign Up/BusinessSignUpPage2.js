@@ -3,10 +3,20 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import styles from './BusinessSignUpPage2.module.css';
 
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated';
+
 import TermsAndConditions from '../../components/Modals/TermsAndConditions'
 import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
 
 function BusinessSignUpPage2() {
+    const typeOptions = [  // final product will fetch from database
+        { value: 'Retailer', label: 'Retailer' },
+        { value: 'Service', label: 'Service' },
+        { value: 'Retailer', label: 'Retailer' },
+        { value: 'Education', label: 'education' },
+    ];
+
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
     const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
 
@@ -25,6 +35,26 @@ function BusinessSignUpPage2() {
     function closePrivacyPolicyModal() {
         setPrivacyPolicyDisplay(false);
     }
+
+    const [selectedBusinessCategory, setSelectedBusinessCategory] = useState([]);
+
+    function customTheme(theme) { //move this a separate file and import maybe?
+        return {
+            control: base => ({
+                ...base,
+                height: 54.5,
+                minHeight: 54.5
+            }),
+            ...theme,
+            colors: {
+                ...theme.colors,
+                primary25: '#B3B3B3',
+                primary: '#1CB48F',
+            }
+        }
+    }
+
+    const animatedComponents = makeAnimated();
 
     return (
         <form className={styles['business-form']}>
@@ -54,10 +84,14 @@ function BusinessSignUpPage2() {
                     <Grid item xs={6}>
                         <div className={styles['input-container']}>
                             <label className={styles['business-categories-input-label']} for='business-categories'><h3>Business Categories</h3></label>
-                            <input
-                                type='text'
-                                placeholder='business category'
-                                name='business-categories'
+                            <Select id="business-category-types" name="business-category-types"
+                                onChange={setSelectedBusinessCategory}
+                                options={typeOptions}
+                                placeholder="Your Business Category"
+                                theme={customTheme}
+                                isSearchable
+                                isMulti
+                                components={animatedComponents}
                             />
                         </div>
                     </Grid>
