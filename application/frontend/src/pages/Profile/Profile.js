@@ -319,7 +319,12 @@ const petProfile = {
     id: '97',
     userName: 'Sasha',
     userPicture: 'petImage',
+    petOwner: 'Alex', 
     about: 'Hello, I\'m Sasha.',
+    petType: {value: 'Dog', label: 'Dog'},
+    petBreeds: [{value: 'Samoyed', label: 'Samoyed'}, {}],
+    petColors: 'White',
+    petSize: 'Large',
     photos: [
         {   pet_id: 3,
             name: 'Juju',

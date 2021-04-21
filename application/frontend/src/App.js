@@ -19,6 +19,7 @@ import ShelterSignUpPage2 from './pages/Sign Up/ShelterSignUpPage2.js'
 import BusinessSignUpPage from './pages/Sign Up/BusinessSignUp.js'
 import BusinessSignUpPage2 from './pages/Sign Up/BusinessSignUpPage2.js'
 import ProfilePage from './pages/Profile/Profile'
+import PetOwnerPage from './pages/Profile/PetOwnerProfilePage'
 import Messages from './pages/Messages/Messages'
 import MyPets from './pages/Pets/MyPets'
 import Pets from './pages/Pets/Pets'
@@ -52,7 +53,8 @@ function App() {
         <Route path="/business-signup2" exact component={BusinessSignUpPage2}/>
         <Route path="/Feed" component={Feed}/>
         <Route path="/MapSearch" component={MapSearch}/>
-        <Route path="/Profile" component={ProfilePage}/>
+        <Route path="/Profile" exact component={ProfilePage}/>
+        <Route path="/Profile/Alex" component={PetOwnerPage}/>
         <Route path="/Photo" component={Photo}/>
         <Route path="/Messages" component={Messages}/>
         <Route path="/MyPets" component={MyPets}/>

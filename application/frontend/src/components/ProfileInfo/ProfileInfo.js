@@ -20,19 +20,26 @@ function ProfileInfo(props) {
     const [follow, setFollow] = useState(false); // update this from backend
     const [showBackdrop, setShowBackdrop] = useState(false);
 
+    const [petType, setPetType] = useState({});
+    const [petBreeds, setPetBreed] = useState([{}]);
+    // const [petColors, setPetColors] = useState([]);
+    // const [petSize, setPetSize] = useState();
+
     const [sendAMessageDisplay,setSendAMessageDisplay] = useState(false);
 
     const[editPetDetailsDisplay, setEditPetDetailsDisplay] = useState(false);
 
     let history = useHistory();
 
-    // useEffect(() => {
-    //     setProfileTitle('Burgsdale Pet Shelter');
-    //     setProfilePic(shelterImg);
-    // },[]);
+    useEffect(() => {
+        setPetType(props.profile.petType);
+        setPetBreed(props.profile.petBreeds);
+    },[]);
 
     function openEditModal(){
-        setEditPetDetailsDisplay(true);
+        props.profile.accountType === 'pet' ?
+        setEditPetDetailsDisplay(true) :
+        setEditing(true);
     }
 
     function cancelEditHandler() {
@@ -86,9 +93,19 @@ function ProfileInfo(props) {
             img = defaultImg;
     }
 
+    let displayName = null;
     let displayAccountInfo = null;
     switch(props.profile.accountType) {
         case 'shelter' :
+            displayName = (
+                <h1 className={styles.UserName} >
+                    <input 
+                        value={props.profile.userName} 
+                        readOnly={!editing}
+                        onChange={event => props.updateProfile('userName', event.target.value)} 
+                    />
+                </h1> 
+            )
             displayAccountInfo = (
                 <div className={styles.ButtonContainer} >
                     {!props.isSelfView ? (
@@ -118,6 +135,15 @@ function ProfileInfo(props) {
             )
             break;
         case 'business' :
+            displayName = (
+                <h1 className={styles.UserName} >
+                    <input 
+                        value={props.profile.userName} 
+                        readOnly={!editing}
+                        onChange={event => props.updateProfile('userName', event.target.value)} 
+                    />
+                </h1> 
+            )
             displayAccountInfo = (
                 <div className={styles.ButtonContainer} >
                     {!props.isSelfView ? (
@@ -148,7 +174,67 @@ function ProfileInfo(props) {
             )
             break;
         case 'pet owner' :
+            displayName = (
+                <h1 className={styles.UserName} >
+                    <input 
+                        value={props.profile.userName} 
+                        readOnly={!editing}
+                        onChange={event => props.updateProfile('userName', event.target.value)} 
+                    />
+                </h1> 
+            )
+            displayAccountInfo = (
+                <div className={styles.ButtonContainer} >
+                    {!props.isSelfView ? (
+                        <React.Fragment>
+                            <Backdrop show={showBackdrop} clicked={closeDropdown} />
+                            <button className={styles.DropdownButton} >
+                                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                    <span className={styles.DropdownText} onClick={() => setFollow(!follow)} >
+                                        {follow ? 'Following' : 'Follow'}
+                                    </span>
+                                    <div onClick={showDropdown} >
+                                        <img src={arrow} />
+                                    </div>
+                                </div>
+                            </button>
+                            <div className={styles.DropdownHidden} id='dropDownContent' > 
+                                <Link className={styles.DropdownItem} to="Followers" >Followers</Link>
+                            </div>
+                        </React.Fragment>
+                        ):
+                        (
+                            <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
+                        )
+                    }
+                    {!props.isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
+                </div>
+            )
+            break;
         case 'pet':
+            displayName = (
+                // <h1 className={styles.UserName} >
+                //     <input 
+                //         value={props.profile.userName} 
+                //         readOnly={!editing}
+                //         onChange={event => props.updateProfile('userName', event.target.value)} 
+                //     />
+                // </h1> 
+                <React.Fragment>
+                    <div style={{display: 'flex'}} >
+                        <h1 className={styles.UserName}>{props.profile.userName}</h1>
+                        <h3>{petType.value}/{petBreeds[0].value}</h3>
+                    </div>
+                    <EditPetDetails 
+                    display={editPetDetailsDisplay} 
+                    updateProfile={props.updateProfile} 
+                    profile={props.profile} 
+                    onClose={()=> setEditPetDetailsDisplay(false)}
+                    updatePetType={setPetType}
+                    updatePetBreed={setPetBreed}
+                    />
+                </React.Fragment>
+            )
             displayAccountInfo = (
                 <div className={styles.ButtonContainer} >
                     {!props.isSelfView ? (
@@ -192,24 +278,18 @@ function ProfileInfo(props) {
                     {
                         props.isSelfView && !editing && 
                         <button 
-                        className={styles.EditButton} 
-                        onClick={() => openEditModal()}  
+                            className={styles.EditButton} 
+                            onClick={() => openEditModal()}  
                         >
                             edit
                         </button>
                     }
-                    <h1 className={styles.UserName} >
-                        <input 
-                            value={props.profile.userName} 
-                            readOnly={!editing}
-                            onChange={event => props.updateProfile('userName', event.target.value)} 
-                        />
-                    </h1> 
+                    {displayName}
                     {
                         props.isSelfView && editing && 
                         <button 
-                        className={styles.EditButton} 
-                        onClick={cancelEditHandler}  
+                            className={styles.EditButton} 
+                            onClick={cancelEditHandler}  
                         >
                             confirm
                         </button>
@@ -218,7 +298,6 @@ function ProfileInfo(props) {
                 {displayAccountInfo}
             </div>
             <SendAMessage display={sendAMessageDisplay} onClose={()=> setSendAMessageDisplay(false)}/>
-            <EditPetDetails display={editPetDetailsDisplay} onClose={()=> setEditPetDetailsDisplay(false)}/>
         </div>
     );
 }

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Tag from './Tag/Tag';
 
 import styles from './AboutMe.module.css';
+import { Link } from 'react-router-dom';
 
 const shelterProfileTags = ["About", "Contact Info", "Recent Posts"]
 const businessProfileTags = ["About", "Business Info", "Recent Posts"]
@@ -55,6 +56,7 @@ function AboutMe(props) {
     }
 
     let profileTags = null;
+    let displayPetOwnerLink = null;
     switch (props.profile.accountType) {
         case 'shelter':
             profileTags = shelterProfileTags;
@@ -63,8 +65,16 @@ function AboutMe(props) {
             profileTags = businessProfileTags;
             break;
         case 'pet owner':
+            profileTags = petOwnerProfileTags;
+            break;
         case 'pet':
             profileTags = petOwnerProfileTags;
+            displayPetOwnerLink = (
+                <div>
+                    <span className={styles.petOwnerLinkLable} >My Owner: </span>
+                    <Link to="/Profile/Alex" >{props.profile.petOwner}</Link>
+                </div>
+            )
             break;
         default:
             profileTags = null;
@@ -79,6 +89,7 @@ function AboutMe(props) {
         case 'About':
             content = (
                 <div>
+                    {displayPetOwnerLink}
                     <textarea 
                         className={styles.TextArea} 
                         value={props.profile.about} 
