@@ -6,8 +6,7 @@ import Select from 'react-select'
 
 import makeAnimated from 'react-select/animated';
 
-import Select from 'react-select'
-import makeAnimated from 'react-select/animated';
+
 
 import TermsAndConditions from '../../components/Modals/TermsAndConditions'
 import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
@@ -95,7 +94,7 @@ function BusinessSignUpPage2() {
                     <label className={styles['types-input-label']} for='business-categories'>Business Categories</label>
                         <Select id="shelter-animal-types" name="shelter_animal_types"
                             onChange={setSelectedBusinessCategories}
-                            options={businessCategoryOptions}
+                            options={typeOptions}
                             placeholder="Categories of your Business"
                             theme={customTheme}
                             isSearchable
