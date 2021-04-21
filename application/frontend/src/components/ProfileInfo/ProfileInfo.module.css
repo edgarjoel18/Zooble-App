@@ -84,7 +84,6 @@
     flex-direction: column;
     position: absolute;
     background-color: #ffffff;
-    text-align: center;
     color: var(--primary-txt-clr);
     min-width: 170px;
     box-shadow: var(--elevation-1);
@@ -92,12 +91,13 @@
 }
 
 .DropdownItem {
-    color: var(--primary-clr);
+    width: 100%;
 }
 
 
 .DropdownItem:hover {
-    background-color: #ccc;
+    width: 100%;
+    color: var(--primary-clr);
 }
 
 .FristButton {
