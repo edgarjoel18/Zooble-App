@@ -19,7 +19,6 @@ function NavBarRight({appUser,setAppUser}) {
   
   return (
         <>
-        {appUser}
         {!appUser && <NavLink className={styles["login-link"]} to="/login-page">Login</NavLink>}
         {appUser && <NavLink to="/Messages" className={styles["messages-menu"]}/>}
         {appUser &&<span className="account-menu-dropdown">
