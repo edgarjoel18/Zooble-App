@@ -18,27 +18,6 @@ function ImageContainer(props) {
         console.log('clicked on image');
         setPostModalDisplay(true);
     }
-
-    // const[pets, setPets] = useState([
-    //     { pet_id: 1,
-    //         name: 'Mimi',
-    //         size_name: 'medium',
-    //         age_name: 'six',
-    //         profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg' 
-    //     }, 
-    //     {   pet_id: 2,
-    //         name: 'Max',
-    //         size_name: 'small',
-    //         age_name: 'two',
-    //         profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
-    //     },
-    //     {   pet_id: 3,
-    //         name: 'Juju',
-    //         size_name: 'larg',
-    //         age_name: 'ten',
-    //         profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg' 
-    //     }
-    // ]);
     const[imageStack, setImageStack] = useState();
 
     useEffect (() => {

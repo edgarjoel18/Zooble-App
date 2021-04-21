@@ -1,10 +1,33 @@
-import React from "react";
+import {useState} from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./Footer.module.css";
 
+import TermsAndConditions from '../../components/Modals/TermsAndConditions'
+import PrivacyPolicy from "../Modals/PrivacyPolicy";
+
 function Footer() {
+  const [termsAndConditionsDisplay,setTermsAndConditionsDisplay]= useState(false);
+  const [privacyPolicyDisplay,setPrivacyPolicyDisplay]= useState(false);
+
+  function openTermsAndConditionsModal(){
+    setTermsAndConditionsDisplay(true);
+  }
+
+  function closeTermsAndConditionsModal(){
+    setTermsAndConditionsDisplay(false);
+  }
+
+  function openPrivacyPolicyModal(){
+    setPrivacyPolicyDisplay(true);
+  }
+
+  function closePrivacyPolicyModal(){
+    setPrivacyPolicyDisplay(false);
+  }
+
 
   return (
+    <>
     <div className={styles["footer"]}>
       <div className={styles["our-team-footer"]}>Our Team<br />
         <NavLink className={styles["nav-link"]} to="/Edgar" >Edgar</NavLink>
@@ -22,11 +45,15 @@ function Footer() {
         <a href=""><i className="fa fa-envelope"></i></a>
       </div>
       <div className={styles['terms-conditions']}>
-        <a href="https://www.linkedin.com/"><i className="terms-of-use"></i>Terms of Use</a>
-        <a><i></i>|</a>
-        <a href="https://www.instagram.com/"><i className="privacy-policy"></i>Privacy Policy</a>
+        <button className={styles['terms-button']} onClick={openTermsAndConditionsModal}>Terms of Use</button>
+        |
+        <button className={styles['policy-button']} onClick={openPrivacyPolicyModal}>Privacy Policy</button>
       </div>
     </div>
+    {/* Modals */}
+    <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal}/>
+    <PrivacyPolicy display={privacyPolicyDisplay} onClose={closePrivacyPolicyModal}/>
+    </>
   );
 }
 

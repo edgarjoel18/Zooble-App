@@ -47,3 +47,10 @@
 i {
     padding-right: 20px;
 }
+
+.terms-button,
+.policy-button{
+    border: none;
+    background-color: transparent;
+    color:var(--reversed-txt-clr);
+}
