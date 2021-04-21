@@ -12,6 +12,7 @@ import styles from './ProfileInfo.module.css';
 import SendAMessage from '../../components/Modals/SendAMessage';
 import Backdrop from '../UI/Backdrop/Backdrop';
 import EditPetDetails from '../Modals/EditPetDetails';
+import EditButton from '../Buttons/EditButton';
 
 function ProfileInfo(props) {
     //const [profilePic, setProfilePic] = useState('');
@@ -286,22 +287,36 @@ function ProfileInfo(props) {
                 <div style={{display: 'flex', justifyItems: 'center'}}>
                     {
                         props.isSelfView && !editing && 
-                        <button 
-                            className={styles.EditButton} 
-                            onClick={() => openEditModal()}  
+                        //<button className={styles.EditButton} onClick={() => openEditModal()}  >edit</button>
+                        <EditButton 
+                            style={{
+                                alignSelf: 'center',
+                                fontSize: '1.5em',
+                                height: '50%',
+                                outline: 'none'
+                            }} 
+                            edit 
+                            clicked={() => openEditModal()}
                         >
-                            edit
-                        </button>
+                            Edit
+                        </EditButton>
                     }
                     {displayName}
                     {
                         props.isSelfView && editing && 
-                        <button 
-                            className={styles.EditButton} 
-                            onClick={cancelEditHandler}  
+                        //<button className={styles.EditButton} onClick={cancelEditHandler}  >confirm</button>
+                        <EditButton 
+                            style={{
+                                alignSelf: 'center',
+                                fontSize: '1.5em',
+                                height: '50%',
+                                outline: 'none'
+                            }} 
+                            save 
+                            clicked={cancelEditHandler}
                         >
-                            confirm
-                        </button>
+                            Save
+                        </EditButton>
                     }
                 </div>
                 {displayAccountInfo}

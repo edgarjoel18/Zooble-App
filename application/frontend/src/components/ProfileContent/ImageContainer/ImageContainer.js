@@ -8,6 +8,9 @@ import PostModal from '../../Modals/PostModal'
 
 function ImageContainer(props) {
     const [postModalDisplay, setPostModalDisplay] = useState(false);
+    const [imageStack, setImageStack] = useState();
+    const [text, setText] = useState('');
+
     let history = useHistory();
 
     function closePostModal(){
@@ -18,7 +21,6 @@ function ImageContainer(props) {
         console.log('clicked on image');
         setPostModalDisplay(true);
     }
-    const[imageStack, setImageStack] = useState();
 
     useEffect (() => {
         setImageStack(displayImageStack(props.image.length, props.accountType));
@@ -30,7 +32,7 @@ function ImageContainer(props) {
         console.log('displayImageStack');
         if (props.image.length === 0)
             return (
-                <Link>
+                <Link onMouseEnter={() => setText('Photo upload coming soon')} onMouseLeave={() => setText('')}>
                     <div className={styles.EmptyDiv} >
                     </div>
                 </Link>
@@ -118,12 +120,15 @@ function ImageContainer(props) {
         seeAll = <p style={{cursor: 'pointer'}} onClick={() => history.push("/MyPets")} >See All</p>
     }
 
+    console.log('[text] ' + text)
+
     return (
         <>
         {/* for debugging  <button onClick={()=>{setPostModalDisplay(true)}}></button> */}
         <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={{}}/>
         <div className={styles.ImageContainer} >
             <h2>{props.title}</h2>
+            {text}
             {imageStack}
             {seeAll}
         </div>

@@ -29,10 +29,11 @@
 
 .Content input {
     outline: none;
-    border: var(--primary-clr) solid 3px;
+    border: var(--primary-clr) solid 2px;
     border-radius: 10px;
     width: 50%;
     margin-bottom: 7px;
+    text-overflow: ellipsis;
 }
 
 .Content input:read-only {
@@ -53,6 +54,13 @@
     border: none;
     background-color: #e4e6eb;
     border-radius: 15px;
+}
+
+.AddressTextArea {
+    resize: none;
+    outline: none;
+    border: var(--primary-clr) solid 2px;
+    border-radius: 5px;
 }
 
 .petOwnerLinkLable {

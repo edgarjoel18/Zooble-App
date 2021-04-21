@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Tag from './Tag/Tag';
+import EditButton from '../Buttons/EditButton'
 
 import styles from './AboutMe.module.css';
 import { Link } from 'react-router-dom';
@@ -99,8 +100,10 @@ function AboutMe(props) {
                         cols='50' 
                     />
                     { props.isSelfView && ((labelSelected !== 'about') ? 
-                        <button onClick={() => changingInfoHandler('about')} >edit</button>:
-                        <button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
+                        // <button onClick={() => changingInfoHandler('about')} >edit</button>
+                        <EditButton edit clicked={() => changingInfoHandler('about')}>Edit</EditButton> :
+                        //<button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
+                        <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton>
                         )
                     }
                 </div>
@@ -110,22 +113,31 @@ function AboutMe(props) {
         case 'Business Info':
             content = (
                 <div>
-                    {props.isSelfView && (labelSelected !== 'address') && <button onClick={() => changingInfoHandler('address')} >edit</button>}
+                    {
+                        props.isSelfView && (labelSelected !== 'address') && 
+                        // <button onClick={() => changingInfoHandler('address')} >edit</button>
+                        <EditButton edit clicked={() => changingInfoHandler('address')}>Edit</EditButton>
+                    }
                     <label>Address: </label>
                     <textarea 
                         value={props.profile.contactInfo.address} 
                         readOnly={!changing || !(labelSelected === 'address')}
                         onChange={event => props.updateProfile('address', event.target.value)} 
-                        style={{resize: 'none', borderColor: 'var(--primary-clr)', outline: 'none'}}
+                        className={styles.AddressTextArea}
                         rows='2' 
                         cols='50' 
                     />
                     {
                         (labelSelected === 'address') && 
-                        <button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
+                        //<button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
+                        <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton>
                     }
                     <br />
-                    {props.isSelfView && (labelSelected !== 'phone number') && <button onClick={() => changingInfoHandler('phone number')} >edit</button>}
+                    {
+                        props.isSelfView && (labelSelected !== 'phone number') && 
+                        //<button onClick={() => changingInfoHandler('phone number')} >edit</button>
+                        <EditButton edit clicked={() => changingInfoHandler('phone number')}>Edit</EditButton>
+                    }
                     <label>Phone Number: </label>
                     <input 
                         type="text" 
@@ -135,26 +147,29 @@ function AboutMe(props) {
                     />
                     {
                         (labelSelected === 'phone number') && 
-                        <button style={{marginLeft: '5px'}} onClick={cancelEditingHandler} >Save</button>
+                        // <button style={{marginLeft: '5px'}} onClick={cancelEditingHandler} >Save</button>
+                        <EditButton save clicked={cancelEditingHandler}>Save</EditButton>
                     }
                     <br />
                     {/* // need to make a modal here to set hours  */}
                     <div style={{textAlign: 'center'}}>
-                    {
-                        props.isSelfView && (labelSelected !== 'hours') && 
-                        <button onClick={() => changingInfoHandler('hours')} >edit</button>
-                    }
-                    <label>Hours: </label>
-                    {Object.keys(props.profile.contactInfo.hours).map(key => (
-                        <div key={key} >
-                            <label>{key}: </label>
-                            <span >{props.profile.contactInfo.hours[key]}</span>
-                        </div>
-                    ))}
+                        {
+                            props.isSelfView && (labelSelected !== 'hours') && 
+                            //<button onClick={() => changingInfoHandler('hours')} >edit</button>
+                            <EditButton edit clicked={() => changingInfoHandler('hours')}>Edit</EditButton>
+                        }
+                        <label>Hours: </label>
+                        {Object.keys(props.profile.contactInfo.hours).map(key => (
+                            <div key={key} >
+                                <label>{key}: </label>
+                                <span >{props.profile.contactInfo.hours[key]}</span>
+                            </div>
+                        ))}
                     </div>
                     {
                         props.isSelfView && (labelSelected === 'hours') && 
-                        <button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
+                        //<button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
+                        <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton>
                     }
                 </div>
             );
