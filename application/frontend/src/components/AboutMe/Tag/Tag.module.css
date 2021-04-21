@@ -21,6 +21,6 @@
 
 .ActiveTag {
     box-shadow: -2px 1px 1px 0 rgba(0,0,0,0.14), -2px 2px 1px -1px rgba(0,0,0,0.12), -2px 1px 3px 0 rgba(0,0,0,0.20);;
-    z-index: 2;
+    z-index: 1;
     background-color: var(--reversed-txt-clr);
 }

@@ -1,0 +1,70 @@
+.messages-header{
+    margin: 25px;
+    font-size: var(--h1);
+    font-family: var(--ff-primary);
+    font-weight: 600;
+}
+
+.messages-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+.messages-container-no-messages{
+    color: var(--inactive-txt-clr);
+    font-size: var(--h1);
+    font-family:var(--ff-primary);
+}
+
+.messages-container-message{
+    display: grid;
+    box-shadow: var(--elevation-1);
+
+    grid-template-columns: 120px auto auto 175px;
+    grid-template-rows: 40px 40px 40px; 
+
+    /* grid-template-areas:  'pic subject ........ timestamp'
+                          'pic sender ........ reply-icon'
+                          'pic ....... ........ ..........'; */
+    width: 750px;
+    height: 125px;
+    align-items: center;
+    font-family: var(--ff-primary);
+    margin-bottom: 25px;
+    border-radius: 7.5px;
+}
+
+.messages-container-message-pic{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 7.5px;
+    grid-area: 1 / 1 / span 3 / span 1;
+    margin-left: 15px;
+}
+
+.messages-container-message-subject{
+    font-size: var(--h3);
+    grid-area: 1 / 2 / span 1 / span 1;
+    font-weight: 600;
+    margin-left: 15px;
+}
+
+.messages-container-message-timestamp{
+    grid-area: 1 / 4 / span 1 / span 1;
+}
+
+.messages-container-message-sender{
+    grid-area: 2 / 2 / span 1 / span 1;
+    margin-left: 15px;
+}
+
+
+@media all and (max-width: 876px){
+    .messages-container-message{
+        width: 90%;
+    }
+}

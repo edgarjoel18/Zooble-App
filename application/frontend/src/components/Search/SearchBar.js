@@ -86,7 +86,7 @@ function SearchBar() {
           }
         }}
         />}
-      </span>
+ </span>
 
       
       <Link className={styles["searchbar-search"]}
@@ -96,45 +96,11 @@ function SearchBar() {
                      searchTermParam: searchTerm}}
             }
       />
-      {/* <button onClick={OnClickHandler} ></button> */}
+      {/* <button className={styles["searchbar-search"]} onClick={OnClickHandler} ></button> */}
+      
       </div>
   </>
   );
 }
 
 export default SearchBar;
-
-// {searchResult.age_name} {searchResult.size_name}
-// {searchResult.reg_business_id} {searchResult.reg_user_id}
-// {searchResult.reg_shelter_id} {searchResult.reg_user_id}
-
-/*<div style={overlayStyle} className={styles["search-results-overlay"]}>
-<div className ={styles["modal-main"]}>
-  Search Results
-  <ul>
-    {recievedSearchResults.length == 0 && <li>No Results</li>}
-    {recievedSearchResults && searchCategory == 'Pet' &&
-     recievedSearchResults.map((searchResult) => (
-        <li key={searchResult.pet_id}><div class="clearfix"><img /><span>Name: {searchResult.name}<br></br>Age: {searchResult.age_name}<br></br>Size: {searchResult.size_name}</span></div></li>
-        
-    ))}
-    {recievedSearchResults && searchCategory == 'Business' &&
-     recievedSearchResults.map((searchResult) => (
-        <li key={searchResult.pet_id}><div class="clearfix"><img /><span>{searchResult.name}</span></div></li>
-    ))}
-    {recievedSearchResults && searchCategory == 'Shelter' &&
-     recievedSearchResults.map((searchResult) => (
-        <li key={searchResult.pet_id}><div class="clearfix"><img/><span>{searchResult.name}</span></div></li>
-    ))}
-
-  </ul>
-  <div className={styles["center"]}>
-  <button onClick= {() => {
-                setOverlayDisplay('none');
-                componentWillUnmount();
-                }} className={styles["overlay-button"]}>Close</button>
-  </div>
-  </div>
-</div>*/
-
-//<br></br>Age: {searchResult.age_name}<br></br>Size: {searchResult.size_name}

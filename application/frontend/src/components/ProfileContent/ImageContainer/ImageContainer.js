@@ -94,7 +94,6 @@ function ImageContainer(props) {
                                 //key={props.image[index].pet_id}
                                 src={props.image[index].profile_pic} 
                                 alt="No Image Found"
-                                //onClick={presentPostModal(props.image[index].profile_pic)}
                                 className={styles.ImageStack_pic}
                             />
                         </div>

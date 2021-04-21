@@ -1,21 +1,33 @@
-import React from "react";
+import React, {useState} from "react";
+import Axios from "axios";
 import styles from './LoginPage.module.css';
 import {Redirect, useHistory} from "react-router-dom";
 
 function LoginPage({appUser, setAppUser}) {
 
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     let history = useHistory();
 
     function loginHandler(e){
-        // setIsLoggedIn(true);
-        // setAppUser(username);
-        console.log(appUser);
-        console.log(isLoggedIn);
-        history.push('/feed');
+        console.log(username)
+        console.log(password)
+
+         Axios.get('/login',{
+           params: {
+             username: username,
+             password: password,
+             }})
+           .then(response =>{
+           console.log(response)
+           console.log(response.data)
+            history.push('/feed')
+        })
+        .catch(error =>{
+            console.log("Error");
+        })
     }
 
     if (isLoggedIn){
@@ -25,7 +37,7 @@ function LoginPage({appUser, setAppUser}) {
     return (
             <>
             <div className={styles['login-container']}>
-                <div className={styles['login-header']}>Zooble</div>
+                <div className={styles['login-header']}/>
                 <div className={styles['username-input-container']}>
                     <label className={styles['username-input-label']} for='username'>Username</label>
                     <input

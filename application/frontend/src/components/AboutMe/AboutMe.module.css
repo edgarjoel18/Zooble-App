@@ -13,6 +13,7 @@
 .Container {
     width: 733px;
     height: 585px;
+    padding: 20px;
     border-radius: 0px 25px 25px 25px;
     margin-bottom: 20px;
     overflow: hidden;
@@ -21,8 +22,8 @@
 }
 
 .Content {
-    margin-top: 20px;
-    margin-left: 30px;
+    /* margin-top: 20px;
+    margin-left: 30px; */
     max-width: 660px;
     font-size: 1.5em;
 }
@@ -40,7 +41,17 @@
     border: none;
 }
 
+.TextArea:read-only {
+    resize: none;
+    outline: none;
+    background-color: unset;
+    box-shadow: unset;
+}
+
 .TextArea {
     resize: none;
     outline: none;
+    border: none;
+    background-color: #e4e6eb;
+    border-radius: 15px;
 }

@@ -3,7 +3,15 @@ import {useState} from 'react'
 import styles from './MyPets.module.css'
 
 import AddIcon from '../../images/Created Icons/Add.svg'
+
+import DeleteIcon from  '../../images/Created Icons/Exit-Cancel.svg'
+import ConfirmPetDeletion from '../../components/Modals/ConfirmPetDeletion';
 function MyPets() {
+
+    const [deletionModalDisplay,setDeletionModalDisplay] = useState(false);
+
+    const [selectedPet, setSelectedPet] = useState({});
+
 
     const [myPets,setMyPets] = useState([
     {
@@ -53,6 +61,15 @@ function MyPets() {
     },
     ])
 
+    function viewDeletionModal(pet){
+        setSelectedPet(pet);
+        setDeletionModalDisplay(true);
+    }
+
+    function closeDeletionModal(){
+        setDeletionModalDisplay(false);
+    }
+
     return (
         <>
         <div className={styles['my-pets-header']}>
@@ -64,12 +81,14 @@ function MyPets() {
                 <div className={styles['my-pets-container-add-pet-text']}>Add a Pet</div>
             </div>
             {myPets && myPets.map((pet) =>(
-                <div className={styles['my-pets-container-pet']}>
+                <div className={styles['my-pets-container-pet']} >
                     <img className={styles['my-pets-container-pet-pic']} src={pet.pet_prof_pic}/>
                     <div className={styles['my-pets-container-pet-name']}>{pet.pet_name}</div>
+                    <img className={styles['my-pets-container-pet-delete']} onClick={()=>viewDeletionModal(pet)}src={DeleteIcon}/>
                 </div>
             ))}
         </div>
+        <ConfirmPetDeletion display={deletionModalDisplay} onClose={closeDeletionModal} selectedPet={selectedPet}/>
         </>
     )
 }

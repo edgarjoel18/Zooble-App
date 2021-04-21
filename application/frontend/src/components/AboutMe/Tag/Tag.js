@@ -16,7 +16,7 @@ function Tag(props) {
         if (props.accountType === 'pet owner' || props.accountType === 'pet')
             tagText = props.section + ' Me';
         else 
-        tagText = props.section + ' Us';
+            tagText = props.section + ' Us';
     }
 
     return (
