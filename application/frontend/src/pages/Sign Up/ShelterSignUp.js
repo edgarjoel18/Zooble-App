@@ -61,7 +61,7 @@ function ShelterSignUpPage() {
     return (
             <>
 
-            <div className={styles['signup-container']}>
+            <form className={styles['signup-container']}>
                 <div className={styles['signup-container-header']}>
                     Create an Account for your Shelter
                 </div>
@@ -73,6 +73,7 @@ function ShelterSignUpPage() {
                                 placeholder='First name'
                                 name='fname'
                                 onChange={e => setFirstName(e.target.value)}
+                                required
                             />
                         </div>
 
@@ -83,6 +84,7 @@ function ShelterSignUpPage() {
                                 placeholder='Last name'
                                 name='lname'
                                 onChange={e => setLastName(e.target.value)}
+                                required
                             />
                         </div>
 
@@ -93,6 +95,7 @@ function ShelterSignUpPage() {
                                 placeholder='Enter email'
                                 name='email'
                                 onChange={e => setEmail(e.target.value)}
+                                required
                             />
                         </div>
 
@@ -103,6 +106,7 @@ function ShelterSignUpPage() {
                                 placeholder='Enter username'
                                 name='uname'
                                 onChange={e => setUname(e.target.value)}
+                                required
                             />
                         </div>
 
@@ -113,6 +117,7 @@ function ShelterSignUpPage() {
                                 placeholder='Enter password'
                                 name='psw'
                                 onChange={e => setPassword(e.target.value)}
+                                required
                             />
                         </div>
 
@@ -123,6 +128,7 @@ function ShelterSignUpPage() {
                                 placeholder='Confirm password'
                                 name='psw-repeat'
                                 onChange={e => setRedonePassword(e.target.value)}
+                                required
                             />
                         </div>
                     </div>
@@ -140,7 +146,7 @@ function ShelterSignUpPage() {
                         <button type='submit' className={styles['submit-btn']}>Next: Shelter Details</button>
                     </div>
                 </NavLink>
-                </div>
+                </form>
         </>
     );
 }

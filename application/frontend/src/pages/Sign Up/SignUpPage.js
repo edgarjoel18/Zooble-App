@@ -32,7 +32,7 @@ function SignUpPage() {
         setPrivacyPolicyDisplay(false);
     }
 
-    function OnClickHandler() {
+    function OnClickHandler(e) {
         console.log(email)
         console.log(uname)
         console.log(firstName)
@@ -40,29 +40,26 @@ function SignUpPage() {
         console.log(password)
         console.log(redonePassword)
         Axios.get('/sign-up', {
-            params: {
-                email: email,
-                firstName: firstName,
-                lastName: lastName,
-                uname: uname,
-                password: password,
-                redonePassword: redonePassword
-            }
-        })
-            .then(response => {
+                params: {
+                    email: email,
+                    firstName: firstName,
+                    lastName: lastName,
+                    uname: uname,
+                    password: password,
+                    redonePassword: redonePassword
+                }
+            }).then(response => {
                 console.log(response)
                 console.log(response.data)
                 console.log(response.data.searchResults)
-            })
-            .catch(error => {
+            }).catch(error => {
                 console.log("Error");
             })
     }
 
     return (
         <>
-
-            <div className={styles['signup-container']}>
+            <form className={styles['signup-container']}>
                 <div className={styles['signup-container-header']}>
                     Sign Up
                 </div>
@@ -74,6 +71,7 @@ function SignUpPage() {
                             placeholder='First name'
                             name='fname'
                             onChange={e => setFirstName(e.target.value)}
+                            required
                         />
                     </div>
 
@@ -84,6 +82,7 @@ function SignUpPage() {
                             placeholder='Last name'
                             name='lname'
                             onChange={e => setLastName(e.target.value)}
+                            required
                         />
                     </div>
 
@@ -94,6 +93,7 @@ function SignUpPage() {
                             placeholder='Enter email'
                             name='email'
                             onChange={e => setEmail(e.target.value)}
+                            required
                         />
                     </div>
 
@@ -104,6 +104,7 @@ function SignUpPage() {
                             placeholder='Enter username'
                             name='uname'
                             onChange={e => setUname(e.target.value)}
+                            required
                         />
                     </div>
 
@@ -114,6 +115,7 @@ function SignUpPage() {
                             placeholder='Enter password'
                             name='psw'
                             onChange={e => setPassword(e.target.value)}
+                            required
                         />
                     </div>
 
@@ -124,6 +126,7 @@ function SignUpPage() {
                             placeholder='Confirm password'
                             name='psw-repeat'
                             onChange={e => setRedonePassword(e.target.value)}
+                            required
                         />
                     </div>
                 </div>
@@ -139,7 +142,7 @@ function SignUpPage() {
                 <div className={styles['btn-container']}>
                     <button className={styles['submit-btn']} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
                 </div>
-            </div>
+            </form>
             {/* Modals */}
             <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal} />
             <PrivacyPolicy display={privacyPolicyDisplay} onClose={closePrivacyPolicyModal} />
