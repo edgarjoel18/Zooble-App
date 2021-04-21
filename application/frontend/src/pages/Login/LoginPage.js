@@ -5,9 +5,9 @@ import {Redirect, useHistory} from "react-router-dom";
 
 function LoginPage({appUser, setAppUser}) {
 
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     let history = useHistory();
 
@@ -23,10 +23,12 @@ function LoginPage({appUser, setAppUser}) {
            .then(response =>{
            console.log(response)
            console.log(response.data)
-           console.log(response.data.searchResults)
+            history.push('/feed')
         })
-        history.push('/feed')
-      }
+        .catch(error =>{
+            console.log("Error");
+        })
+    }
 
     if (isLoggedIn){
         console.log(isLoggedIn);
@@ -35,7 +37,7 @@ function LoginPage({appUser, setAppUser}) {
     return (
             <>
             <div className={styles['login-container']}>
-                <div className={styles['login-header']}>Zooble</div>
+                <div className={styles['login-header']}>Login</div>
                 <div className={styles['username-input-container']}>
                     <label className={styles['username-input-label']} for='username'>Username</label>
                     <input

@@ -8,9 +8,11 @@ function SendAMessage({display,onClose}) {
     return (
         <Modal display={display} onClose={onClose}>
             <h1 className={styles["sendAMessage-header"]}>Send a Message</h1>
-            <input className={styles["sendAMessage-subject"]} placeholder="Subject"/>
-            <textarea className={styles["sendAMessage-body"]}></textarea>
-            <button class={styles["sendAMessage-sendButton"]} onClick={onClose}><span><h4>Send</h4></span></button>
+            <div className={styles['send-a-message-container']}>
+                <input className={styles["sendAMessage-subject"]} placeholder="Subject"/>
+                <textarea className={styles["sendAMessage-body"]}/>
+                <button class={styles["sendAMessage-sendButton"]} onClick={onClose}><h4>Send</h4></button>
+            </div>
         </Modal>
     )
 }

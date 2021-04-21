@@ -22,18 +22,44 @@
 }
 
 
-
-
 .view-message-body{
     margin: 10px auto;
     height: 600px;
-    margin-bottom: 70px;
     width:95%;
-    overflow-y: scroll;
+    overflow-y: auto;
     font-family: var(--ff-secondary);
     border: 1px solid var(--inactive-text-color);
     box-shadow: var(--elevation-1);
     border-radius: 7.5px;
     padding: 10px;
     font-size: var(--body);
+}
+
+.view-message-body{
+    margin: 10px auto;
+    height: 600px;
+    width:95%;
+    overflow-y: auto;
+    font-family: var(--ff-secondary);
+    border: 1px solid var(--inactive-text-color);
+    box-shadow: var(--elevation-1);
+    border-radius: 7.5px;
+    padding: 10px;
+    font-size: var(--body);
+}
+
+
+.view-message-reply-button{
+    background-color: var(--primary-clr);
+    color: white;
+    padding:0 25px 0 25px;
+    border: none;
+    border-radius: 7.5px;
+    box-shadow: var(--elevation-1);
+    cursor: pointer;
+    font-family: var(--ff-primary);
+    text-align: center;
+    line-height: 32px;
+    float: right;
+    margin: 15px 2.5% 15px 0;
 }

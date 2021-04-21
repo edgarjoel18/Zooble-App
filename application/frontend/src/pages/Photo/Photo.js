@@ -6,44 +6,62 @@ import styles from './Photo.module.css';
 
 import PostModal from '../../components/Modals/PostModal'
 
-const dummyPhotos = [
-        {   pet_id: 3,
-            name: 'Juju',
-            size_name: 'larg',
-            age_name: 'ten',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg' 
+    const dummyPhotos = [
+        {   
+            post_id: 1,
+            // user_display_name: name,
+            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
+            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
+            likes: 0,
+            timestamp: '12/25/20 at 11:05 AM',
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         },
-        {   pet_id: 2,
-            name: 'Max',
-            size_name: 'small',
-            age_name: 'two',
-            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
+        {   
+            post_id: 2,
+            //user_display_name: name,
+            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg', 
+            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
+            likes: 10,
+            timestamp: '12/25/20 at 11:05 AM',
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         },
-        { pet_id: 1,
-            name: 'Mimi',
-            size_name: 'medium',
-            age_name: 'six',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg' 
+        {
+            post_id: 3,
+            //user_display_name: name,
+            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg', 
+            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
+            likes: 20,
+            timestamp: '12/25/20 at 11:05 AM',
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         },
-        {   pet_id: 4,
-            name: 'Juju',
-            size_name: 'larg',
-            age_name: 'ten',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg' 
+        {
+            post_id: 20,
+            //user_display_name: name,
+            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
+            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
+            likes: 0,
+            timestamp: '12/25/20 at 11:05 AM',
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         },
-        {   pet_id: 5,
-            name: 'Max',
-            size_name: 'small',
-            age_name: 'two',
-            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
+        {
+            post_id: 5,
+            //user_display_name: name,
+            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg', 
+            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
+            likes: 0,
+            timestamp: '12/25/20 at 11:05 AM',
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         },
-        { pet_id: 6,
-            name: 'Mimi',
-            size_name: 'medium',
-            age_name: 'six',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg' 
+        {
+            post_id: 4,
+            //user_display_name: name,
+            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg', 
+            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
+            likes: 0,
+            timestamp: '12/25/20 at 11:05 AM',
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         }
-];
+    ];
 
 function Photo() {
     const [name, setName] = useState(''); 
@@ -60,11 +78,14 @@ function Photo() {
 
     const [postModalDisplay, setPostModalDisplay] = useState(false);
 
+    const [selectedPost, setSelectedPost] = useState({});
+
     function closePostModal(){
         console.log('exit button clicked')
         setPostModalDisplay(false);
     }
-    function presentPostModal(postImage){
+    function presentPostModal(post){
+        setSelectedPost(post);
         console.log('clicked on image');
         setPostModalDisplay(true);
     }
@@ -72,7 +93,7 @@ function Photo() {
     function deletePhoto(id) {
         console.log('[deletePhoto] ' + id);
         // display modal here
-        let tempPhotos = photos.filter(photo => photo.pet_id != id);
+        let tempPhotos = photos.filter(photo => photo.post_id != id);
         setPhotos(tempPhotos);
     }
 
@@ -81,7 +102,7 @@ function Photo() {
             {photos.map((photo) => (
                 <div onClick={() =>presentPostModal()}>
                  {/* <div onClick={() => deletePhoto(photo.pet_id)}> */}
-                    <img key={photo.pet_id} className={styles.Image} src={photo.profile_pic} alt='No Image Found' />
+                    <img key={photo.post_id} className={styles.Image} src={photo.pic} alt='No Image Found' />
                 </div>
             ))}
         </div>
@@ -91,8 +112,8 @@ function Photo() {
         displayEditing  = (
             <div className={styles.PhotosContainer} >
                 {photos.map(photo => (
-                    <div onClick={() => deletePhoto(photo.pet_id)}>
-                        <img key={photo.pet_id} className={styles.Image} src={photo.profile_pic} alt='No Image Found' />
+                    <div onClick={() => deletePhoto(photo.post_id)}>
+                        <img key={photo.post_id} className={styles.Image} src={photo.pic} alt='No Image Found' />
                     </div>
                 ))}
             </div>
