@@ -1,6 +1,6 @@
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Home from './pages/Home/Home'
 import Edgar from './pages/AboutMe/Edgar'
 import Cameron from './pages/AboutMe/Cameron'
@@ -31,20 +31,23 @@ import ExploreUsers from './pages/ExploreUsers/ExploreUsers';
 
 import MapSearch from './pages/MapSearch/MapSearch.js'
 
-function App() {
-  const [appUser, setAppUser] = useState(null);
+const App = () => {
+
+  const [appUser,setAppUser] = useState();
+
+  console.log("rerendering app");
 
   return (
     <Router>
-      <NavBar appUser={appUser}/>
+      <NavBar
+            appUser={appUser}
+            setAppUser={setAppUser} 
+      />
        <Switch>
         <Route path="/" exact component={Home}/>
-        <Route 
-          path="/login-page" 
-          exact component={LoginPage}
-          appUser={appUser} 
-          setAppUser={setAppUser}
-        />
+        <Route exact path="/login-page" >
+          <LoginPage appUser={appUser} setAppUser={setAppUser}/>
+        </Route>
         <Route path="/account-type" exact component={AccountTypePage}/>
         <Route path="/signup-page" exact component={SignUpPage}/>
         <Route path="/shelter-signup" exact component={ShelterSignUpPage}/>
