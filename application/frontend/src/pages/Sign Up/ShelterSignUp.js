@@ -80,7 +80,7 @@ function ShelterSignUpPage() {
                     </p>
                 </div>
 
-                <NavLink to="/business-signup2">
+                <NavLink to="/shelter-signup2">
                     <div className={styles['btn-container']}>
                         <button type='submit' className={styles['submit-btn']}>Next: Shelter Details</button>
                     </div>
