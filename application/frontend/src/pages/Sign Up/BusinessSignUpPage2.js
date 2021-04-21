@@ -6,16 +6,17 @@ import Select from 'react-select'
 
 import makeAnimated from 'react-select/animated';
 
+
+
 import TermsAndConditions from '../../components/Modals/TermsAndConditions'
 import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
 
 function BusinessSignUpPage2() {
-    const businessCategoryOptions = [ //Only for horizontal prototype, real thing should fetch from db
-        {value: 'Grooming', label: 'Grooming'},
-        {value: 'Supplies', label: 'Supplies'},
-        {value: 'Training', label: 'Training'},
-        {value: 'Kennels', label: 'Kennels'},
-        {value: 'Pet Stores', label: 'Pet Stores'}
+    const typeOptions = [  // final product will fetch from database
+        { value: 'Retailer', label: 'Retailer' },
+        { value: 'Service', label: 'Service' },
+        { value: 'Retailer', label: 'Retailer' },
+        { value: 'Education', label: 'Education' },
     ];
 
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
@@ -93,7 +94,7 @@ function BusinessSignUpPage2() {
                     <label className={styles['types-input-label']} for='business-categories'>Business Categories</label>
                         <Select id="shelter-animal-types" name="shelter_animal_types"
                             onChange={setSelectedBusinessCategories}
-                            options={businessCategoryOptions}
+                            options={typeOptions}
                             placeholder="Categories of your Business"
                             theme={customTheme}
                             isSearchable
