@@ -92,12 +92,13 @@
 }
 
 .DropdownItem {
-    color: var(--primary-clr);
+    width: 100%;
 }
 
 
 .DropdownItem:hover {
-    background-color: #ccc;
+    width: 100%;
+    color: var(--primary-clr);
 }
 
 .FristButton {

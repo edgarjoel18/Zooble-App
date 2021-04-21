@@ -13,7 +13,7 @@ function Feed() {
         {
             post_id: 1,
             user_display_name: 'Paw Spa',
-            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', //CHANGE LATER //NOT WORKING
+            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
             likes: 0,
             timestamp: '12/25/20 at 11:05 AM',
@@ -22,7 +22,7 @@ function Feed() {
         {
             post_id: 2,
             user_display_name: 'Burgsdale Pet Shelter',
-            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg', //CHANGE LATER //NOT WORKING
+            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg', 
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
             likes: 10,
             timestamp: '12/25/20 at 11:05 AM',
@@ -31,7 +31,7 @@ function Feed() {
         {
             post_id: 3,
             user_display_name: 'Alex',
-            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg', //CHANGE LATER //NOT WORKING
+            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg', 
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
             likes: 20,
             timestamp: '12/25/20 at 11:05 AM',

@@ -17,10 +17,11 @@ import makeAnimated from 'react-select/animated';
 function MapSearch(props) {
     //Only for horizontal prototype, real thing should fetch from db
     const businessCategoryOptions = [
-        {value: 'Dog', label: 'Dog'},
-        {value: 'Cat', label: 'Cat'},
-        {value: 'Lizard', label:'Lizard'},
-        {value: 'Monkey', label: 'Monkey'},
+        {value: 'Grooming', label: 'Grooming'},
+        {value: 'Supplies', label: 'Supplies'},
+        {value: 'Training', label: 'Training'},
+        {value: 'Kennels', label: 'Kennels'},
+        {value: 'Pet Stores', label: 'Pet Stores'}
     ];
 
     const dogBreedOptions = [
@@ -85,7 +86,7 @@ function MapSearch(props) {
 
 
     useEffect(()=>{
-        console.log('useEffect');
+        console.log('Fetching Search Results');
         setSearchCategory(state.searchCategoryParam);
         setSearchTerm(state.searchTermParam);
         Axios.get('/search', {  //take in filters here? for final version
@@ -93,9 +94,9 @@ function MapSearch(props) {
               searchTerm: state.searchTermParam,
               searchCategory:state.searchCategoryParam}})
             .then(response =>{
-            // console.log(response)
-            // console.log(response.data)
-            // console.log(response.data.searchResults)
+            console.log(response)
+            console.log(response.data)
+            console.log(response.data.searchResults)
             setRecievedSearchResults(response.data.searchResults)
             // setOverlayDisplay(true);
             displaySearchResults();
@@ -155,7 +156,7 @@ function MapSearch(props) {
                         </div>
                         <div className={styles['map-search-results-text-list']}>
                             <ul>
-                                {recievedSearchResults.length == 0 && <li>No Results</li>}
+                                {recievedSearchResults.length == 0 && <li className={styles['no-results']}>No Results</li>}
                                 {recievedSearchResults && searchCategory == 'Pets' && recievedSearchResults.map((searchResult) => (
                                     <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={searchResult.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                 ))}

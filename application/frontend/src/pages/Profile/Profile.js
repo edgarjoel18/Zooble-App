@@ -319,7 +319,12 @@ const petProfile = {
     id: '97',
     userName: 'Sasha',
     userPicture: 'petImage',
+    petOwner: 'Alex', 
     about: 'Hello, I\'m Sasha.',
+    petType: {value: 'Dog', label: 'Dog'},
+    petBreeds: [{value: 'Samoyed', label: 'Samoyed'}, {}],
+    petColors: 'White',
+    petSize: 'Large',
     photos: [
         {   pet_id: 3,
             name: 'Juju',
@@ -411,7 +416,7 @@ const newPetProfile = {
 
 function Profile() {
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
-    const [userProfile, setUserProfile] = useState(petProfile);
+    const [userProfile, setUserProfile] = useState(newBusinessProfile);
     const [selfView, setSelfView] = useState(true);
 
     useEffect(() => {
