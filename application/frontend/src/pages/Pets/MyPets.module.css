@@ -52,3 +52,10 @@
     font-size: var(--h1);
     font-family:var(--ff-primary);
 }
+
+.my-pets-container-pet-delete{
+    margin-left: auto;
+    margin-right:15px;
+    width:30px;
+    height:30px;
+}
