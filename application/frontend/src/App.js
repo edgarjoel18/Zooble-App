@@ -20,6 +20,9 @@ import BusinessSignUpPage from './pages/Sign Up/BusinessSignUp.js'
 import BusinessSignUpPage2 from './pages/Sign Up/BusinessSignUpPage2.js'
 import ProfilePage from './pages/Profile/Profile'
 import PetOwnerPage from './pages/Profile/PetOwnerProfilePage'
+import MimiProfilePage from './pages/Profile/MimiProfilePage'
+import MaxProfilePage from './pages/Profile/MaxProfilePage'
+import JujuProfilePage from './pages/Profile/JujuProfilePage'
 import Messages from './pages/Messages/Messages'
 import MyPets from './pages/Pets/MyPets'
 import Pets from './pages/Pets/Pets'
@@ -55,6 +58,9 @@ function App() {
         <Route path="/MapSearch" component={MapSearch}/>
         <Route path="/Profile" exact component={ProfilePage}/>
         <Route path="/Profile/Alex" component={PetOwnerPage}/>
+        <Route path="/Profile/Mimi" component={MimiProfilePage}/>
+        <Route path="/Profile/Max" component={MaxProfilePage}/>
+        <Route path="/Profile/Juju" component={JujuProfilePage}/>
         <Route path="/Photo" component={Photo}/>
         <Route path="/Messages" component={Messages}/>
         <Route path="/MyPets" component={MyPets}/>
@@ -68,7 +74,7 @@ function App() {
         <Route path="/Wenjie" component={Wenjie}/>
         <Route path="/Cameron" component={Cameron}/>
         <Route path="/Wameedh" component={Wameedh}/>
-        <Redirect to="/" />
+        {/* <Redirect to="/" /> */}
       </Switch>
     </Router>
   );
