@@ -6,7 +6,7 @@ import styles from './Photo.module.css';
 
 import PostModal from '../../components/Modals/PostModal'
 
-const photos = [
+const dummyPhotos = [
         {   pet_id: 3,
             name: 'Juju',
             size_name: 'larg',
@@ -47,6 +47,8 @@ const photos = [
 
 function Photo() {
     const [name, setName] = useState(''); 
+    const [editing, setEditing] = useState(false);
+    const [photos, setPhotos] = useState(dummyPhotos)
     let location = useLocation();
     let history = useHistory();
 
@@ -67,22 +69,59 @@ function Photo() {
         setPostModalDisplay(true);
     }
 
-    return (
-        <>
-        <div className={styles.Photo} >
-            <div className={styles.NameDiv} >
-                <h1>{name + '\'s Photos'}</h1>
-                <p onClick={() => history.push('/Profile')} >Back to Profile</p>
-            </div>
+    function deletePhoto(id) {
+        console.log('[deletePhoto] ' + id);
+        // display modal here
+        let tempPhotos = photos.filter(photo => photo.pet_id != id);
+        setPhotos(tempPhotos);
+    }
+
+    let displayEditing = (
+        <div className={styles.PhotosContainer} >
+            {photos.map((photo) => (
+                <div onClick={() =>presentPostModal()}>
+                 {/* <div onClick={() => deletePhoto(photo.pet_id)}> */}
+                    <img key={photo.pet_id} className={styles.Image} src={photo.profile_pic} alt='No Image Found' />
+                </div>
+            ))}
+        </div>
+    )
+
+    if (editing) {
+        displayEditing  = (
             <div className={styles.PhotosContainer} >
-                {photos.map((photo) => (
-                    <div onClick={() =>presentPostModal()}>
+                {photos.map(photo => (
+                    <div onClick={() => deletePhoto(photo.pet_id)}>
                         <img key={photo.pet_id} className={styles.Image} src={photo.profile_pic} alt='No Image Found' />
                     </div>
                 ))}
             </div>
-        </div>
-        <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={{}}/>
+        )     
+    }         
+
+    return (
+        <>
+            <div className={styles.Photo} >
+                <div className={styles.NameDiv} >
+                    <div className={styles.NameDivLeft} >
+                        <h1>{name + '\'s Photos'}</h1>
+                        <button onClick={() => setEditing(!editing)} >{editing ? 'Finish Editing' : 'Edit'}</button>
+                    </div>
+                    <div className={styles.NameDivRight} >
+                        {/* <button>filter</button> */}
+                        <p onClick={() => history.goBack()} >Back to Profile</p>
+                    </div>
+                </div>
+                {/* <div className={styles.PhotosContainer} >
+                    {photos.map((photo) => (
+                        <div onClick={() =>presentPostModal()}>
+                            <img key={photo.pet_id} className={styles.Image} src={photo.profile_pic} alt='No Image Found' />
+                        </div>
+                    ))}
+                </div> */}
+                {displayEditing}
+            </div>
+            <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={{}}/>
         </>
     )
 }
