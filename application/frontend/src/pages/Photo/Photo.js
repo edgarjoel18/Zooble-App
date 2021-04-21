@@ -61,8 +61,8 @@ function Photo() {
             </div>
             <div className={styles.PhotosContainer} >
                 {photos.map((photo) => (
-                    <a href={photo.profile_pic}>
-                        <img key={photo.pet_id} className={styles.Image} src={photo.profile_pic} alt='No Image Found' />
+                    <a href={photo.profile_pic} key={photo.pet_id}>
+                        <img className={styles.Image} src={photo.profile_pic} alt='No Image Found' />
                     </a>
                 ))}
             </div>
