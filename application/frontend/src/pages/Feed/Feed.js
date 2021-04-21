@@ -81,7 +81,7 @@ function Feed() {
             <textarea className={styles["follower-feed-new-post-body"]} style={{display: createPostOverlayDisplay.display}} placeholder="Create a Post"/>
             <button className={styles["follower-feed-new-post-attach-image"]} style={{display: createPostOverlayDisplay.display}}>Add Image</button>
             <button className={styles["follower-feed-new-post-submit"]} style={{display: createPostOverlayDisplay.display}}>Submit</button>
-            <button className={styles["follower-feed-new-post-expand-collapse"]} /> {/* onClick={createPostOverlayToggle} */}
+            {/* <button className={styles["follower-feed-new-post-expand-collapse"]} /> onClick={createPostOverlayToggle} */}
         </div>
         <ul className={styles["follower-feed-container"]}>
             {feedPosts.length == 0 && <li>No Feed Posts</li>}
