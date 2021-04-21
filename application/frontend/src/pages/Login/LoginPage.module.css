@@ -5,7 +5,7 @@
     border-radius: 7.5px;
     z-index: 1;
     width: 35%;
-    height: 600px;
+    height: 550px;
     box-shadow: var(--elevation-1);
     margin: 12% auto auto auto;
     grid-column: 2/span 1;
@@ -63,6 +63,12 @@
     text-align: center;
 }
 
+.checkbox {
+    text-align: left;
+    padding-left: 15px;
+    padding-bottom: 20px;
+}
+
 .forgot-password {
     margin-left: 15px;
     float: left;
@@ -86,7 +92,7 @@
     box-shadow: var(--elevation-1);
     border: none;
     border-radius: 7.5px;
-    margin-bottom: 50px;
+    margin-bottom: 5px;
     cursor: pointer;
 }
 
