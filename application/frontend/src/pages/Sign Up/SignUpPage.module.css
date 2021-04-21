@@ -13,6 +13,7 @@
     font-size: var(--h1);
     font-family: var(--ff-primary);
     text-align: center;
+    font-weight: 600;
 }
 
 .signup-fields-container{
