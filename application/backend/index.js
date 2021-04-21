@@ -5,6 +5,10 @@ const app = express();
 const mysql = require('mysql2');
 const { copyFileSync } = require("fs");
 const bcrypt = require('bcrypt');
+const { request } = require("http");
+const { response } = require("express");
+const session = require('express-session');
+const bodyParser = require('body-parser');
 
 const connection = mysql.createConnection({
     host:'csc648project-database.ceh0a99r5rym.us-west-2.rds.amazonaws.com',
@@ -17,6 +21,47 @@ connection.connect(function(err){
     if(err) throw err;
     console.log("Connected!");
 })
+
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
+
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
+
+app.get("/login", (request, response) =>{
+    console.log("/login")
+    const username = request.query.username;
+    const password = request.query.password; 
+    if(username && password){
+        connection.query('SELECT * FROM User WHERE username = ?', [username], function(error, results, fields){
+            if(results.length > 0 && username == results[0].username){
+                bcrypt.compare(password, results[0].password, function(err, result){
+                    if (err) { 
+                        console.log("Error.");
+                    }else if(result){
+                        request.session.loggedin = true;
+                        request.session.username = username;
+                        console.log("Logged in.");
+                    }else{
+                        console.log("Passwords do not match.");
+                    }
+                });
+            }else{
+                console.log("Username or password is incorrect");
+                response.send("Username or password is incorrect");
+            }
+            response.end();
+        });
+    }else{
+        console.log("Please enter information correctly");
+        response.send("Please enter information correctly");
+        response.end();
+    }
+}
+);
 
 
 app.get("/sign-up", (req,res) =>{

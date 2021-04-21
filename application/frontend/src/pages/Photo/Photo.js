@@ -4,6 +4,8 @@ import { useLocation, useHistory } from 'react-router-dom';
 
 import styles from './Photo.module.css';
 
+import PostModal from '../../components/Modals/PostModal'
+
 const photos = [
         {   pet_id: 3,
             name: 'Juju',
@@ -53,7 +55,20 @@ function Photo() {
         setName(query.get('name'));
     } , [])
 
+
+    const [postModalDisplay, setPostModalDisplay] = useState(false);
+
+    function closePostModal(){
+        console.log('exit button clicked')
+        setPostModalDisplay(false);
+    }
+    function presentPostModal(postImage){
+        console.log('clicked on image');
+        setPostModalDisplay(true);
+    }
+
     return (
+        <>
         <div className={styles.Photo} >
             <div className={styles.NameDiv} >
                 <h1>{name + '\'s Photos'}</h1>
@@ -61,12 +76,14 @@ function Photo() {
             </div>
             <div className={styles.PhotosContainer} >
                 {photos.map((photo) => (
-                    <a href={photo.profile_pic} key={photo.pet_id}>
-                        <img className={styles.Image} src={photo.profile_pic} alt='No Image Found' />
-                    </a>
+                    <div onClick={() =>presentPostModal()}>
+                        <img key={photo.pet_id} className={styles.Image} src={photo.profile_pic} alt='No Image Found' />
+                    </div>
                 ))}
             </div>
         </div>
+        <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={{}}/>
+        </>
     )
 }
 
