@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import styles from './BusinessSignUpPage2.module.css';
+import styles from './SignUpPage2.module.css';
+
+import Select from 'react-select'
+
+import makeAnimated from 'react-select/animated';
 
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
@@ -14,7 +17,7 @@ function BusinessSignUpPage2() {
         { value: 'Retailer', label: 'Retailer' },
         { value: 'Service', label: 'Service' },
         { value: 'Retailer', label: 'Retailer' },
-        { value: 'Education', label: 'education' },
+        { value: 'Education', label: 'Education' },
     ];
 
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
@@ -36,7 +39,7 @@ function BusinessSignUpPage2() {
         setPrivacyPolicyDisplay(false);
     }
 
-    const [selectedBusinessCategory, setSelectedBusinessCategory] = useState([]);
+    const [selectedBusinessCategories, setSelectedBusinessCategories] = useState([]);
 
     function customTheme(theme) { //move this a separate file and import maybe?
         return {
@@ -57,56 +60,50 @@ function BusinessSignUpPage2() {
     const animatedComponents = makeAnimated();
 
     return (
-        <form className={styles['business-form']}>
-            <div className={styles['business-container']}>
-                <h1>Business Details</h1>
-                <Grid container>
-                    <Grid item xs={12}>
-                        <div className={styles['input-container']}>
-                            <label className={styles['business-name-input-label']} for='business-name'><h3>Business Name</h3></label>
-                            <input
-                                type='text'
-                                placeholder='Enter business name'
-                                name='business-name'
-                            />
-                        </div>
+        <div className={styles['signup-container']}>
+            <div className={styles['signup-container-header']}>
+                Business Details
+            </div>
+            <div className={styles['signup-fields-container']}>
+                    <div className={styles['name-input-container']}>
+                        <label className={styles['name-input-label']} for='business-name'>Business Name</label>
+                        <input
+                            type='text'
+                            placeholder='Enter Business Name'
+                            name='business-name'
+                        />
+                    </div>
 
-                        <div className={styles['input-container']}>
-                            <label className={styles['business-address-input-label']} for='business-address'><h3>Business Address</h3></label>
-                            <input
-                                type='text'
-                                placeholder='1600 Holloway Ave, San Francisco, CA, 94132'
-                                name='business-address'
-                            />
-                        </div>
-                    </Grid>
+                    <div className={styles['phone-number-input-container']}>
+                        <label className={styles['phone-number-input-label']} for='business-phone-number'>Phone Number</label>
+                        <input
+                            type='text'
+                            placeholder='(000) 000-0000'
+                            name='business-phone-number'
+                        />
+                    </div>
 
-                    <Grid item xs={6}>
-                        <div className={styles['input-container']}>
-                            <label className={styles['business-categories-input-label']} for='business-categories'><h3>Business Categories</h3></label>
-                            <Select id="business-category-types" name="business-category-types"
-                                onChange={setSelectedBusinessCategory}
-                                options={typeOptions}
-                                placeholder="Your Business Category"
-                                theme={customTheme}
-                                isSearchable
-                                isMulti
-                                components={animatedComponents}
-                            />
-                        </div>
-                    </Grid>
-
-                    <Grid item xs={6}>
-                        <div className={styles['input-container']}>
-                            <label className={styles['business-phone-number-input-label']} for='business-phone-number'><h3>Phone Number</h3></label>
-                            <input
-                                type='text'
-                                placeholder='555 555 5555'
-                                name='business-phone-number'
-                            />
-                        </div>
-                    </Grid>
-                </Grid>
+                    <div className={styles['address-input-container']}>
+                        <label className={styles['address-input-label']} for='business-address'>Business Address</label>
+                        <input
+                            type='text'
+                            placeholder='1600 Holloway Ave, San Francisco, CA, 94132'
+                            name='business-address'
+                        />
+                    </div>
+                <div className={styles['types-input-container']}>
+                    <label className={styles['types-input-label']} for='business-categories'>Business Categories</label>
+                        <Select id="shelter-animal-types" name="shelter_animal_types"
+                            onChange={setSelectedBusinessCategories}
+                            options={businessCategoryOptions}
+                            placeholder="Categories of your Business"
+                            theme={customTheme}
+                            isSearchable
+                            isMulti
+                            components={animatedComponents}
+                        />
+                </div>
+            </div>
 
                 <div className={styles['checkbox-container']}>
                     <p>By creating an account you agree to our <button className={styles['terms-button']} onClick={openTermsAndConditionsModal}>Terms</button> &<button className={styles['policy-button']} onClick={openPrivacyPolicyModal}>Privacy Policy</button>
@@ -122,11 +119,10 @@ function BusinessSignUpPage2() {
                 <div className={styles['btn-container']}>
                     <button type='submit' className={styles['submit-btn']}>Sign Up</button>
                 </div>
-            </div>
             {/* Modals */}
             <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal} />
             <PrivacyPolicy display={privacyPolicyDisplay} onClose={closePrivacyPolicyModal} />
-        </form >
+        </div>
     );
 }
 

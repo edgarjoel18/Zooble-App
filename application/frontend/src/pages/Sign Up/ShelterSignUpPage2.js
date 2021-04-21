@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from './ShelterSignUpPage2.module.css';
+import styles from './SignUpPage2.module.css';
 
 import Select from 'react-select'
 
@@ -61,17 +61,26 @@ function ShelterSignUpPage2() {
                 Shelter Details
             </div>
             <div className={styles['signup-fields-container']}>
-                <div className={styles['shelter-name-input-container']}>
-                    <label className={styles['shelter-name-input-label']} for='shelter-name'>Shelter Name</label>
+                <div className={styles['name-input-container']}>
+                    <label className={styles['name-input-label']} for='shelter-name'>Shelter Name</label>
                     <input
                         type='text'
-                        placeholder='Enter shelter name'
+                        placeholder='Enter Shelter Name'
                         name='shelter-name'
                     />
                 </div>
 
-                <div className={styles['shelter-address-input-container']}>
-                    <label className={styles['shelter-address-input-label']} for='shelter-address'>Shelter Address</label>
+                <div className={styles['phone-number-input-container']}>
+                    <label className={styles['phone-number-input-label']} for='shelter-phone-number'>Phone Number</label>
+                    <input
+                        type='text'
+                        placeholder='(000) 000-0000'
+                        name='shelter-phone-number'
+                    />
+                </div>
+
+                <div className={styles['address-input-container']}>
+                    <label className={styles['address-input-label']} for='shelter-address'>Shelter Address</label>
                     <input
                         type='text'
                         placeholder='1600 Holloway Ave, San Francisco, CA, 94132'
@@ -79,8 +88,8 @@ function ShelterSignUpPage2() {
                     />
                 </div>
 
-                <div className={styles['shelter-animal-types-input-container']}>
-                    <label className={styles['shelter-animal-types-input-label']} for='shelter-animal-types'>Types of Animals</label>
+                <div className={styles['types-input-container']}>
+                    <label className={styles['types-input-label']} for='shelter-animal-types'>Types of Animals</label>
                     <Select id="shelter-animal-types" name="shelter_animal_types"
                         onChange={setSelectedPetTypes}
                         options={typeOptions}
@@ -92,14 +101,7 @@ function ShelterSignUpPage2() {
                     />
                 </div>
 
-                <div className={styles['shelter-phone-number-input-container']}>
-                    <label className={styles['shelter-phone-number-input-label']} for='shelter-phone-number'>Phone Number</label>
-                    <input
-                        type='text'
-                        placeholder='(000) 000-0000'
-                        name='shelter-phone-number'
-                    />
-                </div>
+
             </div>
 
             <div className={styles['checkbox-container']}>
