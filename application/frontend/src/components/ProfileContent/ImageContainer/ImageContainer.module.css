@@ -30,7 +30,7 @@
 
 .ImageStack_pic:hover{
     z-index: 1;
-
+    box-shadow: var(--elevation-2);
 }
 
 /* .TopImage {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import ImageContainer from './ImageContainer/ImageContainer';
 import Reviews from './Reviews/Reviews';
@@ -12,7 +12,7 @@ function ProfileContent(props) {
     switch(props.profile.accountType) {
         case 'shelter':
             imageContainer = (
-                <div style={{display: 'flex', justifyContent: 'space-between', minWidth: '500px'}} >
+                <div className={styles.ImageContainerShelter} >
                     <ImageContainer title='Photos' image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
                     <ImageContainer title='Pets' image={props.profile.petProfiles} accountType={props.profile.accountType} profile={props.profile} />
                 </div>
@@ -20,14 +20,14 @@ function ProfileContent(props) {
             break;
         case 'business':
             imageContainer = (
-                <div style={{display: 'flex', justifyContent: 'space-between', minWidth: '500px', justifyContent: 'center', flexWrap: 'wrap'}} >
+                <div className={styles.ImageContainerBusiness} >
                     <ImageContainer title='Photos' image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
                 </div>
             )
             break;
         case 'pet owner':
             imageContainer = (
-                <div style={{display: 'flex', flexDirection: 'column', minWidth: '500px', alignContent: 'center', flexWrap: 'wrap'}} >
+                <div className={styles.ImageContainerTwoRows} >
                     <ImageContainer title='My Photos' image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
                     <ImageContainer title='My Pets' image={props.profile.petProfiles} accountType={props.profile.accountType} profile={props.profile} />
                 </div>
@@ -35,7 +35,7 @@ function ProfileContent(props) {
             break;
         case 'pet':
             imageContainer = (
-                <div style={{display: 'flex', flexDirection: 'column', minWidth: '500px', alignContent: 'center', flexWrap: 'wrap'}} >
+                <div className={styles.ImageContainerTwoRows} >
                     <ImageContainer title='My Photos' image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
                     <ImageContainer title='My Siblings' image={props.profile.petProfiles} accountType={props.profile.accountType} profile={props.profile} />
                 </div>
@@ -48,21 +48,20 @@ function ProfileContent(props) {
     let displayReview = null;
     if (props.profile.accountType !== 'pet owner' && props.profile.accountType !== 'pet'){
         displayReview = (
-            <div style={{display: 'flex', flexDirection: 'column', alignContent: 'center', flexWrap: 'wrap'}}>
+            <div className={styles.Reviews} >
                 <h2>Reviews</h2>
                 <Reviews reviews={props.profile.reviews} />
-                {!props.isSelfView && <Link>Write a Review</Link>}
-                <Link style={{alignSelf: 'flex-end'}} >See All</Link>
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    {!props.isSelfView && <Link>Write a Review</Link>}
+                    <div></div>
+                    {props.profile.reviews.length > 0 && <Link>See All</Link>}
+                </div>
             </div>
         )
     }
 
     return (
         <div className={styles.ProfileContent} >
-            {/* <div style={{display: 'flex', justifyContent: 'space-between', minWidth: '500px'}} >
-                <ImageContainer title='Photo' />
-                <ImageContainer title='Pets' />
-            </div> */}
             {imageContainer}
             {displayReview}
         </div>

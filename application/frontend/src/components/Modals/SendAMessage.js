@@ -10,7 +10,7 @@ function SendAMessage({display,onClose}) {
             <h1 className={styles["sendAMessage-header"]}>Send a Message</h1>
             <input className={styles["sendAMessage-subject"]} placeholder="Subject"/>
             <textarea className={styles["sendAMessage-body"]}></textarea>
-            <button class={styles["sendAMessage-sendButton"]}><span><h4>Send</h4></span></button>
+            <button class={styles["sendAMessage-sendButton"]} onClick={onClose}><span><h4>Send</h4></span></button>
         </Modal>
     )
 }

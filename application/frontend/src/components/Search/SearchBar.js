@@ -2,7 +2,7 @@ import React, {useEffect, useLayoutEffect, useState} from "react";
 import {Link, Switch, Route, Redirect} from "react-router-dom";
 import Axios from "axios";
 
-import styles from './SearchBar.module.css'
+import styles from '../Nav/NavBar.module.css'
 
 //components
 import Modal from '../Modals/Modal.js'
@@ -68,29 +68,36 @@ function SearchBar() {
           <option value="Pets">Pets</option>
           <option value="Businesses">Businesses</option>
           <option value="Shelters">Shelters</option>
+          {/* <option value="Users">Users</option>   need to add db user entities to implement this*/}
         </select>
       </span>   
-      
       <span className={styles["searchbar-input"]}>
-      
-        <input type="text" placeholder= {"Search " + searchCategory.toLowerCase() + " near you"} onChange={e => setSearchTerm(e.target.value)} 
+        {searchCategory=="Users" &&  <input type="text" placeholder= {"Search " + searchCategory.toLowerCase()} onChange={e => setSearchTerm(e.target.value)} 
         onKeyPress={event => {
           if (event.key === 'Enter') {
             OnClickHandler();
           }
         }}
-        />
-      </span>
+        />}
+        {searchCategory != "Users" && <input type="text" placeholder= {"Search " + searchCategory.toLowerCase() + " near you"} onChange={e => setSearchTerm(e.target.value)} 
+        onKeyPress={event => {
+          if (event.key === 'Enter') {
+            OnClickHandler();
+          }
+        }}
+        />}
+ </span>
 
       
-      <Link className={styles["searchbar-search"]}
+      {/* <Link className={styles["searchbar-search"]}
             to={
               {pathname:"/MapSearch",
               state:{searchCategoryParam: searchCategory,
                      searchTermParam: searchTerm}}
             }
-      />
-      {/* <button onClick={OnClickHandler} ></button> */}
+      /> */}
+      <button className={styles["searchbar-search"]} onClick={OnClickHandler} ></button>
+      
       </div>
   </>
   );

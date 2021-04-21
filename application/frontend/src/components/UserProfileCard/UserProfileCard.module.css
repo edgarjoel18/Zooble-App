@@ -1,0 +1,11 @@
+.tabContainer {
+  margin: left;
+  width: 50%;
+  background-color: "white";
+  color: "black";
+  display: flex;
+}
+
+.cardContainer {
+  
+}

@@ -4,12 +4,12 @@
    left: 50%;
    transform: translate(-50%, -50%);
    z-index: 3;
-   height:80%;
-   width:80%;
    background-color: var(--reversed-txt-clr);
    box-shadow: var(--elevation-10);
    border-radius: 10px;
-   overflow: auto;
+   overflow: hidden;
+   max-height: 100%;
+   max-width: 100%;
 }
 
 .overlay{
@@ -19,7 +19,7 @@
     right: 0;
     bottom: 0;
     background-color:rgba(0, 0, 0, 0.3);
-    z-index: 3;
+    z-index: 2;
 }
 
 .exit-button{

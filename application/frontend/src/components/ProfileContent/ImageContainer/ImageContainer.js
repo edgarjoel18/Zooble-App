@@ -7,9 +7,13 @@ import styled from 'styled-components';
 import PostModal from '../../Modals/PostModal'
 
 function ImageContainer(props) {
-    const [postModalDisplay, setPostModalDisplay] = useState(true);
+    const [postModalDisplay, setPostModalDisplay] = useState(false);
     let history = useHistory();
-    
+
+    function closePostModal(){
+        console.log('exit button clicked')
+        setPostModalDisplay(false);
+    }
     function presentPostModal(postImage){
         console.log('clicked on image');
         setPostModalDisplay(true);
@@ -62,36 +66,38 @@ function ImageContainer(props) {
         return (
             <div className={styles.ImageStack} >
                 {imageStack.map((_, index) => {
-                    let position = '';
+                    let position = 'sticky';
                     let top = '';
-                    let right = '';
+                    //let right = '';
+                    let left = ''
                     if (index > 0) {
                         position = 'absolute';
                         top = '0';
-                        right = '0';
+                        //right = '0';
+                        left = '0';
                     }
                     const Img = styled.img `
                         height: 162px;
                         width: 162px;
                         top: ${top};
-                        right: ${right};
+                        left: ${left};
                         position: ${position};
-                        margin-right: ${(val-index-1) * marginToRight  + 'px'};
+                        margin-left: ${(val-index-1) * marginToRight  + 'px'};
                         border-radius: 15px;
-                        z-index: 0;
-                        box-shadow: var(--elevation-${index < 6 ? 6-index : 1});
+                        box-shadow: var(--elevation-1); //-${index < 6 ? 6-index : 1}
                         object-fit: cover;
                         `;
                     return (
                         // <a href={props.image[index].profile_pic} key={props.image[index].pet_id} > //Removed to test post modal functionality
+                        <div onClick={() => presentPostModal(props.image[index].profile_pic)} key={props.image[index].pet_id}>
                             <Img 
-                                key={props.image[index].pet_id}
+                                //key={props.image[index].pet_id}
                                 src={props.image[index].profile_pic} 
                                 alt="No Image Found"
-                                onClick={presentPostModal(props.image[index].profile_pic)}
                                 className={styles.ImageStack_pic}
                             />
-                        // </a>
+                        </div>
+                        //</a>
                     );
                 })}
             </div>
@@ -120,7 +126,8 @@ function ImageContainer(props) {
 
     return (
         <>
-        <PostModal display={postModalDisplay} onClose={()=> setPostModalDisplay(false)}/>
+        {/* for debugging  <button onClick={()=>{setPostModalDisplay(true)}}></button> */}
+        <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={{}}/>
         <div className={styles.ImageContainer} >
             <h2>{props.title}</h2>
             {imageStack}

@@ -11,7 +11,13 @@
     padding: 16px;
     min-height: 719.5px;
     box-shadow: var(--elevation-2);
+    /* flex-wrap: wrap;
+    need to make the grid responsive */
     border-radius: 15px;
+}
+
+.PhotosContainer div{
+    cursor: pointer;
 }
 
 .Image {

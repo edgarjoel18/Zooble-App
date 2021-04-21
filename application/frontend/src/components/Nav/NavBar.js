@@ -11,7 +11,7 @@ function NavBar({appUser}) {
         <div className={styles["navbar"]}>
             <NavBarLeft />
             <SearchBar/>
-            <NavBarRight/>
+            <NavBarRight appUser={appUser}/>
         </div>
     )
 }
