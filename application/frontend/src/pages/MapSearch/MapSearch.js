@@ -85,7 +85,7 @@ function MapSearch(props) {
 
 
     useEffect(()=>{
-        console.log('useEffect');
+        console.log('Fetching Search Results');
         setSearchCategory(state.searchCategoryParam);
         setSearchTerm(state.searchTermParam);
         Axios.get('/search', {  //take in filters here? for final version
@@ -93,9 +93,9 @@ function MapSearch(props) {
               searchTerm: state.searchTermParam,
               searchCategory:state.searchCategoryParam}})
             .then(response =>{
-            // console.log(response)
-            // console.log(response.data)
-            // console.log(response.data.searchResults)
+            console.log(response)
+            console.log(response.data)
+            console.log(response.data.searchResults)
             setRecievedSearchResults(response.data.searchResults)
             // setOverlayDisplay(true);
             displaySearchResults();

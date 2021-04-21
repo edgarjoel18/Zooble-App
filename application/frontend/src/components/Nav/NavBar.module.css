@@ -1,14 +1,10 @@
-a:link {
-    /* text-decoration: none; */
-    width: 50px;
-}
- @import url('https://www.w3schools.com/w3css/4/w3.css');
+@import url('https://www.w3schools.com/w3css/4/w3.css');
 
 .navbar{
     display: grid;
     height: 100px;
     align-items: center;
-    /* box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20); */
+
     grid-template-columns: 225px auto 75px 75px;
     column-gap: 50px;
     padding-left: 25px;
@@ -119,7 +115,27 @@ select {
   cursor: pointer;
 }
 
-.searchbar-search {
+.searchbar{
+    display:flex;
+    flex-direction: row;
+    box-shadow: var(--elevation-1);
+    border-radius:10px;
+    text-align: center;
+    align-items: center;
+    font-family: var(--ff-primary);
+    flex-shrink: 2;
+  }
+  
+  .searchbar input{
+    border: none;
+    flex-grow:2;
+    font-size: 1.5em;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+
+/* Searchbar button */
+.searchbar-search {  
   width: 50px;
   height: 50px;
   display:inline-flex;
@@ -129,23 +145,12 @@ select {
 padding-bottom: 10%; */
   /* background-size: 100%; */
   background: url("../../images/Third\ Party\ Icons/icons8-search-location-48.png") no-repeat;
+  margin-left: auto;
 }
 
 
-.searchbar input{
-    border: none;
-    flex-grow:2;
-    font-size: 1.5em;
-    text-overflow: ellipsis;
-  }
-
-  .searchbar-input {
-    width:70%;
-}
-
-/* ipad */
-@media all and (max-width: 1280px){
-    /*
+/* tablet */
+/* @media all and (max-width: 1280px){
     .navbar{
         height: auto;
         display: grid;
@@ -176,40 +181,9 @@ padding-bottom: 10%; */
         height: 50px;
         background: url('../../images/Created\ Icons/Account.svg') 50% no-repeat;
     }
+} */
 
 
 
-.searchbar{
-  display:flex;
-  flex-direction: row;
-  box-shadow: var(--elevation-1);
-  border-radius:10px;
-  text-align: center;
-  align-items: center;
-  font-family: var(--ff-primary);
-  flex-shrink: 2;
-  justify-content: space-between;
-}
-
-.searchbar input{
-  border: none;
-  flex-grow:2;
-  font-size: 1.5em;
-  text-overflow: ellipsis;
-}
-*/
-.searchbar-input {
-    width:70%;
-}
-}
 
 
-/* iphone */
-@media all and (max-device-width: 480px) {
-
-    /* .searchbar {
-        display: block;
-    }  */
-   
-}
-   

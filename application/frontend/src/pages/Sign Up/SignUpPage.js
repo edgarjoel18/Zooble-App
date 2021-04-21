@@ -11,7 +11,7 @@ function SignUpPage() {
     const [password, setPassword] = useState('')
     const [redonePassword, setRedonePassword] = useState('')
 
-    function OnClickHandler(e) {
+    function OnClickHandler() {
         console.log(email)
         console.log(uname)
         console.log(firstName)
@@ -28,11 +28,14 @@ function SignUpPage() {
                 redonePassword: redonePassword
             }
         })
-            .then(response => {
-                console.log(response)
-                console.log(response.data)
-                console.log(response.data.searchResults)
-            })
+        .then(response => {
+            console.log(response)
+            console.log(response.data)
+            console.log(response.data.searchResults)
+        })
+        .catch(error =>{
+            console.log("Error");
+        })
     }
 
     return (
@@ -105,7 +108,7 @@ function SignUpPage() {
                     </Grid>
                 </Grid>
 
-                <div className={styles['checkbox-container']}>
+                {/* <div className={styles['checkbox-container']}>
                     <p>By creating an account you agree to our <a href='#'>Terms & Privacy</a>
                         <label>
                             <input
@@ -114,7 +117,7 @@ function SignUpPage() {
                             />
                         </label>
                     </p>
-                </div>
+                </div> */}
 
                 <div className={styles['btn-container']}>
                     <button type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
