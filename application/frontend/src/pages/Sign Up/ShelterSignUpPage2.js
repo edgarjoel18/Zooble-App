@@ -1,32 +1,54 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import styles from './ShelterSignUpPage2.module.css';
 
 import Select from 'react-select'
 
 import makeAnimated from 'react-select/animated';
 
+import TermsAndConditions from '../../components/Modals/TermsAndConditions'
+import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
+
 function ShelterSignUpPage2() {
     const typeOptions = [   //Real version will fetch from database
-        {value: 'Dog', label: 'Dog'},
-        {value: 'Cat', label: 'Cat'},
-        {value: 'Lizard', label:'Lizard'},
-        {value: 'Monkey', label: 'Monkey'},
+        { value: 'Dog', label: 'Dog' },
+        { value: 'Cat', label: 'Cat' },
+        { value: 'Lizard', label: 'Lizard' },
+        { value: 'Monkey', label: 'Monkey' },
     ];
 
-    const [selectedPetTypes,setSelectedPetTypes] = useState([]);
+    const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
+    const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
 
-    function customTheme(theme){ //move this a separate file and import maybe?
+    function openTermsAndConditionsModal() {
+        setTermsAndConditionsDisplay(true);
+    }
+
+    function closeTermsAndConditionsModal() {
+        setTermsAndConditionsDisplay(false);
+    }
+
+    function openPrivacyPolicyModal() {
+        setPrivacyPolicyDisplay(true);
+    }
+
+    function closePrivacyPolicyModal() {
+        setPrivacyPolicyDisplay(false);
+    }
+
+    const [selectedPetTypes, setSelectedPetTypes] = useState([]);
+
+    function customTheme(theme) { //move this a separate file and import maybe?
         return {
             control: base => ({
                 ...base,
                 height: 54.5,
                 minHeight: 54.5
             }),
-            ... theme,
-            colors:{
-                ... theme.colors,
+            ...theme,
+            colors: {
+                ...theme.colors,
                 primary25: '#B3B3B3',
-                primary:'#1CB48F',
+                primary: '#1CB48F',
             }
         }
     }
@@ -41,11 +63,11 @@ function ShelterSignUpPage2() {
             <div className={styles['signup-fields-container']}>
                 <div className={styles['shelter-name-input-container']}>
                     <label className={styles['shelter-name-input-label']} for='shelter-name'>Shelter Name</label>
-                        <input
-                            type='text'
-                            placeholder='Enter shelter name'
-                                name='shelter-name'
-                        />
+                    <input
+                        type='text'
+                        placeholder='Enter shelter name'
+                        name='shelter-name'
+                    />
                 </div>
 
                 <div className={styles['shelter-address-input-container']}>
@@ -60,13 +82,13 @@ function ShelterSignUpPage2() {
                 <div className={styles['shelter-animal-types-input-container']}>
                     <label className={styles['shelter-animal-types-input-label']} for='shelter-animal-types'>Types of Animals</label>
                     <Select id="shelter-animal-types" name="shelter_animal_types"
-                                    onChange={setSelectedPetTypes}
-                                    options={typeOptions}
-                                    placeholder="Types of Animals at your Shelter"
-                                    theme={customTheme}
-                                    isSearchable
-                                    isMulti
-                                    components={animatedComponents}
+                        onChange={setSelectedPetTypes}
+                        options={typeOptions}
+                        placeholder="Types of Animals at your Shelter"
+                        theme={customTheme}
+                        isSearchable
+                        isMulti
+                        components={animatedComponents}
                     />
                 </div>
 
@@ -78,22 +100,25 @@ function ShelterSignUpPage2() {
                         name='shelter-phone-number'
                     />
                 </div>
-                </div>
+            </div>
 
-                {/* <div className={styles['checkbox-container']}>
-                    <p>By creating an account you agree to our <a href='#'>Terms & Privacy</a>
-                        <label>
-                            <input
-                                type='checkbox'
-                                required name='remember'
-                            />
-                        </label>
-                    </p>
-                </div> */}
+            <div className={styles['checkbox-container']}>
+                <p>By creating an account you agree to our <button className={styles['terms-button']} onClick={openTermsAndConditionsModal}>Terms</button> &<button className={styles['policy-button']} onClick={openPrivacyPolicyModal}>Privacy Policy</button>
+                    <label>
+                        <input
+                            type='checkbox'
+                            required name='remember'
+                        />
+                    </label>
+                </p>
+            </div>
 
-                <div className={styles['btn-container']}>
-                    <button type='submit' className={styles['submit-btn']}>Sign Up</button>
-                </div>
+            <div className={styles['btn-container']}>
+                <button type='submit' className={styles['submit-btn']}>Sign Up</button>
+            </div>
+            {/* Modals */}
+            <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal} />
+            <PrivacyPolicy display={privacyPolicyDisplay} onClose={closePrivacyPolicyModal} />
         </div>
     );
 }

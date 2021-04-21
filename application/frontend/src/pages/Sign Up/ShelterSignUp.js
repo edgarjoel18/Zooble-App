@@ -127,14 +127,14 @@ function ShelterSignUpPage() {
                         </div>
                     </div>
                 
-                    <div className={styles['checkbox-container']}>
+                    {/* <div className={styles['checkbox-container']}>
                             <p>By creating an account you agree to our <button className={styles['terms-button']} onClick={openTermsAndConditionsModal}>Terms</button> &<button className={styles['policy-button']} onClick={openPrivacyPolicyModal}>Privacy Policy</button>
                                 <input
                                     type='checkbox'
                                     required name='remember'
                                 />
                             </p>
-                    </div>
+                    </div> */}
                     <NavLink to="/shelter-signup2">
                     <div className={styles['btn-container']}>
                         <button type='submit' className={styles['submit-btn']}>Next: Shelter Details</button>

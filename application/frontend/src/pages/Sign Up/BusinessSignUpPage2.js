@@ -1,8 +1,30 @@
+import { useState } from 'react';
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import styles from './BusinessSignUpPage2.module.css';
 
+import TermsAndConditions from '../../components/Modals/TermsAndConditions'
+import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
+
 function BusinessSignUpPage2() {
+    const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
+    const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
+
+    function openTermsAndConditionsModal() {
+        setTermsAndConditionsDisplay(true);
+    }
+
+    function closeTermsAndConditionsModal() {
+        setTermsAndConditionsDisplay(false);
+    }
+
+    function openPrivacyPolicyModal() {
+        setPrivacyPolicyDisplay(true);
+    }
+
+    function closePrivacyPolicyModal() {
+        setPrivacyPolicyDisplay(false);
+    }
 
     return (
         <form className={styles['business-form']}>
@@ -53,7 +75,7 @@ function BusinessSignUpPage2() {
                 </Grid>
 
                 <div className={styles['checkbox-container']}>
-                    <p>By creating an account you agree to our <a href='#'>Terms & Privacy</a>
+                    <p>By creating an account you agree to our <button className={styles['terms-button']} onClick={openTermsAndConditionsModal}>Terms</button> &<button className={styles['policy-button']} onClick={openPrivacyPolicyModal}>Privacy Policy</button>
                         <label>
                             <input
                                 type='checkbox'
@@ -67,6 +89,9 @@ function BusinessSignUpPage2() {
                     <button type='submit' className={styles['submit-btn']}>Sign Up</button>
                 </div>
             </div>
+            {/* Modals */}
+            <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal} />
+            <PrivacyPolicy display={privacyPolicyDisplay} onClose={closePrivacyPolicyModal} />
         </form >
     );
 }
