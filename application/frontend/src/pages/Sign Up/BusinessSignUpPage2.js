@@ -15,9 +15,9 @@ function BusinessSignUpPage2() {
     const typeOptions = [  // final product will fetch from database
         { value: 'Retailer', label: 'Retailer' },
         { value: 'Service', label: 'Service' },
-        { value: 'Retailer', label: 'Retailer' },
+        { value: 'Grooming', label: 'Grooming' },
         { value: 'Education', label: 'Education' },
-    ];
+    ]; 
 
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
     const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
