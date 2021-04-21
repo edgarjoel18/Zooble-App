@@ -141,19 +141,6 @@ function ShelterSignUpPage() {
                     </div>
                 </NavLink>
                 </div>
-
-                <div className={styles['checkbox-container']}>
-                    <p>By creating an account you agree to our <a href='#'>Terms & Privacy</a>
-                        <label>
-                            <input
-                                type='checkbox'
-                                required name='remember'
-                            />
-                        </label>
-                    </p>
-                </div>
-
-
         </>
     );
 }

@@ -3,17 +3,18 @@ import Axios from "axios";
 import styles from './LoginPage.module.css';
 import {Redirect, useHistory} from "react-router-dom";
 
-function LoginPage({appUser, setAppUser}) {
+function LoginPage({appUser,setAppUser}){
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     let history = useHistory();
 
     function loginHandler(e){
-        console.log(username)
-        console.log(password)
+        console.log(username);
+        console.log(password);
+        setAppUser(username);
+        console.log("AppUser in Login Handler: " + appUser);
 
          Axios.get('/login',{
            params: {
@@ -30,10 +31,10 @@ function LoginPage({appUser, setAppUser}) {
         })
     }
 
-    if (isLoggedIn){
-        console.log(isLoggedIn);
-        return <Redirect to="/Feed"/>
-    }
+    // if(appUser){
+    //     console.log('User is Logged In');
+    //     return <Redirect to="/Feed"/>
+    // }
     return (
             <>
             <div className={styles['login-container']}>

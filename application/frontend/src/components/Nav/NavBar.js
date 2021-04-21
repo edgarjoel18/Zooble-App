@@ -6,12 +6,12 @@ import { NavLink } from 'react-router-dom';
 
 import styles from './NavBar.module.css'
 
-function NavBar({appUser}) {
+function NavBar({appUser, setAppUser}) {
     return (
         <div className={styles["navbar"]}>
             <NavBarLeft />
             <SearchBar/>
-            <NavBarRight appUser={appUser}/>
+            <NavBarRight appUser={appUser} setAppUser={setAppUser}/>
         </div>
     )
 }
