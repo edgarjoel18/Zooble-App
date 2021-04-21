@@ -63,7 +63,7 @@ function BusinessSignUpPage() {
     return (
             <>
 
-            <div className={styles['signup-container']}>
+            <form className={styles['signup-container']}>
                 <div className={styles['signup-container-header']}>
                     Create an Account for your Business
                 </div>
@@ -75,6 +75,7 @@ function BusinessSignUpPage() {
                                 placeholder='First name'
                                 name='fname'
                                 onChange={e => setFirstName(e.target.value)}
+                                required
                             />
                         </div>
 
@@ -85,6 +86,7 @@ function BusinessSignUpPage() {
                                 placeholder='Last name'
                                 name='lname'
                                 onChange={e => setLastName(e.target.value)}
+                                required
                             />
                         </div>
 
@@ -95,6 +97,7 @@ function BusinessSignUpPage() {
                                 placeholder='Enter email'
                                 name='email'
                                 onChange={e => setEmail(e.target.value)}
+                                required
                             />
                         </div>
 
@@ -105,6 +108,7 @@ function BusinessSignUpPage() {
                                 placeholder='Enter username'
                                 name='uname'
                                 onChange={e => setUname(e.target.value)}
+                                required
                             />
                         </div>
 
@@ -115,6 +119,7 @@ function BusinessSignUpPage() {
                                 placeholder='Enter password'
                                 name='psw'
                                 onChange={e => setPassword(e.target.value)}
+                                required
                             />
                         </div>
 
@@ -125,6 +130,7 @@ function BusinessSignUpPage() {
                                 placeholder='Confirm password'
                                 name='psw-repeat'
                                 onChange={e => setRedonePassword(e.target.value)}
+                                required
                             />
                         </div>
                     </div>
@@ -142,10 +148,10 @@ function BusinessSignUpPage() {
                         <button type='submit' className={styles['submit-btn']}>Next: Business Details</button>
                     </div>
                 </NavLink>
-            </div>
-            {/* Modals */}
+            </form>
+            {/* Modals
             <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal}/>
-        <PrivacyPolicy display={privacyPolicyDisplay} onClose={closePrivacyPolicyModal}/>
+        <PrivacyPolicy display={privacyPolicyDisplay} onClose={closePrivacyPolicyModal}/> */}
         </>
 
     );

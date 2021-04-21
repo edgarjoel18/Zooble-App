@@ -13,10 +13,11 @@ import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
 
 function BusinessSignUpPage2() {
     const typeOptions = [  // final product will fetch from database
-        { value: 'Retailer', label: 'Retailer' },
-        { value: 'Service', label: 'Service' },
-        { value: 'Retailer', label: 'Retailer' },
-        { value: 'Education', label: 'Education' },
+        {value: 'Grooming', label: 'Grooming'},
+        {value: 'Supplies', label: 'Supplies'},
+        {value: 'Training', label: 'Training'},
+        {value: 'Kennels', label: 'Kennels'},
+        {value: 'Pet Stores', label: 'Pet Stores'}
     ];
 
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
@@ -59,7 +60,8 @@ function BusinessSignUpPage2() {
     const animatedComponents = makeAnimated();
 
     return (
-        <div className={styles['signup-container']}>
+        <>
+        <form className={styles['signup-container']}>
             <div className={styles['signup-container-header']}>
                 Business Details
             </div>
@@ -70,6 +72,7 @@ function BusinessSignUpPage2() {
                             type='text'
                             placeholder='Enter Business Name'
                             name='business-name'
+                            required
                         />
                     </div>
 
@@ -79,6 +82,7 @@ function BusinessSignUpPage2() {
                             type='text'
                             placeholder='(000) 000-0000'
                             name='business-phone-number'
+                            required
                         />
                     </div>
 
@@ -88,6 +92,7 @@ function BusinessSignUpPage2() {
                             type='text'
                             placeholder='1600 Holloway Ave, San Francisco, CA, 94132'
                             name='business-address'
+                            required
                         />
                     </div>
                 <div className={styles['types-input-container']}>
@@ -118,10 +123,12 @@ function BusinessSignUpPage2() {
                 <div className={styles['btn-container']}>
                     <button type='submit' className={styles['submit-btn']}>Sign Up</button>
                 </div>
-            {/* Modals */}
-            <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal} />
-            <PrivacyPolicy display={privacyPolicyDisplay} onClose={closePrivacyPolicyModal} />
-        </div>
+
+        </form>
+        {/* Modals */}
+        <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal} />
+        <PrivacyPolicy display={privacyPolicyDisplay} onClose={closePrivacyPolicyModal} />
+        </>
     );
 }
 

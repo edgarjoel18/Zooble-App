@@ -56,7 +56,8 @@ function ShelterSignUpPage2() {
     const animatedComponents = makeAnimated();
 
     return (
-        <div className={styles['signup-container']}>
+        <>
+        <form className={styles['signup-container']}>
             <div className={styles['signup-container-header']}>
                 Shelter Details
             </div>
@@ -67,6 +68,7 @@ function ShelterSignUpPage2() {
                         type='text'
                         placeholder='Enter Shelter Name'
                         name='shelter-name'
+                        required
                     />
                 </div>
 
@@ -76,6 +78,7 @@ function ShelterSignUpPage2() {
                         type='text'
                         placeholder='(000) 000-0000'
                         name='shelter-phone-number'
+                        required
                     />
                 </div>
 
@@ -85,6 +88,7 @@ function ShelterSignUpPage2() {
                         type='text'
                         placeholder='1600 Holloway Ave, San Francisco, CA, 94132'
                         name='shelter-address'
+                        required
                     />
                 </div>
 
@@ -119,9 +123,11 @@ function ShelterSignUpPage2() {
                 <button type='submit' className={styles['submit-btn']}>Sign Up</button>
             </div>
             {/* Modals */}
-            <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal} />
-            <PrivacyPolicy display={privacyPolicyDisplay} onClose={closePrivacyPolicyModal} />
-        </div>
+
+        </form>
+        <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal} />
+        <PrivacyPolicy display={privacyPolicyDisplay} onClose={closePrivacyPolicyModal} />
+        </>
     );
 }
 
