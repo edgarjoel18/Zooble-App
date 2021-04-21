@@ -66,8 +66,7 @@ function ImageContainer(props) {
                         box-shadow: var(--elevation-1); //-${index < 6 ? 6-index : 1}
                         object-fit: cover;
                         `;
-                    return (
-                        // <a href={props.image[index].profile_pic} key={props.image[index].pet_id} > //Removed to test post modal functionality
+                    let displayPostModal = (
                         <div onClick={() => presentPostModal(props.image[index].profile_pic)} key={props.image[index].pet_id}>
                             <Img 
                                 //key={props.image[index].pet_id}
@@ -76,6 +75,22 @@ function ImageContainer(props) {
                                 className={styles.ImageStack_pic}
                             />
                         </div>
+                    )
+                    if (props.title === 'My Siblings' || props.title === 'My Pets')
+                        displayPostModal = (
+                            <Link to={"/Profile/" + props.image[index].name} >
+                                <Img 
+                                    //key={props.image[index].pet_id}
+                                    src={props.image[index].profile_pic} 
+                                    alt="No Image Found"
+                                    className={styles.ImageStack_pic}
+                                />
+                            </Link>
+                        )
+                    return (
+                        // <a href={props.image[index].profile_pic} key={props.image[index].pet_id} > //Removed to test post modal functionality
+                        // <Link to={"/Profile/" + props.image[index].name} ></Link>
+                        displayPostModal
                         //</a>
                     );
                 })}
@@ -100,7 +115,7 @@ function ImageContainer(props) {
         seeAll = <p style={{cursor: 'pointer'}} onClick={() => seeAllImageHandler()} >See All</p>;
     }
     else {
-        seeAll = <p style={{cursor: 'pointer'}} onClick={() => alert('coming soon')} >See All</p>
+        seeAll = <p style={{cursor: 'pointer'}} onClick={() => history.push("/MyPets")} >See All</p>
     }
 
     return (

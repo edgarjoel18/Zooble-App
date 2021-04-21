@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import {Link} from 'react-router-dom'
 
 import styles from './MyPets.module.css'
 
@@ -81,11 +82,13 @@ function MyPets() {
                 <div className={styles['my-pets-container-add-pet-text']}>Add a Pet</div>
             </div>
             {myPets && myPets.map((pet) =>(
-                <div className={styles['my-pets-container-pet']} >
-                    <img className={styles['my-pets-container-pet-pic']} src={pet.pet_prof_pic}/>
-                    <div className={styles['my-pets-container-pet-name']}>{pet.pet_name}</div>
-                    <img className={styles['my-pets-container-pet-delete']} onClick={()=>viewDeletionModal(pet)}src={DeleteIcon}/>
-                </div>
+                <Link to={"/Profile/" + pet.pet_name} >
+                    <div className={styles['my-pets-container-pet']} >
+                        <img className={styles['my-pets-container-pet-pic']} src={pet.pet_prof_pic}/>
+                        <div className={styles['my-pets-container-pet-name']}>{pet.pet_name}</div>
+                        <img className={styles['my-pets-container-pet-delete']} onClick={()=>viewDeletionModal(pet)}src={DeleteIcon}/>
+                    </div>
+                </Link>
             ))}
         </div>
         <ConfirmPetDeletion display={deletionModalDisplay} onClose={closeDeletionModal} selectedPet={selectedPet}/>

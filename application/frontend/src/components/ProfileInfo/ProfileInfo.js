@@ -86,9 +86,18 @@ function ProfileInfo(props) {
         case 'petOwnerImage' :
             img = petOwnerImg;
             break;
-        case 'petImage' :
+        case 'petImage-Sasha' :
             img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg';
-            break
+            break;
+        case 'petImage-Max' :
+            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
+            break;
+        case 'petImage-Mimi' :
+            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg';
+            break;
+        case 'petImage-Juju' :
+            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg';
+            break;
         default:
             img = defaultImg;
     }

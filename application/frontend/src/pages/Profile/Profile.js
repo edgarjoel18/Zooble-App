@@ -318,7 +318,7 @@ const petProfile = {
     accountType: 'pet',
     id: '97',
     userName: 'Sasha',
-    userPicture: 'petImage',
+    userPicture: 'petImage-Sasha',
     petOwner: 'Alex', 
     about: 'Hello, I\'m Sasha.',
     petType: {value: 'Dog', label: 'Dog'},
@@ -364,7 +364,7 @@ const petProfile = {
         }
     ],
     petProfiles: [
-        { pet_id: 1,
+        {   pet_id: 1,
             name: 'Mimi',
             size_name: 'medium',
             age_name: 'six',
@@ -382,7 +382,7 @@ const petProfile = {
             age_name: 'two',
             profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
         },
-        { pet_id: 4,
+        {  pet_id: 4,
             name: 'Mimi',
             size_name: 'medium',
             age_name: 'six',
