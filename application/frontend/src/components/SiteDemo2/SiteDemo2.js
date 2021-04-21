@@ -26,7 +26,7 @@ function SiteDemo2() {
             <span><h3>{text}</h3></span>
         </button>
       </div>
-      <img className={styles['site-demo2-box2']} src={mapSearchDemo} />
+      {/* <img className={styles['site-demo2-box2']} src={mapSearchDemo} /> */}
     </div>
   );
 }

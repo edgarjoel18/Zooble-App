@@ -1,4 +1,3 @@
-/*Full width for inputs */
 .login-container {
     display: flex;
     flex-direction: column;
@@ -6,16 +5,13 @@
     border-radius: 7.5px;
     z-index: 1;
     width: 35%;
+    height: 600px;
     box-shadow: var(--elevation-1);
     margin: 12% auto auto auto;
     grid-column: 2/span 1;
 }
 
-.login-form h1 {
-    text-align: center;
-}
 
-/*Full width for inputs */
 .login-header{
     font-family: var(--ff-primary);
     font-weight: 600;

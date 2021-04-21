@@ -37,7 +37,7 @@ function LoginPage({appUser, setAppUser}) {
     return (
             <>
             <div className={styles['login-container']}>
-                <div className={styles['login-header']}/>
+                <div className={styles['login-header']}>Login</div>
                 <div className={styles['username-input-container']}>
                     <label className={styles['username-input-label']} for='username'>Username</label>
                     <input
