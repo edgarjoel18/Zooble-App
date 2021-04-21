@@ -1,6 +1,7 @@
 a:link {
     /* text-decoration: none; */
-    width: 50px;
+    /* width: 50px; */
+    /* the width prop affect all elements */
 }
  @import url('https://www.w3schools.com/w3css/4/w3.css');
 

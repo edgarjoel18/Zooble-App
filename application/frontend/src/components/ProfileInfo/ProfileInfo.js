@@ -99,7 +99,7 @@ function ProfileInfo(props) {
                                     <span className={styles.DropdownText} onClick={() => setFollow(!follow)} >
                                         {follow ? 'Following' : 'Follow'}
                                     </span>
-                                    <div className={styles.threeDots} onClick={showDropdown} >
+                                    <div  onClick={showDropdown} >
                                         <img src={arrow} />
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@ function ProfileInfo(props) {
                                     <span className={styles.DropdownText} onClick={() => setFollow(!follow)} >
                                         {follow ? 'Following' : 'Follow'}
                                     </span>
-                                    <div className={styles.threeDots} onClick={showDropdown} >
+                                    <div  onClick={showDropdown} >
                                         <img src={arrow} />
                                     </div>
                                 </div>
@@ -159,7 +159,7 @@ function ProfileInfo(props) {
                                     <span className={styles.DropdownText} onClick={() => setFollow(!follow)} >
                                         {follow ? 'Following' : 'Follow'}
                                     </span>
-                                    <div className={styles.threeDots} onClick={showDropdown} >
+                                    <div onClick={showDropdown} >
                                         <img src={arrow} />
                                     </div>
                                 </div>
