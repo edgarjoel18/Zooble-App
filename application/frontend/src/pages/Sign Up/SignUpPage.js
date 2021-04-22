@@ -52,8 +52,8 @@ function SignUpPage() {
         console.log(lastName)
         console.log(password)
         console.log(redonePassword)
-        Axios.get('/sign-up', {
-                params: {
+        Axios.post('/sign-up', {
+                data: {
                     email: email,
                     firstName: firstName,
                     lastName: lastName,
@@ -62,14 +62,13 @@ function SignUpPage() {
                     redonePassword: redonePassword
                 }
             }).then(response => {
-                console.log(response)
-                console.log(response.data)
-                console.log(response.data.searchResults)
+                console.log(response);
             }).catch(error => {
                 console.log("Error");
             })
 
-        history.push("/SignUpSuccess");
+
+        
     }
 
     // function onPasswordChangedHandler(event) {
@@ -144,7 +143,7 @@ function SignUpPage() {
                         />
                     </div>
 
-                    <div className={styles['confirmpassword-input-container']}>
+                    <div className={styles['confirm-password-input-container']}>
                         <label className={styles['repeat-password-input-label']} for='psw-repeat'>Confirm Password</label>
                         <input
                             type='password'

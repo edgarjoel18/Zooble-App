@@ -16,9 +16,9 @@
                          'fri-start fri-end'
                          'sat-start sat-end'
                          'btn           btn';
-    gap: 50px;
+    gap: 10px;
     width: 700px;
-    height: 1000px;
+    height: 700px;
     
 }
 

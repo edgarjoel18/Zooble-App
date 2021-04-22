@@ -80,9 +80,9 @@
     width: 195px;
     height: 62px;
     cursor: default;
-    background-color: var(--reversed-txt-clr);
-    color: var(--accent-color-2);
-    border: 2px solid var(--accent-color-2);
+    background-color: var(--primary-clr);
+    color: var(--accent-color-1);
+    border: 2px solid var(--accent-color-1);
     border-radius: 7.5px;
     cursor: pointer;
 }
