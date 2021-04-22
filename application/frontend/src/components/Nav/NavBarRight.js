@@ -5,23 +5,17 @@ import parrotPng from '../../images/parrot.png';
 import styles from './NavBar.module.css'
 
 function NavBarRight({appUser,setAppUser}) {
-
-  let[,setState]=useState();
-  let history = useHistory();
-
-  function navRefresh(){
-    console.log('refreshing');
-    setState({});
-  }
-  
-  console.log("AppUser from NavBarRight: ", appUser);
+  const history = useHistory();
 
   function logoutHandler(){
-    setAppUser('null');
+    setAppUser(null);
     console.log("App User after Logout:", appUser);
-    navRefresh();
     history.push('/');
   }
+
+  useEffect(() =>{
+    console.log('AppUser in NavbarRight changed to: ', appUser)
+  },[appUser])
   
   return (
         <>

@@ -27,34 +27,34 @@
     justify-content: center;
 }
 
-.shelter-name-input-container{
+.name-input-container{
     grid-area: 1/ 1/ span 1;
 }
 
-.shelter-phone-number-input-container{
+.phone-number-input-container{
     grid-area: 1/ 2/ span 1;
 }
 
-.shelter-address-input-container{
+.address-input-container{
     grid-area: 2/ 1/ span 1;
 }
 
 
-.shelter-animal-types-input-container{
+.types-input-container{
     grid-area: 2/ 2/ span 1;
 }
 
 
-.shelter-name-input-label, .shelter-phone-number-input-label, .shelter-address-input-label, .shelter-animal-types-input-label {
+.name-input-label, .phone-number-input-label, .address-input-label, .types-input-label {
     font-family: var(--ff-primary);
     font-size:var(--h3);
     display: block;
 }
 
 
-.shelter-name-input-container input,
-.shelter-phone-number-input-container input,
-.shelter-address-input-container input
+.name-input-container input,
+.phone-number-input-container input,
+.address-input-container input
 {
     padding: 15px;
     display: inline-block;
@@ -63,12 +63,12 @@
 }
 
 .checkbox-container{
-    padding: 25px 0 25px 0;
+    padding: 25px 0 15px 0;
 }
 
 .btn-container {
     text-align: center;
-    padding: 30px 0 30px 0;
+    padding: 0 0 30px 0;
 }
 
 .submit-btn{

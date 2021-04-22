@@ -5,15 +5,16 @@
     height: 100px;
     align-items: center;
 
-    grid-template-columns: 225px auto 75px 75px;
+    grid-template-columns: 100px 50px auto 75px 75px;
     column-gap: 50px;
     padding-left: 25px;
     padding-right: 25px;
+    /* background-color: var(--nav-bar-color); */
+    /* box-shadow: var(--elevation-2); */
 }
 
 .logo-img{
     height:80px;
-    background: url('../../images/Created\ Icons/Logo.png') 50% no-repeat;
 }
 
 .login-link{
@@ -21,6 +22,7 @@
     font-weight: 600;
     text-decoration: none;
     font-size: var(--h2);
+    /* color: var(--accent-color-1); */
 }
 
 
@@ -32,15 +34,17 @@
     font-weight: 600;
     cursor:pointer;
     text-decoration: none;
-    grid-column: 3 / span 1;
+    grid-column: 4 / span 1;
     width: 75px;
     height: 75px;
     background: url('../../images/Created\ Icons/Messages.svg') 50% no-repeat;
     background-size: 50px 50px;
+    color: var(--accent-color-1);
+
 }
 
 .account-menu-dropdown{
-    grid-column: 4 / span 1;
+    grid-column: 5 / span 1;
     overflow: hidden;
 }
 .account-menu-dropdown-button{
@@ -55,6 +59,7 @@
     font-family: 'Nunito', sans-serif;
     font-weight: 600;
     cursor:pointer;
+    color: var(--accent-color-1);
     /* background: url('../../images/Created\ Icons/Account.svg') no-repeat; */
 }
 
@@ -108,10 +113,9 @@ select {
   border: none;
   border-radius:10px;
   font-size: 2em;
-  margin-left:10px;
-  padding-right: 20px;
+  padding-left:10px;
+  padding-right: 25px;
   background: url("../../images/Created\ Icons/Dropdown.svg") no-repeat right;
-  margin-right: 10px;
   cursor: pointer;
 }
 
@@ -124,6 +128,10 @@ select {
     align-items: center;
     font-family: var(--ff-primary);
     flex-shrink: 2;
+    background-color: white;
+    grid-column: 3 /span 1;
+    margin: 0 auto;
+    width: 700px;
   }
   
   .searchbar input{
@@ -131,7 +139,8 @@ select {
     flex-grow:2;
     font-size: 1.5em;
     text-overflow: ellipsis;
-    width: 100%;
+    width: 435px;
+    margin-left:15px;
   }
 
 /* Searchbar button */
@@ -145,7 +154,7 @@ select {
 padding-bottom: 10%; */
   /* background-size: 100%; */
   background: url("../../images/Created\ Icons/Search.svg") 50% no-repeat;
-  margin-left: auto;
+  margin-left:auto;
 }
 
 

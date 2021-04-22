@@ -41,6 +41,10 @@ const App = () => {
 
   console.log("rerendering app");
 
+  useEffect(() => {
+    console.log('AppUser in App changed to: ', appUser)
+  }, [appUser])
+
   return (
     <Router>
       <NavBar
