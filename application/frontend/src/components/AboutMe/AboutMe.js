@@ -78,7 +78,7 @@ function AboutMe(props) {
             profileTags = petOwnerProfileTags;
             displayPetOwnerLink = (
                 <div>
-                    <span className={styles.petOwnerLinkLable} >My Owner: </span>
+                    <span className={styles.PetOwnerLinkLabel} >My Owner: </span>
                     <Link to="/Profile/Alex" >{props.profile.petOwner}</Link>
                 </div>
             )
@@ -159,21 +159,23 @@ function AboutMe(props) {
                     }
                     <br />
                     {/* // need to make a modal here to set hours  */}
-                    <div style={{textAlign: 'center'}}>
-                        {
-                            props.isSelfView && (labelSelected !== 'hours') && 
-                            //<button onClick={() => changingInfoHandler('hours')} >edit</button>
-                            <EditButton edit clicked={() => {
-                                setEditHoursDisplay(true);
-                                changingInfoHandler('hours')
-                                }}
-                            >
-                                Edit
-                            </EditButton>
-                        }
-                        <label>Hours: </label>
+                    <div className={styles.HoursDiv} >
+                        <div>
+                            {
+                                props.isSelfView && (labelSelected !== 'hours') && 
+                                //<button onClick={() => changingInfoHandler('hours')} >edit</button>
+                                <EditButton edit clicked={() => {
+                                    setEditHoursDisplay(true);
+                                    changingInfoHandler('hours')
+                                    }}
+                                >
+                                    Edit
+                                </EditButton>
+                            }
+                            <label>Hours: </label>
+                        </div>
                         {Object.keys(props.profile.contactInfo.hours).map(key => (
-                            <div key={key} >
+                            <div className={styles.Days} key={key} >
                                 <label>{key}: </label>
                                 <span >{props.profile.contactInfo.hours[key]}</span>
                             </div>
