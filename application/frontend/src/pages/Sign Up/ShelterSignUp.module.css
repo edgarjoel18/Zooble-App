@@ -15,6 +15,7 @@
 
 .shelter-form h1 {
     text-align: center;
+    font-family: var(--ff-tertiary);
 }
 
 .email-input-label, .username-input-label, .password-input-label, .repeat-password-input-label {

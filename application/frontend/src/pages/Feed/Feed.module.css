@@ -3,9 +3,11 @@
     margin-left: 0px;
     padding-left: 0px;
 }
-.follower-feed-header h1{
+.follower-feed-header{
     margin-left: 15px;
     font-weight: 600;
+    font-size: var(--h1);
+    font-family: var(--ff-tertiary);
 }
 
 
@@ -47,10 +49,12 @@
 .follower-feed-post-timestamp{
     margin-left: 15px;
     grid-area: 3/ 2 /span 1 / span 1;
+    font-family: var(--ff-primary);
 }
 
 .follower-feed-post-likes{
     grid-area: 2 / 3 / span 1 / span 1;
+    font-family: var(--ff-primary);
     text-align: center;
     line-height: 34px;
 }
@@ -69,6 +73,7 @@
 .follower-feed-post-body{
     margin-top: 10px;
     grid-area: 4 / 1 / span 1 / span 3;
+    font-family: var(--ff-primary);
 }
 
 .follower-feed-post-pic{
@@ -95,6 +100,7 @@
                          ".............      ............. new-post-expand-collapse ...................    .....................";
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(2, 90) 20;
+    font-family: var(--ff-primary);
 }
 
 .follower-feed-new-post-body{

@@ -1,7 +1,7 @@
 .messages-header{
     margin: 25px;
     font-size: var(--h1);
-    font-family: var(--ff-primary);
+    font-family: var(--ff-tertiary);
     font-weight: 600;
 }
 
@@ -32,7 +32,6 @@
     width: 750px;
     height: 125px;
     align-items: center;
-    font-family: var(--ff-primary);
     margin-bottom: 25px;
     border-radius: 7.5px;
 }
@@ -51,15 +50,18 @@
     grid-area: 1 / 2 / span 1 / span 1;
     font-weight: 600;
     margin-left: 15px;
+    font-family: var(--ff-primary);
 }
 
 .messages-container-message-timestamp{
     grid-area: 1 / 4 / span 1 / span 1;
+    font-family: var(--ff-primary);
 }
 
 .messages-container-message-sender{
     grid-area: 2 / 2 / span 1 / span 1;
     margin-left: 15px;
+    font-family: var(--ff-primary);
 }
 
 

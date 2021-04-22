@@ -8,7 +8,7 @@ function Input(props) {
     // invalid check
     let validationError = null;
     if (!props.valid && props.touched) {
-        validationError = <p className={styles.ErrorMessage} >Please enter a valid value!</p>;
+        validationError = <p className={styles.ErrorMessage} >Passwords Do Not Match</p>;
         inputClasses.push(styles.Invalid);
     }
      

@@ -13,7 +13,7 @@
 .business-button,
 .signup-button{
     width: 200px;
-    padding: 10px 0 10px 0;
+    padding: 15px 0 15px 0;
     text-justify: center;
     text-align: center;
     color: white;
@@ -23,6 +23,9 @@
     border: none;
     cursor: pointer;
     margin: 30px auto;
+    font-size: var(--h4);
+    font-weight: 600;
+    font-family: var(--ff-tertiary);
 }
 
 .account-type-container img {
@@ -40,16 +43,20 @@
     border-radius: 7.5px;
     margin:20px;
     padding-top: 20px;
+    box-shadow: var(--elevation-1);
+    transition: .5s ease;
+}
+
+.owner-container:hover,
+.shelter-container:hover,
+.business-container:hover{
+    background-color: var(--primary-clr);
 }
 
 
 .signup-button:hover, .shelter-button:hover, .business-button:hover{  
-    transition: 0.15s;
+    transition: 0.5s;
     transform: translateY(-4px);
-}
-
-.owner-container,
-.shelter-container,
-.business-container{
-    box-shadow: var(--elevation-1);
+    background-color: var(--reversed-txt-clr);
+    color: var(--accent-color-2);
 }

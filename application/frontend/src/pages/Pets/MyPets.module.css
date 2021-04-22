@@ -1,7 +1,7 @@
 .my-pets-header{
     margin: 25px;
     font-size: var(--h1);
-    font-family: var(--ff-primary);
+    font-family: var(--ff-tertiary);
     font-weight: 600;
 }
 

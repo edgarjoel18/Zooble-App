@@ -8,6 +8,7 @@
     display: grid;
     grid-template-rows: 10;
     grid-template-columns: 20;
+    font-family: var(--ff-primary);
 }
 
 .about-me-header{

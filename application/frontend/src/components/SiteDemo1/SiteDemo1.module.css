@@ -4,7 +4,8 @@
     height: 576px;
     align-items: center;
     background-color: var(--accent-color-1); 
-    border-radius: 175px 0 0 0;
+    border-radius: 200px 0 0 0;
+    font-family: var(--ff-primary);
   /* 683B30 */
 }
 

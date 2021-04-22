@@ -11,7 +11,7 @@
 .signup-container-header{
     padding-top: 20px;
     font-size: var(--h1);
-    font-family: var(--ff-primary);
+    font-family: var(--ff-tertiary);
     text-align: center;
     font-weight: 600;
 }
@@ -26,6 +26,7 @@
     grid-template-rows: 3;
     gap: 50px;
     justify-content: center;
+    font-family: var(--ff-primary);
 }
 
 .fname-input-container{

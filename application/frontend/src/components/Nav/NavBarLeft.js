@@ -5,12 +5,17 @@ import LogoPng from '../../images/Created Icons/LogoScript.png';
 
 import styles from './NavBar.module.css'
 
-function NavBarLeft() {
+function NavBarLeft({appUser,setAppUser}) {
   return (
     <span  className={styles["navbar-left"]}>
-      <NavLink to="/">
+      {!appUser && <NavLink to="/">
         <img className={styles["logo-img"]} src={LogoPng}/>
       </NavLink>
+      }
+      {appUser && <NavLink to="/Feed">
+        <img className={styles["logo-img"]} src={LogoPng}/>
+      </NavLink>
+      }
     </span>
   );
 }

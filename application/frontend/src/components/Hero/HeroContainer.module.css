@@ -42,7 +42,7 @@
 }
 
 .right-side-text {
-    font-family: var(--ff-primary);
+    font-family: var(--ff-tertiary);
     display: block;
     grid-row: 2 / span 1;
     color: var(--accent-color-1);

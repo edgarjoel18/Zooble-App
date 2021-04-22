@@ -76,7 +76,7 @@ function Feed() {
 
     return (
         <>
-        <div className={styles["follower-feed-header"]}><h1>Feed</h1></div>
+        <div className={styles["follower-feed-header"]}>Feed</div>
         <div className={styles["follower-feed-new-post"]} style={{height:createPostOverlayDisplay.height}}>
             <textarea className={styles["follower-feed-new-post-body"]} style={{display: createPostOverlayDisplay.display}} placeholder="Create a Post"/>
             <button className={styles["follower-feed-new-post-attach-image"]} style={{display: createPostOverlayDisplay.display}}>Add Image</button>

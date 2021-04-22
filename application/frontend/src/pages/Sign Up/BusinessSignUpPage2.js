@@ -130,10 +130,10 @@ function BusinessSignUpPage2() {
                     </div>
                 <div className={styles['types-input-container']}>
                     <label className={styles['types-input-label']} for='business-categories'>Business Categories</label>
-                        <Select id="shelter-animal-types" name="shelter_animal_types"
+                        <Select id="shelter-animal-types" name="shelter_animal_types" className={styles['Select']}
                             onChange={setSelectedBusinessCategories}
                             options={typeOptions}
-                            placeholder="Categories of your Business"
+                            placeholder="Business Categories"
                             theme={customTheme}
                             isSearchable
                             isMulti
