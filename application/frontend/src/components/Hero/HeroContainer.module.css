@@ -9,6 +9,7 @@
 }
 
 .left-side-dog{
+    position: relative;
     height: 576px;
     float: right;
     grid-area: 1 / 2 / span 2 / span 1;
@@ -16,6 +17,7 @@
 }
 
 .right-side{
+    position: relative;
     width: 50%;
     display: grid;
     grid-template-rows: 30% auto auto auto 30%;
