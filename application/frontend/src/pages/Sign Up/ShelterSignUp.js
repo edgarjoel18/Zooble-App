@@ -41,7 +41,7 @@ function ShelterSignUpPage() {
         console.log(redonePassword)
 
         if(email && uname && firstName && lastName && password && redonePassword){
-            history.push('/shelter-signup2')
+            history.push('/shelter-signup2')   //real version will pass along the registration information
         }
     
     }

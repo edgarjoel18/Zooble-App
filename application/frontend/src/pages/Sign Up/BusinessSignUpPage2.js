@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import {useHistory} from 'react-router'
 import React from 'react';
 import styles from './SignUpPage2.module.css';
 
@@ -58,6 +59,12 @@ function BusinessSignUpPage2() {
     }
 
     const animatedComponents = makeAnimated();
+
+    const history= useHistory();
+
+    function OnClickHandler(){
+        history.push("/SignUpSuccess");
+    }
 
     return (
         <>
@@ -121,7 +128,7 @@ function BusinessSignUpPage2() {
                 </div>
 
                 <div className={styles['btn-container']}>
-                    <button type='submit' className={styles['submit-btn']}>Sign Up</button>
+                    <button type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
                 </div>
 
         </form>

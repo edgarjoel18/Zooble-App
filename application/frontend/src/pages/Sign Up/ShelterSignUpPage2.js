@@ -7,6 +7,7 @@ import makeAnimated from 'react-select/animated';
 
 import TermsAndConditions from '../../components/Modals/TermsAndConditions'
 import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
+import { useHistory } from 'react-router';
 
 function ShelterSignUpPage2() {
     const typeOptions = [   //Real version will fetch from database
@@ -51,6 +52,12 @@ function ShelterSignUpPage2() {
                 primary: '#1CB48F',
             }
         }
+    }
+
+    const history= useHistory();
+
+    function OnClickHandler(){
+        history.push("/SignUpSuccess");
     }
 
     const animatedComponents = makeAnimated();
@@ -120,7 +127,7 @@ function ShelterSignUpPage2() {
             </div>
 
             <div className={styles['btn-container']}>
-                <button type='submit' className={styles['submit-btn']}>Sign Up</button>
+                <button type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
             </div>
             {/* Modals */}
 

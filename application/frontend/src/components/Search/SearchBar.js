@@ -129,7 +129,6 @@ function SearchBar() {
                 setSearchTerm(e.target.value);
             }}
             disabled={!ready}
-            placeholder="Enter an address"
             onKeyPress={event => {
               if(event.key === 'Enter'){
                 history.push(
@@ -145,13 +144,12 @@ function SearchBar() {
         {searchCategory != "Users" &&
             <ComboboxInput 
               value={value}
-              placeholder= {"Search " + searchCategory.toLowerCase()}
+              placeholder= {"Search " + searchCategory.toLowerCase() + " near you"}
               onChange={(e)=> {
                 setValue(e.target.value);
                 setSearchTerm(e.target.value);
               }}
               disabled={!ready}
-              placeholder="Enter an address"
               onKeyPress={event => {
                 if(event.key === 'Enter'){
                   history.push(

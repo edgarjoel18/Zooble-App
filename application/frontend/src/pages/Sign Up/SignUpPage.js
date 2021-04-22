@@ -4,6 +4,7 @@ import styles from './SignUpPage.module.css';
 
 import TermsAndConditions from '../../components/Modals/TermsAndConditions'
 import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
+import { useHistory } from "react-router";
 
 function SignUpPage() {
     const [email, setEmail] = useState('')
@@ -32,6 +33,8 @@ function SignUpPage() {
         setPrivacyPolicyDisplay(false);
     }
 
+    const history = useHistory();
+
     function OnClickHandler(e) {
         console.log(email)
         console.log(uname)
@@ -55,6 +58,8 @@ function SignUpPage() {
             }).catch(error => {
                 console.log("Error");
             })
+
+        history.push("/SignUpSuccess");
     }
 
     return (

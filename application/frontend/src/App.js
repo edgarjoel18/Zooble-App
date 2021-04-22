@@ -33,6 +33,8 @@ import Photo from './pages/Photo/Photo';
 import Followers from './pages/Followers/Followers';
 import ExploreUsers from './pages/ExploreUsers/ExploreUsers';
 
+import SignUpSuccess from './pages/Sign Up/SignUpSuccess'
+
 
 import MapSearch from './pages/MapSearch/MapSearch.js'
 
@@ -84,6 +86,7 @@ const App = () => {
         <Route path="/Wenjie" component={Wenjie}/>
         <Route path="/Cameron" component={Cameron}/>
         <Route path="/Wameedh" component={Wameedh}/>
+        <Route path="/SignUpSuccess" component={SignUpSuccess}/>
         {/* <Redirect to="/" /> */}
       </Switch>
     </Router>
