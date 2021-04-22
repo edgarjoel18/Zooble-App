@@ -1,4 +1,4 @@
-import {React, useEffect, useState} from 'react'
+import {useRef,useCallback, useEffect, useState} from 'react'
 
 import {Link} from "react-router-dom"
 
@@ -14,7 +14,28 @@ import makeAnimated from 'react-select/animated';
 
 import {GoogleMap, useLoadScript, Marker, InfoWindow} from '@react-google-maps/api';
 
+const mapContainerStyle = {
+    width: '100%',
+    height: 'calc(100vh - 100px)',
+};
+
+const options = {
+    disableDefaultUI: true,
+    zoomControl: false,
+    gestureHandling:"none",
+}
+
 function MapSearch(props) {
+
+    const panTo = useCallback(({lat,lng}) =>{
+        mapRef.current.panTo({lat,lng});
+        mapRef.current.setZoom(14);
+    },[]);
+    
+    const mapRef = useRef(); //retain state without causing re-renders
+    const onMapLoad = useCallback((map) =>{
+        mapRef.current = map;
+    }, []);
     
     //Only for horizontal prototype, real thing should fetch from db
     const businessCategoryOptions = [
@@ -90,7 +111,7 @@ function MapSearch(props) {
     const[longitude,setLongitude] = useState();
     const[mapUrl,setMapUrl] = useState();
 
-
+    const center = {lat: state.lat, lng: state.lng};
 
     useEffect(()=>{
         if(state.searchTermParam && state.searchCategoryParam){
@@ -116,11 +137,6 @@ function MapSearch(props) {
               })
         }
         else if(state.lat && state.lng){
-            console.log(state.lat + "+" + state.lng);
-            setLatitude(state.lat);
-            setLongitude(state.lng);
-            setMapUrl(`https://maps.googleapis.com/maps/api/staticmap?center=`+ longitude +","+ latitude +`&zoom=14&size=2048x2048&key=AIzaSyDGz7t7D1PRi8X2Or-SHAie2OgWoFH--Bs`);
-            console.log(mapUrl);
         }
 
     },[state]);  //only fetch and reload when search params change
@@ -158,10 +174,21 @@ function MapSearch(props) {
             <>
             <div className={styles['map-search-results-container']}>
                 <div className={styles['map-search-results-map']}>
-                    {state.lat && state.lng && <img src={`https://maps.googleapis.com/maps/api/staticmap?center=`+ latitude +","+ longitude +`&zoom=8&size=640x640&markers=color=gray%7C` + latitude +","+ longitude + "&key=AIzaSyDGz7t7D1PRi8X2Or-SHAie2OgWoFH--Bs"}/>}
+                    <GoogleMap 
+                        mapContainerStyle={mapContainerStyle}
+                        zoom={8}
+                        center={center}
+                        options={options}
+                        onLoad={onMapLoad}
+                        >
+                        <Marker 
+                            position={{lat:state.lat,lng:state.lng}}
+                        />
+                    </GoogleMap>
+                    {/* {state.lat && state.lng && <img src={`https://maps.googleapis.com/maps/api/staticmap?center=`+ state.lat +","+ state.lng +`&zoom=8&size=640x640&markers=color=gray%7C` + latitude +","+ longitude + "&key=AIzaSyDGz7t7D1PRi8X2Or-SHAie2OgWoFH--Bs"}/>} */}
                     {!state.lat && !state.lng && <div className={styles['map-coming-soon']}>Location Results Feature Coming Soon</div>}
                 </div>
-                <div className={styles['map-search-results-text']} style={{display: searchResultsDisplay}}>
+                <div className={styles['map-search-results-te2xt']} style={{display: searchResultsDisplay}}>
                     <>
                         <div className={styles['map-search-header']}>
                             <span><span className={styles['map-search-header-text']}>Results</span><button className={styles['map-search-results-header-action']} onClick={displayFilterOverlay}>Filter</button></span>
