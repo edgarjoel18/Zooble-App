@@ -19,13 +19,17 @@ function SiteDemo2() {
 
   return (
     <div className={styles['site-demo2-container']}>
-      <div className={styles['site-demo2-box1']}>
-        <p className={styles['site-demo2-text']}> <h2>Use our tool to find pets and <br/>resources near you</h2> </p>
-        <button className={styles['site-demo2-button']} onMouseEnter={onMouseover} onMouseLeave={onMouseout}>
-            <span><h3>{text}</h3></span>
-        </button>
+      <div className={styles['left-side']}>
+        <img className={styles['left-side-map']} src={MapSearchPreview} />
       </div>
-      <img className={styles['site-demo2-box2']} src={MapSearchPreview} />
+      <div className={styles['right-side']}>
+        <div className={styles['right-side-text']}>
+            Use our location search tool to find pets and small businesses near you 
+            <button className={styles['site-demo2-button']} onMouseEnter={onMouseover} onMouseLeave={onMouseout}>
+            {text}
+        </button>
+        </div>
+      </div>
     </div>
   );
 }

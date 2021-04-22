@@ -24,14 +24,11 @@ function HeroContainer() {
 
   return (
     <div className={styles['hero-container']}>
-      <div className={styles['left-side']}>
-        {/* <img className={styles['left-side-cat']} src={CatOwnerImage}/>  */}
-        <img className={styles['left-side-dog']} src={DogOwnerImage} />
-      </div>
+      
       <div className={styles['right-side']}>
 
         <div className={styles['right-side-text']}>The Social Network for your furry (or not so furry) friends</div>
-        <div className={styles['right-side-subtext']}>Sign Up or Search for a Pet to Get Started</div>
+        <div className={styles['right-side-subtext']}>Sign Up or Search for a Friend to Get Started</div>
         <div className={styles['button-container']}>
           <NavLink to="/account-type">
             <button className={styles['signup-button']}><span><h3>Sign Up</h3></span></button>
@@ -39,9 +36,13 @@ function HeroContainer() {
           <button className={styles['find-friend-button']} onMouseEnter={onMouseover} onMouseLeave={onMouseout}>
             <span><h3>{text}</h3></span>
           </button>
-          {/* <img className={styles['right-side-dog']} src={DogOwnerImage}/> */}
         </div>
       </div>
+
+      <div className={styles['left-side']}>
+        <img className={styles['left-side-dog']} src={DogOwnerImage} />
+      </div>
+
     </div>
   );
 }
