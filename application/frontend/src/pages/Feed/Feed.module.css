@@ -51,6 +51,8 @@
 
 .follower-feed-post-likes{
     grid-area: 2 / 3 / span 1 / span 1;
+    text-align: center;
+    line-height: 34px;
 }
 
 .follower-feed-post-like{

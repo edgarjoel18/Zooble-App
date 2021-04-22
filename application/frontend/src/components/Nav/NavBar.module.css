@@ -4,6 +4,7 @@
     display: grid;
     height: 100px;
     align-items: center;
+    position: relative;
 
     grid-template-columns: 100px 50px auto 75px 75px;
     column-gap: 50px;
@@ -11,6 +12,7 @@
     padding-right: 25px;
     /* background-color: var(--nav-bar-color); */
     /* box-shadow: var(--elevation-2); */
+    z-index:2;
 }
 
 .logo-img{
@@ -125,7 +127,7 @@ select {
 .searchbar{
     display:flex;
     flex-direction: row;
-    box-shadow: var(--elevation-1);
+    box-shadow: var(--elevation-2);
     border-radius:10px;
     text-align: center;
     align-items: center;
@@ -198,15 +200,19 @@ padding-bottom: 10%; */
 
 .combobox-popover{
     background-color: white;
-    padding: 10px;
+    padding: 15px;
     list-style: none;
     box-shadow: var(--elevation-2);
     font-family: var(--ff-primary);
-    
+    z-index: 1;
+    border-radius: 7.5px;
+    position: relative;
 }
 
 .combobox-popover li{
     cursor:pointer;
+    padding:5px;
+    border-bottom: 1px solid rgba(0,0,0,0.10);
 }
 
 .combobox-popover li:hover{
