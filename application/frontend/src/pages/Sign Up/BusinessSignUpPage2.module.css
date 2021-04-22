@@ -1,0 +1,61 @@
+.business-form {
+    display: grid;
+    grid-template-columns: 2;
+}
+
+.business-container {
+    padding-left: 3%;
+    margin-top: 15%;
+    border-radius: 10px;
+    z-index: 1;
+    width: 50%;
+    grid-column: 2/span 1;
+    box-shadow:  var(--elevation-1)
+}
+
+.business-form h1 {
+    text-align: center;
+}
+
+.business-name-input-label, .business-address-input-label, .business-categories-input-label, .business-phone-number-input-label {
+    display: block;
+}
+
+.input-container input {
+    padding: 15px;
+    display: inline-block;
+    border: 1px solid;
+    border-color: var(--inactive-txt-clr);
+    border-radius: 5px;
+    background:white;
+    width: 92%;
+}
+
+.btn-container {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.checkbox-container {
+    padding-top: 4%;
+    text-align: center;
+}
+
+.submit-btn{
+    width: 200px;
+    text-justify: center;
+    text-align: center;
+    color: white;
+    background-color: var(--primary-clr);
+    border-radius: 5px;
+    box-shadow:  var(--elevation-1);
+}
+
+.terms-button,
+.policy-button{
+    border: none;
+    background-color: transparent;
+    color:var(--primary-txt-clr);
+    text-decoration: underline;
+    cursor:pointer;
+}
