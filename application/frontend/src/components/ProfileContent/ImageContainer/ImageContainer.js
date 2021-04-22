@@ -120,8 +120,6 @@ function ImageContainer(props) {
         seeAll = <p style={{cursor: 'pointer'}} onClick={() => history.push("/MyPets")} >See All</p>
     }
 
-    console.log('[text] ' + text)
-
     return (
         <>
         {/* for debugging  <button onClick={()=>{setPostModalDisplay(true)}}></button> */}
