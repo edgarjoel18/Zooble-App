@@ -14,6 +14,8 @@ import Backdrop from '../UI/Backdrop/Backdrop';
 import EditPetDetails from '../Modals/EditPetDetails';
 import EditButton from '../Buttons/EditButton';
 
+
+
 function ProfileInfo(props) {
     //const [profilePic, setProfilePic] = useState('');
     //const [profileTitle, setProfileTitle] = useState('');
@@ -29,6 +31,8 @@ function ProfileInfo(props) {
     const [sendAMessageDisplay,setSendAMessageDisplay] = useState(false);
 
     const[editPetDetailsDisplay, setEditPetDetailsDisplay] = useState(false);
+
+   
 
     let history = useHistory();
 
@@ -325,6 +329,7 @@ function ProfileInfo(props) {
                 {displayAccountInfo}
             </div>
             <SendAMessage display={sendAMessageDisplay} onClose={()=> setSendAMessageDisplay(false)}/>
+            
         </div>
     );
 }

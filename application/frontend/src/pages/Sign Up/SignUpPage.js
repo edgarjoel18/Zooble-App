@@ -13,7 +13,7 @@ function SignUpPage() {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [password, setPassword] = useState('')
-    const [redonePassword, setRedonePassword] = useState({
+    const [redonePassword, setRedonePassword] = useState(/*{
         inputConfig: {
             type: 'password',
             placeholder: 'Confirm password',
@@ -22,7 +22,7 @@ function SignUpPage() {
         value: '', 
         valid: false,
         touched: false
-    })
+    }*/)
 
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
     const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
@@ -72,15 +72,15 @@ function SignUpPage() {
         history.push("/SignUpSuccess");
     }
 
-    function onPasswordChangedHandler(event) {
-        const updatedPassword = {
-            ...redonePassword,
-            value: event.target.value,
-            valid: event.target.value === password,
-            touched: true
-        };
-        setRedonePassword(updatedPassword);
-    }
+    // function onPasswordChangedHandler(event) {
+    //     const updatedPassword = {
+    //         ...redonePassword,
+    //         value: event.target.value,
+    //         valid: event.target.value === password,
+    //         touched: true
+    //     };
+    //     setRedonePassword(updatedPassword);
+    // }
 
     return (
         <>
@@ -146,20 +146,20 @@ function SignUpPage() {
 
                     <div className={styles['confirmpassword-input-container']}>
                         <label className={styles['repeat-password-input-label']} for='psw-repeat'>Confirm Password</label>
-                        {/* <input
+                        <input
                             type='password'
                             placeholder='Confirm password'
                             name='psw-repeat'
                             onChange={e => setRedonePassword(e.target.value)}
                             required
-                        /> */}
-                        <Input
+                        />
+                        {/* <Input
                             config={redonePassword.inputConfig}
                             value={redonePassword.value}
                             valid={redonePassword.valid}
                             touched={redonePassword.touched}
                             changed={event => onPasswordChangedHandler(event)}
-                        />
+                        /> */}
                     </div>
                 </div>
 
@@ -172,8 +172,8 @@ function SignUpPage() {
                     </p>
                 </div>
                 <div className={styles['btn-container']}>
-                    {/* <button className={styles['submit-btn']} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button> */}
-                    <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
+                    <button className={styles['submit-btn']} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
+                    {/* <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button> */}
                 </div>
             </form>
             {/* Modals */}
