@@ -26,7 +26,7 @@ function NavBarRight({appUser,setAppUser}) {
           <ul className={styles["account-menu-dropdown-content"]}>
             <li><NavLink className={styles["account-menu-dropdown-link"]} to="/Profile">My Profile</NavLink></li>
             <li><NavLink className={styles["account-menu-dropdown-link"]} to="/MyPets">My Pets</NavLink></li>
-            <li><button className={styles["account-menu-dropdown-link"]} to="/" onClick={logoutHandler}>Logout</button></li>
+            <li><NavLink className={styles["account-menu-dropdown-link"]} to="/" onClick={logoutHandler}>Logout</NavLink></li>
           </ul>
         </span>}
         </>

@@ -7,6 +7,7 @@ import makeAnimated from 'react-select/animated';
 
 import TermsAndConditions from '../../components/Modals/TermsAndConditions'
 import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
+import { useHistory } from 'react-router';
 
 function ShelterSignUpPage2() {
     const typeOptions = [   //Real version will fetch from database
@@ -39,11 +40,6 @@ function ShelterSignUpPage2() {
 
     function customTheme(theme) { //move this a separate file and import maybe?
         return {
-            control: base => ({
-                ...base,
-                height: 54.5,
-                minHeight: 54.5
-            }),
             ...theme,
             colors: {
                 ...theme.colors,
@@ -53,7 +49,23 @@ function ShelterSignUpPage2() {
         }
     }
 
+    const history= useHistory();
+
+    function OnClickHandler(){
+        history.push("/SignUpSuccess");
+    }
+
+    document.querySelector( "input" ).addEventListener( "invalid",
+    function( event ) {
+        event.preventDefault();
+    });
+
     const animatedComponents = makeAnimated();
+
+    //State variables for inputs
+    const [name, setName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [address, setAddress] = useState('');
 
     return (
         <>
@@ -69,6 +81,7 @@ function ShelterSignUpPage2() {
                         placeholder='Enter Shelter Name'
                         name='shelter-name'
                         required
+                        onChange={e => setName(e.target.value)}
                     />
                 </div>
 
@@ -79,6 +92,7 @@ function ShelterSignUpPage2() {
                         placeholder='(000) 000-0000'
                         name='shelter-phone-number'
                         required
+                        onChange={e => setPhoneNumber(e.target.value)}
                     />
                 </div>
 
@@ -89,6 +103,7 @@ function ShelterSignUpPage2() {
                         placeholder='1600 Holloway Ave, San Francisco, CA, 94132'
                         name='shelter-address'
                         required
+                        onChange={e => setAddress(e.target.value)}
                     />
                 </div>
 
@@ -97,7 +112,7 @@ function ShelterSignUpPage2() {
                     <Select id="shelter-animal-types" name="shelter_animal_types"
                         onChange={setSelectedPetTypes}
                         options={typeOptions}
-                        placeholder="Types of Animals at your Shelter"
+                        placeholder="Animal Types"
                         theme={customTheme}
                         isSearchable
                         isMulti
@@ -120,7 +135,7 @@ function ShelterSignUpPage2() {
             </div>
 
             <div className={styles['btn-container']}>
-                <button type='submit' className={styles['submit-btn']}>Sign Up</button>
+                <button type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
             </div>
             {/* Modals */}
 

@@ -113,6 +113,10 @@
     cursor:pointer;
 }
 
+.signup-container-check{
+    margin: 30px;
+}
+
 
 
 @media all and (max-width: 1024px){
@@ -126,3 +130,4 @@
         width: 90%;
     }
 }
+

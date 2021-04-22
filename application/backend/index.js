@@ -225,6 +225,37 @@ app.get("/search", (req,res) =>{
             }
         });
     }
+    else if(category == 'Pet Owners'){
+        console.log('searching through RegisteredPetOwner')
+        connection.query(
+            `SELECT * 
+            FROM RegisteredPetOwner
+            WHERE LOWER(name) LIKE '%${name}%'
+            `, 
+            function(err, result) {
+            if(err){
+                throw err;
+            } else {
+              
+                // [ TextRow { pet_id: 1, name: 'Max', size_id: 1, age_id: 1 } ]
+                Object.keys(result).forEach(function(key) {
+                    var row = result[key];
+                    // console.log(row);
+                    // console.log(row.name);
+                    // console.log(row.size_id);
+                    // console.log(row.age_id);
+                    requestedSearchResults.searchResults.push({
+                        "reg_pet_owner_id":row.reg_pet_owner_id,
+                        "reg_user_id":row.reg_user_id,
+                        "name": row.name,
+                        "profile_pic": row.profile_pic
+                    });
+                  });
+                console.log(requestedSearchResults);
+                res.json(requestedSearchResults);
+            }
+        });
+    }
 
 });
 

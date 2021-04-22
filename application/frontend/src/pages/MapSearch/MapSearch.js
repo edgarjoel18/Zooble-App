@@ -1,4 +1,4 @@
-import {React, useEffect, useState} from 'react'
+import {useRef,useCallback, useEffect, useState} from 'react'
 
 import {Link} from "react-router-dom"
 
@@ -12,9 +12,31 @@ import Select from 'react-select';
 
 import makeAnimated from 'react-select/animated';
 
-// import {GoogleMap, useLoadScript, Marker, InfoWindow} from '@react-google-maps/api';
+import {GoogleMap, useLoadScript, Marker, InfoWindow} from '@react-google-maps/api';
+
+const mapContainerStyle = {
+    width: '100%',
+    height: 'calc(100vh - 100px)',
+};
+
+const options = {
+    disableDefaultUI: true,
+    zoomControl: false,
+    gestureHandling:"none",
+}
 
 function MapSearch(props) {
+
+    const panTo = useCallback(({lat,lng}) =>{
+        mapRef.current.panTo({lat,lng});
+        mapRef.current.setZoom(14);
+    },[]);
+    
+    const mapRef = useRef(); //retain state without causing re-renders
+    const onMapLoad = useCallback((map) =>{
+        mapRef.current = map;
+    }, []);
+    
     //Only for horizontal prototype, real thing should fetch from db
     const businessCategoryOptions = [
         {value: 'Grooming', label: 'Grooming'},
@@ -77,35 +99,46 @@ function MapSearch(props) {
     //For storing filter states
     const [businessCategoryFilters,setBusinessCategoryFilters] = useState([]);
     const [petTypeFilters,setPetTypeFilters] = useState([]);
-    const [petBreedFilters, setPetBreedFilters] = useState([]);
+    const [dogBreedFilters, setDogBreedFilters] = useState([]);
+    const [catBreedFilters, setCatBreedFilters] = useState([]);
     const [petColorFilters, setPetColorFilters] = useState([]);
     const [petSizeFilters, setPetSizeFilters] = useState([]);
     const [petAgeFilters, setPetAgeFilters] = useState([]);
     const [shelterPetTypeFilters, setShelterPetTypeFilters] = useState([]);
 
+    //for storing map location
+    const[latitude,setLatitude] = useState();
+    const[longitude,setLongitude] = useState();
+    const[mapUrl,setMapUrl] = useState();
 
+    const center = {lat: state.lat, lng: state.lng};
 
     useEffect(()=>{
-        console.log('Fetching Search Results');
-        setSearchCategory(state.searchCategoryParam);
-        setSearchTerm(state.searchTermParam);
-        Axios.get('/search', {  //take in filters here? for final version
-            params: {
-              searchTerm: state.searchTermParam,
-              searchCategory:state.searchCategoryParam}})
-            .then(response =>{
-            console.log(response)
-            console.log(response.data)
-            console.log(response.data.searchResults)
-            setRecievedSearchResults(response.data.searchResults)
-            // setOverlayDisplay(true);
-            displaySearchResults();
-            console.log("Recieved Search Results: " + recievedSearchResults)
-            
-          })
-          .catch(error =>{
-            console.log("Error");
-          })
+        if(state.searchTermParam && state.searchCategoryParam){
+            console.log('Fetching Search Results');
+            setSearchCategory(state.searchCategoryParam);
+            setSearchTerm(state.searchTermParam);
+            Axios.get('/search', {  //take in filters here? for final version
+                params: {
+                  searchTerm: state.searchTermParam,
+                  searchCategory:state.searchCategoryParam}})
+                .then(response =>{
+                console.log(response)
+                console.log(response.data)
+                console.log(response.data.searchResults)
+                setRecievedSearchResults(response.data.searchResults)
+                // setOverlayDisplay(true);
+                displaySearchResults();
+                console.log("Recieved Search Results: " + recievedSearchResults)
+                
+              })
+              .catch(error =>{
+                console.log("Error");
+              })
+        }
+        else if(state.lat && state.lng){
+        }
+
     },[state]);  //only fetch and reload when search params change
 
 
@@ -135,13 +168,27 @@ function MapSearch(props) {
 
     const animatedComponents = makeAnimated();
 
+    console.log(petTypeFilters);
+
     return (
             <>
             <div className={styles['map-search-results-container']}>
                 <div className={styles['map-search-results-map']}>
-                    {/* <img src={`https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=2048x2048&key=AIzaSyDGz7t7D1PRi8X2Or-SHAie2OgWoFH--Bs`}/> */} {/* Uncomment to see Map*/}
+                    <GoogleMap 
+                        mapContainerStyle={mapContainerStyle}
+                        zoom={8}
+                        center={center}
+                        options={options}
+                        onLoad={onMapLoad}
+                        >
+                        <Marker 
+                            position={{lat:state.lat,lng:state.lng}}
+                        />
+                    </GoogleMap>
+                    {/* {state.lat && state.lng && <img src={`https://maps.googleapis.com/maps/api/staticmap?center=`+ state.lat +","+ state.lng +`&zoom=8&size=640x640&markers=color=gray%7C` + latitude +","+ longitude + "&key=AIzaSyDGz7t7D1PRi8X2Or-SHAie2OgWoFH--Bs"}/>} */}
+                    {!state.lat && !state.lng && <div className={styles['map-coming-soon']}>Location Results Feature Coming Soon</div>}
                 </div>
-                <div className={styles['map-search-results-text']} style={{display: searchResultsDisplay}}>
+                <div className={styles['map-search-results-te2xt']} style={{display: searchResultsDisplay}}>
                     <>
                         <div className={styles['map-search-header']}>
                             <span><span className={styles['map-search-header-text']}>Results</span><button className={styles['map-search-results-header-action']} onClick={displayFilterOverlay}>Filter</button></span>
@@ -161,11 +208,15 @@ function MapSearch(props) {
                                     <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={searchResult.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                 ))}
                                 {recievedSearchResults && searchCategory == 'Businesses' && recievedSearchResults.map((searchResult) => (
-                                    <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={searchResult.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                    <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={searchResult.reg_business_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                 ))}
                                 {recievedSearchResults && searchCategory == 'Shelters' && recievedSearchResults.map((searchResult) => (
-                                    <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={searchResult.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                    <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={searchResult.reg_shelter_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                 ))}
+                                {recievedSearchResults && searchCategory == 'Pet Owners' && recievedSearchResults.map((searchResult) => (
+                                    <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={searchResult.reg_pet_owner_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                ))}
+
                             </ul>
                         </div>
                     </>
@@ -240,11 +291,24 @@ function MapSearch(props) {
                                     />
                             </div>
                             <div className={styles['filter-pet-breed']}>
-                                <label for="pet-breed">Breed</label>
-                                    <Select id="pet-breed" name="pet_breed"
-                                        onChange={setPetAgeFilters}
-                                        options={ageOptions}
-                                        placeholder="Select Pet Breed(s)"
+                                <label for="dog-breed">Dog Breeds</label>
+                                    <Select id="dog-breed" name="dog_breed"
+                                        onChange={setDogBreedFilters}
+                                        options={dogBreedOptions}
+                                        placeholder="Select Dog Breed(s)"
+                                        theme={customTheme}
+                                        isSearchable
+                                        isMulti
+                                        components={animatedComponents}
+                                    />
+                            </div>
+
+                            <div className={styles['filter-pet-breed']}>
+                                <label for="cat-breed">Cat Breeds</label>
+                                    <Select id="cat-breed" name="cat_breed"
+                                        onChange={setCatBreedFilters}
+                                        options={catBreedOptions}
+                                        placeholder="Select Cat Breed(s)"
                                         theme={customTheme}
                                         isSearchable
                                         isMulti

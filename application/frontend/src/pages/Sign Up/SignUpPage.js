@@ -5,6 +5,7 @@ import styles from './SignUpPage.module.css';
 import TermsAndConditions from '../../components/Modals/TermsAndConditions'
 import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
 import Input from '../../components/UI/Input/Input';
+import { useHistory } from "react-router";
 
 function SignUpPage() {
     const [email, setEmail] = useState('')
@@ -42,6 +43,8 @@ function SignUpPage() {
         setPrivacyPolicyDisplay(false);
     }
 
+    const history = useHistory();
+
     function OnClickHandler(e) {
         console.log(email)
         console.log(uname)
@@ -65,6 +68,8 @@ function SignUpPage() {
             }).catch(error => {
                 console.log("Error");
             })
+
+        history.push("/SignUpSuccess");
     }
 
     function onPasswordChangedHandler(event) {
@@ -168,7 +173,7 @@ function SignUpPage() {
                 </div>
                 <div className={styles['btn-container']}>
                     {/* <button className={styles['submit-btn']} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button> */}
-                    <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']}>Next: Business Details</button>
+                    <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
                 </div>
             </form>
             {/* Modals */}

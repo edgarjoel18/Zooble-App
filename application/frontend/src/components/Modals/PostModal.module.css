@@ -6,13 +6,15 @@
 /* Image Half */
 .post-image{
     grid-column: 1/span 1;
+    background-color: black;
 }
 
 /* Post and Comments Half */
 .post-content{
-    margin-top: 30px;
+    padding-top:30px;
     height: 100%;
     grid-column: 2 /span 1;
+    box-shadow: var(--elevation-1);
 }
 
 .post-image img{
@@ -34,7 +36,6 @@
                             "post-detail-pic  post-detail-timestamp "
                             "post-detail-body post-detail-body      post-detail-body"; */
     margin-right:35px;
-
 }
 
 /* Profile Pic */

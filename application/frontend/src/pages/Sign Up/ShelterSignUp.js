@@ -1,12 +1,13 @@
 import {useState} from 'react';
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
-import {Axios} from 'axios'
+import axios from 'axios'
 import styles from './SignUpPage.module.css';
 
 import Input from '../../components/UI/Input/Input';
 
 function ShelterSignUpPage() {
+    const history = useHistory();
     const [email, setEmail] = useState('')
     const [uname, setUname] = useState('')
     const [firstName, setFirstName] = useState('')
@@ -42,31 +43,18 @@ function ShelterSignUpPage() {
       setPrivacyPolicyDisplay(false);
     }
 
-    function OnClickHandler() {
+    function OnClickHandler(e) {
         console.log(email)
         console.log(uname)
         console.log(firstName)
         console.log(lastName)
         console.log(password)
         console.log(redonePassword)
-        Axios.get('/sign-up', {
-            params: {
-                email: email,
-                firstName: firstName,
-                lastName: lastName,
-                uname: uname,
-                password: password,
-                redonePassword: redonePassword
-            }
-        })
-        .then(response => {
-            console.log(response)
-            console.log(response.data)
-            console.log(response.data.searchResults)
-        })
-        .catch(error =>{
-            console.log("Error");
-        })
+
+        if(email && uname && firstName && lastName && password && redonePassword){
+            history.push('/shelter-signup2')   //real version will pass along the registration information
+        }
+    
     }
 
     function onPasswordChangedHandler(event) {
@@ -169,12 +157,9 @@ function ShelterSignUpPage() {
                                 />
                             </p>
                     </div> */}
-                    <NavLink to="/shelter-signup2">
-                    <div className={styles['btn-container']}>
-                        {/* <button type='submit' className={styles['submit-btn']}>Next: Shelter Details</button> */}
-                        <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']}>Next: Business Details</button>
-                    </div>
-                </NavLink>
+                        <div className={styles['btn-container']}>
+                            <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']} onClick={(e) => OnClickHandler(e)}>Next: Shelter Details</button>
+                        </div>
                 </form>
         </>
     );

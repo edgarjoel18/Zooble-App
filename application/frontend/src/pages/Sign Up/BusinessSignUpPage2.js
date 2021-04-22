@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import {useHistory} from 'react-router'
 import React from 'react';
 import styles from './SignUpPage2.module.css';
 
@@ -23,6 +24,16 @@ function BusinessSignUpPage2() {
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
     const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
 
+
+    const [email, setEmail] = useState('')
+    const [uname, setUname] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [password, setPassword] = useState('')
+    const [redonePassword, setRedonePassword] = useState('')
+
+    const [failedSubmit, setFailedSubmit] = useState(false)
+
     function openTermsAndConditionsModal() {
         setTermsAndConditionsDisplay(true);
     }
@@ -40,6 +51,11 @@ function BusinessSignUpPage2() {
     }
 
     const [selectedBusinessCategories, setSelectedBusinessCategories] = useState([]);
+
+    const [name, setName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [address, setAddress] = useState('');
+
 
     function customTheme(theme) { //move this a separate file and import maybe?
         return {
@@ -59,6 +75,17 @@ function BusinessSignUpPage2() {
 
     const animatedComponents = makeAnimated();
 
+    const history= useHistory();
+
+    function OnClickHandler(){
+        if( name && phoneNumber && address){
+            history.push("/SignUpSuccess");
+        }
+        else{
+            setFailedSubmit(true);  //set border color of fields to red if failed submit happens
+        }
+    }
+
     return (
         <>
         <form className={styles['signup-container']}>
@@ -73,6 +100,8 @@ function BusinessSignUpPage2() {
                             placeholder='Enter Business Name'
                             name='business-name'
                             required
+                            oninvalid={()=>{console.log('')}}
+                            onChange={e => setName(e.target.value)}
                         />
                     </div>
 
@@ -83,6 +112,8 @@ function BusinessSignUpPage2() {
                             placeholder='(000) 000-0000'
                             name='business-phone-number'
                             required
+                            oninvalid={()=>{alert()}}
+                            onChange={e => setPhoneNumber(e.target.value)}
                         />
                     </div>
 
@@ -93,6 +124,8 @@ function BusinessSignUpPage2() {
                             placeholder='1600 Holloway Ave, San Francisco, CA, 94132'
                             name='business-address'
                             required
+                            oninvalid={()=>{console.log('')}}
+                            onChange={e => setAddress(e.target.value)}
                         />
                     </div>
                 <div className={styles['types-input-container']}>
@@ -121,7 +154,7 @@ function BusinessSignUpPage2() {
                 </div>
 
                 <div className={styles['btn-container']}>
-                    <button type='submit' className={styles['submit-btn']}>Sign Up</button>
+                    <button type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
                 </div>
 
         </form>

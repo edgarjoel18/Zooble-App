@@ -15,30 +15,31 @@ function LoginPage({ appUser, setAppUser }) {
         console.log(password);
         setAppUser(username);
         console.log("AppUser in Login Handler: " + appUser);
-
-        Axios.get('/login', {
-            params: {
-                username: username,
-                password: password,
-            }
-        })
-            .then(response => {
-                console.log(response)
-                console.log(response.data)
-                history.push('/feed')
+        if(username && password){
+            Axios.get('/login', {
+                params: {
+                    username: username,
+                    password: password,
+                }
             })
-            .catch(error => {
-                console.log("Error");
-            })
+                .then(response => {
+                    console.log(response)
+                    console.log(response.data)
+                    history.push('/feed')
+                })
+                .catch(error => {
+                    console.log("Error");
+                })
+        }
     }
 
-    // if(appUser){
-    //     console.log('User is Logged In');
-    //     return <Redirect to="/Feed"/>
-    // }
+    if(appUser){
+         console.log('User is Logged In');
+        return <Redirect to="/Feed"/>
+    }
     return (
         <>
-            <div className={styles['login-container']}>
+            <form className={styles['login-container']}>
                 <div className={styles['login-header']}>Login</div>
                 <div className={styles['username-input-container']}>
                     <label className={styles['username-input-label']} for='username'>Username</label>
@@ -48,6 +49,7 @@ function LoginPage({ appUser, setAppUser }) {
                         name='username'
                         value={username}
                         onChange={e => setUsername(e.target.value)}
+                        required
                     />
                 </div>
                 <div className={styles['password-input-container']}>
@@ -58,6 +60,7 @@ function LoginPage({ appUser, setAppUser }) {
                         name='password'
                         value={password}
                         onChange={e => setPassword(e.target.value)}
+                        required
                     />
                 </div>
                 <div className={styles['forgot-password']}>
@@ -67,14 +70,14 @@ function LoginPage({ appUser, setAppUser }) {
                     <button type='submit' className={styles['submit-btn']} onClick={loginHandler}>Login</button>
 
                     <div className={styles['checkbox']}>
-                        <input type='checkbox' required name='remember'/> Stay logged in
+                        <input type='checkbox' name='remember'/> Stay logged in
                     </div>
                 </div>
 
                 <p className={styles['create-account']}>
                     Not registered? <a href='/account-type'>Create an account</a>
                 </p>
-            </div>
+            </form>
         </>
     );
 }
