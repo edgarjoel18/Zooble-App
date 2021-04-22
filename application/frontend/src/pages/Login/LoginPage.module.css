@@ -69,9 +69,13 @@
     padding-bottom: 20px;
 }
 
-.forgot-password {
+.forgot-password button {
     margin-left: 15px;
     float: left;
+    border:none;
+    cursor: pointer;
+    background: transparent;
+    color: var(--inactive-txt-clr)
 }
 
 .create-account {

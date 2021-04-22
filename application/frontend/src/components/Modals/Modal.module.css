@@ -3,7 +3,7 @@
    top: 50%;
    left: 50%;
    transform: translate(-50%, -50%);
-   z-index: 3;
+   z-index: 4;
    background-color: var(--reversed-txt-clr);
    box-shadow: var(--elevation-10);
    border-radius: 10px;
@@ -19,7 +19,7 @@
     right: 0;
     bottom: 0;
     background-color:rgba(0, 0, 0, 0.3);
-    z-index: 2;
+    z-index: 3;
 }
 
 .exit-button{

@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import Axios from "axios";
 import styles from './LoginPage.module.css';
 import { Redirect, useHistory } from "react-router-dom";
+import ForgotPassword from "../../components/Modals/ForgotPassword";
 
 function LoginPage({ appUser, setAppUser }) {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    //toggle forgot password modal
+    const [forgotPasswordModalDisplay, setForgotPasswordModalDisplay] = useState(false);
 
     let history = useHistory();
 
@@ -37,6 +41,7 @@ function LoginPage({ appUser, setAppUser }) {
          console.log('User is Logged In');
         return <Redirect to="/Feed"/>
     }
+
     return (
         <>
             <form className={styles['login-container']}>
@@ -64,7 +69,7 @@ function LoginPage({ appUser, setAppUser }) {
                     />
                 </div>
                 <div className={styles['forgot-password']}>
-                    <a href='#'> Forgot password?</a>
+                    <button onClick={() => setForgotPasswordModalDisplay(true)}> Forgot password?</button>
                 </div>
                 <div className={styles['btn-container']}>
                     <button type='submit' className={styles['submit-btn']} onClick={loginHandler}>Login</button>
@@ -79,6 +84,7 @@ function LoginPage({ appUser, setAppUser }) {
                     Not registered? <a href='/account-type'>Create an account</a>
                 </p>
             </form>
+            <ForgotPassword display={forgotPasswordModalDisplay} onClose={()=>setForgotPasswordModalDisplay(false)}/>
         </>
     );
 }
