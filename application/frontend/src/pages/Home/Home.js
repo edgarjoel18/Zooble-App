@@ -10,7 +10,7 @@ function Home() {
     return (
         <div>
             <HeroContainer/>
-            <SiteDemo1/>
+            {/* <SiteDemo1/> */}
             <SiteDemo2/>
             <Footer/>
         </div>

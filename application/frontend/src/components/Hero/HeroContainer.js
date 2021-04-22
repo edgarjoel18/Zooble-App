@@ -36,12 +36,10 @@ function HeroContainer() {
           <button className={styles['find-friend-button']} onMouseEnter={onMouseover} onMouseLeave={onMouseout}>
             <span><h3>{text}</h3></span>
           </button>
-          {/* <img className={styles['right-side-dog']} src={DogOwnerImage}/> */}
         </div>
       </div>
 
       <div className={styles['left-side']}>
-        {/* <img className={styles['left-side-cat']} src={CatOwnerImage}/>  */}
         <img className={styles['left-side-dog']} src={DogOwnerImage} />
       </div>
 
