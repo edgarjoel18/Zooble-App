@@ -32,6 +32,8 @@ function BusinessSignUpPage2() {
     const [password, setPassword] = useState('')
     const [redonePassword, setRedonePassword] = useState('')
 
+    const [failedSubmit, setFailedSubmit] = useState(false)
+
     function openTermsAndConditionsModal() {
         setTermsAndConditionsDisplay(true);
     }
@@ -79,7 +81,9 @@ function BusinessSignUpPage2() {
         if( name && phoneNumber && address){
             history.push("/SignUpSuccess");
         }
-
+        else{
+            setFailedSubmit(true);  //set border color of fields to red if failed submit happens
+        }
     }
 
     return (
@@ -96,7 +100,7 @@ function BusinessSignUpPage2() {
                             placeholder='Enter Business Name'
                             name='business-name'
                             required
-                            oninvalid='alert("poop")'
+                            oninvalid={()=>{console.log('')}}
                             onChange={e => setName(e.target.value)}
                         />
                     </div>
@@ -108,7 +112,7 @@ function BusinessSignUpPage2() {
                             placeholder='(000) 000-0000'
                             name='business-phone-number'
                             required
-                            oninvalid=""
+                            oninvalid={()=>{alert()}}
                             onChange={e => setPhoneNumber(e.target.value)}
                         />
                     </div>
@@ -120,6 +124,7 @@ function BusinessSignUpPage2() {
                             placeholder='1600 Holloway Ave, San Francisco, CA, 94132'
                             name='business-address'
                             required
+                            oninvalid={()=>{console.log('')}}
                             onChange={e => setAddress(e.target.value)}
                         />
                     </div>

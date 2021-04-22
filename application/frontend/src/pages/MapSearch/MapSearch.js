@@ -78,7 +78,8 @@ function MapSearch(props) {
     //For storing filter states
     const [businessCategoryFilters,setBusinessCategoryFilters] = useState([]);
     const [petTypeFilters,setPetTypeFilters] = useState([]);
-    const [petBreedFilters, setPetBreedFilters] = useState([]);
+    const [dogBreedFilters, setDogBreedFilters] = useState([]);
+    const [catBreedFilters, setCatBreedFilters] = useState([]);
     const [petColorFilters, setPetColorFilters] = useState([]);
     const [petSizeFilters, setPetSizeFilters] = useState([]);
     const [petAgeFilters, setPetAgeFilters] = useState([]);
@@ -150,6 +151,8 @@ function MapSearch(props) {
     }
 
     const animatedComponents = makeAnimated();
+
+    console.log(petTypeFilters);
 
     return (
             <>
@@ -257,11 +260,24 @@ function MapSearch(props) {
                                     />
                             </div>
                             <div className={styles['filter-pet-breed']}>
-                                <label for="pet-breed">Breed</label>
-                                    <Select id="pet-breed" name="pet_breed"
-                                        onChange={setPetAgeFilters}
-                                        options={ageOptions}
-                                        placeholder="Select Pet Breed(s)"
+                                <label for="dog-breed">Dog Breeds</label>
+                                    <Select id="dog-breed" name="dog_breed"
+                                        onChange={setDogBreedFilters}
+                                        options={dogBreedOptions}
+                                        placeholder="Select Dog Breed(s)"
+                                        theme={customTheme}
+                                        isSearchable
+                                        isMulti
+                                        components={animatedComponents}
+                                    />
+                            </div>
+
+                            <div className={styles['filter-pet-breed']}>
+                                <label for="cat-breed">Cat Breeds</label>
+                                    <Select id="cat-breed" name="cat_breed"
+                                        onChange={setCatBreedFilters}
+                                        options={catBreedOptions}
+                                        placeholder="Select Cat Breed(s)"
                                         theme={customTheme}
                                         isSearchable
                                         isMulti

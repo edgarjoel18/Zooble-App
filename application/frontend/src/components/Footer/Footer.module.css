@@ -55,3 +55,8 @@ i {
     color:var(--reversed-txt-clr);
     cursor: pointer;
 }
+
+.icons-8-attribution{
+    margin-left: auto;
+    padding:10px;
+}

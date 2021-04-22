@@ -40,11 +40,6 @@ function ShelterSignUpPage2() {
 
     function customTheme(theme) { //move this a separate file and import maybe?
         return {
-            control: base => ({
-                ...base,
-                height: 54.5,
-                minHeight: 54.5
-            }),
             ...theme,
             colors: {
                 ...theme.colors,
@@ -117,7 +112,7 @@ function ShelterSignUpPage2() {
                     <Select id="shelter-animal-types" name="shelter_animal_types"
                         onChange={setSelectedPetTypes}
                         options={typeOptions}
-                        placeholder="Types of Animals at your Shelter"
+                        placeholder="Animal Types"
                         theme={customTheme}
                         isSearchable
                         isMulti

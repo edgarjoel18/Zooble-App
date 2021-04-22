@@ -49,10 +49,12 @@ function Footer() {
         |
         <button className={styles['policy-button']} onClick={openPrivacyPolicyModal}>Privacy Policy</button>
       </div>
+      <div className={styles['icons-8-attribution']}>Icons by <a href="https://icons8.com/">icons8.com</a></div>
     </div>
     {/* Modals */}
     <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal}/>
     <PrivacyPolicy display={privacyPolicyDisplay} onClose={closePrivacyPolicyModal}/>
+    
     </>
   );
 }
