@@ -13,7 +13,7 @@ function SignUpPage() {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [password, setPassword] = useState('')
-    const [redonePassword, setRedonePassword] = useState({
+    const [redonePassword, setRedonePassword] = useState(/*{
         inputConfig: {
             type: 'password',
             placeholder: 'Confirm password',
@@ -22,7 +22,7 @@ function SignUpPage() {
         value: '', 
         valid: false,
         touched: false
-    })
+    }*/)
 
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
     const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
