@@ -40,12 +40,12 @@ const shelterProfile = {
         },
         {
             user_id: 3,
-            review: 'staff are frendly',
+            review: 'Staff are frendly',
             rating: 5
         },
         {
             user_id: 4,
-            review: 'I saw one of these in Canada and I bought one. My ant loves to play with it.',
+            review: 'This is a Review test. This is a Review test. This is a Review test. This is a Review test. This is a Review test.',
             rating: 4.5 
         }
     ],

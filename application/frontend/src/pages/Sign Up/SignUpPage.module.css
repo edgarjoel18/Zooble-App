@@ -66,8 +66,10 @@
 .lname-input-container input,
 .username-input-container input,
 .email-input-container input,
-.password-input-container input,
-.confirmpassword-input-container input
+.password-input-container input
+/* .confirmpassword-input-container input  
+    have to remove this to prevent overwriting 
+*/ 
 {
     padding: 15px;
     display: inline-block;

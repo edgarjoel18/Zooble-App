@@ -5,6 +5,7 @@ import styles from './SignUpPage.module.css';
 
 import TermsAndConditions from '../../components/Modals/TermsAndConditions'
 import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
+import Input from '../../components/UI/Input/Input';
 
 function BusinessSignUpPage() {
     const [email, setEmail] = useState('')
@@ -12,7 +13,16 @@ function BusinessSignUpPage() {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [password, setPassword] = useState('')
-    const [redonePassword, setRedonePassword] = useState('')
+    const [redonePassword, setRedonePassword] = useState({
+        inputConfig: {
+            type: 'password',
+            placeholder: 'Confirm password',
+            name: 'psw-repeat'
+        },
+        value: '', 
+        valid: false,
+        touched: false
+    })
 
     const [termsAndConditionsDisplay,setTermsAndConditionsDisplay]= useState(false);
     const [privacyPolicyDisplay,setPrivacyPolicyDisplay]= useState(false);
@@ -60,6 +70,18 @@ function BusinessSignUpPage() {
         })
     }
 
+    function onPasswordChangedHandler(event) {
+        const updatedPassword = {
+            ...redonePassword,
+            value: event.target.value,
+            valid: event.target.value === password,
+            touched: true
+        };
+        setRedonePassword(updatedPassword);
+    }
+
+
+    console.log(redonePassword)
     return (
             <>
 
@@ -125,12 +147,19 @@ function BusinessSignUpPage() {
 
                         <div className={styles['confirmpassword-input-container']}>
                             <label className={styles['repeat-password-input-label']} for='psw-repeat'>Confirm Password</label>
-                            <input
+                            {/* <input
                                 type='password'
                                 placeholder='Confirm password'
                                 name='psw-repeat'
                                 onChange={e => setRedonePassword(e.target.value)}
                                 required
+                            /> */}
+                            <Input
+                                config={redonePassword.inputConfig}
+                                value={redonePassword.value}
+                                valid={redonePassword.valid}
+                                touched={redonePassword.touched}
+                                changed={event => onPasswordChangedHandler(event)}
                             />
                         </div>
                     </div>
@@ -145,7 +174,7 @@ function BusinessSignUpPage() {
                     </div> */}
                     <NavLink to="/business-signup2">
                     <div className={styles['btn-container']}>
-                        <button type='submit' className={styles['submit-btn']}>Next: Business Details</button>
+                        <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']}>Next: Business Details</button>
                     </div>
                 </NavLink>
             </form>

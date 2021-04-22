@@ -7,6 +7,7 @@
     height: 223px;
     border-radius: 10px;
     box-shadow: var(--elevation-2);
+    object-fit: cover;
 }
 
 .UserName {

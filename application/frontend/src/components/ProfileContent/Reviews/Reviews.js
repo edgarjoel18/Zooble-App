@@ -33,7 +33,7 @@ function Reviews(props) {
     let displayReviews = null
     if (props.reviews.length !== 0) {
         displayReviews = (
-            props.reviews.slice(0,3).map(ele => (
+            props.reviews.slice(props.reviews.length - 3 >= 0 ? props.reviews.length - 3 : 0, props.reviews.length).map(ele => (
                 <Box 
                     key={ele.user_id}
                     className={styles.Reviews} 
@@ -55,6 +55,7 @@ function Reviews(props) {
         displayReviews = <div className={styles.EmptyReviews} ><h2>Don't have any reviews yet</h2></div>
     }
 
+    console.log(props.reviews);
 
     return (  
         <div className={styles.Container} >      

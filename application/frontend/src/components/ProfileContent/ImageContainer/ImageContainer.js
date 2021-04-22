@@ -57,7 +57,7 @@ function ImageContainer(props) {
                         //right = '0';
                         left = '0';
                     }
-                    const Img = styled.img `
+                    const Img = styled.div `
                         height: 162px;
                         width: 162px;
                         top: ${top};
@@ -65,28 +65,28 @@ function ImageContainer(props) {
                         position: ${position};
                         margin-left: ${(val-index-1) * marginToRight  + 'px'};
                         border-radius: 15px;
-                        box-shadow: var(--elevation-1); //-${index < 6 ? 6-index : 1}
-                        object-fit: cover;
+                        text-align: center;
+                        box-shadow: var(--elevation-1);
                         `;
                     let displayPostModal = (
-                        <div onClick={() => presentPostModal(props.image[index].profile_pic)} key={props.image[index].pet_id}>
+                        <div onClick={() => presentPostModal(props.image[index].profile_pic)} key={props.image[index].name + index}>
                             <Img 
                                 //key={props.image[index].pet_id}
-                                src={props.image[index].profile_pic} 
-                                alt="No Image Found"
                                 className={styles.ImageStack_pic}
-                            />
+                            >
+                                <img src={props.image[index].profile_pic} alt="No Image Found" className={styles.ImageStack_pic} />
+                            </Img>
                         </div>
                     )
                     if (props.title === 'My Siblings' || props.title === 'My Pets')
                         displayPostModal = (
-                            <Link to={"/Profile/" + props.image[index].name} >
+                            <Link to={"/Profile/" + props.image[index].name} key={props.image[index].name + index} >
                                 <Img 
-                                    //key={props.image[index].pet_id}
-                                    src={props.image[index].profile_pic} 
-                                    alt="No Image Found"
                                     className={styles.ImageStack_pic}
-                                />
+                                >
+                                    <img src={props.image[index].profile_pic} alt="No Image Found" className={styles.ImageStack_pic} />
+                                    <div className={styles.ImageStackText} >{props.image[index].name}</div>
+                                </Img>
                             </Link>
                         )
                     return (

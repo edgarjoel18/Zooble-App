@@ -25,12 +25,27 @@
 }
 
 .ImageStack_pic{
+    width: 162px;
+    height: 162px;
+    border-radius: 15px;
     cursor:pointer;
+    object-fit: cover;
 }
+
 
 .ImageStack_pic:hover{
     z-index: 1;
-    box-shadow: var(--elevation-2);
+}
+
+.ImageStackText {
+    position: absolute;
+    width: 100%;
+    padding: 5px;
+    color: white;
+    background-color: var(--primary-clr);
+    bottom: 0;
+    align-content: center;
+    border-radius: 0 0 15px 15px;
 }
 
 /* .TopImage {

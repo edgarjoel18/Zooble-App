@@ -132,7 +132,6 @@ function Profile() {
         selfView ? button.className = styles.SwitchSelf : button.className = styles.SwitchVistor;
     }
 
-    console.log(userProfile);
     return (
         <div className={styles.Profile} >
             <ProfileInfo isSelfView={selfView} profile={userProfile} updateProfile={updateProfileHandler} />
