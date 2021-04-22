@@ -100,7 +100,7 @@ function Photo() {
     let displayEditing = (
         <div className={styles.PhotosContainer} >
             {photos.map((photo) => (
-                <div onClick={() =>presentPostModal()}>
+                <div className={styles.PhotoDiv} onClick={() =>presentPostModal()}>
                  {/* <div onClick={() => deletePhoto(photo.pet_id)}> */}
                     <img key={photo.post_id} className={styles.Image} src={photo.pic} alt='No Image Found' />
                 </div>
@@ -112,8 +112,11 @@ function Photo() {
         displayEditing  = (
             <div className={styles.PhotosContainer} >
                 {photos.map(photo => (
-                    <div onClick={() => deletePhoto(photo.post_id)}>
-                        <img key={photo.post_id} className={styles.Image} src={photo.pic} alt='No Image Found' />
+                    <div className={styles.EditingPhotoDiv} onClick={() => deletePhoto(photo.post_id)} >
+                        <div>
+                            <img key={photo.post_id} className={styles.Image} src={photo.pic} alt='No Image Found' />
+                        </div>
+                        <div className={styles.DeleteIcon} ></div>
                     </div>
                 ))}
             </div>
