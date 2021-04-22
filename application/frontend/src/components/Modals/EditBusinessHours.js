@@ -81,7 +81,7 @@ function EditBusinessHours({display,onClose}){
                     />
                 </div>
                 <div className={styles['edit-sunday-hours-end']}>
-                    <label for="sunday-end">Sunday End</label>
+                    <label for="sunday-end">Sunday Closing</label>
                         <Select id="sunday-end" name="sunday_end"
                             onChange={setSundayEnd}
                             options={hourOptions}

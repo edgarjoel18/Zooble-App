@@ -51,7 +51,7 @@
 }
 
 
-.confirmpassword-input-container{
+.confirm-password-input-container{
     grid-area: 3/ 2 / span 1;
 }
 
@@ -68,7 +68,7 @@
 .username-input-container input,
 .email-input-container input,
 .password-input-container input,
-.confirmpassword-input-container input  
+.confirm-password-input-container input  
 {
     padding: 15px;
     display: inline-block;

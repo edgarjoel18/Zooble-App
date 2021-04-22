@@ -144,7 +144,7 @@ function SignUpPage() {
                         />
                     </div>
 
-                    <div className={styles['confirmpassword-input-container']}>
+                    <div className={styles['confirm-password-input-container']}>
                         <label className={styles['repeat-password-input-label']} for='psw-repeat'>Confirm Password</label>
                         <input
                             type='password'
