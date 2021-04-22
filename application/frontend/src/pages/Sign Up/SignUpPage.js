@@ -24,6 +24,8 @@ function SignUpPage() {
         touched: false
     }*/)
 
+    const[acceptTerms, setAcceptTerms] = useState();
+
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
     const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
 
@@ -52,7 +54,9 @@ function SignUpPage() {
         console.log(lastName)
         console.log(password)
         console.log(redonePassword)
-        Axios.get('/sign-up', {
+        console.log(acceptTerms)
+        if(email && uname && firstName && lastName && password && redonePassword && acceptTerms){
+            Axios.get('/sign-up', {
                 params: {
                     email: email,
                     firstName: firstName,
@@ -62,14 +66,17 @@ function SignUpPage() {
                     redonePassword: redonePassword
                 }
             }).then(response => {
-                console.log(response)
-                console.log(response.data)
-                console.log(response.data.searchResults)
+                if(response.data =="success"){
+                    history.push("/SignUpSuccess");
+                }
             }).catch(error => {
                 console.log("Error");
             })
+        }
+    }
 
-        history.push("/SignUpSuccess");
+    function handleCheck(e) {
+        setAcceptTerms(e.target.checked);
     }
 
     // function onPasswordChangedHandler(event) {
@@ -167,7 +174,9 @@ function SignUpPage() {
                     <p>By creating an account you agree to our <button className={styles['terms-button']} onClick={openTermsAndConditionsModal}>Terms</button> &<button className={styles['policy-button']} onClick={openPrivacyPolicyModal}>Privacy Policy</button>
                         <input
                             type='checkbox'
-                            required name='remember'
+                            required 
+                            name='remember'
+                            onChange={e => handleCheck(e)}
                         />
                     </p>
                 </div>

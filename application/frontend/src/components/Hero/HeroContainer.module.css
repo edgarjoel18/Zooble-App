@@ -78,11 +78,17 @@
     border: 2px solid var(--accent-color-2);
     border-radius: 7.5px;
     cursor: pointer;
+    transition: .15s ease-in-out;
 }
 
 .signup-button:hover, .find-friend-button:hover{  
     transition: 0.15s;
     transform: translateY(-4px);
+}
+
+.find-friend-button:hover{
+    color:var(--reversed-txt-clr);
+    background-color: var(--accent-color-2);
 }
 
 /* button span {
