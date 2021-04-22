@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import {Axios} from "axios";
 import styles from './SignUpPage.module.css';
 
@@ -33,36 +33,16 @@ function BusinessSignUpPage() {
       setPrivacyPolicyDisplay(false);
     }
 
-    function OnClickHandler() {
-        console.log(email)
-        console.log(uname)
-        console.log(firstName)
-        console.log(lastName)
-        console.log(password)
-        console.log(redonePassword)
-        Axios.get('/sign-up', {
-            params: {
-                email: email,
-                firstName: firstName,
-                lastName: lastName,
-                uname: uname,
-                password: password,
-                redonePassword: redonePassword
-            }
-        })
-        .then(response => {
-            console.log(response)
-            console.log(response.data)
-            console.log(response.data.searchResults)
-        })
-        .catch(error =>{
-            console.log("Error");
-        })
+    const history = useHistory();
+
+    function OnClickHandler(e) {
+        if(email && uname && firstName && lastName && password && redonePassword){
+            history.push('/business-signup2');
+        }
     }
 
     return (
             <>
-
             <form className={styles['signup-container']}>
                 <div className={styles['signup-container-header']}>
                     Create an Account for your Business
@@ -134,24 +114,10 @@ function BusinessSignUpPage() {
                             />
                         </div>
                     </div>
-                
-                    {/* <div className={styles['checkbox-container']}>
-                            <p>By creating an account you agree to our <button className={styles['terms-button']} onClick={openTermsAndConditionsModal}>Terms</button> &<button className={styles['policy-button']} onClick={openPrivacyPolicyModal}>Privacy Policy</button>
-                                <input
-                                    type='checkbox'
-                                    required name='remember'
-                                />
-                            </p>
-                    </div> */}
-                    <NavLink to="/business-signup2">
                     <div className={styles['btn-container']}>
-                        <button type='submit' className={styles['submit-btn']}>Next: Business Details</button>
+                        <button type='submit' className={styles['submit-btn']} onClick={(e) => OnClickHandler(e)}>Next: Business Details</button>
                     </div>
-                </NavLink>
             </form>
-            {/* Modals
-            <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal}/>
-        <PrivacyPolicy display={privacyPolicyDisplay} onClose={closePrivacyPolicyModal}/> */}
         </>
 
     );

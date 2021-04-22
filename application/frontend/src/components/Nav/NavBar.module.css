@@ -89,6 +89,9 @@
     text-decoration: none;
     font-size:var(--h2);
     cursor: pointer;
+    border: none;
+    background: transparent;
+
 }
 
 .account-menu-dropdown-link:hover{
@@ -199,6 +202,15 @@ padding-bottom: 10%; */
     list-style: none;
     box-shadow: var(--elevation-2);
     font-family: var(--ff-primary);
+    
+}
+
+.combobox-popover li{
+    cursor:pointer;
+}
+
+.combobox-popover li:hover{
+    color: var(--primary-clr)
 }
 
 
