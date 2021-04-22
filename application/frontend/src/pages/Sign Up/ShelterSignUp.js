@@ -4,6 +4,8 @@ import { NavLink, useHistory } from "react-router-dom";
 import axios from 'axios'
 import styles from './SignUpPage.module.css';
 
+import Input from '../../components/UI/Input/Input';
+
 function ShelterSignUpPage() {
     const history = useHistory();
     const [email, setEmail] = useState('')
@@ -11,7 +13,16 @@ function ShelterSignUpPage() {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [password, setPassword] = useState('')
-    const [redonePassword, setRedonePassword] = useState('')
+    const [redonePassword, setRedonePassword] = useState({
+        inputConfig: {
+            type: 'password',
+            placeholder: 'Confirm password',
+            name: 'psw-repeat'
+        },
+        value: '', 
+        valid: false,
+        touched: false
+    })
 
     const [termsAndConditionsDisplay,setTermsAndConditionsDisplay]= useState(false);
     const [privacyPolicyDisplay,setPrivacyPolicyDisplay]= useState(false);
@@ -44,6 +55,16 @@ function ShelterSignUpPage() {
             history.push('/shelter-signup2')   //real version will pass along the registration information
         }
     
+    }
+
+    function onPasswordChangedHandler(event) {
+        const updatedPassword = {
+            ...redonePassword,
+            value: event.target.value,
+            valid: event.target.value === password,
+            touched: true
+        };
+        setRedonePassword(updatedPassword);
     }
 
     return (
@@ -111,12 +132,19 @@ function ShelterSignUpPage() {
 
                         <div className={styles['confirmpassword-input-container']}>
                             <label className={styles['repeat-password-input-label']} for='psw-repeat'>Confirm Password</label>
-                            <input
+                            {/* <input
                                 type='password'
                                 placeholder='Confirm password'
                                 name='psw-repeat'
                                 onChange={e => setRedonePassword(e.target.value)}
                                 required
+                            /> */}
+                            <Input
+                                config={redonePassword.inputConfig}
+                                value={redonePassword.value}
+                                valid={redonePassword.valid}
+                                touched={redonePassword.touched}
+                                changed={event => onPasswordChangedHandler(event)}
                             />
                         </div>
                     </div>
@@ -130,7 +158,7 @@ function ShelterSignUpPage() {
                             </p>
                     </div> */}
                         <div className={styles['btn-container']}>
-                            <button type='submit' className={styles['submit-btn']} onClick={(e) => OnClickHandler(e)}>Next: Shelter Details</button>
+                            <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']} onClick={(e) => OnClickHandler(e)}>Next: Shelter Details</button>
                         </div>
                 </form>
         </>

@@ -29,7 +29,6 @@
     padding: 15px;
     display: inline-block;
     border: 1px solid;
-    border-color: var(--inactive-txt-clr);
     border-radius: 5px;
     background:white;
 }

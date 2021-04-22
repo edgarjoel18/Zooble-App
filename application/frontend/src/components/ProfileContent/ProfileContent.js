@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 
 import ImageContainer from './ImageContainer/ImageContainer';
 import Reviews from './Reviews/Reviews';
+import WriteAReview from '../Modals/WriteAReview';
 
 import styles from './ProfileContent.module.css';
 
 function ProfileContent(props) {
+    const [writeAReviewDisplay, setWriteAReviewDisplay] = useState(false);
+
+    function onReviewSendHandler(rating, review) {
+        console.log('rating is ' + rating + ' | review is ' + review);
+    }
+
     let imageContainer = null;
-    console.log('[account type] is ' + props.profile.accountType)
     switch(props.profile.accountType) {
         case 'shelter':
             imageContainer = (
@@ -52,7 +58,15 @@ function ProfileContent(props) {
                 <h2>Reviews</h2>
                 <Reviews reviews={props.profile.reviews} />
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                    {!props.isSelfView && <Link>Write a Review</Link>}
+                    {
+                        !props.isSelfView && 
+                        <span 
+                            style={{cursor: 'pointer'}} 
+                            onClick={() => setWriteAReviewDisplay(true)} 
+                        >
+                            Write a Review
+                        </span>
+                    }
                     <div></div>
                     {props.profile.reviews.length > 0 && <Link>See All</Link>}
                 </div>
@@ -64,6 +78,13 @@ function ProfileContent(props) {
         <div className={styles.ProfileContent} >
             {imageContainer}
             {displayReview}
+            <WriteAReview 
+                display={writeAReviewDisplay} 
+                onClose={()=> setWriteAReviewDisplay(false)}
+                clicked={onReviewSendHandler}
+            >
+                Write a Review
+            </WriteAReview>
         </div>
     );
 }

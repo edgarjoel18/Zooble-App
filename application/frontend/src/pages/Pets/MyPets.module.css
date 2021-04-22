@@ -58,6 +58,7 @@
     margin-right:15px;
     width:30px;
     height:30px;
+    z-index: 1;
 }
 
 .my-pets-container a {
