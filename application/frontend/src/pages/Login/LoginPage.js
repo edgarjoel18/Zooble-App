@@ -17,9 +17,9 @@ function LoginPage({ appUser, setAppUser }) {
     function loginHandler(e) {
         console.log(username);
         console.log(password);
-        setAppUser(username);
-        console.log("AppUser in Login Handler: " + appUser);
-        if(username && password){
+        if( username && password){
+            setAppUser(username);
+            console.log("AppUser in Login Handler: " + appUser);
             Axios.get('/login', {
                 params: {
                     username: username,
@@ -35,6 +35,9 @@ function LoginPage({ appUser, setAppUser }) {
                     console.log("Error");
                 })
         }
+
+
+
     }
 
     if(appUser){

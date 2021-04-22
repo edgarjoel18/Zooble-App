@@ -4,10 +4,10 @@
     align-items: center;
     border-radius: 7.5px;
     z-index: 1;
-    width: 35%;
+    width: 550px;
     height: 550px;
     box-shadow: var(--elevation-1);
-    margin: 12% auto auto auto;
+    margin: 200px auto auto auto;
     grid-column: 2/span 1;
 }
 

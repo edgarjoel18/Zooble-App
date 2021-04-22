@@ -33,6 +33,7 @@
     grid-template-rows: 30% auto auto auto 30%;
     grid-template-columns: auto;
     background-color: var(--primary-clr);
+    border-left: 30px solid var(--primary-clr);;
 }
 
 .right-side-dog{

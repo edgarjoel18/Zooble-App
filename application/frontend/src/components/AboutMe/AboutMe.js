@@ -6,6 +6,8 @@ import EditButton from '../Buttons/EditButton'
 import styles from './AboutMe.module.css';
 import { Link } from 'react-router-dom';
 
+import EditBusinessHours from '../../components/Modals/EditBusinessHours'
+
 const shelterProfileTags = ["About", "Contact Info", "Recent Posts"]
 const businessProfileTags = ["About", "Business Info", "Recent Posts"]
 const petOwnerProfileTags = ["About", "Recent Posts"]
@@ -18,6 +20,8 @@ function AboutMe(props) {
     //const [about, setAbout] = useState('');
     const [changing, setChanging] = useState(false);
     const [labelSelected, setLabelSelected] = useState();
+
+    const [editHoursDisplay, setEditHoursDisplay] = useState(false);
 
     // useEffect(() => {
     //     setPhone(shelterInfo.phone);
@@ -48,6 +52,8 @@ function AboutMe(props) {
         setChanging(true);
         setLabelSelected(label);
         console.log(label)
+        setEditHoursDisplay(true);
+
     }
 
     function cancelEditingHandler() {
@@ -183,6 +189,7 @@ function AboutMe(props) {
     }
 
     return (
+        <>
         <div className={styles.AboutMe} >
             <div style={{display: "flex", flexDirection: "column"}} >
                 {tags}
@@ -193,6 +200,8 @@ function AboutMe(props) {
                 </div>
             </div>
         </div>
+        <EditBusinessHours display={editHoursDisplay} onClose={()=>setEditHoursDisplay(false)}/>
+        </>
     );
 }
 
