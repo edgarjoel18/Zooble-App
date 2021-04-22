@@ -52,8 +52,8 @@ function SignUpPage() {
         console.log(lastName)
         console.log(password)
         console.log(redonePassword)
-        Axios.post('/sign-up', {
-                data: {
+        Axios.get('/sign-up', {
+                params: {
                     email: email,
                     firstName: firstName,
                     lastName: lastName,
@@ -62,13 +62,14 @@ function SignUpPage() {
                     redonePassword: redonePassword
                 }
             }).then(response => {
-                console.log(response);
+                console.log(response)
+                console.log(response.data)
+                console.log(response.data.searchResults)
             }).catch(error => {
                 console.log("Error");
             })
 
-
-        
+        history.push("/SignUpSuccess");
     }
 
     // function onPasswordChangedHandler(event) {
