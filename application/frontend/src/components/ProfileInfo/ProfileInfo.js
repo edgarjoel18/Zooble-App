@@ -112,7 +112,7 @@ function ProfileInfo(props) {
                     <input 
                         value={props.profile.userName} 
                         readOnly={!editing}
-                        maxlength = "25"
+                        maxLength = "25"
                         onChange={event => props.updateProfile('userName', event.target.value)} 
                     />
                 </h1> 
@@ -151,7 +151,7 @@ function ProfileInfo(props) {
                     <input 
                         value={props.profile.userName} 
                         readOnly={!editing}
-                        maxlength = "25"
+                        maxLength = "25"
                         onChange={event => props.updateProfile('userName', event.target.value)} 
                     />
                 </h1> 
@@ -191,7 +191,7 @@ function ProfileInfo(props) {
                     <input 
                         value={props.profile.userName} 
                         readOnly={!editing}
-                        maxlength = "25"
+                        maxLength = "25"
                         onChange={event => props.updateProfile('userName', event.target.value)} 
                     />
                 </h1> 
@@ -236,7 +236,7 @@ function ProfileInfo(props) {
                 <React.Fragment>
                     <div style={{display: 'flex'}} >
                         <h1 className={styles.UserName}>{props.profile.userName}</h1>
-                        <h3>{petType.value}/{petBreeds[0].value}</h3>
+                        <h3 style={{marginLeft: '10px'}} >{petType.value}/{petBreeds[0].value}</h3>
                     </div>
                     <EditPetDetails 
                     display={editPetDetailsDisplay} 
