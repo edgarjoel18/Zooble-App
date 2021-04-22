@@ -4,6 +4,7 @@
     height: 576px;
     border: none;
     background-color: var(--site-preview-2-container-color);
+    justify-content: space-between;
   }
   .site-demo2-box1 {
     width: 30%;
@@ -12,9 +13,7 @@
   .site-demo2-box2 {
     max-width: 70%;
     height: 576px;
-    float: right;
-    right:0%;
-    position: absolute;
+    
   }
   
 .site-demo2-text {
@@ -36,7 +35,7 @@
     left: 7.36%;
     width: 195px;
     height: 62px;
-    background-color: var(--primary-clr, red);
+    background-color: var(--primary-clr);
     color: var(--reversed-txt-clr);
     box-shadow: var(--elevation-1);
     border: none;

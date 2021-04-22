@@ -1,7 +1,6 @@
-import React,{useState} from "react";
+import {useState} from "react";
 
-import testImg from '../../images/testImages/test.jpg';
-import mapSearchDemo from '../../images/testImages/homepageSideDemo2.png'
+import MapSearchPreview from '../../images/MapSearchPreview.png'
 
 import styles from './SiteDemo2.module.css';
 
@@ -26,7 +25,7 @@ function SiteDemo2() {
             <span><h3>{text}</h3></span>
         </button>
       </div>
-      <img className={styles['site-demo2-box2']} src={mapSearchDemo} />
+      <img className={styles['site-demo2-box2']} src={MapSearchPreview} />
     </div>
   );
 }

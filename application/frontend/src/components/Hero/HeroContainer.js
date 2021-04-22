@@ -6,7 +6,7 @@ import styles from './HeroContainer.module.css';
 import CallToActionButton from '../Buttons/CallToActionButton'
 
 //Import Images
-import DogOwnerImage from '../../images/Third Party Images/undraw_Modern_woman_lxh7 1.svg'
+import DogOwnerImage from '../../images/Third Party Images/undraw_Modern_woman_lxh7.svg'
 import CatOwnerImage from '../../images/Third Party Images/undraw_chilling_8tii 1.svg'
 
 function HeroContainer() {
@@ -30,8 +30,8 @@ function HeroContainer() {
       </div>
       <div className={styles['right-side']}>
 
-        <div className={styles['right-side-text']}><h1>The Social Network for your furry (or not so furry) friends</h1></div>
-        <div className={styles['right-side-subtext']}><h2>Sign Up or Search for a Pet to Get Started</h2></div>
+        <div className={styles['right-side-text']}>The Social Network for your furry (or not so furry) friends</div>
+        <div className={styles['right-side-subtext']}>Sign Up or Search for a Pet to Get Started</div>
         <div className={styles['button-container']}>
           <NavLink to="/account-type">
             <button className={styles['signup-button']}><span><h3>Sign Up</h3></span></button>
