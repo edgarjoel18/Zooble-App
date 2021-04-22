@@ -10,6 +10,7 @@
     resize: none;
     border-radius: 7.5px;
     border: 1px solid var(--inactive-txt-clr);
+    padding: 10px;
 }
 
 .sendAMessage-sendButton{
