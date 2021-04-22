@@ -35,7 +35,6 @@ import ExploreUsers from './pages/ExploreUsers/ExploreUsers';
 
 
 import MapSearch from './pages/MapSearch/MapSearch.js'
-import Map from './pages/MapSearch/Map'
 
 const App = () => {
 
@@ -85,7 +84,6 @@ const App = () => {
         <Route path="/Wenjie" component={Wenjie}/>
         <Route path="/Cameron" component={Cameron}/>
         <Route path="/Wameedh" component={Wameedh}/>
-        <Route path="/Map" component={Map}/>
         {/* <Redirect to="/" /> */}
       </Switch>
     </Router>
