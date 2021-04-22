@@ -99,7 +99,7 @@ function SearchBar() {
           <option value="Pets">Pets</option>
           <option value="Businesses">Businesses</option>
           <option value="Shelters">Shelters</option>
-          {/* <option value="Users">Users</option>   need to add db user entities to implement this*/}
+          <option value="Pet Owners">Pet Owners</option>
         </select>
       </span>   
       <span className={styles["searchbar-input"]}>
@@ -120,7 +120,7 @@ function SearchBar() {
                 console.log(address)
             }}
           >
-          {searchCategory=="Users" && 
+          {searchCategory=="Pet Owners" && 
           <ComboboxInput 
             value={value}
             placeholder= {"Search " + searchCategory.toLowerCase()}
@@ -141,7 +141,7 @@ function SearchBar() {
             }}
         />
         }
-        {searchCategory != "Users" &&
+        {searchCategory != "Pet Owners" &&
             <ComboboxInput 
               value={value}
               placeholder= {"Search " + searchCategory.toLowerCase() + " near you"}
@@ -162,11 +162,12 @@ function SearchBar() {
                     }}
                 />
         }
-        <ComboboxPopover className={styles['combobox-popover']}>
+        {searchCategory != "Pet Owners" && <ComboboxPopover className={styles['combobox-popover']}>
             {status === "OK" && data.map(({id,description}) => 
                 <ComboboxOption key={id} value={description}/>
             )}
         </ComboboxPopover>
+        }
       </Combobox>
       </span>
 
