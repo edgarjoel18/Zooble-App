@@ -30,11 +30,18 @@
     border-radius: 15px;
     cursor:pointer;
     object-fit: cover;
+    overflow: hidden;
+}
+
+.ImageStack_pic img{
+    transition: transform .25s ease;
 }
 
 
 .ImageStack_pic:hover{
     z-index: 1;
+    transform: scale(1.1);
+    
 }
 
 .ImageStackText {
