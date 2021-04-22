@@ -24,10 +24,7 @@ function HeroContainer() {
 
   return (
     <div className={styles['hero-container']}>
-      <div className={styles['left-side']}>
-        {/* <img className={styles['left-side-cat']} src={CatOwnerImage}/>  */}
-        <img className={styles['left-side-dog']} src={DogOwnerImage} />
-      </div>
+      
       <div className={styles['right-side']}>
 
         <div className={styles['right-side-text']}>The Social Network for your furry (or not so furry) friends</div>
@@ -42,6 +39,12 @@ function HeroContainer() {
           {/* <img className={styles['right-side-dog']} src={DogOwnerImage}/> */}
         </div>
       </div>
+
+      <div className={styles['left-side']}>
+        {/* <img className={styles['left-side-cat']} src={CatOwnerImage}/>  */}
+        <img className={styles['left-side-dog']} src={DogOwnerImage} />
+      </div>
+
     </div>
   );
 }

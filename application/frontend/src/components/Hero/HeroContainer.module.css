@@ -6,11 +6,13 @@
 
 .left-side {
     width: 50%;
+    /* background-color: var(--primary-clr); */
     /* display: grid;
     grid-template-rows: repeat(2, 288px);
     grid-template-columns: repeat(2, 1fr); */
     /* grid-template-areas: "left-side-dog left-side-cat"
                          "............. left-side-cat"; */
+    
 }
 
 
@@ -24,7 +26,7 @@
     height: 576px;
     float: right;
     grid-area: 1 / 2 / span 2 / span 1;
-    border-right: 30px solid var(--primary-clr);
+    /* border-right: 30px solid var(--primary-clr); */
 }
 
 .right-side{
@@ -32,8 +34,10 @@
     display: grid;
     grid-template-rows: 30% auto auto auto 30%;
     grid-template-columns: auto;
-    background-color: var(--primary-clr);
-    border-left: 30px solid var(--primary-clr);;
+    /* background-color: var(--primary-clr); */
+    /* padding-left: 30px; */
+    /* border-left: 30px solid var(--primary-clr);; */
+    padding-left: 10%;
 }
 
 .right-side-dog{
@@ -46,7 +50,8 @@
     font-family: var(--ff-tertiary);
     display: block;
     grid-row: 2 / span 1;
-    color: var(--accent-color-1);
+    /* color: var(--accent-color-1); */
+    color: var(--accent-color-2);;
     font-weight: 600;
     font-size: var(--hero);
 }
