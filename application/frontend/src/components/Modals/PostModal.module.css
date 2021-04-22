@@ -84,6 +84,8 @@
 
 .post-detail-likes{
     grid-area: 3 / 3 / span 1 / span 1;
+    text-align: center;
+    line-height: 34px;
 }
 
 /* Comments  */
@@ -99,7 +101,7 @@
 
 .post-comment{
     display: grid;
-    grid-template-columns: 75px auto 25px;
+    grid-template-columns: 75px auto 35px;
     grid-template-rows: repeat(3, 25px) auto;
     /* grid-template-areas: "comment-pic    comment-name       comment-like "
                             "comment-pic    *****************  comment-likes"

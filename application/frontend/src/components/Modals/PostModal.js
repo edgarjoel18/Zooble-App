@@ -46,8 +46,11 @@ function PostModal({display,onClose,selectedPost}) {
                         <img className={styles["post-detail-pic"]} src={selectedPost.prof_pic}/>
                         <div className={styles["post-detail-name"]}><h3>{selectedPost.user_display_name}</h3></div>
                         <div className={styles["post-detail-timestamp"]}>{selectedPost.timestamp}</div>
+                        <div className={styles["post-detail-likes"]}>
+                            {selectedPost.likes}
+                            
+                        </div>
                         <button className={styles["post-detail-like"]}/>
-                        <div className={styles["post-detail-likes"]}>{selectedPost.likes}</div>
                         {/* <div className={styles["post-detail-comments-count"]}>{comments.length} comments</div>  */} 
                         <div className={styles["post-detail-body"]}>{selectedPost.body} comments</div>
                     </div>
@@ -60,8 +63,11 @@ function PostModal({display,onClose,selectedPost}) {
                                     <div className={styles['post-comment-name']}><h4>{comment.name}</h4></div>
                                     <div className={styles['post-comment-timestamp']}>{comment.timestamp}</div>
                                     <div className={styles['post-comment-body']}>{comment.body}</div>
-                                    <div className={styles['post-comment-likes']}>{comment.likes}</div>
+                                    <div className={styles['post-comment-likes']}>
+                                        {comment.likes}  
+                                    </div>
                                     <button className={styles['post-comment-like']}/>
+                                    
                                 </div>
                             </li>
                         ))}
