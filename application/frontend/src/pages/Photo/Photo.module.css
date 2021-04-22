@@ -16,15 +16,46 @@
     border-radius: 15px;
 }
 
-.PhotosContainer div{
+.PhotoDiv {
     cursor: pointer;
 }
 
+.EditingPhotoDiv {
+    position: relative;
+    cursor: pointer;
+    max-height: 332.75px;
+}
+
+.DeleteIcon {
+    position: absolute;
+    transition: .5s ease;
+    background: url("../../images/Created\ Icons/Exit-Cancel.svg") 50% no-repeat;
+    background-color: coral;
+    left: 166px;
+    top: 166px;
+    opacity: 0;
+    border-radius: 15px;
+    width: 332.75px;
+    height: 332.75px;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
 .Image {
+    opacity: 1;
     width: 332.75px;
     height: 332.75px;
     border-radius: 15px;
+    transition: .5s ease;
     object-fit:cover;
+}
+
+.EditingPhotoDiv:hover .Image {
+    opacity: 0.3;
+  }
+  
+.EditingPhotoDiv:hover .DeleteIcon {
+    opacity: 0.7;
 }
 
 .NameDiv {
