@@ -69,10 +69,11 @@ function LoginPage({ appUser, setAppUser }) {
                 <div className={styles['btn-container']}>
                     <button type='submit' className={styles['submit-btn']} onClick={loginHandler}>Login</button>
 
-                    <div className={styles['checkbox']}>
-                        <input type='checkbox' name='remember'/> Stay logged in
-                    </div>
+
                 </div>
+                <div className={styles['checkbox']}>
+                        <input type='checkbox' name='remember'/> Remember Me
+                    </div>
 
                 <p className={styles['create-account']}>
                     Not registered? <a href='/account-type'>Create an account</a>

@@ -17,12 +17,12 @@ html,body {
 :root{
 
   /* UI Colors*/
-  --primary-clr: #1CB48F;
+  --primary-clr: #24949a;
   --inset-txt-field-clr: #FCF8F8;
   --site-preview-1-container-color: #C6A5A5;
   --site-preview-2-container-color:  #a0bcf7;
   --cancel-delete-exit-color: #EB1B1B;
-  --nav-bar-color: #131b49;
+  --accent-color-2: #131b49;
   --accent-color-1: #feebde;
   
   /*text colors*/

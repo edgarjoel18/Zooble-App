@@ -96,6 +96,10 @@
     cursor: pointer;
 }
 
+.checkbox{
+    padding:15px;
+}
+
 @media (max-width: 1024px){
     .login-container {
         width: 50%;
