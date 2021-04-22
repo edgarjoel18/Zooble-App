@@ -143,6 +143,7 @@ function AboutMe(props) {
                         type="text" 
                         value={props.profile.contactInfo.phone} 
                         readOnly={!changing || !(labelSelected === 'phone number')}
+                        maxlength = "25"
                         onChange={event => props.updateProfile('phone', event.target.value)} 
                     />
                     {
@@ -175,10 +176,10 @@ function AboutMe(props) {
             );
             break;
         case 'Recent Posts':
-            content = <p>Coming soon</p>
+            content = <span>Coming soon</span>
             break;
         default:
-            content = <p>Error</p>;
+            content = <span>Error</span>;
     }
 
     return (

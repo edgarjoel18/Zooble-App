@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-
 import { useLocation, useHistory } from 'react-router-dom';
 
 import styles from './Photo.module.css';
 
-import PostModal from '../../components/Modals/PostModal'
+import PostModal from '../../components/Modals/PostModal';
+import EditButton from '../../components/Buttons/EditButton';
 
     const dummyPhotos = [
         {   
@@ -126,7 +126,8 @@ function Photo() {
                 <div className={styles.NameDiv} >
                     <div className={styles.NameDivLeft} >
                         <h1>{name + '\'s Photos'}</h1>
-                        <button onClick={() => setEditing(!editing)} >{editing ? 'Finish Editing' : 'Edit'}</button>
+                        {/* <button onClick={() => setEditing(!editing)} >{editing ? 'Finish Editing' : 'Edit'}</button> */}
+                        <EditButton edit={!editing} clicked={() => setEditing(!editing)}>{editing ? 'Finish Editing' : 'Edit Photo'}</EditButton>
                     </div>
                     <div className={styles.NameDivRight} >
                         {/* <button>filter</button> */}
