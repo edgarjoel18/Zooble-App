@@ -1,6 +1,6 @@
 import {useRef,useCallback, useEffect, useState} from 'react'
 
-import {Link} from "react-router-dom"
+import {Link,useLocation,useHistory} from "react-router-dom"
 
 import Axios from "axios";
 
@@ -26,6 +26,9 @@ const options = {
 }
 
 function MapSearch(props) {
+
+    const location = useLocation();
+    let history = useHistory();
 
     const panTo = useCallback(({lat,lng}) =>{
         mapRef.current.panTo({lat,lng});
@@ -83,10 +86,15 @@ function MapSearch(props) {
 
     //Recieve search params for searchbar.js
     let state = props.location.state;
-    console.log("Search Category: " + state.searchCategoryParam);
-    console.log("Search Term: " + state.searchTermParam);
-    const[searchCategory, setSearchCategory] = useState(state.searchCategoryParam);
-    const[searchTerm, setSearchTerm] = useState(state.searchTermParam);
+    console.log(state);
+
+
+    if(typeof(state) =='undefined'){
+        state = {lat: 0, lng: 0}
+    }
+
+    const[searchCategory, setSearchCategory] = useState();
+    const[searchTerm, setSearchTerm] = useState();
     const[resultsSortOption, setResultsSortOption] = useState('');
     const[recievedSearchResults, setRecievedSearchResults] = useState([]);  //store search results
 
@@ -110,8 +118,8 @@ function MapSearch(props) {
     const[latitude,setLatitude] = useState();
     const[longitude,setLongitude] = useState();
     const[mapUrl,setMapUrl] = useState();
-
     const center = {lat: state.lat, lng: state.lng};
+        
 
     useEffect(()=>{
         if(state.searchTermParam && state.searchCategoryParam){
