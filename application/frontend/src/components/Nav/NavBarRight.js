@@ -19,7 +19,7 @@ function NavBarRight({appUser,setAppUser}) {
   
   return (
         <>
-        {!appUser && <NavLink className={styles["login-link"]} to="/login-page">Login</NavLink>}
+        {!appUser && <button className={styles["login-link"]} onClick={()=>history.push("/login-page")}>Login</button>}
         {appUser && <NavLink to="/Messages" className={styles["messages-menu"]}/>}
         {appUser &&<span className="account-menu-dropdown">
           <button className={styles["account-menu-dropdown-button"]}/>
