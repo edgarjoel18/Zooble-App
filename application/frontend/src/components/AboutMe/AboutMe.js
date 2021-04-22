@@ -52,7 +52,7 @@ function AboutMe(props) {
         setChanging(true);
         setLabelSelected(label);
         console.log(label)
-        setEditHoursDisplay(true);
+        // setEditHoursDisplay(true);
 
     }
 
@@ -163,7 +163,13 @@ function AboutMe(props) {
                         {
                             props.isSelfView && (labelSelected !== 'hours') && 
                             //<button onClick={() => changingInfoHandler('hours')} >edit</button>
-                            <EditButton edit clicked={() => changingInfoHandler('hours')}>Edit</EditButton>
+                            <EditButton edit clicked={() => {
+                                setEditHoursDisplay(true);
+                                changingInfoHandler('hours')
+                                }}
+                            >
+                                Edit
+                            </EditButton>
                         }
                         <label>Hours: </label>
                         {Object.keys(props.profile.contactInfo.hours).map(key => (
@@ -173,11 +179,11 @@ function AboutMe(props) {
                             </div>
                         ))}
                     </div>
-                    {
+                    {/* {
                         props.isSelfView && (labelSelected === 'hours') && 
                         //<button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
                         <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton>
-                    }
+                    } */}
                 </div>
             );
             break;
@@ -200,7 +206,10 @@ function AboutMe(props) {
                 </div>
             </div>
         </div>
-        <EditBusinessHours display={editHoursDisplay} onClose={()=>setEditHoursDisplay(false)}/>
+        <EditBusinessHours display={editHoursDisplay} onClose={()=> {
+            cancelEditingHandler(); 
+            setEditHoursDisplay(false);
+            }}/>
         </>
     );
 }
