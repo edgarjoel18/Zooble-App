@@ -12,9 +12,10 @@ import Select from 'react-select';
 
 import makeAnimated from 'react-select/animated';
 
-// import {GoogleMap, useLoadScript, Marker, InfoWindow} from '@react-google-maps/api';
+import {GoogleMap, useLoadScript, Marker, InfoWindow} from '@react-google-maps/api';
 
 function MapSearch(props) {
+    
     //Only for horizontal prototype, real thing should fetch from db
     const businessCategoryOptions = [
         {value: 'Grooming', label: 'Grooming'},
@@ -83,29 +84,44 @@ function MapSearch(props) {
     const [petAgeFilters, setPetAgeFilters] = useState([]);
     const [shelterPetTypeFilters, setShelterPetTypeFilters] = useState([]);
 
+    //for storing map location
+    const[latitude,setLatitude] = useState();
+    const[longitude,setLongitude] = useState();
+    const[mapUrl,setMapUrl] = useState();
+
 
 
     useEffect(()=>{
-        console.log('Fetching Search Results');
-        setSearchCategory(state.searchCategoryParam);
-        setSearchTerm(state.searchTermParam);
-        Axios.get('/search', {  //take in filters here? for final version
-            params: {
-              searchTerm: state.searchTermParam,
-              searchCategory:state.searchCategoryParam}})
-            .then(response =>{
-            console.log(response)
-            console.log(response.data)
-            console.log(response.data.searchResults)
-            setRecievedSearchResults(response.data.searchResults)
-            // setOverlayDisplay(true);
-            displaySearchResults();
-            console.log("Recieved Search Results: " + recievedSearchResults)
-            
-          })
-          .catch(error =>{
-            console.log("Error");
-          })
+        if(state.searchTermParam && state.searchCategoryParam){
+            console.log('Fetching Search Results');
+            setSearchCategory(state.searchCategoryParam);
+            setSearchTerm(state.searchTermParam);
+            Axios.get('/search', {  //take in filters here? for final version
+                params: {
+                  searchTerm: state.searchTermParam,
+                  searchCategory:state.searchCategoryParam}})
+                .then(response =>{
+                console.log(response)
+                console.log(response.data)
+                console.log(response.data.searchResults)
+                setRecievedSearchResults(response.data.searchResults)
+                // setOverlayDisplay(true);
+                displaySearchResults();
+                console.log("Recieved Search Results: " + recievedSearchResults)
+                
+              })
+              .catch(error =>{
+                console.log("Error");
+              })
+        }
+        else if(state.lat && state.lng){
+            console.log(state.lat + "+" + state.lng);
+            setLatitude(state.lat);
+            setLongitude(state.lng);
+            setMapUrl(`https://maps.googleapis.com/maps/api/staticmap?center=`+ longitude +","+ latitude +`&zoom=14&size=2048x2048&key=AIzaSyDGz7t7D1PRi8X2Or-SHAie2OgWoFH--Bs`);
+            console.log(mapUrl);
+        }
+
     },[state]);  //only fetch and reload when search params change
 
 
@@ -139,7 +155,7 @@ function MapSearch(props) {
             <>
             <div className={styles['map-search-results-container']}>
                 <div className={styles['map-search-results-map']}>
-                    {/* <img src={`https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=2048x2048&key=AIzaSyDGz7t7D1PRi8X2Or-SHAie2OgWoFH--Bs`}/> */} {/* Uncomment to see Map*/}
+                    <img src={`https://maps.googleapis.com/maps/api/staticmap?center=`+ latitude +","+ longitude +`&zoom=8&size=640x640&markers=color=gray%7C` + latitude +","+ longitude + "&key=AIzaSyDGz7t7D1PRi8X2Or-SHAie2OgWoFH--Bs"}/>
                 </div>
                 <div className={styles['map-search-results-text']} style={{display: searchResultsDisplay}}>
                     <>

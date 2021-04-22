@@ -53,4 +53,5 @@ i {
     border: none;
     background-color: transparent;
     color:var(--reversed-txt-clr);
+    cursor: pointer;
 }

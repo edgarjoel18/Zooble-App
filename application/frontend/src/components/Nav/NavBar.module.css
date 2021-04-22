@@ -193,6 +193,14 @@ padding-bottom: 10%; */
 } */
 
 
+.combobox-popover{
+    background-color: white;
+    padding: 10px;
+    list-style: none;
+    box-shadow: var(--elevation-2);
+    font-family: var(--ff-primary);
+}
+
 
 
 
