@@ -34,6 +34,7 @@ html,body {
   /*typography*/ 
   --ff-primary: 'Open Sans', sans-serif;
   --ff-secondary: 'Roboto', sans-serif;
+  --ff-tertiary: 'Nunito', sans-serif;
 
   /* shadows */
   --elevation-0: none;

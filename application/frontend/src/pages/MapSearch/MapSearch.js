@@ -155,7 +155,8 @@ function MapSearch(props) {
             <>
             <div className={styles['map-search-results-container']}>
                 <div className={styles['map-search-results-map']}>
-                    <img src={`https://maps.googleapis.com/maps/api/staticmap?center=`+ latitude +","+ longitude +`&zoom=8&size=640x640&markers=color=gray%7C` + latitude +","+ longitude + "&key=AIzaSyDGz7t7D1PRi8X2Or-SHAie2OgWoFH--Bs"}/>
+                    {state.lat && state.lng && <img src={`https://maps.googleapis.com/maps/api/staticmap?center=`+ latitude +","+ longitude +`&zoom=8&size=640x640&markers=color=gray%7C` + latitude +","+ longitude + "&key=AIzaSyDGz7t7D1PRi8X2Or-SHAie2OgWoFH--Bs"}/>}
+                    {!state.lat && !state.lng && <div className={styles['map-coming-soon']}>Location Results Feature Coming Soon</div>}
                 </div>
                 <div className={styles['map-search-results-text']} style={{display: searchResultsDisplay}}>
                     <>
