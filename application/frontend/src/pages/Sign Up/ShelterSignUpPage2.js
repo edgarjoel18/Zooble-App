@@ -60,7 +60,17 @@ function ShelterSignUpPage2() {
         history.push("/SignUpSuccess");
     }
 
+    document.querySelector( "input" ).addEventListener( "invalid",
+    function( event ) {
+        event.preventDefault();
+    });
+
     const animatedComponents = makeAnimated();
+
+    //State variables for inputs
+    const [name, setName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [address, setAddress] = useState('');
 
     return (
         <>
@@ -76,6 +86,7 @@ function ShelterSignUpPage2() {
                         placeholder='Enter Shelter Name'
                         name='shelter-name'
                         required
+                        onChange={e => setName(e.target.value)}
                     />
                 </div>
 
@@ -86,6 +97,7 @@ function ShelterSignUpPage2() {
                         placeholder='(000) 000-0000'
                         name='shelter-phone-number'
                         required
+                        onChange={e => setPhoneNumber(e.target.value)}
                     />
                 </div>
 
@@ -96,6 +108,7 @@ function ShelterSignUpPage2() {
                         placeholder='1600 Holloway Ave, San Francisco, CA, 94132'
                         name='shelter-address'
                         required
+                        onChange={e => setAddress(e.target.value)}
                     />
                 </div>
 

@@ -24,6 +24,14 @@ function BusinessSignUpPage2() {
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
     const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
 
+
+    const [email, setEmail] = useState('')
+    const [uname, setUname] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [password, setPassword] = useState('')
+    const [redonePassword, setRedonePassword] = useState('')
+
     function openTermsAndConditionsModal() {
         setTermsAndConditionsDisplay(true);
     }
@@ -41,6 +49,11 @@ function BusinessSignUpPage2() {
     }
 
     const [selectedBusinessCategories, setSelectedBusinessCategories] = useState([]);
+
+    const [name, setName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [address, setAddress] = useState('');
+
 
     function customTheme(theme) { //move this a separate file and import maybe?
         return {
@@ -63,7 +76,10 @@ function BusinessSignUpPage2() {
     const history= useHistory();
 
     function OnClickHandler(){
-        history.push("/SignUpSuccess");
+        if( name && phoneNumber && address){
+            history.push("/SignUpSuccess");
+        }
+
     }
 
     return (
@@ -80,6 +96,8 @@ function BusinessSignUpPage2() {
                             placeholder='Enter Business Name'
                             name='business-name'
                             required
+                            oninvalid='alert("poop")'
+                            onChange={e => setName(e.target.value)}
                         />
                     </div>
 
@@ -90,6 +108,8 @@ function BusinessSignUpPage2() {
                             placeholder='(000) 000-0000'
                             name='business-phone-number'
                             required
+                            oninvalid=""
+                            onChange={e => setPhoneNumber(e.target.value)}
                         />
                     </div>
 
@@ -100,6 +120,7 @@ function BusinessSignUpPage2() {
                             placeholder='1600 Holloway Ave, San Francisco, CA, 94132'
                             name='business-address'
                             required
+                            onChange={e => setAddress(e.target.value)}
                         />
                     </div>
                 <div className={styles['types-input-container']}>
