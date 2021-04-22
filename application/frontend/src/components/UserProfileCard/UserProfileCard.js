@@ -1,6 +1,8 @@
 import { Tabs, Tab, AppBar, Card, Typography, Grid } from "@material-ui/core";
 // import { Card, CardColumns, Col } from "react-bootstrap";
 import React, { useState, useRef, useEffect } from "react";
+import { Link } from 'react-router-dom';
+
 import styles from "./UserProfileCard.module.css";
 
 function UserProfileCard(props) {
@@ -30,6 +32,57 @@ function UserProfileCard(props) {
         "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
     },
     {
+      pet_id: 4,
+      name: "Max",
+      size_name: "small",
+      age_name: "two",
+      profile_pic:
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
+    },
+    {
+      pet_id: 5,
+      name: "Juju",
+      size_name: "larg",
+      age_name: "ten",
+      profile_pic:
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
+    },
+    {
+      pet_id: 6,
+      name: "Mimi",
+      size_name: "medium",
+      age_name: "six",
+      profile_pic:
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
+    },
+  ]);
+
+  const [followingList, setFollowingList] = useState([
+    {
+      pet_id: 6,
+      name: "Max",
+      size_name: "small",
+      age_name: "two",
+      profile_pic:
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
+    },
+    {
+      pet_id: 5,
+      name: "Juju",
+      size_name: "larg",
+      age_name: "ten",
+      profile_pic:
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
+    },
+    {
+      pet_id: 4,
+      name: "Mimi",
+      size_name: "medium",
+      age_name: "six",
+      profile_pic:
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
+    },
+    {
       pet_id: 1,
       name: "Max",
       size_name: "small",
@@ -48,57 +101,6 @@ function UserProfileCard(props) {
     {
       pet_id: 3,
       name: "Mimi",
-      size_name: "medium",
-      age_name: "six",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
-    },
-  ]);
-
-  const [followingList, setFollowingList] = useState([
-    {
-      pet_id: 1,
-      name: "Max Test Following 1",
-      size_name: "small",
-      age_name: "two",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
-    },
-    {
-      pet_id: 2,
-      name: "Juju Test Following 2",
-      size_name: "larg",
-      age_name: "ten",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
-    },
-    {
-      pet_id: 3,
-      name: "Mimi Test Following 3",
-      size_name: "medium",
-      age_name: "six",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
-    },
-    {
-      pet_id: 1,
-      name: "Max Test Following 4",
-      size_name: "small",
-      age_name: "two",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
-    },
-    {
-      pet_id: 2,
-      name: "Juju Test Following 5",
-      size_name: "larg",
-      age_name: "ten",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
-    },
-    {
-      pet_id: 3,
-      name: "Mimi Test Following 6",
       size_name: "medium",
       age_name: "six",
       profile_pic:
@@ -167,17 +169,19 @@ function UserProfileCard(props) {
           >
             {" "}
             {followersList.map((item, index) => (
-              <div
-                style={{
-                  padding: " 10px 0px",
-                }}
-              >
-                <EuCard
-                  title={item.name}
-                  src={item.profile_pic}
-                  thethingyintheplace={index}
-                />
-              </div>
+              <Link style={{textDecoration: 'none'}} key={item.pet_id} to={'/Profile/' + item.name} >
+                <div
+                  style={{
+                    padding: " 10px 0px",
+                  }}
+                >
+                  <EuCard
+                    title={item.name}
+                    src={item.profile_pic}
+                    thethingyintheplace={index}
+                  />
+                </div>
+              </Link>
             ))}
           </div>
         </Card>
@@ -187,19 +191,23 @@ function UserProfileCard(props) {
         <Card elevation={0}>
           <div style={{ columns: "2", width: "1000px", margin: "auto" }}>
             {" "}
-            {followingList.map((item, index) => (
-              <div
-                style={{
-                  padding: " 10px 0px",
-                }}
-              >
-                <EuCard
-                  title={item.name}
-                  src={item.profile_pic}
-                  thethingyintheplace={index}
-                />
-              </div>
-            ))}
+            {
+              followingList.map((item, index) => (
+                <Link style={{textDecoration: 'none'}} key={item.pet_id} to={"/Profile/" + item.name} >
+                  <div
+                    style={{
+                      padding: " 10px 0px",
+                    }}
+                  >
+                    <EuCard
+                      title={item.name}
+                      src={item.profile_pic}
+                      thethingyintheplace={index}
+                    />
+                  </div>
+                </Link>
+              ))
+            }
           </div>
         </Card>
       )}

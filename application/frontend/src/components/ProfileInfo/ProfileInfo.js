@@ -112,6 +112,7 @@ function ProfileInfo(props) {
                     <input 
                         value={props.profile.userName} 
                         readOnly={!editing}
+                        maxlength = "25"
                         onChange={event => props.updateProfile('userName', event.target.value)} 
                     />
                 </h1> 
@@ -150,6 +151,7 @@ function ProfileInfo(props) {
                     <input 
                         value={props.profile.userName} 
                         readOnly={!editing}
+                        maxlength = "25"
                         onChange={event => props.updateProfile('userName', event.target.value)} 
                     />
                 </h1> 
@@ -189,6 +191,7 @@ function ProfileInfo(props) {
                     <input 
                         value={props.profile.userName} 
                         readOnly={!editing}
+                        maxlength = "25"
                         onChange={event => props.updateProfile('userName', event.target.value)} 
                     />
                 </h1> 
@@ -209,7 +212,7 @@ function ProfileInfo(props) {
                                 </div>
                             </button>
                             <div className={styles.DropdownHidden} id='dropDownContent' > 
-                                <Link className={styles.DropdownItem} to="Followers" >Followers</Link>
+                                <Link className={styles.DropdownItem} to="/Followers" >Followers</Link>
                             </div>
                         </React.Fragment>
                         ):
@@ -261,7 +264,7 @@ function ProfileInfo(props) {
                                 </div>
                             </button>
                             <div className={styles.DropdownHidden} id='dropDownContent' > 
-                                <Link className={styles.DropdownItem} to="Followers" >Followers</Link>
+                                <Link className={styles.DropdownItem} to="/Followers" >Followers</Link>
                             </div>
                         </React.Fragment>
                         ):

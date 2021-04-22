@@ -23,6 +23,7 @@ import PetOwnerPage from './pages/Profile/PetOwnerProfilePage'
 import MimiProfilePage from './pages/Profile/MimiProfilePage'
 import MaxProfilePage from './pages/Profile/MaxProfilePage'
 import JujuProfilePage from './pages/Profile/JujuProfilePage'
+import ShelterProfilePage from './pages/Profile/ShelterProfilePage';
 import Messages from './pages/Messages/Messages'
 import MyPets from './pages/Pets/MyPets'
 import Pets from './pages/Pets/Pets'
@@ -64,6 +65,7 @@ const App = () => {
         <Route path="/Profile/Mimi" component={MimiProfilePage}/>
         <Route path="/Profile/Max" component={MaxProfilePage}/>
         <Route path="/Profile/Juju" component={JujuProfilePage}/>
+        <Route path="/Profile/Shelter" component={ShelterProfilePage}/>
         <Route path="/Photo" component={Photo}/>
         <Route path="/Messages" component={Messages}/>
         <Route path="/MyPets" component={MyPets}/>

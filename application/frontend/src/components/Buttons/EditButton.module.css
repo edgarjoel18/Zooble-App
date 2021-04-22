@@ -1,8 +1,10 @@
 .Button {
+    display: inline;
     margin-right: 10px;
     cursor: pointer;
     border: none;
     border-radius: 5px;
+    white-space: nowrap;
 }
 
 .Button:hover {

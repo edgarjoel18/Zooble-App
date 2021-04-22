@@ -50,6 +50,7 @@
 }
 
 .NameDivLeft button {
+    margin-right: 0px;
     height: 50%;
     align-self: center;
     margin-left: 20px;
