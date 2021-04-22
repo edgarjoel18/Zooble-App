@@ -147,7 +147,7 @@ function Profile() {
             }
             <div className={styles.Bottom}>
                 <AboutMe isSelfView={selfView} profile={userProfile} updateProfile={updateProfileHandler} />
-                <ProfileContent isSelfView={selfView} profile={userProfile} />
+                <ProfileContent isSelfView={selfView} profile={userProfile} updateProfile={updateProfileHandler} />
             </div>
         </div>
     )

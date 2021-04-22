@@ -45,8 +45,15 @@ function Reviews(props) {
                         cols='8'
                         readOnly
                         value={ele.review} 
+                        style={{textAlign: 'center'}}
                     />
-                    <Rating name="read-only" value={ele.rating} readOnly style={{float: 'right', paddingLeft: '15px', color: '#1CB48F' }} />
+                    <Rating 
+                        name="read-only" 
+                        value={ele.rating} 
+                        precision={0.5} 
+                        readOnly 
+                        style={{float: 'right', paddingLeft: '15px', color: '#1CB48F' }} 
+                    />
                 </Box>
             ))
         );

@@ -9,9 +9,15 @@ import styles from './ProfileContent.module.css';
 
 function ProfileContent(props) {
     const [writeAReviewDisplay, setWriteAReviewDisplay] = useState(false);
+    const [text, setText] = useState('See All');
 
-    function onReviewSendHandler(rating, review) {
-        console.log('rating is ' + rating + ' | review is ' + review);
+    function onReviewSendHandler(newRating, newReview) {
+        console.log(props.profile.reviews);
+        let updatedReviews = [...props.profile.reviews];
+        updatedReviews.push({user_Id: 2, review: newReview, rating: newRating})
+        console.log(updatedReviews)
+        console.log('rating is ' + newRating + ' | review is ' + newReview);
+        props.updateProfile('reviews', updatedReviews);
     }
 
     let imageContainer = null;
@@ -68,7 +74,8 @@ function ProfileContent(props) {
                         </span>
                     }
                     <div></div>
-                    {props.profile.reviews.length > 0 && <Link>See All</Link>}
+                    {props.profile.reviews.length > 0 && <Link onMouseEnter={() => setText('Cooming Soon')} 
+                    onMouseLeave={() => setText('See All')} >{text}</Link>}
                 </div>
             </div>
         )
