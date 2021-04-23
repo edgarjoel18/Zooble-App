@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 
 import styles from './MyPets.module.css'
 
@@ -62,6 +62,8 @@ function MyPets() {
     },
     ])
 
+    let history = useHistory();
+
     function viewDeletionModal(pet){
         setSelectedPet(pet);
         setDeletionModalDisplay(true);
@@ -77,10 +79,10 @@ function MyPets() {
             My Pets
         </div>
         <div className={styles['my-pets-container']}>
-            <div className={styles['my-pets-container-add-pet']}>
-                <img className={styles['my-pets-container-add-pet-icon']} src={AddIcon}/>
-                <div className={styles['my-pets-container-add-pet-text']}>Add a Pet</div>
-            </div>
+                <div className={styles['my-pets-container-add-pet']} onClick={() => history.push('/Profile/PetCreate')}>
+                    <img className={styles['my-pets-container-add-pet-icon']} src={AddIcon}/>
+                    <div className={styles['my-pets-container-add-pet-text']}>Add a Pet</div>
+                </div>
             {myPets && myPets.map((pet) =>(
                     <div className={styles['my-pets-container-pet']} >
                         <Link to={"/Profile/" + pet.pet_name} >
