@@ -1,7 +1,7 @@
 import { Tabs, Tab, AppBar, Card, Typography, Grid } from "@material-ui/core";
 // import { Card, CardColumns, Col } from "react-bootstrap";
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import styles from "./UserProfileCard.module.css";
 
@@ -169,7 +169,11 @@ function UserProfileCard(props) {
           >
             {" "}
             {followersList.map((item, index) => (
-              <Link style={{textDecoration: 'none'}} key={item.pet_id} to={'/Profile/' + item.name} >
+              <Link
+                style={{ textDecoration: "none" }}
+                key={item.pet_id}
+                to={"/Profile/" + item.name}
+              >
                 <div
                   style={{
                     padding: " 10px 0px",
@@ -189,25 +193,35 @@ function UserProfileCard(props) {
 
       {selectedTab === 1 && (
         <Card elevation={0}>
-          <div style={{ columns: "2", width: "1000px", margin: "auto" }}>
+          <div
+            style={{
+              columns: "2",
+              width: "1000px",
+              margin: "auto",
+              width: "80%",
+              height: "50%",
+            }}
+          >
             {" "}
-            {
-              followingList.map((item, index) => (
-                <Link style={{textDecoration: 'none'}} key={item.pet_id} to={"/Profile/" + item.name} >
-                  <div
-                    style={{
-                      padding: " 10px 0px",
-                    }}
-                  >
-                    <EuCard
-                      title={item.name}
-                      src={item.profile_pic}
-                      thethingyintheplace={index}
-                    />
-                  </div>
-                </Link>
-              ))
-            }
+            {followingList.map((item, index) => (
+              <Link
+                style={{ textDecoration: "none" }}
+                key={item.pet_id}
+                to={"/Profile/" + item.name}
+              >
+                <div
+                  style={{
+                    padding: " 10px 0px",
+                  }}
+                >
+                  <EuCard
+                    title={item.name}
+                    src={item.profile_pic}
+                    thethingyintheplace={index}
+                  />
+                </div>
+              </Link>
+            ))}
           </div>
         </Card>
       )}
