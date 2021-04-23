@@ -18,6 +18,11 @@
 
 .PhotoDiv {
     cursor: pointer;
+    transition: .15s ease-in-out;
+}
+
+.PhotoDiv:hover{
+    opacity: .9;
 }
 
 .EditingPhotoDiv {

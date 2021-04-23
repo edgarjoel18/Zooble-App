@@ -29,7 +29,10 @@ function LoginPage({ appUser, setAppUser }) {
                 .then(response => {
                     console.log(response)
                     console.log(response.data)
-                    history.push('/feed')
+                    if(response.data == 'success'){
+                        history.push('/feed')
+                    }
+                    
                 })
                 .catch(error => {
                     console.log("Error");

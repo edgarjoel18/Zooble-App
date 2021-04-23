@@ -97,12 +97,21 @@
     border-radius: 7.5px;
     margin-bottom: 5px;
     cursor: pointer;
+    transition: .15s ease-in-out;
+}
+
+.submit-btn:hover{
+    opacity: .75;
 }
 
 
 
 .checkbox{
     padding:15px;
+}
+
+.checkbox input{
+    cursor:pointer;
 }
 
 @media (max-width: 1024px){

@@ -17,6 +17,11 @@
 
 .logo-img{
     height: 50px;
+    transition: .15s ease-in-out;
+}
+
+.logo-img:hover{
+    opacity: .75;
 }
 
 .login-link{
@@ -56,6 +61,11 @@
     background-size: 50px 50px;
     line-height: 75px;
     color: var(--accent-color-2);
+    transition: .15s ease-in-out;
+}
+
+.messages-menu:hover{
+    opacity: .75;
 }
 
 .account-menu-dropdown{
@@ -77,6 +87,11 @@
     color: var(--accent-color-2);
     line-height: 75px;
     /* background: url('../../images/Created\ Icons/Account.svg') no-repeat; */
+    transition: .15s ease-in-out;
+}
+
+.account-menu-dropdown-button:hover{
+    opacity: .75;
 }
 
 

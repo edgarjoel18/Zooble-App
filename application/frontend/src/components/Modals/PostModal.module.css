@@ -80,6 +80,11 @@
     background-size: 34px 34px;
     cursor:pointer;
     grid-area: 2 / 3 / span 1 /span 1;
+    transition: .15s ease-in-out;
+}
+
+.post-detail-like:hover{
+    opacity: .75;
 }
 
 .post-detail-likes{
@@ -146,6 +151,12 @@
     border-style: none;
     background: url('../../images/Third\ Party\ Icons/icons8-thumbs-up-48.png') no-repeat;
     background-size: 24px 24px;
+    transition: .15s ease-in-out;
+    cursor: pointer;
+}
+
+.post-comment-like:hover{
+    opacity: .75;
 }
 
 .post-comment-likes{
@@ -171,7 +182,11 @@
     cursor: pointer;
     margin-right: 15px;
     margin-bottom: 15px;
-    
+    transition: .15s ease-in-out;
+}
+
+.post-leave-comment button:hover{
+    opacity: .75;
 }
 
 .post-leave-comment span {

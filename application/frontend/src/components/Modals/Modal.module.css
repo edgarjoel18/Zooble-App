@@ -31,4 +31,9 @@
     background: url("../../images/Created\ Icons/Exit-Cancel.svg") 50% no-repeat;
     border: none;
     cursor: pointer;
+    transition: .15s ease-in-out;
+}
+
+.exit-button:hover{
+    opacity:.75;
 }

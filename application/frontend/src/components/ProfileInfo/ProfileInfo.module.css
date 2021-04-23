@@ -75,6 +75,11 @@
     /* box-shadow: var(--elevation-1); */
     outline: none;
     cursor: pointer;
+    transition: border-width 0.1s linear;
+}
+
+.DropdownButton:hover{
+    border-width: 3px;
 }
 
 .DropdownHidden {
@@ -87,10 +92,11 @@
     position: absolute;
     background-color: #ffffff;
     text-align: center;
-    color: var(--primary-txt-clr);
+    color: var(--primary-clr);
     min-width: 170px;
     box-shadow: var(--elevation-1);
-    z-index: 101;
+    z-index: 100;
+    border-radius: 7.5px;
 }
 
 .DropdownItem {
@@ -131,6 +137,11 @@
     align-items: center;
     outline: none;
     cursor: pointer;
+    transition: .15s ease-in-out;
+}
+
+.Button:hover{
+    opacity: .75;
 }
 
 .EditButton {

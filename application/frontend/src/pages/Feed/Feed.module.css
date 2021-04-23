@@ -126,6 +126,11 @@
     height: 75px;
     line-height: 75px;
     cursor: pointer;
+    transition: border-width 0.1s linear;
+}
+
+.follower-feed-new-post-attach-image:hover{
+    border-width: 4px;
 }
 
 
@@ -143,6 +148,11 @@
     height: 75px;
     line-height: 75px;
     cursor: pointer;
+    transition: .15s ease-in-out;
+}
+
+.follower-feed-new-post-submit:hover{
+    opacity: .75;
 }
 
 
