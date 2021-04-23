@@ -12,6 +12,7 @@
 
 .UserName {
     font-weight: 600;
+    font-family: var(--ff-primary);
 }
 
 .UserName input {

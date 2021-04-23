@@ -26,6 +26,13 @@
     margin-right: 15px;
     margin-top: 15px;
     cursor:pointer;
+    transition: .15s ease-in-out;
+    font-family: var(--ff-primary);
+}
+
+.my-pets-container-add-pet:hover,
+.my-pets-container-pet:hover{
+    color: var(--primary-clr);
 }
 
 .my-pets-container-add-pet-icon{
@@ -59,6 +66,12 @@
     width:30px;
     height:30px;
     z-index: 1;
+    transition: .15s ease-in-out;
+}
+
+.my-pets-container-pet-delete:hover{
+    width: 31px;
+    height: 31px;
 }
 
 .my-pets-container a {

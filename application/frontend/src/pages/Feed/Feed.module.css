@@ -4,7 +4,7 @@
     padding-left: 0px;
 }
 .follower-feed-header{
-    margin-left: 15px;
+    margin: 25px;
     font-weight: 600;
     font-size: var(--h1);
     font-family: var(--ff-tertiary);

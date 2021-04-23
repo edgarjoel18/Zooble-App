@@ -12,7 +12,7 @@ function ConfirmPetDeletion({display,onClose,selectedPet}) {
                 <div className={styles['delete-pet-header']}>Are you Sure?</div>
                 <div className={styles['delete-pet-body']}>Delete {selectedPet.pet_name} from your account?</div>
                 {/* <button className={styles['delete-pet-cancel-button']}>Cancel</button> */}
-                <button className={styles['delete-pet-confirm-button']}>Delete</button>
+                <button className={styles['delete-pet-confirm-button']} onClick={onClose}>Delete</button>
             </div>
         </Modal>
     )
