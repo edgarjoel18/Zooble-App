@@ -49,9 +49,11 @@
 .TextArea {
     resize: none;
     outline: none;
-    border: none;
-    background-color: #e4e6eb;
-    border-radius: 15px;
+    border: 1px solid var(--inactive-txt-clr);
+    border-radius: 7.5px;
+    width: 100%;  
+    padding-left: 10px;
+
 }
 
 .AddressTextArea {
