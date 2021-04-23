@@ -27,6 +27,11 @@
     text-align: center;
     align-self: flex-end;
     line-height: 32px;
+    transition: .15s ease-in-out;
+}
+
+.sendAMessage-sendButton:hover{
+    opacity: .75;
 }
 
 .sendAMessage-sendButton h4{

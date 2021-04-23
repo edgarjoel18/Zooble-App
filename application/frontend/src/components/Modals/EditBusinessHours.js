@@ -131,7 +131,7 @@ function EditBusinessHours({display,onClose}){
                         />
                 </div>
                 <div className={styles['edit-wednesday-hours-start']}>
-                <label for="wednesday-start">wednesday Start</label>
+                <label for="wednesday-start">Wednesday Start</label>
                         <Select id="wednesday-start" name="wednesday_start"
                             onChange={setWednesdayStart}
                             options={hourOptions}

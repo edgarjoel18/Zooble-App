@@ -74,7 +74,7 @@ function ProfileContent(props) {
                         </span>
                     }
                     <div></div>
-                    {props.profile.reviews.length > 0 && <Link onMouseEnter={() => setText('Cooming Soon')} 
+                    {props.profile.reviews.length > 0 && <Link onMouseEnter={() => setText('Coming Soon')} 
                     onMouseLeave={() => setText('See All')} >{text}</Link>}
                 </div>
             </div>
