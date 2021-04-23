@@ -58,4 +58,9 @@
     line-height: 32px;
     float: right;
     margin: 15px 2.5% 15px 0;
+    transition: .15s ease-in-out;
+}
+
+.view-message-reply-button:hover{
+    opacity: .75;
 }

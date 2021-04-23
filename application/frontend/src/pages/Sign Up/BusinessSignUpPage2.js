@@ -112,7 +112,8 @@ function BusinessSignUpPage2() {
                             placeholder='(000) 000-0000'
                             name='business-phone-number'
                             required
-                            oninvalid={()=>{alert()}}
+                            pattern="[0-9]*"
+                            maxLength={10}
                             onChange={e => setPhoneNumber(e.target.value)}
                         />
                     </div>
@@ -124,7 +125,6 @@ function BusinessSignUpPage2() {
                             placeholder='1600 Holloway Ave, San Francisco, CA, 94132'
                             name='business-address'
                             required
-                            oninvalid={()=>{console.log('')}}
                             onChange={e => setAddress(e.target.value)}
                         />
                     </div>

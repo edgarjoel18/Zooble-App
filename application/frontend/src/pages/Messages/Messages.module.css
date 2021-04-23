@@ -34,6 +34,11 @@
     align-items: center;
     margin-bottom: 25px;
     border-radius: 7.5px;
+    transition: .15s ease-in-out;
+}
+
+.messages-container-message:hover{
+    color: var(--primary-clr);
 }
 
 .messages-container-message-pic{

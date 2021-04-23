@@ -4,6 +4,11 @@
     white-space: nowrap;
     color: var(--inactive-txt-clr);
     transform: rotate(-90deg);
+    transition: .15s ease-in-out;
+}
+
+.Text:hover{
+    color: black;
 }
 
 .Tag {
@@ -14,6 +19,7 @@
     cursor: pointer;
     background-color: var(--reversed-txt-clr);
 }
+
 
 .ActiveText {
     color: var(--primary-txt-clr);

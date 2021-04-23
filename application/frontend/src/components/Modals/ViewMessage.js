@@ -23,7 +23,7 @@ function ViewMessage({display,onClose,selectedMessage}) {
                     <div className={styles['view-message-timestamp']}>{selectedMessage.timestamp}</div>
                     <div className={styles['view-message-body']}>{selectedMessage.body}</div>
                     <textarea required className={styles['view-message-reply-body']} placeholder={"Reply to " + selectedMessage.sender}/>
-                    <button type="submit" className={styles['view-message-reply-button']} >Reply</button>
+                    <button type="submit" className={styles['view-message-reply-button']} onClick={onClose} >Reply</button>
                 </div>
         </Modal>
     )

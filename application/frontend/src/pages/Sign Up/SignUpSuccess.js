@@ -20,7 +20,7 @@ function SignUpSuccess() {
                 Your Account was Successfully Created! You can now Login
             </div>
             <div className={styles['btn-container']}>
-                <button type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Login</button>
+                <button type='submit' className={styles['submit-btn-2']} onClick={OnClickHandler}>Login</button>
             </div>
         </div>
     )
