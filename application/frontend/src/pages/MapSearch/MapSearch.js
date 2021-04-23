@@ -331,7 +331,7 @@ function MapSearch(props) {
                                 <label for="shelter-pet-types">Available Types of Pets</label>
                                     <Select id="shelter-pet-types" name="shelter_pet_types"
                                         onChange={setShelterPetTypeFilters}
-                                        options={businessCategoryOptions}
+                                        options={typeOptions}
                                         placeholder="Select Types of Pets"
                                         theme={customTheme}
                                         isSearchable
@@ -340,7 +340,8 @@ function MapSearch(props) {
                                     />
                             </div>
                         }
-                    </> 
+
+                    </>
                 </div>
             </div>
             </>     
