@@ -39,6 +39,8 @@ import SignUpSuccess from './pages/Sign Up/SignUpSuccess'
 
 import MapSearch from './pages/MapSearch/MapSearch.js'
 
+import Map from './pages/MapSearch/Map'
+
 const App = () => {
 
   const [appUser,setAppUser] = useState();
@@ -89,7 +91,8 @@ const App = () => {
         <Route path="/Cameron" component={Cameron}/>
         <Route path="/Wameedh" component={Wameedh}/>
         <Route path="/SignUpSuccess" component={SignUpSuccess}/>
-        {/* <Redirect to="/" /> */}
+        <Route path="/Map" component={Map}/>
+        <Redirect to="/" />
       </Switch>
     </Router>
   );
