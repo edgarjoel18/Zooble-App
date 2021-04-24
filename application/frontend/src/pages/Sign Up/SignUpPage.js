@@ -47,7 +47,8 @@ function SignUpPage() {
 
     const history = useHistory();
 
-    function OnClickHandler(e) {
+    function signUp(event) {
+        event.preventDefault();
         console.log(email)
         console.log(uname)
         console.log(firstName)
@@ -55,7 +56,7 @@ function SignUpPage() {
         console.log(password)
         console.log(redonePassword)
         console.log(acceptTerms)
-        if(email && uname && firstName && lastName && password && redonePassword && acceptTerms){
+        // if(email && uname && firstName && lastName && password && redonePassword && acceptTerms){
             Axios.get('/sign-up', {
                 params: {
                     email: email,
@@ -72,7 +73,7 @@ function SignUpPage() {
             }).catch(error => {
                 console.log(error);
             })
-        }
+        // }
     }
 
     function handleCheck(e) {
@@ -91,7 +92,7 @@ function SignUpPage() {
 
     return (
         <>
-            <form className={styles['signup-container']}>
+            <form className={styles['signup-container']} onSubmit={signUp}>
                 <div className={styles['signup-container-header']}>
                     Sign Up
                 </div>
@@ -181,7 +182,7 @@ function SignUpPage() {
                     </p>
                 </div>
                 <div className={styles['btn-container']}>
-                    <button className={styles['submit-btn']} type='button' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
+                    <button className={styles['submit-btn']} type='submit' className={styles['submit-btn']} >Sign Up</button>
                     {/* <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button> */}
                 </div>
             </form>
