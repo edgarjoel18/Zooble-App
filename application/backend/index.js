@@ -8,7 +8,8 @@ const bcrypt = require('bcrypt');
 const { request } = require("http");
 const { response } = require("express");
 const session = require('express-session');
-const bodyParser = require('body-parser');
+
+// const cors = require('cors');
 
 const connection = mysql.createConnection({
     host:'csc648project-database.ceh0a99r5rym.us-west-2.rds.amazonaws.com',
@@ -28,8 +29,15 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.use(bodyParser.urlencoded({extended : true}));
-app.use(bodyParser.json());
+// app.use(cors());
+
+//start express server on port 5000
+app.listen(5000, () =>{
+    console.log("server started on port 5000");
+});
+
+app.use(express.urlencoded({extended : true}));
+app.use(express.json());
 
 app.get("/login", (request, response) =>{
     console.log("/login")
@@ -116,7 +124,7 @@ app.get("/sign-up", (req,res) =>{
                                     }else{
                                         console.log("Password must have SUCH AND SUCH values")
                                     }
-                                } else{
+                                } else if(result.length != 0){
                                     console.log("User does exist")
                                 }
                             })
@@ -259,7 +267,3 @@ app.get("/search", (req,res) =>{
 
 });
 
-//start express server on port 5000
-app.listen(5000, () =>{
-    console.log("server started on port 5000");
-});

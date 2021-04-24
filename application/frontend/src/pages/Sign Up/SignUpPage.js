@@ -70,7 +70,7 @@ function SignUpPage() {
                     history.push("/SignUpSuccess");
                 }
             }).catch(error => {
-                console.log("Error");
+                console.log(error);
             })
         }
     }
@@ -181,7 +181,7 @@ function SignUpPage() {
                     </p>
                 </div>
                 <div className={styles['btn-container']}>
-                    <button className={styles['submit-btn']} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
+                    <button className={styles['submit-btn']} type='button' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
                     {/* <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button> */}
                 </div>
             </form>
