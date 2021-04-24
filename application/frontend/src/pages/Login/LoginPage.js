@@ -20,11 +20,9 @@ function LoginPage({ appUser, setAppUser }) {
         console.log(password);
             
             console.log("AppUser in Login Handler: " + appUser);
-            Axios.get('/login', {
-                params: {
-                        username: username,
-                        password: password,
-                    }
+            Axios.post('/login', {
+                    username: username,
+                    password: password,
                 })
                 .then(response => {
                     console.log(response)

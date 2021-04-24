@@ -39,10 +39,10 @@ app.listen(5000, () =>{
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
 
-app.get("/login", (req, res) =>{
+app.post("/login", (req, res) =>{
     console.log("/login")
-    const username = req.query.username;
-    const password = req.query.password;
+    const username = req.body.username;
+    const password = req.body.password;
     
     if(username && password){
         connection.query('SELECT * FROM User WHERE username = ?', [username], function(error, results, fields){
@@ -72,14 +72,14 @@ app.get("/login", (req, res) =>{
 );
 
 
-app.get("/sign-up", (req,res) =>{
+app.post("/sign-up", (req,res) =>{
     console.log("/sign-up");
-    const givenEmail = req.query.email;
-    const givenUsername = req.query.uname;
-    const givenFirstName = req.query.firstName;
-    const givenLastName = req.query.lastName;
-    const givenPassword = req.query.password;
-    const givenResubmitted = req.query.redonePassword;
+    const givenEmail = req.body.email;
+    const givenUsername = req.body.uname;
+    const givenFirstName = req.body.firstName;
+    const givenLastName = req.body.lastName;
+    const givenPassword = req.body.password;
+    const givenResubmitted = req.body.redonePassword;
 
     console.log(givenEmail)
     console.log(givenFirstName)

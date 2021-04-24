@@ -57,15 +57,13 @@ function SignUpPage() {
         console.log(redonePassword)
         console.log(acceptTerms)
         // if(email && uname && firstName && lastName && password && redonePassword && acceptTerms){
-            Axios.get('/sign-up', {
-                params: {
+            Axios.post('/sign-up', {
                     email: email,
                     firstName: firstName,
                     lastName: lastName,
                     uname: uname,
                     password: password,
                     redonePassword: redonePassword
-                }
             }).then(response => {
                 if(response.data =="success"){
                     history.push("/SignUpSuccess");
