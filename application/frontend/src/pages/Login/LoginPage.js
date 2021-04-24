@@ -14,33 +14,33 @@ function LoginPage({ appUser, setAppUser }) {
 
     let history = useHistory();
 
-    function loginHandler(e) {
+    function loginHandler(event) {
+        event.preventDefault();
         console.log(username);
         console.log(password);
-        if( username && password){
-            setAppUser(username);
+            
             console.log("AppUser in Login Handler: " + appUser);
             Axios.get('/login', {
                 params: {
-                    username: username,
-                    password: password,
-                }
-            })
+                        username: username,
+                        password: password,
+                    }
+                })
                 .then(response => {
                     console.log(response)
                     console.log(response.data)
-                    if(response.data == 'success'){
+
+                    if(response.data === 'success'){
                         history.push('/feed')
+                        setAppUser(username);
                     }
-                    
+                    else{
+                        //display message to user
+                    }
                 })
                 .catch(error => {
                     console.log("Error");
                 })
-        }
-
-
-
     }
 
     if(appUser){
@@ -50,7 +50,7 @@ function LoginPage({ appUser, setAppUser }) {
 
     return (
         <>
-            <form className={styles['login-container']}>
+            <form className={styles['login-container']} onSubmit={loginHandler}>
                 <div className={styles['login-header']}>Login</div>
                 <div className={styles['username-input-container']}>
                     <label className={styles['username-input-label']} for='username'>Username</label>
@@ -78,7 +78,7 @@ function LoginPage({ appUser, setAppUser }) {
                     <button onClick={() => setForgotPasswordModalDisplay(true)}> Forgot password?</button>
                 </div>
                 <div className={styles['btn-container']}>
-                    <button type='submit' className={styles['submit-btn']} onClick={loginHandler}>Login</button>
+                    <button type='submit' className={styles['submit-btn']}>Login</button>
 
 
                 </div>

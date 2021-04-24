@@ -39,10 +39,11 @@ app.listen(5000, () =>{
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
 
-app.get("/login", (request, response) =>{
+app.get("/login", (req, res) =>{
     console.log("/login")
-    const username = request.query.username;
-    const password = request.query.password; 
+    const username = req.query.username;
+    const password = req.query.password;
+    
     if(username && password){
         connection.query('SELECT * FROM User WHERE username = ?', [username], function(error, results, fields){
             if(results.length > 0 && username == results[0].username){
@@ -50,23 +51,22 @@ app.get("/login", (request, response) =>{
                     if (err) { 
                         console.log("Error.");
                     }else if(result){
-                        request.session.loggedin = true;
-                        request.session.username = username;
+                        req.session.loggedin = true;
+                        req.session.username = username;
+                        res.status(200).json("success")
                         console.log("Logged in.");
-                    }else{
-                        console.log("Passwords do not match.");
                     }
                 });
             }else{
                 console.log("Username or password is incorrect");
-                response.send("Username or password is incorrect");
+                res.status(500).json("no match")
+                // res.send("Username or password is incorrect");
             }
-            response.end();
+            // res.end();
         });
     }else{
         console.log("Please enter information correctly");
-        response.send("Please enter information correctly");
-        response.end();
+        res.status(500).json("incomplete");
     }
 }
 );
