@@ -4,7 +4,7 @@ import ReactDom from 'react-dom'
 import styles from './Modal.module.css'
 
 function Modal({display,children, onClose}) {
-    console.log("Children: " + {children});
+    // console.log("Children: " + {children});
     if(!display) return null
     return ReactDom.createPortal(
         <>

@@ -1,14 +1,22 @@
+import axios from "axios";
 import {React, useEffect, useState} from "react";
 import {NavLink, useHistory} from "react-router-dom";
 import parrotPng from '../../images/parrot.png';
 
 import styles from './NavBar.module.css'
 
-function NavBarRight({appUser,setAppUser}) {
+function NavBarRight({appUser, updateLoginState}) {
   const history = useHistory();
 
   function logoutHandler(){
-    setAppUser(null);
+    axios.get("/logout").then((response) =>{
+      console.log(response.data.loggedIn);
+      console.log(response.data.user);
+      updateLoginState(response.data.loggedIn,response.data.user);
+    })
+    .catch((err) =>{
+      console.log(err);
+    });
     console.log("App User after Logout:", appUser);
     history.push('/');
   }

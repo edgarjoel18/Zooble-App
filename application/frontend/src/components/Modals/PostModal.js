@@ -7,7 +7,7 @@ import prof_pic from '../../images/businessProfile.jpg'
 
 
 function PostModal({display,onClose,selectedPost}) {
-    console.log(selectedPost);
+    // console.log(selectedPost);
     const [comments, setComments] = useState([ //Real version will fetch comments associated with post id of post passed in
         {
             comment_id: 1,            

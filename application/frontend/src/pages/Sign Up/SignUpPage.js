@@ -64,8 +64,9 @@ function SignUpPage() {
                     uname: uname,
                     password: password,
                     redonePassword: redonePassword
-            }).then(response => {
-                if(response.data =="success"){
+            },{withCredentials:true}).then(response => {
+                console.log(response.data);
+                if(response.data.affectedRows === 1){
                     history.push("/SignUpSuccess");
                 }
             }).catch(error => {

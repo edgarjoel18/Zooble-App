@@ -9,6 +9,9 @@ const { request } = require("http");
 const { response } = require("express");
 const session = require('express-session');
 
+const cookieParser = require('cookie-parser');
+const { traceDeprecation } = require("process");
+
 // const cors = require('cors');
 
 const connection = mysql.createConnection({
@@ -23,13 +26,17 @@ connection.connect(function(err){
     console.log("Connected!");
 })
 
-app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
-}));
+app.use(cookieParser());
 
-// app.use(cors());
+app.use(session({
+    key: "userId",
+    secret: "zooble",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 60 * 60 * 24 * 1000, //1 day expiration
+    }
+}))
 
 //start express server on port 5000
 app.listen(5000, () =>{
@@ -38,6 +45,20 @@ app.listen(5000, () =>{
 
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
+
+app.get("/login",(req, res) =>{
+    if(req.session.username){
+        res.send({loggedIn: true, user: req.session.username})
+    } else{
+        res.send({loggedIn: false})
+    }
+})
+
+app.get("/logout",(req,res) =>{
+    req.session.loggedin = false;
+    req.session.username = null;
+    res.send({loggedIn:false})
+})
 
 app.post("/login", (req, res) =>{
     console.log("/login")
@@ -53,7 +74,9 @@ app.post("/login", (req, res) =>{
                     }else if(result){
                         req.session.loggedin = true;
                         req.session.username = username;
-                        res.status(200).json("success")
+                        console.log(req.session.username);
+                        console.log(result);
+                        res.status(200).json(result)
                         console.log("Logged in.");
                     }
                 });
@@ -115,17 +138,20 @@ app.post("/sign-up", (req,res) =>{
                                                                 if(err){
                                                                     throw err;
                                                                 } else{
-                                                                    res.json("success");
+                                                                    res.json(result);
                                                                 }
                                                             })
                                         }else{
                                             console.log("Passwords do not match.");
+                                            res.status(200).json(result);
                                         }
                                     }else{
                                         console.log("Password must have SUCH AND SUCH values")
+                                        res.status(500).json("password requirements");
                                     }
                                 } else if(result.length != 0){
                                     console.log("User does exist")
+                                    res.status(500).json("exists");
                                 }
                             })
 })

@@ -4,7 +4,7 @@ import styles from './LoginPage.module.css';
 import { Redirect, useHistory } from "react-router-dom";
 import ForgotPassword from "../../components/Modals/ForgotPassword";
 
-function LoginPage({ appUser, setAppUser }) {
+function LoginPage({appUser, updateLoginState}) {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -23,14 +23,14 @@ function LoginPage({ appUser, setAppUser }) {
             Axios.post('/login', {
                     username: username,
                     password: password,
-                })
+                },{withCredentials:true})
                 .then(response => {
-                    console.log(response)
                     console.log(response.data)
 
-                    if(response.data === 'success'){
-                        history.push('/feed')
-                        setAppUser(username);
+                    if(response.data === true){
+                        console.log(username);
+                        updateLoginState(response.data,username);
+                        history.push('/Feed')
                     }
                     else{
                         //display message to user
