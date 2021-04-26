@@ -15,7 +15,7 @@ function Feed() {
         {
             post_id: 1,
             user_display_name: 'Paw Spa',
-            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
             likes: 0,
             timestamp: '12/25/20 at 11:05 AM',
@@ -24,7 +24,7 @@ function Feed() {
         {
             post_id: 2,
             user_display_name: 'Burgsdale Pet Shelter',
-            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg', 
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg', 
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
             likes: 10,
             timestamp: '12/25/20 at 11:05 AM',
@@ -33,7 +33,7 @@ function Feed() {
         {
             post_id: 3,
             user_display_name: 'Alex',
-            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg', 
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg', 
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
             likes: 20,
             timestamp: '12/25/20 at 11:05 AM',
@@ -93,7 +93,7 @@ function Feed() {
                 <div className={styles["follower-feed-new-post"]} style={{height:createPostOverlayDisplay.height}}>
                     <img className={styles["follower-feed-new-post-pic"]} src={feedPosts[0].pic}/>
                     <div className={styles["follower-feed-new-post-name"]}>Bob</div>
-                    <textarea className={styles["follower-feed-new-post-body"]} style={{display: createPostOverlayDisplay.display}} placeholder="Create a Post"/>
+                    <textarea className={styles["follower-feed-new-post-body"]} style={{display: createPostOverlayDisplay.display}} placeholder="Update your followers on what's going on with you and your pets"/>
                     <button className={styles["follower-feed-new-post-attach-image"]} style={{display: createPostOverlayDisplay.display}}>Add Image</button>
                     <button className={styles["follower-feed-new-post-submit"]} style={{display: createPostOverlayDisplay.display}}>Submit</button>
                     {/* <button className={styles["follower-feed-new-post-expand-collapse"]} /> onClick={createPostOverlayToggle} */}
@@ -101,7 +101,7 @@ function Feed() {
                 {feedPosts.length == 0 && <li>No Feed Posts</li>}
                 {feedPosts && feedPosts.map((feedPost)=>(
                 <div className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
-                        <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.prof_pic}/>
+                        <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic}/>
                         <div className={styles["follower-feed-post-name"]}>{feedPost.user_display_name}</div>
                         <div className={styles["follower-feed-post-timestamp"]}>{feedPost.timestamp}</div>
                         <div className={styles["follower-feed-post-likes"]}>{feedPost.likes}</div>
