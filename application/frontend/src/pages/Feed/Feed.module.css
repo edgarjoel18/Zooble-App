@@ -5,8 +5,34 @@
     margin: 0 auto;
 }
 
+.follower-feed-header-profile {
+    text-align: left;
+    margin: 10px 0 10px 40px;
+}
+
+.follower-feed-header-profile:hover{
+    opacity: .75;
+}
+
+.follower-feed-header-profile-pic {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    float: left;
+    margin-right: 15px;
+}
+
+.follower-feed-header-profile-name{
+    display: block;
+    grid-area: 1/ 2/ span 1 / span 1;
+    font-size: var(--h2);
+    font-family: var(--ff-primary);
+    font-weight: 500;
+}
+
 .follower-feed-header{
-    margin: 10px;
+    margin: 5px;
     font-size: var(--h0);
     font-family: var(--ff-tertiary);
     font-weight: 600;
@@ -178,13 +204,14 @@
 }
 
 
-.follower-feed-new-post-expand-collapse{
-    /* grid-area: 3 / 3 / span 1 / span 1;
+/* .follower-feed-new-post-expand-collapse{
+    grid-area: 3 / 3 / span 1 / span 1;
     border: none;
     background-size: 20px 20px;
     background: url('../../images/Created\ Icons/Arrow.svg') 50% no-repeat;
-    cursor: pointer; */
+    cursor: pointer; 
 }
+*/
 
 
 @media all and (max-width: 876px){
