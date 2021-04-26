@@ -9,6 +9,21 @@ import TermsAndConditions from '../../components/Modals/TermsAndConditions'
 import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
 import { useHistory } from 'react-router';
 
+//For address input and suggestions
+import {
+    Combobox,
+    ComboboxInput,
+    ComboboxPopover,
+    ComboboxList,
+    ComboboxOption,
+  } from "@reach/combobox";
+  import "@reach/combobox";
+
+  import usePlacesAutocomplete,{
+    getGeocode,
+    getLatLng,
+  } from "use-places-autocomplete";
+
 function ShelterSignUpPage2() {
     const typeOptions = [   //Real version will fetch from database
         { value: 'Dog', label: 'Dog' },
@@ -67,9 +82,23 @@ function ShelterSignUpPage2() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
 
+    //Use Places Autocomplete call
+    const {
+        ready, 
+        value, 
+        suggestions: {status, data}, 
+        setValue, 
+        clearSuggestions,
+      } = usePlacesAutocomplete({
+        requestOptions:{
+            location: {lat: () => 37.773972,lng: () => -122.431297},
+            radius: 200 * 1000,
+        },
+      });
+
     return (
         <>
-        <form className={styles['signup-container']}>
+        <form className={styles['signup-container']} onSubmit={OnClickHandler}>
             <div className={styles['signup-container-header']}>
                 Shelter Details
             </div>
@@ -91,20 +120,47 @@ function ShelterSignUpPage2() {
                         type='text'
                         placeholder='(000) 000-0000'
                         name='shelter-phone-number'
+                        pattern="[0-9]*"
                         required
                         onChange={e => setPhoneNumber(e.target.value)}
                     />
                 </div>
 
                 <div className={styles['address-input-container']}>
-                    <label className={styles['address-input-label']} for='shelter-address'>Shelter Address</label>
-                    <input
-                        type='text'
-                        placeholder='1600 Holloway Ave, San Francisco, CA, 94132'
-                        name='shelter-address'
+                <label className={styles['address-input-label']} for='shelter-address'>Address</label>
+                <Combobox 
+                    onSelect={async (address)=>{
+                    setValue(address,false);
+                    clearSuggestions();
+                    try{
+                        const results = await getGeocode({address});
+                        const{lat,lng} = await getLatLng(results[0]);
+                        console.log(lat,lng);
+                    } catch(error){
+                        console.log("error!")
+                    }
+                        console.log(address)
+                    }}
+                >
+                    <ComboboxInput 
+                        value={value}
+                        placeholder= "Start Typing your Shelter's Address"
+                        onChange={(e)=> {
+                            setValue(e.target.value);
+                            //record lat lng to store in database
+                        }}
                         required
-                        onChange={e => setAddress(e.target.value)}
+                        disabled={!ready}
                     />
+                    <ComboboxPopover>
+                        <ComboboxList className={styles['combobox-list']}>
+                            {status === "OK" && data.map(({id,description}) => 
+                            <ComboboxOption key={id} value={description}/>
+
+                        )}
+                         </ComboboxList>
+                    </ComboboxPopover>
+                </Combobox>
                 </div>
 
                 <div className={styles['types-input-container']}>
@@ -135,7 +191,7 @@ function ShelterSignUpPage2() {
             </div>
 
             <div className={styles['btn-container']}>
-                <button type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
+                <button type='submit' className={styles['submit-btn']}>Sign Up</button>
             </div>
             {/* Modals */}
 

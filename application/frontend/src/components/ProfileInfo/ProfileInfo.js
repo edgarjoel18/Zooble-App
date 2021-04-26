@@ -328,8 +328,7 @@ function ProfileInfo(props) {
                 </div>
                 {displayAccountInfo}
             </div>
-            <SendAMessage display={sendAMessageDisplay} onClose={()=> setSendAMessageDisplay(false)}/>
-            
+            <SendAMessage display={sendAMessageDisplay} onClose={()=> setSendAMessageDisplay(false)}/>         
         </div>
     );
 }

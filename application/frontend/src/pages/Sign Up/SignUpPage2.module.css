@@ -105,6 +105,22 @@
     cursor:pointer;
 }
 
+.combobox-list{
+    background-color: white;
+    padding: 15px;
+    list-style: none;
+    box-shadow: var(--elevation-2);
+    font-family: var(--ff-primary);
+    z-index: 1;
+    border-radius: 7.5px;
+    position: relative;
+}
+
+.combobox-list li{
+    cursor:pointer;
+    padding:5px;
+    border-bottom: 1px solid rgba(0,0,0,0.10);
+}
 
 
 @media all and (max-width: 1024px){
