@@ -79,6 +79,7 @@
     border-radius: 7.5px;
     cursor: pointer;
     transition: .15s ease-in-out;
+    font-size: var(--h2);
 }
 
 .signup-button:hover, .find-friend-button:hover{  

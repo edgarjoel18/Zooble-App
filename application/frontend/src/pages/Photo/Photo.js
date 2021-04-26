@@ -6,11 +6,21 @@ import styles from './Photo.module.css';
 import PostModal from '../../components/Modals/PostModal';
 import EditButton from '../../components/Buttons/EditButton';
 
+
+function Photo() {
+    const [name, setName] = useState(''); 
+
+    useEffect(() => {
+        const query = new URLSearchParams(location.search);
+        setName(query.get('name'));
+    } , [])
+
+    
     const dummyPhotos = [
         {   
             post_id: 1,
-            // user_display_name: name,
-            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
+            user_display_name: name,
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
             likes: 0,
             timestamp: '12/25/20 at 11:05 AM',
@@ -18,8 +28,8 @@ import EditButton from '../../components/Buttons/EditButton';
         },
         {   
             post_id: 2,
-            //user_display_name: name,
-            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg', 
+            user_display_name: name,
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg', 
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
             likes: 10,
             timestamp: '12/25/20 at 11:05 AM',
@@ -27,8 +37,8 @@ import EditButton from '../../components/Buttons/EditButton';
         },
         {
             post_id: 3,
-            //user_display_name: name,
-            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg', 
+            user_display_name: name,
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg', 
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
             likes: 20,
             timestamp: '12/25/20 at 11:05 AM',
@@ -36,8 +46,8 @@ import EditButton from '../../components/Buttons/EditButton';
         },
         {
             post_id: 20,
-            //user_display_name: name,
-            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
+            user_display_name: name,
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
             likes: 0,
             timestamp: '12/25/20 at 11:05 AM',
@@ -45,8 +55,8 @@ import EditButton from '../../components/Buttons/EditButton';
         },
         {
             post_id: 5,
-            //user_display_name: name,
-            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg', 
+            user_display_name: name,
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg', 
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
             likes: 0,
             timestamp: '12/25/20 at 11:05 AM',
@@ -54,8 +64,8 @@ import EditButton from '../../components/Buttons/EditButton';
         },
         {
             post_id: 4,
-            //user_display_name: name,
-            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg', 
+            user_display_name: name,
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg', 
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
             likes: 0,
             timestamp: '12/25/20 at 11:05 AM',
@@ -63,17 +73,15 @@ import EditButton from '../../components/Buttons/EditButton';
         }
     ];
 
-function Photo() {
-    const [name, setName] = useState(''); 
+    
     const [editing, setEditing] = useState(false);
     const [photos, setPhotos] = useState(dummyPhotos)
     let location = useLocation();
     let history = useHistory();
 
-    useEffect(() => {
-        const query = new URLSearchParams(location.search);
-        setName(query.get('name'));
-    } , [])
+
+
+   
 
 
     const [postModalDisplay, setPostModalDisplay] = useState(false);
@@ -100,7 +108,7 @@ function Photo() {
     let displayEditing = (
         <div className={styles.PhotosContainer} >
             {photos.map((photo) => (
-                <div className={styles.PhotoDiv} onClick={() =>presentPostModal()}>
+                <div className={styles.PhotoDiv} onClick={() =>presentPostModal(photo)}>
                  {/* <div onClick={() => deletePhoto(photo.pet_id)}> */}
                     <img key={photo.post_id} className={styles.Image} src={photo.pic} alt='No Image Found' />
                 </div>
@@ -146,7 +154,7 @@ function Photo() {
                 </div> */}
                 {displayEditing}
             </div>
-            <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={{}}/>
+            <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost}/>
         </>
     )
 }

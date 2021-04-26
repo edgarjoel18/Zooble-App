@@ -4,7 +4,7 @@ import styles from './LoginPage.module.css';
 import { Redirect, useHistory } from "react-router-dom";
 import ForgotPassword from "../../components/Modals/ForgotPassword";
 
-function LoginPage({ appUser, setAppUser }) {
+function LoginPage({appUser, updateLoginState}) {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -12,35 +12,39 @@ function LoginPage({ appUser, setAppUser }) {
     //toggle forgot password modal
     const [forgotPasswordModalDisplay, setForgotPasswordModalDisplay] = useState(false);
 
+    const [error, setError] = useState(null);
+
     let history = useHistory();
 
-    function loginHandler(e) {
+    const errorDisplay = error ? 
+    <div className={styles['login-error-container']}>
+        {error}
+    </div> : "";
+
+    function loginHandler(event) {
+        event.preventDefault();
         console.log(username);
         console.log(password);
-        if( username && password){
-            setAppUser(username);
+            
             console.log("AppUser in Login Handler: " + appUser);
-            Axios.get('/login', {
-                params: {
+            Axios.post('/login', {
                     username: username,
                     password: password,
-                }
-            })
+                },{withCredentials:true})
                 .then(response => {
-                    console.log(response)
                     console.log(response.data)
-                    if(response.data == 'success'){
-                        history.push('/feed')
+
+                    if(response.data === true){
+                        console.log(username);
+                        updateLoginState(response.data,username);
+                        history.push('/Feed')
                     }
-                    
                 })
                 .catch(error => {
-                    console.log("Error");
+                    if(error.response.data ==="no match"){
+                        setError("Username or Password is Incorrect");
+                    }
                 })
-        }
-
-
-
     }
 
     if(appUser){
@@ -50,7 +54,7 @@ function LoginPage({ appUser, setAppUser }) {
 
     return (
         <>
-            <form className={styles['login-container']}>
+            <form className={styles['login-container']} onSubmit={loginHandler}>
                 <div className={styles['login-header']}>Login</div>
                 <div className={styles['username-input-container']}>
                     <label className={styles['username-input-label']} for='username'>Username</label>
@@ -65,6 +69,9 @@ function LoginPage({ appUser, setAppUser }) {
                 </div>
                 <div className={styles['password-input-container']}>
                     <label className={styles['password-input-label']} for='password'>Password</label>
+                    <span className={styles['forgot-password']}>
+                        <button onClick={() => setForgotPasswordModalDisplay(true)}> Forgot password?</button>
+                    </span>
                     <input
                         type='password'
                         placeholder='Enter password'
@@ -74,11 +81,9 @@ function LoginPage({ appUser, setAppUser }) {
                         required
                     />
                 </div>
-                <div className={styles['forgot-password']}>
-                    <button onClick={() => setForgotPasswordModalDisplay(true)}> Forgot password?</button>
-                </div>
+
                 <div className={styles['btn-container']}>
-                    <button type='submit' className={styles['submit-btn']} onClick={loginHandler}>Login</button>
+                    <button type='submit' className={styles['submit-btn']}>Login</button>
 
 
                 </div>
@@ -86,9 +91,10 @@ function LoginPage({ appUser, setAppUser }) {
                         <input type='checkbox' name='remember'/> Remember Me
                     </div>
 
-                <p className={styles['create-account']}>
+                <div className={styles['create-account-link']}>
                     Not registered? <a href='/account-type'>Create an account</a>
-                </p>
+                </div>
+                {errorDisplay}
             </form>
             <ForgotPassword display={forgotPasswordModalDisplay} onClose={()=>setForgotPasswordModalDisplay(false)}/>
         </>

@@ -43,7 +43,7 @@ function PostModal({display,onClose,selectedPost}) {
                 </div>
                 <div className={styles["post-content"]}>
                     <div className={styles["post-detail"]}>
-                        <img className={styles["post-detail-pic"]} src={selectedPost.prof_pic}/>
+                        <img className={styles["post-detail-pic"]} src={selectedPost.profile_pic}/>
                         <div className={styles["post-detail-name"]}><h3>{selectedPost.user_display_name}</h3></div>
                         <div className={styles["post-detail-timestamp"]}>{selectedPost.timestamp}</div>
                         <div className={styles["post-detail-likes"]}>

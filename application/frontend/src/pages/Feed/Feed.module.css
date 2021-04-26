@@ -1,36 +1,36 @@
 .follower-feed-container{
-    height: auto;
-    margin-left: 0px;
-    padding-left: 0px;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
 }
+
 .follower-feed-header{
-    margin: 25px;
-    font-weight: 600;
-    font-size: var(--h1);
+    margin: 10px;
+    font-size: var(--h0);
     font-family: var(--ff-tertiary);
+    font-weight: 600;
 }
-
-
 
 .follower-feed-post{
-    cursor: pointer;
-    padding: 15px;
     display: grid;
-    width: 50%;
-    grid-template-areas:"follower-feed-post-prof_pic follower-feed-post-name follower-feed-post-like"
+    
+    padding: 15px;
+    width: 100%;
+    /* grid-template-areas:"follower-feed-post-prof_pic follower-feed-post-name follower-feed-post-like"
                         "follower-feed-post-prof_pic            .            follower-feed-post-likes"
                         "follower-feed-post-prof-pic follower-feed-post-timestamp follower-feed-post-comments"
                         "follower-feed-post-body follower-feed-post-body follower-feed-post-body"
-                        "follower-feed-post-pic  follower-feed-post-pic follower-feed-post-pic";
+                        "follower-feed-post-pic  follower-feed-post-pic follower-feed-post-pic"; */
     grid-template-columns: 100px auto 34px;
     grid-template-rows: repeat(3,34px) auto;
     box-shadow: var(--elevation-2);
     border-radius: 7.5px;
-    margin: auto;
+    margin-bottom: 15px;
+    cursor: pointer;
 }
 
 .follower-feed-post-prof_pic{
-    
     width:100px;
     height:100px;
     object-fit: cover;
@@ -64,6 +64,12 @@
     background: url('../../images/Third\ Party\ Icons/icons8-thumbs-up-48.png') no-repeat;
     background-size: 34px 34px;
     grid-area: 1 / 3 / span 1 / span 1;
+    transition: .15s ease-in-out;
+    cursor: pointer;
+}
+
+.follower-feed-post-like:hover{
+    opacity: .75;
 }
 
 /* .follower-feed-post-comments{
@@ -82,38 +88,55 @@
     height: calc(100%-15px);
     object-fit: cover;
     grid-area: 5 / 1 / span 1 / span 3;
+    border-radius: 7.5px;
 }
 
 .follower-feed-new-post{
     /* position: sticky;
     position: -webkit-sticky;  */
     margin: auto;
-    width: 50%;
-    height: 200px;
+    width: 100%;
     box-shadow: var(--elevation-1);
     background-color:rgba(255,255,255,0.95);
     border-radius: 7.5px;
-    top: 0;
     display:grid;
-    grid-template-areas: "new-post-body      new-post-body new-post-body            new-post-body          new-post-attach-image"
-                         "new-post-body      new-post-body new-post-body            new-post-body                new-post-submit"
-                         ".............      ............. new-post-expand-collapse ...................    .....................";
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(2, 90) 20;
+    /* grid-template-areas: "new-post-pic  new-post-user new-post-attach-image new-post-submit"
+                            "new-post-pic  ............. ..................... ..............."
+                            "new-post-body new-post-body new-post-body         ..............."; */
+    grid-template-columns: 100px auto 150px 150px;
+    grid-gap: 15px;
+    grid-template-rows: 100px 200px;
     font-family: var(--ff-primary);
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.follower-feed-new-post-pic{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    grid-area: 1 / 1 / span 1 / span 1;
+    border-radius: 7.5px;
+}
+
+.follower-feed-new-post-name{
+    font-size: var(--h2);
+    font-family: var(--ff-primary);
+    font-weight: 600;
+    grid-area: 1/ 2 / span 1 / span 1;
 }
 
 .follower-feed-new-post-body{
     border: 1px solid var(--inactive-txt-clr);
     border-radius: 7.5px;
-    margin: 10px;
     padding: 10px;
-    grid-area: 1 / 1 / span 2 / span 4;
+    grid-area: 2 / 1 / span 2 / span 4;
     resize: none;
+    font-family: var(--ff-primary);
 }
 
 .follower-feed-new-post-attach-image{
-    grid-area: 1 / 5 / span 1 / span 1;
+    grid-area: 1 / 3 / span 1 / span 1;
     background-color: var(--reversed-txt-clr);
     color: var(--primary-clr);
     box-shadow: none;
@@ -122,9 +145,9 @@
     font-family: var(--ff-primary);
     font-size: var(--h3);
     font-weight: 400;
-    margin: 10px;
-    height: 75px;
-    line-height: 75px;
+    /* margin: 10px; */
+    height: 50px;
+    line-height: 50px;
     cursor: pointer;
     transition: border-width 0.1s linear;
 }
@@ -135,7 +158,7 @@
 
 
 .follower-feed-new-post-submit{
-    grid-area: 2 / 5 / span 1 / span 1;
+    grid-area: 1 / 4 / span 1 / span 1;
     background-color: var(--primary-clr);
     color: var(--reversed-txt-clr);
     box-shadow: var(--elevation-1);
@@ -144,9 +167,8 @@
     font-family: var(--ff-primary);
     font-size: var(--h3);
     font-weight: 600;
-    margin:10px;
-    height: 75px;
-    line-height: 75px;
+    height: 50px;
+    line-height: 50px;
     cursor: pointer;
     transition: .15s ease-in-out;
 }
@@ -157,16 +179,16 @@
 
 
 .follower-feed-new-post-expand-collapse{
-    grid-area: 3 / 3 / span 1 / span 1;
+    /* grid-area: 3 / 3 / span 1 / span 1;
     border: none;
     background-size: 20px 20px;
     background: url('../../images/Created\ Icons/Arrow.svg') 50% no-repeat;
-    cursor: pointer;
+    cursor: pointer; */
 }
 
 
-@media all and (max-width: 834px){
+@media all and (max-width: 876px){
     .follower-feed-post{
-        width: 100%;
+        width: 90%;
     }
 }

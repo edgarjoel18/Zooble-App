@@ -29,6 +29,7 @@ function SignUpPage() {
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
     const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
 
+
     function openTermsAndConditionsModal() {
         setTermsAndConditionsDisplay(true);
     }
@@ -45,9 +46,18 @@ function SignUpPage() {
         setPrivacyPolicyDisplay(false);
     }
 
+    //states for sign up error display
+    const [error, setError] = useState(null);
+
+    const errorDisplay = error ? 
+    <div className={styles['signup-error-container']}>
+        {error}
+    </div> : "";
+
     const history = useHistory();
 
-    function OnClickHandler(e) {
+    function signUp(event) {
+        event.preventDefault();
         console.log(email)
         console.log(uname)
         console.log(firstName)
@@ -55,24 +65,37 @@ function SignUpPage() {
         console.log(password)
         console.log(redonePassword)
         console.log(acceptTerms)
-        if(email && uname && firstName && lastName && password && redonePassword && acceptTerms){
-            Axios.get('/sign-up', {
-                params: {
+        // if(email && uname && firstName && lastName && password && redonePassword && acceptTerms){
+            Axios.post('/sign-up', {
                     email: email,
                     firstName: firstName,
                     lastName: lastName,
                     uname: uname,
                     password: password,
                     redonePassword: redonePassword
-                }
-            }).then(response => {
-                if(response.data =="success"){
+            },{withCredentials:true}).then(response => {
+                console.log(response);
+                console.log(response.data);
+                if(response.data.affectedRows === 1){
                     history.push("/SignUpSuccess");
                 }
+ 
             }).catch(error => {
-                console.log("Error");
+                if (error.response.data === "exists"){
+                    setError("An Account using that Email or Username already exists");
+                    console.log(error);
+                }
+                else if (error.response.data === "passwords not matching"){
+                    setError("The Passwords Entered Do Not Match");
+                    console.log(error);
+                }
+                else if (error.response.data === "password requirements"){
+                    setError("Your Password Must Have: 8-50 Characters and Contain: 1 Capital Letter, 1 Number, 1 Special Character");
+                    console.log(error);
+                }
+                console.log(error);
             })
-        }
+        // }
     }
 
     function handleCheck(e) {
@@ -91,7 +114,7 @@ function SignUpPage() {
 
     return (
         <>
-            <form className={styles['signup-container']}>
+            <form className={styles['signup-container']} onSubmit={signUp}>
                 <div className={styles['signup-container-header']}>
                     Sign Up
                 </div>
@@ -181,9 +204,10 @@ function SignUpPage() {
                     </p>
                 </div>
                 <div className={styles['btn-container']}>
-                    <button className={styles['submit-btn']} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
+                    <button className={styles['submit-btn']} type='submit' className={styles['submit-btn']} >Sign Up</button>
                     {/* <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button> */}
                 </div>
+                {errorDisplay}
             </form>
             {/* Modals */}
             <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal} />

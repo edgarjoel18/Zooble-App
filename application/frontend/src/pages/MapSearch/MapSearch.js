@@ -91,6 +91,7 @@ function MapSearch(props) {
 
     if(typeof(state) =='undefined'){
         state = {lat: 0, lng: 0}
+        history.push('/');
     }
 
     const[searchCategory, setSearchCategory] = useState();
@@ -119,11 +120,81 @@ function MapSearch(props) {
     const[longitude,setLongitude] = useState();
     const[mapUrl,setMapUrl] = useState();
     const center = {lat: state.lat, lng: state.lng};
-        
+
+    //Recommended results for horizontal prototype
+    const recommendedPets = [
+        { 
+            pet_id: 1,
+            name: 'Max',
+            size_name: 'small',
+            age_name: 'two',
+            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg' 
+        },
+        {
+            pet_id: 2,
+            name: 'Mimi',
+            size_name: 'small',
+            age_name: 'two',
+            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg' 
+        },
+        {
+            pet_id: 3,
+            name: 'Juju',
+            size_name: 'small',
+            age_name: 'two',
+            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'
+        },
+    ]
+
+    const recommendedPetOwners = [
+        { 
+            reg_pet_owner_id: 1,
+            reg_user_id: 5,
+            name: 'Alex',
+            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/AlexPic.jpg' 
+        },
+        { 
+            reg_business_id: 2,
+            reg_user_id: 4,
+            name: 'Paw Spa',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/PawSpaPic.jpg' 
+        },
+    ]
+
+    const recommendedBusinesses = [
+        { reg_business_id: 1,
+            reg_user_id: 2,
+            name: 'Booming Poodle Grooming',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/BoomingPoodleGroomingPic.jpg' 
+        },
+        { 
+            reg_business_id: 2,
+            reg_user_id: 4,
+            name: 'Paw Spa',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/PawSpaPic.jpg' 
+        },
+    ]
+
+    const recommendedShelters = [
+        { 
+            reg_shelter_id: 1,
+            reg_user_id: 1,
+            name: 'Bad Boys Dog Pound',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/BadBoysDogPoundPic.jpg' 
+        },
+        { 
+            reg_shelter_id: 2,
+            reg_user_id: 3,
+            name: 'Burgsdale Pet Shelter',
+            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/BurgsdalePetShelterPic.jpg' 
+        }
+    ]
 
     useEffect(()=>{
-        if(state.searchTermParam && state.searchCategoryParam){
+        if(state.searchTermParam || state.searchCategoryParam){
             console.log('Fetching Search Results');
+            console.log('Search Category: '+ state.searchCategoryParam);
+            console.log('Search Term: ' + state.searchTermParam);
             setSearchCategory(state.searchCategoryParam);
             setSearchTerm(state.searchTermParam);
             Axios.get('/search', {  //take in filters here? for final version
@@ -212,7 +283,28 @@ function MapSearch(props) {
                         </div>
                         <div className={styles['map-search-results-text-list']}>
                             <ul>
-                                {recievedSearchResults.length == 0 && <li className={styles['no-results']}>No Results</li>}
+                                {recievedSearchResults.length == 0 && <li className={styles['no-results']}>No Results that Match your Search. But here are some {searchCategory} you might like: </li>}
+                                {recievedSearchResults.length == 0 && searchCategory == 'Pets' &&
+                                    recommendedPets.map((searchResult) => (
+                                        <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={recommendedPets.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                    ))
+                                }
+                                {recievedSearchResults.length == 0 && searchCategory == 'Businesses' &&
+                                    recommendedBusinesses.map((searchResult) => (
+                                        <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={recommendedBusinesses.reg_business_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                    ))
+                                }
+                                {recievedSearchResults.length == 0 && searchCategory == 'Shelters' &&
+                                    recommendedShelters.map((searchResult) => (
+                                        <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={recommendedShelters.reg_shelter_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                    ))
+                                }
+                                {recievedSearchResults.length == 0 && searchCategory == 'Pet Owners' &&
+                                    recommendedPetOwners.map((searchResult) => (
+                                        <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={recommendedPetOwners.reg_pet_owner_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                    ))
+                                }
+
                                 {recievedSearchResults && searchCategory == 'Pets' && recievedSearchResults.map((searchResult) => (
                                     <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={searchResult.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                 ))}

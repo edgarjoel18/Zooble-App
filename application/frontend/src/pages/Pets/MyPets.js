@@ -75,18 +75,20 @@ function MyPets() {
 
     return (
         <>
-        <div className={styles['my-pets-header']}>
-            My Pets
-        </div>
+
         <div className={styles['my-pets-container']}>
-                <div className={styles['my-pets-container-add-pet']} onClick={() => history.push('/Profile/PetCreate')}>
-                    <img className={styles['my-pets-container-add-pet-icon']} src={AddIcon}/>
-                    <div className={styles['my-pets-container-add-pet-text']}>Add a Pet</div>
-                </div>
+            <div className={styles['my-pets-header']}>
+                My Pets
+            </div>
+            <div className={styles['my-pets-container-pets']}>
+            <div className={styles['my-pets-container-add-pet']} onClick={() => history.push('/Profile/PetCreate')}>
+                <img className={styles['my-pets-container-add-pet-icon']} src={AddIcon}/>
+                <div className={styles['my-pets-container-add-pet-text']}>Add a Pet</div>
+             </div>
             {myPets && myPets.map((pet) =>(
                     <div className={styles['my-pets-container-pet']} >
-                        <Link to={"/Profile/" + pet.pet_name} >
-                            <div className={styles.LinkDiv} >
+                        <Link to={"/Profile/" + pet.pet_name}>
+                            <div className={styles.LinkDiv}>
                                 <img className={styles['my-pets-container-pet-pic']} src={pet.pet_prof_pic}/>
                                 <div className={styles['my-pets-container-pet-name']}>{pet.pet_name}</div>
                             </div>
@@ -94,6 +96,7 @@ function MyPets() {
                         <img className={styles['my-pets-container-pet-delete']} onClick={()=>viewDeletionModal(pet)}src={DeleteIcon}/>
                     </div>
             ))}
+            </div>
         </div>
         <ConfirmPetDeletion display={deletionModalDisplay} onClose={closeDeletionModal} selectedPet={selectedPet}/>
         </>

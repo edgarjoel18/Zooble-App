@@ -11,13 +11,16 @@ function ImageContainer(props) {
     const [imageStack, setImageStack] = useState();
     const [text, setText] = useState('');
 
+    const [selectedPost,setSelectedPost] = useState({});
+
     let history = useHistory();
 
     function closePostModal(){
         console.log('exit button clicked')
         setPostModalDisplay(false);
     }
-    function presentPostModal(postImage){
+    function presentPostModal(index){
+        setSelectedPost(props.image[index])
         console.log('clicked on image');
         setPostModalDisplay(true);
     }
@@ -30,6 +33,8 @@ function ImageContainer(props) {
     //display a given number of pictures
     const displayImageStack = (val, accountType) => {
         console.log('displayImageStack');
+        console.log(props.image);
+        console.log(props.image[0]);
         if (props.image.length === 0)
             return (
                 <Link onMouseEnter={() => setText('Photo upload coming soon')} onMouseLeave={() => setText('')}>
@@ -69,7 +74,7 @@ function ImageContainer(props) {
                         box-shadow: var(--elevation-1);
                         `;
                     let displayPostModal = (
-                        <div onClick={() => presentPostModal(props.image[index].profile_pic)} key={props.image[index].name + index}>
+                        <div onClick={() => presentPostModal(index)} key={props.image[index].name + index}>
                             <Img 
                                 className={styles.ImageStack_pic}
                             >
@@ -125,7 +130,7 @@ function ImageContainer(props) {
     return (
         <>
         {/* for debugging  <button onClick={()=>{setPostModalDisplay(true)}}></button> */}
-        <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={{}}/>
+        <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost}/>
         <div className={styles.ImageContainer} >
             <h2>{props.title}</h2>
             {text}

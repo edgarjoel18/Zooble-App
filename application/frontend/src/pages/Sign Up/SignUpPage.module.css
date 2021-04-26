@@ -152,3 +152,11 @@
 .submit-btn:hover{
     opacity: .75;
 }
+
+.signup-error-container{
+    background-color: var(--cancel-delete-exit-color);
+    width: 100%;
+    border-radius: 0 0 7.5px 7.5px;
+    text-align: center;
+    color: var(--reversed-txt-clr);
+}

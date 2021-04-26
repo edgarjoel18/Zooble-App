@@ -20,10 +20,15 @@
 }
 
 .username-input-label,
-.password-input-label{
+.password-input-label
+{
     font-size: var(--h3);
     font-family: var(--ff-primary);
-    display: block;
+}
+
+.password-input-label{
+    display: inline;
+    float: left;
 }
 
 .username-input-container{
@@ -32,7 +37,7 @@
 }
 
 .password-input-container{
-    margin-bottom: 10px;
+    margin-bottom: 50px;
 }
 
 .forgot-password{
@@ -42,7 +47,7 @@
 
 .create-account-link{
     color: var(--primary-txt-clr);
-    margin-bottom: 25px;
+    margin-bottom: 37px;
     font-family: var(--ff-primary);
 }
 
@@ -67,18 +72,13 @@
 }
 
 .forgot-password button {
-    margin-left: 15px;
-    float: left;
+    margin-left: auto;
+    float: right;
     border:none;
     cursor: pointer;
     background: transparent;
     color: var(--inactive-txt-clr);
     font-family: var(--ff-primary);
-}
-
-.create-account {
-    margin-right: 15px;
-    float: right;
 }
 
 .submit-btn{
@@ -126,4 +126,12 @@
     }
 }
 
+
+.login-error-container{
+    background-color: var(--cancel-delete-exit-color);
+    width: 100%;
+    border-radius: 0 0 7.5px 7.5px;
+    text-align: center;
+    color: var(--reversed-txt-clr);
+}
 

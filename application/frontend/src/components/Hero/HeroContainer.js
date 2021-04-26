@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import styles from './HeroContainer.module.css';
 
 //Import components
@@ -11,6 +11,8 @@ import CatOwnerImage from '../../images/Third Party Images/undraw_chilling_8tii 
 
 function HeroContainer() {
 
+  const history = useHistory();
+
   const [text, setText] = useState('Find a Friend');
 
 
@@ -20,6 +22,17 @@ function HeroContainer() {
 
   function onMouseout(e) {
     setText('Find a Friend');
+  }
+
+
+  function searchLocalPets(){
+    navigator.geolocation.getCurrentPosition((position)=>{
+      const location = {
+        pathname:'/MapSearch',
+        state: {lat:position.coords.latitude, lng:position.coords.longitude, searchTerm: "", searchCategoryParam: "Pets"}
+      }
+      history.push(location);
+    })
   }
 
   return (
@@ -33,8 +46,8 @@ function HeroContainer() {
           <NavLink to="/account-type">
             <button className={styles['signup-button']}><span><h3>Sign Up</h3></span></button>
           </NavLink>
-          <button className={styles['find-friend-button']} onMouseEnter={onMouseover} onMouseLeave={onMouseout}>
-            <span><h3>{text}</h3></span>
+          <button className={styles['find-friend-button']} onClick={searchLocalPets}>
+             Find a Friend
           </button>
         </div>
       </div>

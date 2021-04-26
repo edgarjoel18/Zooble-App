@@ -24,6 +24,11 @@
     opacity: .75;
 }
 
+.logo-img-inactive{
+    height: 50px;
+    cursor: default;
+}
+
 .login-link{
     font-family: 'Nunito', sans-serif;
     text-decoration: none;

@@ -8,7 +8,11 @@ const bcrypt = require('bcrypt');
 const { request } = require("http");
 const { response } = require("express");
 const session = require('express-session');
-const bodyParser = require('body-parser');
+
+const cookieParser = require('cookie-parser');
+const { traceDeprecation } = require("process");
+
+// const cors = require('cors');
 
 const connection = mysql.createConnection({
     host:'csc648project-database.ceh0a99r5rym.us-west-2.rds.amazonaws.com',
@@ -22,19 +26,45 @@ connection.connect(function(err){
     console.log("Connected!");
 })
 
+app.use(cookieParser());
+
 app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
-}));
+    key: "userId",
+    secret: "zooble",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 60 * 60 * 24 * 1000, //1 day expiration
+    }
+}))
 
-app.use(bodyParser.urlencoded({extended : true}));
-app.use(bodyParser.json());
+//start express server on port 5000
+app.listen(5000, () =>{
+    console.log("server started on port 5000");
+});
 
-app.get("/login", (request, response) =>{
+app.use(express.urlencoded({extended : true}));
+app.use(express.json());
+
+app.get("/login",(req, res) =>{
+    if(req.session.username){
+        res.send({loggedIn: true, user: req.session.username})
+    } else{
+        res.send({loggedIn: false})
+    }
+})
+
+app.get("/logout",(req,res) =>{
+    req.session.loggedin = false;
+    req.session.username = null;
+    res.send({loggedIn:false})
+})
+
+app.post("/login", (req, res) =>{
     console.log("/login")
-    const username = request.query.username;
-    const password = request.query.password; 
+    const username = req.body.username;
+    const password = req.body.password;
+    
     if(username && password){
         connection.query('SELECT * FROM User WHERE username = ?', [username], function(error, results, fields){
             if(results.length > 0 && username == results[0].username){
@@ -42,36 +72,37 @@ app.get("/login", (request, response) =>{
                     if (err) { 
                         console.log("Error.");
                     }else if(result){
-                        request.session.loggedin = true;
-                        request.session.username = username;
+                        req.session.loggedin = true;
+                        req.session.username = username;
+                        console.log(req.session.username);
+                        console.log(result);
+                        res.status(200).json(result)
                         console.log("Logged in.");
-                    }else{
-                        console.log("Passwords do not match.");
                     }
                 });
             }else{
                 console.log("Username or password is incorrect");
-                response.send("Username or password is incorrect");
+                res.status(400).json("no match");
+                // res.send("Username or password is incorrect");
             }
-            response.end();
+            // res.end();
         });
     }else{
         console.log("Please enter information correctly");
-        response.send("Please enter information correctly");
-        response.end();
+        res.status(400).json("incomplete");
     }
 }
 );
 
 
-app.get("/sign-up", (req,res) =>{
+app.post("/sign-up", (req,res) =>{
     console.log("/sign-up");
-    const givenEmail = req.query.email;
-    const givenUsername = req.query.uname;
-    const givenFirstName = req.query.firstName;
-    const givenLastName = req.query.lastName;
-    const givenPassword = req.query.password;
-    const givenResubmitted = req.query.redonePassword;
+    const givenEmail = req.body.email;
+    const givenUsername = req.body.uname;
+    const givenFirstName = req.body.firstName;
+    const givenLastName = req.body.lastName;
+    const givenPassword = req.body.password;
+    const givenResubmitted = req.body.redonePassword;
 
     console.log(givenEmail)
     console.log(givenFirstName)
@@ -85,11 +116,11 @@ app.get("/sign-up", (req,res) =>{
             'capital' : /[A-Z]/,
             'digit'   : /[0-9]/,
             'special' : /[!@#$%^&*]/,
-            'full'    : /^[A-Za-z0-9]{5,50}$/
+            'full'    : /^[A-Za-z0-9!@$%^&*]{8,50}$/
         };
         return re.capital .test(password) && 
                re.digit   .test(password) && 
-               re.digit   .test(password) &&
+               re.special .test(password) &&
                re.full    .test(password);
                
     }
@@ -107,24 +138,30 @@ app.get("/sign-up", (req,res) =>{
                                                                 if(err){
                                                                     throw err;
                                                                 } else{
-                                                                    res.json("success");
+                                                                    res.status(201).json(result);
                                                                 }
                                                             })
                                         }else{
                                             console.log("Passwords do not match.");
+                                            res.status(400).json("passwords not matching");
                                         }
                                     }else{
                                         console.log("Password must have SUCH AND SUCH values")
+                                        res.status(400).json("password requirements");
                                     }
-                                } else{
+                                } else if(result.length != 0){
                                     console.log("User does exist")
+                                    res.status(400).json("exists");
                                 }
                             })
 })
 
 app.get("/search", (req,res) =>{
     console.log("/search");
-    var name = req.query.searchTerm.toLowerCase();
+    if(name){
+        var name = req.query.searchTerm.toLowerCase();
+    }
+    
     console.log(name);
     var category = req.query.searchCategory
     console.log(category);
@@ -259,7 +296,3 @@ app.get("/search", (req,res) =>{
 
 });
 
-//start express server on port 5000
-app.listen(5000, () =>{
-    console.log("server started on port 5000");
-});

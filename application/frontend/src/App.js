@@ -39,26 +39,48 @@ import SignUpSuccess from './pages/Sign Up/SignUpSuccess'
 
 import MapSearch from './pages/MapSearch/MapSearch.js'
 
+import Map from './pages/MapSearch/Map'
+import axios from 'axios';
+
 const App = () => {
 
-  const [appUser,setAppUser] = useState();
+  const [appUser,setAppUser] = useState("");
 
   console.log("rerendering app");
 
   useEffect(() => {
-    console.log('AppUser in App changed to: ', appUser)
-  }, [appUser])
+    axios.get("/login").then((response) =>{
+      console.log(response.data);
+      console.log(response.data.user);
+      setAppUser(response.data.user);
+      console.log(appUser);
+    })
+    .catch((err) =>{
+      console.log(err);
+    })
+    // console.log('AppUser in App changed to: ', appUser)
+  })
+
+
+  function updateLoginState(loggedIn, user){
+    console.log("Updating Login State");
+    console.log(loggedIn);
+    setAppUser(user);
+    console.log(user);
+  }
+
+
 
   return (
     <Router>
       <NavBar
             appUser={appUser}
-            setAppUser={setAppUser} 
+            updateLoginState={updateLoginState} 
       />
        <Switch>
         <Route path="/" exact component={Home}/>
         <Route exact path="/login-page" >
-          <LoginPage appUser={appUser} setAppUser={setAppUser}/>
+          <LoginPage appUser={appUser} updateLoginState={updateLoginState}/>
         </Route>
         <Route path="/account-type" exact component={AccountTypePage}/>
         <Route path="/signup-page" exact component={SignUpPage}/>
@@ -89,7 +111,8 @@ const App = () => {
         <Route path="/Cameron" component={Cameron}/>
         <Route path="/Wameedh" component={Wameedh}/>
         <Route path="/SignUpSuccess" component={SignUpSuccess}/>
-        {/* <Redirect to="/" /> */}
+        <Route path="/Map" component={Map}/>
+        <Redirect to="/" />
       </Switch>
     </Router>
   );

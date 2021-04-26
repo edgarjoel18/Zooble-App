@@ -5,7 +5,7 @@ import LogoPng from '../../images/Created Icons/LogoScript.png';
 
 import styles from './NavBar.module.css'
 
-function NavBarLeft({appUser,setAppUser}) {
+function NavBarLeft({appUser}) {
   return (
     <span  className={styles["navbar-left"]}>
       {!appUser && <NavLink to="/">
@@ -13,7 +13,7 @@ function NavBarLeft({appUser,setAppUser}) {
       </NavLink>
       }
       {appUser && <NavLink to="/Feed">
-        <img className={styles["logo-img"]} src={LogoPng}/>
+        <img className={styles["logo-img-inactive"]} src={LogoPng}/>
       </NavLink>
       }
     </span>

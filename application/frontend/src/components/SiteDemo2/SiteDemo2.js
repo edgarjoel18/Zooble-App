@@ -1,4 +1,5 @@
 import {useState} from "react";
+import { useHistory } from "react-router";
 
 import MapSearchPreview from '../../images/MapSearchPreview.png'
 
@@ -7,6 +8,8 @@ import styles from './SiteDemo2.module.css';
 
 function SiteDemo2() {
   const [text, setText] = useState('Try the Tool');
+
+  const history = useHistory();
 
 
   function onMouseover(e){
@@ -17,6 +20,16 @@ function SiteDemo2() {
     setText('Try the Tool');
   }
 
+  function searchLocalBusinesses(){
+    navigator.geolocation.getCurrentPosition((position)=>{
+      const location = {
+        pathname:'/MapSearch',
+        state: {lat:position.coords.latitude, lng:position.coords.longitude, searchTerm: "", searchCategoryParam: "Businesses"}
+      }
+      history.push(location);
+    })
+  }
+
   return (
     <div className={styles['site-demo2-container']}>
       <div className={styles['left-side']}>
@@ -24,8 +37,8 @@ function SiteDemo2() {
       </div>
       <div className={styles['right-side']}>
         <div className={styles['right-side-text']}>
-            Use our location search tool to find pets and small businesses near you 
-            <button className={styles['site-demo2-button']} onMouseEnter={onMouseover} onMouseLeave={onMouseout}>
+            Use our location search tool to find a pet-friendly small businesses near you 
+            <button className={styles['site-demo2-button']} onClick={searchLocalBusinesses}>
             {text}
         </button>
         </div>

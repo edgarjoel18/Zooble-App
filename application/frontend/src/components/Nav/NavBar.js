@@ -6,16 +6,16 @@ import { NavLink } from 'react-router-dom';
 
 import styles from './NavBar.module.css'
 
-function NavBar({appUser, setAppUser}) {
+function NavBar({appUser, updateLoginState}) {
     useEffect(() => {
         console.log('AppUser in Navbar changed to: ', appUser)
     }, [appUser])
     
     return (
         <div className={styles["navbar"]}>
-            <NavBarLeft appUser={appUser} setAppUser={setAppUser}/>
+            <NavBarLeft appUser={appUser}/>
             <SearchBar/>
-            <NavBarRight appUser={appUser} setAppUser={setAppUser}/>
+            <NavBarRight appUser={appUser} updateLoginState={updateLoginState}/>
         </div>
     )
 }
