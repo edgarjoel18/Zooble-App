@@ -38,11 +38,10 @@ function Messages() {
 
     return (
         <>
+        <div className={styles['messages-container']}>
         <div className={styles['messages-header']}>
             Messages
         </div>
-        <div className={styles['messages-container']}>
-        
         {messages.length== 0 && <div className={styles['messages-container-no-messages']}>You have no messages :(</div>}
         {messages && messages.map((message) =>(
                 <>

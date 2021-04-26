@@ -19,6 +19,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "react-select": "^4.3.0",
+    "react-spinners": "^0.10.6",
     "styled-components": "^5.2.3",
     "use-places-autocomplete": "^1.9.1",
     "web-vitals": "^1.1.0"

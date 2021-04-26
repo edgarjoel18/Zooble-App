@@ -128,6 +128,7 @@ function SearchBar() {
                 setValue(e.target.value);
                 setSearchTerm(e.target.value);
             }}
+            required
             disabled={!ready}
             onKeyPress={event => {
               if(event.key === 'Enter'){

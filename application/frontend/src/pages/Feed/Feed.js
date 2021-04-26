@@ -1,4 +1,4 @@
-import {React, useState} from 'react'
+import {useState, useEffect} from 'react'
 import styles from './Feed.module.css'
 import bus_prof_pic from '../../images/businessProfile.jpg'
 import shel_prof_pic from '../../images/shelterProfile.jpg'
@@ -6,6 +6,8 @@ import own_prof_pic from '../../images/petOwnerProfile.jpg'
 import PostModal from '../../components/Modals/PostModal'
 
 import ArrowIcon from '../../images/Created Icons/Arrow.svg'
+
+import ClipLoader from "react-spinners/ClipLoader";
 
 function Feed() {
     const [postModalDisplay,setPostModalDisplay]= useState(false);
@@ -43,7 +45,7 @@ function Feed() {
     const [createPostOverlayDisplayBool, setCreatePostOverlayDisplayBool] = useState(true);
     const [createPostOverlayDisplay, setCreatePostOverlayDisplay] = useState({
         display: 'grid',
-        height: 200
+        height: 360
     });
 
     function openPostModal(feedPost){
@@ -69,35 +71,49 @@ function Feed() {
             setCreatePostOverlayDisplayBool(true);
             setCreatePostOverlayDisplay({
                 display: 'grid',
-                height: 200
+                height: 330
             });
         }
     }
 
+    //Loading
+
+    // const [loading, setLoading] = useState(false);
+    // useEffect(() => {
+    //     setLoading(true)
+    //     setTimeout (() =>{
+    //         setLoading(false);
+    //     }, 1000)
+    // }, [])
+
     return (
         <>
-        <div className={styles["follower-feed-header"]}>Feed</div>
-        <div className={styles["follower-feed-new-post"]} style={{height:createPostOverlayDisplay.height}}>
-            <textarea className={styles["follower-feed-new-post-body"]} style={{display: createPostOverlayDisplay.display}} placeholder="Create a Post"/>
-            <button className={styles["follower-feed-new-post-attach-image"]} style={{display: createPostOverlayDisplay.display}}>Add Image</button>
-            <button className={styles["follower-feed-new-post-submit"]} style={{display: createPostOverlayDisplay.display}}>Submit</button>
-            {/* <button className={styles["follower-feed-new-post-expand-collapse"]} /> onClick={createPostOverlayToggle} */}
-        </div>
-        <ul className={styles["follower-feed-container"]}>
-            {feedPosts.length == 0 && <li>No Feed Posts</li>}
-            {feedPosts && feedPosts.map((feedPost)=>(
-            <div className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
-                    <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.prof_pic}/>
-                    <div className={styles["follower-feed-post-name"]}>{feedPost.user_display_name}</div>
-                    <div className={styles["follower-feed-post-timestamp"]}>{feedPost.timestamp}</div>
-                    <div className={styles["follower-feed-post-likes"]}>{feedPost.likes}</div>
-                    <button className={styles['follower-feed-post-like']}/>
-                    {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
-                    <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
-                    <img className={styles["follower-feed-post-pic"]} src={feedPost.pic}/>
+            <div className={styles['follower-feed-header-container']}>
+                <div className={styles["follower-feed-header"]}>Feed</div>
+                <div className={styles["follower-feed-new-post"]} style={{height:createPostOverlayDisplay.height}}>
+                    <img className={styles["follower-feed-new-post-pic"]} src={feedPosts[0].pic}/>
+                    <div className={styles["follower-feed-new-post-name"]}>Bob</div>
+                    <textarea className={styles["follower-feed-new-post-body"]} style={{display: createPostOverlayDisplay.display}} placeholder="Create a Post"/>
+                    <button className={styles["follower-feed-new-post-attach-image"]} style={{display: createPostOverlayDisplay.display}}>Add Image</button>
+                    <button className={styles["follower-feed-new-post-submit"]} style={{display: createPostOverlayDisplay.display}}>Submit</button>
+                    {/* <button className={styles["follower-feed-new-post-expand-collapse"]} /> onClick={createPostOverlayToggle} */}
                 </div>
-            ))}
-        </ul>
+            </div>
+            <ul className={styles["follower-feed-container"]}>
+                {feedPosts.length == 0 && <li>No Feed Posts</li>}
+                {feedPosts && feedPosts.map((feedPost)=>(
+                <div className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
+                        <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.prof_pic}/>
+                        <div className={styles["follower-feed-post-name"]}>{feedPost.user_display_name}</div>
+                        <div className={styles["follower-feed-post-timestamp"]}>{feedPost.timestamp}</div>
+                        <div className={styles["follower-feed-post-likes"]}>{feedPost.likes}</div>
+                        <button className={styles['follower-feed-post-like']}/>
+                        {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
+                        <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
+                        <img className={styles["follower-feed-post-pic"]} src={feedPost.pic}/>
+                    </div>
+                ))}
+            </ul>
         <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost}/>
         </>
     )
