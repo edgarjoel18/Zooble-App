@@ -32,6 +32,7 @@
     box-shadow: var(--elevation-1);
     border-radius: 7.5px;
     margin-bottom: 15px;
+    cursor: pointer;
 }
 
 .messages-container-message:hover{

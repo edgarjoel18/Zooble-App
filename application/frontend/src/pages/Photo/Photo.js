@@ -8,13 +8,14 @@ import EditButton from '../../components/Buttons/EditButton';
 
 
 function Photo() {
+    const [name, setName] = useState(''); 
 
     useEffect(() => {
         const query = new URLSearchParams(location.search);
         setName(query.get('name'));
     } , [])
+
     
-    const [name, setName] = useState(''); 
     const dummyPhotos = [
         {   
             post_id: 1,
