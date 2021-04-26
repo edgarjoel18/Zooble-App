@@ -84,14 +84,14 @@ function ProfileContent(props) {
     return (
         <div className={styles.ProfileContent} >
             {imageContainer}
-            {displayReview}
+            {/* {displayReview}
             <WriteAReview 
                 display={writeAReviewDisplay} 
                 onClose={()=> setWriteAReviewDisplay(false)}
                 clicked={onReviewSendHandler}
             >
                 Write a Review
-            </WriteAReview>
+            </WriteAReview> */}
         </div>
     );
 }

@@ -12,7 +12,9 @@ function Tag(props) {
     }
 
     let tagText = props.section;
+    let aboutStyle = {};
     if (tagText === 'About') {
+        aboutStyle = {marginTop: '35px'};
         if (props.accountType === 'pet owner' || props.accountType === 'pet')
             tagText = props.section + ' Me';
         else 
@@ -20,8 +22,8 @@ function Tag(props) {
     }
 
     return (
-        <div className={tagStyle}  onClick={() => props.clicked(props.id)}>
-            <p className={textStyle} >
+        <div className={tagStyle} id="tag" onClick={() => props.clicked(props.id)}>
+            <p className={textStyle} style={aboutStyle}  >
                 {tagText}
             </p>
         </div>

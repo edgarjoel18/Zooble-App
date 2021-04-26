@@ -1,4 +1,5 @@
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
+import {NavLink, useHistory} from "react-router-dom";
 import styles from './Feed.module.css'
 import bus_prof_pic from '../../images/businessProfile.jpg'
 import shel_prof_pic from '../../images/shelterProfile.jpg'
@@ -10,12 +11,12 @@ import ArrowIcon from '../../images/Created Icons/Arrow.svg'
 import ClipLoader from "react-spinners/ClipLoader";
 
 function Feed() {
-    const [postModalDisplay,setPostModalDisplay]= useState(false);
+    const [postModalDisplay, setPostModalDisplay] = useState(false);
     const [feedPosts, setFeedPosts] = useState([
         {
             post_id: 1,
             user_display_name: 'Paw Spa',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
             likes: 0,
             timestamp: '12/25/20 at 11:05 AM',
@@ -24,7 +25,7 @@ function Feed() {
         {
             post_id: 2,
             user_display_name: 'Burgsdale Pet Shelter',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg', 
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
             likes: 10,
             timestamp: '12/25/20 at 11:05 AM',
@@ -33,7 +34,7 @@ function Feed() {
         {
             post_id: 3,
             user_display_name: 'Alex',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg', 
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
             likes: 20,
             timestamp: '12/25/20 at 11:05 AM',
@@ -48,26 +49,26 @@ function Feed() {
         height: 360
     });
 
-    function openPostModal(feedPost){
+    function openPostModal(feedPost) {
         console.log(feedPost);
         setSelectedPost(feedPost);
         setPostModalDisplay(true);
-        return 
+        return
     }
 
-    function closePostModal(){
+    function closePostModal() {
         setPostModalDisplay(false);
     }
 
-    function createPostOverlayToggle(){
-        if(createPostOverlayDisplayBool){
+    function createPostOverlayToggle() {
+        if (createPostOverlayDisplayBool) {
             setCreatePostOverlayDisplayBool(false);
             setCreatePostOverlayDisplay({
                 display: 'none',
                 height: 36
             });
         }
-        else{
+        else {
             setCreatePostOverlayDisplayBool(true);
             setCreatePostOverlayDisplay({
                 display: 'grid',
@@ -88,31 +89,37 @@ function Feed() {
 
     return (
         <>
+            <NavLink to="/Profile/Alex" style={{ textDecoration: 'none' }}>
+                <div className={styles["follower-feed-header-profile"]}>
+                    <img className={styles["follower-feed-header-profile-pic"]} src={own_prof_pic} />
+                    <div className={styles["follower-feed-header-profile-name"]}>Alex</div>
+                </div>
+            </NavLink>
             <div className={styles["follower-feed-container"]}>
                 <div className={styles["follower-feed-header"]}>Feed</div>
-                <div className={styles["follower-feed-new-post"]} style={{height:createPostOverlayDisplay.height}}>
-                    <img className={styles["follower-feed-new-post-pic"]} src={feedPosts[0].pic}/>
+                <div className={styles["follower-feed-new-post"]} style={{ height: createPostOverlayDisplay.height }}>
+                    <img className={styles["follower-feed-new-post-pic"]} src={feedPosts[0].pic} />
                     <div className={styles["follower-feed-new-post-name"]}>Bob</div>
-                    <textarea className={styles["follower-feed-new-post-body"]} style={{display: createPostOverlayDisplay.display}} placeholder="Update your followers on what's going on with you and your pets"/>
-                    <button className={styles["follower-feed-new-post-attach-image"]} style={{display: createPostOverlayDisplay.display}}>Add Image</button>
-                    <button className={styles["follower-feed-new-post-submit"]} style={{display: createPostOverlayDisplay.display}}>Submit</button>
+                    <textarea className={styles["follower-feed-new-post-body"]} style={{ display: createPostOverlayDisplay.display }} placeholder="Update your followers on what's going on with you and your pets" />
+                    <button className={styles["follower-feed-new-post-attach-image"]} style={{ display: createPostOverlayDisplay.display }}>Add Image</button>
+                    <button className={styles["follower-feed-new-post-submit"]} style={{ display: createPostOverlayDisplay.display }}>Submit</button>
                     {/* <button className={styles["follower-feed-new-post-expand-collapse"]} /> onClick={createPostOverlayToggle} */}
                 </div>
                 {feedPosts.length == 0 && <li>No Feed Posts</li>}
-                {feedPosts && feedPosts.map((feedPost)=>(
-                <div className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
-                        <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic}/>
+                {feedPosts && feedPosts.map((feedPost) => (
+                    <div className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
+                        <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic} />
                         <div className={styles["follower-feed-post-name"]}>{feedPost.user_display_name}</div>
                         <div className={styles["follower-feed-post-timestamp"]}>{feedPost.timestamp}</div>
                         <div className={styles["follower-feed-post-likes"]}>{feedPost.likes}</div>
-                        <button className={styles['follower-feed-post-like']}/>
+                        <button className={styles['follower-feed-post-like']} />
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
                         <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
-                        <img className={styles["follower-feed-post-pic"]} src={feedPost.pic}/>
+                        <img className={styles["follower-feed-post-pic"]} src={feedPost.pic} />
                     </div>
                 ))}
             </div>
-        <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost}/>
+            <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost} />
         </>
     )
 }

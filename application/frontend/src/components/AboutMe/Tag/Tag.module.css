@@ -1,8 +1,8 @@
 .Text {
     direction: rtl;
-    vertical-align: middle;
     white-space: nowrap;
     color: var(--inactive-txt-clr);
+    margin-top: 24px;
     transform: rotate(-90deg);
     transition: .15s ease-in-out;
 }
@@ -22,11 +22,19 @@
 
 
 .ActiveText {
-    color: var(--primary-txt-clr);
+    color: white;
+}
+
+.ActiveText:hover {
+    color: white;
 }
 
 .ActiveTag {
     box-shadow: -2px 1px 1px 0 rgba(0,0,0,0.14), -2px 2px 1px -1px rgba(0,0,0,0.12), -2px 1px 3px 0 rgba(0,0,0,0.20);;
     z-index: 1;
-    background-color: var(--reversed-txt-clr);
+    background-color: var(--primary-clr);
+}
+
+.AboutTag {
+    margin-top: 30px;
 }

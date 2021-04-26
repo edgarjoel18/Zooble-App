@@ -239,8 +239,12 @@ function ProfileInfo(props) {
                 // </h1> 
                 <React.Fragment>
                     <div style={{display: 'flex'}} >
-                        <h1 className={styles.UserName}>{props.profile.userName}</h1>
-                        <h3 style={{marginLeft: '10px'}} >{petType.value}/{petBreeds[0].value}</h3>
+                        <h1 className={styles.UserName}>{props.profile.userName ? props.profile.userName : 'Name of Your Pet'}</h1>
+                        <h3 style={{marginLeft: '10px'}} >
+                            {petType.value ? petType.value : 'Type'}
+                            /
+                            {petBreeds[0].value ? petBreeds[0].value : 'Breed'}
+                        </h3>
                     </div>
                     <EditPetDetails 
                     display={editPetDetailsDisplay} 
@@ -272,8 +276,11 @@ function ProfileInfo(props) {
                             </div>
                         </React.Fragment>
                         ):
-                        (
-                            <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
+                        (   
+                            <React.Fragment>
+                                <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
+                                <button className={styles.Button} onClick={() => history.push('/Profile/Alex')} >My Owner</button>
+                            </React.Fragment>
                         )
                     }
                     {!props.isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
