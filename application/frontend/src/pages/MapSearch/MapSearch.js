@@ -91,6 +91,7 @@ function MapSearch(props) {
 
     if(typeof(state) =='undefined'){
         state = {lat: 0, lng: 0}
+        history.push('/');
     }
 
     const[searchCategory, setSearchCategory] = useState();
