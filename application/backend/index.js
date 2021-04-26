@@ -82,14 +82,14 @@ app.post("/login", (req, res) =>{
                 });
             }else{
                 console.log("Username or password is incorrect");
-                res.status(500).json("no match")
+                res.status(200).json("no match");
                 // res.send("Username or password is incorrect");
             }
             // res.end();
         });
     }else{
         console.log("Please enter information correctly");
-        res.status(500).json("incomplete");
+        res.status(200).json("incomplete");
     }
 }
 );
@@ -116,11 +116,11 @@ app.post("/sign-up", (req,res) =>{
             'capital' : /[A-Z]/,
             'digit'   : /[0-9]/,
             'special' : /[!@#$%^&*]/,
-            'full'    : /^[A-Za-z0-9]{5,50}$/
+            'full'    : /^[A-Za-z0-9!@$%^&*]{8,50}$/
         };
         return re.capital .test(password) && 
                re.digit   .test(password) && 
-               re.digit   .test(password) &&
+            //    re.special .test(password) &&
                re.full    .test(password);
                
     }
@@ -138,20 +138,20 @@ app.post("/sign-up", (req,res) =>{
                                                                 if(err){
                                                                     throw err;
                                                                 } else{
-                                                                    res.json(result);
+                                                                    res.status(201).json(result);
                                                                 }
                                                             })
                                         }else{
                                             console.log("Passwords do not match.");
-                                            res.status(200).json(result);
+                                            res.status(400).json("passwords not matching");
                                         }
                                     }else{
                                         console.log("Password must have SUCH AND SUCH values")
-                                        res.status(500).json("password requirements");
+                                        res.status(400).json("password requirements");
                                     }
                                 } else if(result.length != 0){
                                     console.log("User does exist")
-                                    res.status(500).json("exists");
+                                    res.status(400).json("exists");
                                 }
                             })
 })

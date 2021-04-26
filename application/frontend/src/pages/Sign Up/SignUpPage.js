@@ -29,6 +29,7 @@ function SignUpPage() {
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
     const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
 
+
     function openTermsAndConditionsModal() {
         setTermsAndConditionsDisplay(true);
     }
@@ -44,6 +45,14 @@ function SignUpPage() {
     function closePrivacyPolicyModal() {
         setPrivacyPolicyDisplay(false);
     }
+
+    //states for sign up error display
+    const [error, setError] = useState(null);
+
+    const errorDisplay = error ? 
+    <div className={styles['signup-error-container']}>
+        {error}
+    </div> : "";
 
     const history = useHistory();
 
@@ -65,11 +74,25 @@ function SignUpPage() {
                     password: password,
                     redonePassword: redonePassword
             },{withCredentials:true}).then(response => {
+                console.log(response);
                 console.log(response.data);
                 if(response.data.affectedRows === 1){
                     history.push("/SignUpSuccess");
                 }
+ 
             }).catch(error => {
+                if (error.response.data === "exists"){
+                    setError("An Account using that Email or Username already exists");
+                    console.log(error);
+                }
+                else if (error.response.data === "passwords not matching"){
+                    setError("The Passwords Entered Do Not Match");
+                    console.log(error);
+                }
+                else if (error.response.data === "password requirements"){
+                    setError("Your Password Must Have: 8-50 Characters and Contain: 1 Capital Letter, 1 Number, 1 Special Character");
+                    console.log(error);
+                }
                 console.log(error);
             })
         // }
@@ -184,6 +207,7 @@ function SignUpPage() {
                     <button className={styles['submit-btn']} type='submit' className={styles['submit-btn']} >Sign Up</button>
                     {/* <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button> */}
                 </div>
+                {errorDisplay}
             </form>
             {/* Modals */}
             <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal} />
