@@ -86,7 +86,7 @@ function MyPets() {
                 <div className={styles['my-pets-container-add-pet-text']}>Add a Pet</div>
              </div>
             {myPets && myPets.map((pet) =>(
-                    <div className={styles['my-pets-container-pet']} >
+                    <div key={pet.pet_id} className={styles['my-pets-container-pet']}>
                         <Link to={"/Profile/" + pet.pet_name}>
                             <div className={styles.LinkDiv}>
                                 <img className={styles['my-pets-container-pet-pic']} src={pet.pet_prof_pic}/>

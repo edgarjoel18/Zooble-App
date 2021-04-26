@@ -158,7 +158,7 @@ app.post("/sign-up", (req,res) =>{
 
 app.get("/search", (req,res) =>{
     console.log("/search");
-    if(name){
+    if(req.query.searchTerm){
         var name = req.query.searchTerm.toLowerCase();
     }
     
