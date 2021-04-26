@@ -12,7 +12,14 @@ function LoginPage({appUser, updateLoginState}) {
     //toggle forgot password modal
     const [forgotPasswordModalDisplay, setForgotPasswordModalDisplay] = useState(false);
 
+    const [error, setError] = useState(null);
+
     let history = useHistory();
+
+    const errorDisplay = error ? 
+    <div className={styles['login-error-container']}>
+        {error}
+    </div> : "";
 
     function loginHandler(event) {
         event.preventDefault();
@@ -32,12 +39,11 @@ function LoginPage({appUser, updateLoginState}) {
                         updateLoginState(response.data,username);
                         history.push('/Feed')
                     }
-                    else{
-                        //display message to user
-                    }
                 })
                 .catch(error => {
-                    console.log("Error");
+                    if(error.response.data ==="no match"){
+                        setError("Username or Password is Incorrect");
+                    }
                 })
     }
 
@@ -63,6 +69,9 @@ function LoginPage({appUser, updateLoginState}) {
                 </div>
                 <div className={styles['password-input-container']}>
                     <label className={styles['password-input-label']} for='password'>Password</label>
+                    <span className={styles['forgot-password']}>
+                        <button onClick={() => setForgotPasswordModalDisplay(true)}> Forgot password?</button>
+                    </span>
                     <input
                         type='password'
                         placeholder='Enter password'
@@ -72,9 +81,7 @@ function LoginPage({appUser, updateLoginState}) {
                         required
                     />
                 </div>
-                <div className={styles['forgot-password']}>
-                    <button onClick={() => setForgotPasswordModalDisplay(true)}> Forgot password?</button>
-                </div>
+
                 <div className={styles['btn-container']}>
                     <button type='submit' className={styles['submit-btn']}>Login</button>
 
@@ -84,9 +91,10 @@ function LoginPage({appUser, updateLoginState}) {
                         <input type='checkbox' name='remember'/> Remember Me
                     </div>
 
-                <p className={styles['create-account']}>
+                <div className={styles['create-account-link']}>
                     Not registered? <a href='/account-type'>Create an account</a>
-                </p>
+                </div>
+                {errorDisplay}
             </form>
             <ForgotPassword display={forgotPasswordModalDisplay} onClose={()=>setForgotPasswordModalDisplay(false)}/>
         </>

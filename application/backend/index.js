@@ -82,14 +82,14 @@ app.post("/login", (req, res) =>{
                 });
             }else{
                 console.log("Username or password is incorrect");
-                res.status(200).json("no match");
+                res.status(400).json("no match");
                 // res.send("Username or password is incorrect");
             }
             // res.end();
         });
     }else{
         console.log("Please enter information correctly");
-        res.status(200).json("incomplete");
+        res.status(400).json("incomplete");
     }
 }
 );
@@ -120,7 +120,7 @@ app.post("/sign-up", (req,res) =>{
         };
         return re.capital .test(password) && 
                re.digit   .test(password) && 
-            //    re.special .test(password) &&
+               re.special .test(password) &&
                re.full    .test(password);
                
     }
