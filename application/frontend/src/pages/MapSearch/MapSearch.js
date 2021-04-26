@@ -191,8 +191,10 @@ function MapSearch(props) {
     ]
 
     useEffect(()=>{
-        if(state.searchTermParam && state.searchCategoryParam){
+        if(state.searchTermParam || state.searchCategoryParam){
             console.log('Fetching Search Results');
+            console.log('Search Category: '+ state.searchCategoryParam);
+            console.log('Search Term: ' + state.searchTermParam);
             setSearchCategory(state.searchCategoryParam);
             setSearchTerm(state.searchTermParam);
             Axios.get('/search', {  //take in filters here? for final version

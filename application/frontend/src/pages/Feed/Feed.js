@@ -88,7 +88,7 @@ function Feed() {
 
     return (
         <>
-            <div className={styles['follower-feed-header-container']}>
+            <div className={styles["follower-feed-container"]}>
                 <div className={styles["follower-feed-header"]}>Feed</div>
                 <div className={styles["follower-feed-new-post"]} style={{height:createPostOverlayDisplay.height}}>
                     <img className={styles["follower-feed-new-post-pic"]} src={feedPosts[0].pic}/>
@@ -98,8 +98,6 @@ function Feed() {
                     <button className={styles["follower-feed-new-post-submit"]} style={{display: createPostOverlayDisplay.display}}>Submit</button>
                     {/* <button className={styles["follower-feed-new-post-expand-collapse"]} /> onClick={createPostOverlayToggle} */}
                 </div>
-            </div>
-            <ul className={styles["follower-feed-container"]}>
                 {feedPosts.length == 0 && <li>No Feed Posts</li>}
                 {feedPosts && feedPosts.map((feedPost)=>(
                 <div className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
@@ -113,7 +111,7 @@ function Feed() {
                         <img className={styles["follower-feed-post-pic"]} src={feedPost.pic}/>
                     </div>
                 ))}
-            </ul>
+            </div>
         <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost}/>
         </>
     )

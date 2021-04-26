@@ -1,16 +1,15 @@
+.messages-container{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+}
+
 .messages-header{
     margin: 10px;
     font-size: var(--h0);
     font-family: var(--ff-tertiary);
     font-weight: 600;
-}
-
-.messages-container{
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    cursor: pointer;
-    margin: 0 auto;
 }
 
 .messages-container-no-messages{
@@ -21,20 +20,18 @@
 
 .messages-container-message{
     display: grid;
-    box-shadow: var(--elevation-1);
-
-    grid-template-columns: 120px auto auto 175px;
-    grid-template-rows: 40px 40px 40px; 
-
+    padding: 15px;
+    width: 100%;
     /* grid-template-areas:  'pic subject ........ timestamp'
                           'pic sender ........ reply-icon'
                           'pic ....... ........ ..........'; */
-    width: 100%;
-    height: 125px;
-    align-items: center;
-    margin-bottom: 25px;
-    border-radius: 7.5px;
+    grid-template-columns: 120px auto auto 175px;
+    grid-template-rows: 34px 34px 34px;
     transition: .15s ease-in-out;
+   
+    box-shadow: var(--elevation-1);
+    border-radius: 7.5px;
+    margin-bottom: 15px;
 }
 
 .messages-container-message:hover{
@@ -45,17 +42,16 @@
     width: 100px;
     height: 100px;
     object-fit: cover;
-    border-radius: 7.5px;
     grid-area: 1 / 1 / span 3 / span 1;
-    margin-left: 15px;
+    border-radius: 7.5px;
 }
 
 .messages-container-message-subject{
-    font-size: var(--h3);
-    grid-area: 1 / 2 / span 1 / span 1;
-    font-weight: 600;
     margin-left: 15px;
+    grid-area: 1 / 2 / span 1 / span 1;
+    font-size: var(--h3);
     font-family: var(--ff-primary);
+    font-weight: 600;
 }
 
 .messages-container-message-timestamp{

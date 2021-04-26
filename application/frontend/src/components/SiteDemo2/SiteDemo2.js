@@ -24,7 +24,7 @@ function SiteDemo2() {
     navigator.geolocation.getCurrentPosition((position)=>{
       const location = {
         pathname:'/MapSearch',
-        state: {lat:position.coords.latitude, lng:position.coords.longitude}
+        state: {lat:position.coords.latitude, lng:position.coords.longitude, searchTerm: "", searchCategoryParam: "Businesses"}
       }
       history.push(location);
     })
