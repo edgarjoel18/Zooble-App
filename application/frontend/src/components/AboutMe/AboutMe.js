@@ -4,13 +4,13 @@ import Tag from './Tag/Tag';
 import EditButton from '../Buttons/EditButton'
 
 import styles from './AboutMe.module.css';
-import { Link } from 'react-router-dom';
+
 
 import EditBusinessHours from '../../components/Modals/EditBusinessHours'
 
-const shelterProfileTags = ["About", "Contact Info", "Recent Posts"]
-const businessProfileTags = ["About", "Business Info", "Recent Posts"]
-const petOwnerProfileTags = ["About", "Recent Posts"]
+const shelterProfileTags = ["About", "Contact Info"]//, "Recent Posts"]
+const businessProfileTags = ["About", "Business Info"]//, "Recent Posts"]
+const petOwnerProfileTags = ["About"]//, "Recent Posts"]
 
 function AboutMe(props) {
     const [selected, setSelected] = useState('About');
@@ -52,8 +52,6 @@ function AboutMe(props) {
         setChanging(true);
         setLabelSelected(label);
         console.log(label)
-        // setEditHoursDisplay(true);
-
     }
 
     function cancelEditingHandler() {
@@ -63,7 +61,7 @@ function AboutMe(props) {
     }
 
     let profileTags = null;
-    let displayPetOwnerLink = null;
+    // let displayPetOwnerLink = null;
     switch (props.profile.accountType) {
         case 'shelter':
             profileTags = shelterProfileTags;
@@ -76,12 +74,12 @@ function AboutMe(props) {
             break;
         case 'pet':
             profileTags = petOwnerProfileTags;
-            displayPetOwnerLink = (
-                <div>
-                    <span className={styles.PetOwnerLinkLabel} >My Owner: </span>
-                    <Link to="/Profile/Alex" >{props.profile.petOwner}</Link>
-                </div>
-            )
+            // displayPetOwnerLink = (
+            //     <div>
+            //         <span className={styles.PetOwnerLinkLabel} >My Owner: </span>
+            //         <Link to="/Profile/Alex" >{props.profile.petOwner}</Link>
+            //     </div>
+            // )
             break;
         default:
             profileTags = null;
@@ -96,7 +94,7 @@ function AboutMe(props) {
         case 'About':
             content = (
                 <div>
-                    {displayPetOwnerLink}
+                    {/* {displayPetOwnerLink} */}
                     <textarea 
                         className={styles.TextArea} 
                         value={props.profile.about} 
@@ -149,7 +147,7 @@ function AboutMe(props) {
                         type="text" 
                         value={props.profile.contactInfo.phone} 
                         readOnly={!changing || !(labelSelected === 'phone number')}
-                        maxlength = "25"
+                        maxLength = "25"
                         onChange={event => props.updateProfile('phone', event.target.value)} 
                     />
                     {

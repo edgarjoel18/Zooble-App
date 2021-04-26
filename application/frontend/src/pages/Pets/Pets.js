@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import { Link } from 'react-router-dom'
 
 import styles from './MyPets.module.css'  //same style as my pets without add pet button 
 
@@ -61,10 +62,12 @@ function Pets() {
         <div className={styles['my-pets-container']}>
             {Pets.length == 0 && <div className={styles['my-pets-container-no-pets']}>This User has No Pets :(</div>}
             {Pets && Pets.map((pet) =>(
+                <Link to={"/Profile/" + pet.pet_name} >
                 <div className={styles['my-pets-container-pet']}>
                     <img className={styles['my-pets-container-pet-pic']} src={pet.pet_prof_pic}/>
                     <div className={styles['my-pets-container-pet-name']}>{pet.pet_name}</div>
                 </div>
+                </Link>
             ))}
         </div>
         </>

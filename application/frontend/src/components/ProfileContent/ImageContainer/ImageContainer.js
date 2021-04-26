@@ -71,7 +71,6 @@ function ImageContainer(props) {
                     let displayPostModal = (
                         <div onClick={() => presentPostModal(props.image[index].profile_pic)} key={props.image[index].name + index}>
                             <Img 
-                                //key={props.image[index].pet_id}
                                 className={styles.ImageStack_pic}
                             >
                                 <img src={props.image[index].profile_pic} alt="No Image Found" className={styles.ImageStack_pic} />
@@ -116,8 +115,11 @@ function ImageContainer(props) {
     if (props.title === 'Photos' || props.title === 'My Photos') {
         seeAll = <p style={{cursor: 'pointer'}} onClick={() => seeAllImageHandler()} >See All</p>;
     }
-    else {
+    else if (props.title === 'My Pets') {
         seeAll = <p style={{cursor: 'pointer'}} onClick={() => history.push("/MyPets")} >See All</p>
+    }
+    else {
+        seeAll = <p style={{cursor: 'pointer'}} onClick={() => history.push("/Pets")} >See All</p>
     }
 
     return (
