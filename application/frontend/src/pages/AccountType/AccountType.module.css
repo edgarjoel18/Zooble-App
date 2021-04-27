@@ -50,7 +50,7 @@
 .owner-container:hover,
 .shelter-container:hover,
 .business-container:hover{
-    background-color: var(--primary-clr);
+    background-color: var(--accent-color-2);
 }
 
 
