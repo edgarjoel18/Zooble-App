@@ -282,13 +282,14 @@ function ProfileInfo(props) {
                             </button>
                             <div className={styles.DropdownHidden} id='dropDownContent' > 
                                 <Link className={styles.DropdownItem} to="/Followers" >Followers</Link>
+                                <Link className={styles.DropdownItem} to="/Profile/PetOwnerId=2" >My Owner</Link>
                             </div>
                         </React.Fragment>
                         ):
                         (   
                             <React.Fragment>
                                 <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
-                                <button className={styles.Button} onClick={() => history.push('/Profile/Alex')} >My Owner</button>
+                                <button className={styles.Button} onClick={() => history.push('/Profile/PetOwnerId=2')} >My Owner</button>
                             </React.Fragment>
                         )
                     }
