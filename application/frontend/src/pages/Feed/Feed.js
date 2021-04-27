@@ -49,6 +49,14 @@ function Feed() {
         height: 360
     });
 
+    //for changing submit image button state
+    const [attachImageFontColor, setAttachImageFontColor] = useState('#131b49');
+    const [attachImageBackgroundColor, setAttachImageBackgroundColor] = useState('#ffffff');
+    const [attachImageText, setAttachImageText] = useState('Add Image');
+    const [attachImageBorderColor, setAttachImageBorderColor] = useState('#131b49')
+    const [attachedImage,setAttachedImage] = useState(false);  //real thing will be null or attached image?
+
+
     function openPostModal(feedPost) {
         console.log(feedPost);
         setSelectedPost(feedPost);
@@ -77,6 +85,40 @@ function Feed() {
         }
     }
 
+    function attachImage(){
+        if(attachedImage === false){
+            setAttachImageFontColor('#ffffff')
+            setAttachImageBackgroundColor('#131b49')
+            setAttachImageBorderColor('#131b49')
+            setAttachImageText('Image Added')
+            setAttachedImage(true);
+        }
+        else if(attachedImage === true){
+            setAttachImageFontColor('#131b49')
+            setAttachImageBackgroundColor('#ffffff')
+            setAttachImageBorderColor('#131b49')
+            setAttachImageText('Add Image')
+            setAttachedImage(false);
+        }
+        
+    }
+
+    function attachImageHover(){
+        if(attachedImage === true){
+                setAttachImageBackgroundColor('#EB1B1B')
+                setAttachImageBorderColor('#EB1B1B')
+                setAttachImageText('Remove Image')
+        }
+    }
+
+    function attachImageLeave(){
+        if(attachedImage === true){
+            setAttachImageBackgroundColor('#131b49')
+            setAttachImageBorderColor('#131b49')
+            setAttachImageText('Image Added')
+        }
+    }
+
     //Loading
 
     // const [loading, setLoading] = useState(false);
@@ -89,19 +131,19 @@ function Feed() {
 
     return (
         <>
-            <NavLink to="/Profile/Alex" style={{ textDecoration: 'none' }}>
+            {/* <NavLink to="/Profile/Alex" style={{ textDecoration: 'none' }}>
                 <div className={styles["follower-feed-header-profile"]}>
                     <img className={styles["follower-feed-header-profile-pic"]} src={own_prof_pic} />
                     <div className={styles["follower-feed-header-profile-name"]}>Alex</div>
                 </div>
-            </NavLink>
+            </NavLink> */}
             <div className={styles["follower-feed-container"]}>
                 <div className={styles["follower-feed-header"]}>Feed</div>
                 <div className={styles["follower-feed-new-post"]} style={{ height: createPostOverlayDisplay.height }}>
                     <img className={styles["follower-feed-new-post-pic"]} src={feedPosts[0].pic} />
                     <div className={styles["follower-feed-new-post-name"]}>Bob</div>
                     <textarea className={styles["follower-feed-new-post-body"]} style={{ display: createPostOverlayDisplay.display }} placeholder="Update your followers on what's going on with you and your pets" />
-                    <button className={styles["follower-feed-new-post-attach-image"]} style={{ display: createPostOverlayDisplay.display }}>Add Image</button>
+                    <button className={styles["follower-feed-new-post-attach-image"]} style={{ display: createPostOverlayDisplay.display, color: attachImageFontColor, backgroundColor: attachImageBackgroundColor, borderColor: attachImageBorderColor}} onClick={attachImage} onMouseOver={attachImageHover} onMouseLeave={attachImageLeave}>{attachImageText}</button>
                     <button className={styles["follower-feed-new-post-submit"]} style={{ display: createPostOverlayDisplay.display }}>Submit</button>
                     {/* <button className={styles["follower-feed-new-post-expand-collapse"]} /> onClick={createPostOverlayToggle} */}
                 </div>

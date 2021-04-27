@@ -49,11 +49,11 @@
 
 .DropdownButton {
     background-color: var(--reversed-txt-clr);
-    border: solid var(--primary-clr) 2px;
+    border: solid var(--accent-color-2) 2px;
     width: 170px;
     height: 100%;
     margin-right: 30px;
-    color: var(--primary-clr);
+    color: var(--accent-color-2);
     border-radius:7px;
     box-sizing: border-box;
     /* box-shadow: var(--elevation-1); */

@@ -138,7 +138,7 @@ function ProfileInfo(props) {
                             <button className={styles.DropdownButton} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <span className={styles.DropdownText} onClick={() => setFollow(!follow)} >
-                                        {follow ? 'Following' : 'Follow'}
+                                        {follow ? 'Unfollow' : 'Follow'}
                                     </span>
                                     <div  onClick={showDropdown} >
                                         <img src={arrow} />
@@ -177,7 +177,7 @@ function ProfileInfo(props) {
                             <button className={styles.DropdownButton} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <span className={styles.DropdownText} onClick={() => setFollow(!follow)} >
-                                        {follow ? 'Following' : 'Follow'}
+                                        {follow ? 'Unfollow' : 'Follow'}
                                     </span>
                                     <div  onClick={showDropdown} >
                                         <img src={arrow} />

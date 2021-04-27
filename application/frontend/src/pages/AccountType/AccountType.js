@@ -23,7 +23,7 @@ function AccountTypePage() {
                             <button className={styles['shelter-button']}>Sign Up as Pet Shelter</button>
                         </NavLink>
                     </div>
-                    <div className={styles['business-container'+'']}>
+                    <div className={styles['business-container']}>
                         <img className={styles['business-img']} src={BusinessImage} />
                         <NavLink to="/business-signup">
                             <button className={styles['business-button']}>Sign Up as Pet Business</button>
