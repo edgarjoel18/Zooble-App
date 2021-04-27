@@ -18,13 +18,17 @@ import ShelterSignUpPage from './pages/Sign Up/ShelterSignUp.js'
 import ShelterSignUpPage2 from './pages/Sign Up/ShelterSignUpPage2.js'
 import BusinessSignUpPage from './pages/Sign Up/BusinessSignUp.js'
 import BusinessSignUpPage2 from './pages/Sign Up/BusinessSignUpPage2.js'
-import ProfilePage from './pages/Profile/Profile'
-import PetOwnerPage from './pages/Profile/PetOwnerProfilePage'
-import MimiProfilePage from './pages/Profile/MimiProfilePage'
-import MaxProfilePage from './pages/Profile/MaxProfilePage'
-import JujuProfilePage from './pages/Profile/JujuProfilePage'
-import ShelterProfilePage from './pages/Profile/ShelterProfilePage';
-import PetProfileCreatePage from './pages/Profile/PetProfileCreatePage'
+import ProfilePage from './pages/Profile/Profile';
+import PetOwner1Page from './pages/Profile/AlexProfilePage';
+import PetOwner2Page from './pages/Profile/MaryProfilePage';
+import MimiProfilePage from './pages/Profile/MimiProfilePage';
+import MaxProfilePage from './pages/Profile/MaxProfilePage';
+import JujuProfilePage from './pages/Profile/JujuProfilePage';
+import Shelter1ProfilePage from './pages/Profile/BadBoysDogPound';
+import Shelter2ProfilePage from './pages/Profile/BurgsdalePetShelter';
+import PetProfileCreatePage from './pages/Profile/PetProfileCreatePage';
+import Business1ProfilePage from './pages/Profile/BoomingPoodleGroomingProfilePage';
+import Business2ProfilePage from './pages/Profile/PawSpaProfilePage';
 import Messages from './pages/Messages/Messages'
 import MyPets from './pages/Pets/MyPets'
 import Pets from './pages/Pets/Pets'
@@ -91,11 +95,15 @@ const App = () => {
         <Route path="/Feed" component={Feed}/>
         <Route path="/MapSearch" component={MapSearch}/>
         <Route path="/Profile" exact component={ProfilePage}/>
-        <Route path="/Profile/Alex" component={PetOwnerPage}/>
+        <Route path="/Profile/PetOwnerId=1" component={PetOwner1Page}/>
+        <Route path="/Profile/PetOwnerId=2" component={PetOwner2Page}/>
         <Route path="/Profile/Mimi" component={MimiProfilePage}/>
         <Route path="/Profile/Max" component={MaxProfilePage}/>
         <Route path="/Profile/Juju" component={JujuProfilePage}/>
-        <Route path="/Profile/Shelter" component={ShelterProfilePage}/>
+        <Route path="/Profile/ShelterId=1" component={Shelter1ProfilePage}/>
+        <Route path="/Profile/ShelterId=2" component={Shelter2ProfilePage}/>
+        <Route path="/Profile/BusinessId=1" component={Business1ProfilePage}/>
+        <Route path="/Profile/BusinessId=2" component={Business2ProfilePage}/>
         <Route path="/Profile/PetCreate" component={PetProfileCreatePage}/>
         <Route path="/Photo" component={Photo}/>
         <Route path="/Messages" component={Messages}/>

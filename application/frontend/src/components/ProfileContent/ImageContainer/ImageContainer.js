@@ -74,7 +74,7 @@ function ImageContainer(props) {
                         box-shadow: var(--elevation-1);
                         `;
                     let displayPostModal = (
-                        <div onClick={() => presentPostModal(index)} key={props.image[index].name + index}>
+                        <div onClick={() => presentPostModal(index)} key={props.image[index].timestamp + index}>
                             <Img 
                                 className={styles.ImageStack_pic}
                             >
@@ -84,7 +84,7 @@ function ImageContainer(props) {
                     )
                     if (props.title === 'My Siblings' || props.title === 'My Pets')
                         displayPostModal = (
-                            <Link to={"/Profile/" + props.image[index].name} key={props.image[index].name + index} >
+                            <Link to={"/Profile/" + props.image[index].name} key={props.image[index].timestamp + index} >
                                 <Img 
                                     className={styles.ImageStack_pic}
                                 >

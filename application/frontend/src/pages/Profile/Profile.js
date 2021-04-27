@@ -156,7 +156,7 @@ const businessProfile = {
     accountType: 'business',
     id: '2',
     userName: 'Paw Spa',
-    userPicture: 'businessImage',
+    userPicture: 'business2Image',
     about: 'Paw Spa is a family business.',
     contactInfo: {
         phone: '(111) 111-1111', 
