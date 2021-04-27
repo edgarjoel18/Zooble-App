@@ -46,6 +46,8 @@
 
 .ButtonContainer a {
     text-decoration: none;
+    display: inline-block;
+    width: 100%;
 }
 
 .DropdownButton {
@@ -60,18 +62,17 @@
     /* box-shadow: var(--elevation-1); */
     outline: none;
     cursor: pointer;
-    transition: border-width 0.1s linear;
 }
 
-.DropdownButton:hover{
+/* .DropdownButton:hover{
     border-width: 3px;
-}
+} */
 
-.DropdownHidden {
+/* .DropdownHidden {
     display: none;
-}
+} */
 
-.DropdownContent {
+/* .DropdownContent {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -82,16 +83,48 @@
     box-shadow: var(--elevation-1);
     z-index: 100;
     border-radius: 7.5px;
-}
+} */
 
 .DropdownItem {
-    width: 100%;
+    padding-left: 0;
 }
 
-
 .DropdownItem:hover {
-    width: 100%;
     color: var(--primary-clr);
+}
+
+.DropdownContent{
+    opacity: 0;
+    width: 200px;
+    padding-left: 20px;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+    margin-top: 0px;
+    list-style: none;
+    border-radius: 7.5px;
+    position:absolute;
+    background-color: white;
+    box-shadow: var(--elevation-1);
+    z-index: 1;
+}
+
+/* .DropdownButton:focus + ul{
+    opacity:1;
+    visibility: visible;
+    transform: translateY(0px);
+} */
+
+.DropdownButton:hover + ul, .FollowingButton:hover + ul{
+    opacity:1;
+    visibility: visible;
+    transform: translateY(0px);
+}
+
+.DropdownContent:hover{
+    opacity:1;
+    visibility: visible;
+    transform: translateY(0px);
 }
 
 .FristButton {
@@ -138,4 +171,18 @@
 
 .DropdownText {
     flex-grow: 1;
+}
+
+.FollowingButton {
+    background-color: #ccc;
+    border: none;
+    width: 170px;
+    height: 100%;
+    margin-right: 30px;
+    color: white;
+    border-radius:7px;
+    box-sizing: border-box;
+    box-shadow: var(--elevation-1);
+    outline: none;
+    cursor: pointer;
 }

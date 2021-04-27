@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Link, useHistory } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 
 import shelterImg from '../../images/shelterProfile.jpg';
 import businessImg from '../../images/businessProfile.jpg';
@@ -10,7 +10,6 @@ import arrow from '../../images/Arrow.png';
 import styles from './ProfileInfo.module.css';
 
 import SendAMessage from '../../components/Modals/SendAMessage';
-import Backdrop from '../UI/Backdrop/Backdrop';
 import EditPetDetails from '../Modals/EditPetDetails';
 import EditButton from '../Buttons/EditButton';
 
@@ -21,7 +20,7 @@ function ProfileInfo(props) {
     //const [profileTitle, setProfileTitle] = useState('');
     const [editing, setEditing] = useState(false);
     const [follow, setFollow] = useState(false); // update this from backend
-    const [showBackdrop, setShowBackdrop] = useState(false);
+    // const [showBackdrop, setShowBackdrop] = useState(false);
 
     const [petType, setPetType] = useState({});
     const [petBreeds, setPetBreed] = useState([{}]);
@@ -67,16 +66,22 @@ function ProfileInfo(props) {
     //     console.log(files);
     // }
 
-    function showDropdown() {
-        setShowBackdrop(true);
-        let dropDownContent = document.getElementById('dropDownContent');
-        dropDownContent.className = styles.DropdownContent;
-    }
+    // function showDropdown() {
+    //     setShowBackdrop(true);
+    //     let dropDownContent = document.getElementById('dropDownContent');
+    //     dropDownContent.className = styles.DropdownContent;
+    // }
 
-    function closeDropdown() {
-        setShowBackdrop(false);
-        let dropDownContent = document.getElementById('dropDownContent');
-        dropDownContent.className = styles.DropdownHidden;
+    // function closeDropdown() {
+    //     setShowBackdrop(false);
+    //     let dropDownContent = document.getElementById('dropDownContent');
+    //     dropDownContent.className = styles.DropdownHidden;
+    // }
+
+    function onFollowHandler() {
+        let dropdownButton = document.getElementById('dropdownButton');
+        setFollow(!follow);
+        follow ? dropdownButton.className = styles.FollowingButton : dropdownButton.className = styles.DropdownButton;
     }
 
     console.log('[Image] is ' + props.profile.userPicture);
@@ -118,6 +123,8 @@ function ProfileInfo(props) {
 
     let displayName = null;
     let displayAccountInfo = null;
+    let dropdownButtonStyle = null;
+    follow ? dropdownButtonStyle = styles.FollowingButton : dropdownButtonStyle = styles.DropdownButton;
     switch(props.profile.accountType) {
         case 'shelter' :
             displayName = (
@@ -131,24 +138,23 @@ function ProfileInfo(props) {
                 </h1> 
             )
             displayAccountInfo = (
-                <div className={styles.ButtonContainer} >
+                <div className={styles.ButtonContainer} onClick={() => setFollow(!follow)} >
                     {!props.isSelfView ? (
-                        <React.Fragment>
-                            <Backdrop show={showBackdrop} clicked={closeDropdown} />
-                            <button className={styles.DropdownButton} >
+                        <div style={{position: 'relative'}}>
+                            <button className={dropdownButtonStyle} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                                    <span className={styles.DropdownText} onClick={() => setFollow(!follow)} >
+                                    <span className={styles.DropdownText} >
                                         {follow ? 'Following' : 'Follow'}
                                     </span>
-                                    <div  onClick={showDropdown} >
+                                    <div  >
                                         <img src={arrow} />
                                     </div>
                                 </div>
                             </button>
-                            <div className={styles.DropdownHidden} id='dropDownContent' > 
-                                <Link className={styles.DropdownItem} to="/Followers" >Followers</Link>
-                            </div>
-                        </React.Fragment>
+                            <ul className={styles.DropdownContent}>
+                                <li><NavLink className={styles.DropdownItem} to="/Followers">Followers</NavLink></li>
+                            </ul>
+                        </div>
                         ):
                         (
                             <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
@@ -170,24 +176,23 @@ function ProfileInfo(props) {
                 </h1> 
             )
             displayAccountInfo = (
-                <div className={styles.ButtonContainer} >
+                <div className={styles.ButtonContainer} onClick={() => setFollow(!follow)} >
                     {!props.isSelfView ? (
-                        <React.Fragment>
-                            <Backdrop show={showBackdrop} clicked={closeDropdown} />
-                            <button className={styles.DropdownButton} >
+                        <div style={{position: 'relative'}}>
+                            <button className={dropdownButtonStyle} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                                    <span className={styles.DropdownText} onClick={() => setFollow(!follow)} >
+                                    <span className={styles.DropdownText} >
                                         {follow ? 'Following' : 'Follow'}
                                     </span>
-                                    <div  onClick={showDropdown} >
+                                    <div  >
                                         <img src={arrow} />
                                     </div>
                                 </div>
                             </button>
-                            <div className={styles.DropdownHidden} id='dropDownContent' > 
-                                <Link className={styles.DropdownItem} to="/Followers" >Followers</Link>
-                            </div>
-                        </React.Fragment>
+                            <ul className={styles.DropdownContent}>
+                                <li><NavLink className={styles.DropdownItem} to="/Followers">Followers</NavLink></li>
+                            </ul>
+                        </div>                       
                         ):
                         (
                             <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
@@ -210,24 +215,23 @@ function ProfileInfo(props) {
                 </h1> 
             )
             displayAccountInfo = (
-                <div className={styles.ButtonContainer} >
+                <div className={styles.ButtonContainer} onClick={() => setFollow(!follow)} >
                     {!props.isSelfView ? (
-                        <React.Fragment>
-                            <Backdrop show={showBackdrop} clicked={closeDropdown} />
-                            <button className={styles.DropdownButton} >
+                        <div style={{position: 'relative'}}>
+                            <button className={dropdownButtonStyle} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                                    <span className={styles.DropdownText} onClick={() => setFollow(!follow)} >
+                                    <span className={styles.DropdownText} >
                                         {follow ? 'Following' : 'Follow'}
                                     </span>
-                                    <div onClick={showDropdown} >
+                                    <div  >
                                         <img src={arrow} />
                                     </div>
                                 </div>
                             </button>
-                            <div className={styles.DropdownHidden} id='dropDownContent' > 
-                                <Link className={styles.DropdownItem} to="/Followers" >Followers</Link>
-                            </div>
-                        </React.Fragment>
+                            <ul className={styles.DropdownContent}>
+                                <li><NavLink className={styles.DropdownItem} to="/Followers">Followers</NavLink></li>
+                            </ul>
+                        </div>
                         ):
                         (
                             <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
@@ -239,13 +243,6 @@ function ProfileInfo(props) {
             break;
         case 'pet':
             displayName = (
-                // <h1 className={styles.UserName} >
-                //     <input 
-                //         value={props.profile.userName} 
-                //         readOnly={!editing}
-                //         onChange={event => props.updateProfile('userName', event.target.value)} 
-                //     />
-                // </h1> 
                 <React.Fragment>
                     <div style={{display: 'flex'}} >
                         <h1 className={styles.UserName}>{props.profile.userName ? props.profile.userName : 'Name of Your Pet'}</h1>
@@ -266,25 +263,24 @@ function ProfileInfo(props) {
                 </React.Fragment>
             )
             displayAccountInfo = (
-                <div className={styles.ButtonContainer} >
+                <div className={styles.ButtonContainer} onClick={() => setFollow(!follow)} >
                     {!props.isSelfView ? (
-                        <React.Fragment>
-                            <Backdrop show={showBackdrop} clicked={closeDropdown} />
-                            <button className={styles.DropdownButton} >
+                        <div style={{position: 'relative'}}>
+                            <button className={dropdownButtonStyle} id="dropdownButton" >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                                    <span className={styles.DropdownText} onClick={() => setFollow(!follow)} >
+                                    <span className={styles.DropdownText}>
                                         {follow ? 'Following' : 'Follow'}
                                     </span>
-                                    <div onClick={showDropdown} >
+                                    <div  >
                                         <img src={arrow} />
                                     </div>
                                 </div>
                             </button>
-                            <div className={styles.DropdownHidden} id='dropDownContent' > 
-                                <Link className={styles.DropdownItem} to="/Followers" >Followers</Link>
-                                <Link className={styles.DropdownItem} to="/Profile/PetOwnerId=2" >My Owner</Link>
-                            </div>
-                        </React.Fragment>
+                            <ul className={styles.DropdownContent}>
+                                <li><NavLink className={styles.DropdownItem} to="/Followers">Followers</NavLink></li>
+                                <li><NavLink className={styles.DropdownItem} to="/Profile/PetOwnerId=2">My Owner</NavLink></li>
+                            </ul>
+                        </div>
                         ):
                         (   
                             <React.Fragment>
