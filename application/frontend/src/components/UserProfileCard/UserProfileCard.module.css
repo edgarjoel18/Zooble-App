@@ -7,9 +7,10 @@
 }
 
 .cardContainer {
-  max-width: 1440px;
+  max-width: 100%;
   margin: 30px auto;
   font-family: var(--ff-primary);
+  overflow-x: hidden;
 }
 
 .Tabs {

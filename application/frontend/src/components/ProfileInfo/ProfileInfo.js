@@ -144,7 +144,7 @@ function ProfileInfo(props) {
                             <button className={dropdownButtonStyle} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <span className={styles.DropdownText} >
-                                        {follow ? 'Following' : 'Follow'}
+                                        {follow ? 'Unfollow' : 'Follow'}
                                     </span>
                                     <div  >
                                         <img src={arrow} />
@@ -182,7 +182,7 @@ function ProfileInfo(props) {
                             <button className={dropdownButtonStyle} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <span className={styles.DropdownText} >
-                                        {follow ? 'Following' : 'Follow'}
+                                        {follow ? 'Unfollow' : 'Follow'}
                                     </span>
                                     <div  >
                                         <img src={arrow} />
@@ -221,7 +221,7 @@ function ProfileInfo(props) {
                             <button className={dropdownButtonStyle} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <span className={styles.DropdownText} >
-                                        {follow ? 'Following' : 'Follow'}
+                                        {follow ? 'Unfollow' : 'Follow'}
                                     </span>
                                     <div  >
                                         <img src={arrow} />
@@ -269,7 +269,7 @@ function ProfileInfo(props) {
                             <button className={dropdownButtonStyle} id="dropdownButton" >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <span className={styles.DropdownText}>
-                                        {follow ? 'Following' : 'Follow'}
+                                        {follow ? 'Unfollow' : 'Follow'}
                                     </span>
                                     <div  >
                                         <img src={arrow} />

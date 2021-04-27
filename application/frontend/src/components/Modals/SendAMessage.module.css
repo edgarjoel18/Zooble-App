@@ -4,6 +4,10 @@
     font-family: var(--ff-tertiary);
 }
 
+.sendAMessage-subject{
+    width: 100%;
+}
+
 .sendAMessage-body{
     margin-top:20px;
     width: 100%;

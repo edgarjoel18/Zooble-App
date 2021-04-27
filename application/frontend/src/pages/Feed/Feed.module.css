@@ -70,6 +70,11 @@
     font-size: var(--h2);
     font-family: var(--ff-primary);
     font-weight: 600;
+    transition: .15s ease-in-out;
+}
+
+.follower-feed-post-name:hover{
+    opacity: .75;
 }
 
 .follower-feed-post-timestamp{
@@ -115,6 +120,14 @@
     object-fit: cover;
     grid-area: 5 / 1 / span 1 / span 3;
     border-radius: 7.5px;
+}
+
+.follower-feed-new-post-prof_pic{
+    transition: .15s ease-in-out;
+}
+
+.follower-feed-post-prof_pic:hover {
+    opacity: .75;
 }
 
 .follower-feed-new-post{
@@ -164,9 +177,9 @@
 .follower-feed-new-post-attach-image{
     grid-area: 1 / 3 / span 1 / span 1;
     background-color: var(--reversed-txt-clr);
-    color: var(--primary-clr);
+    color: var(--accent-color-2);
     box-shadow: none;
-    border: 2px solid var(--primary-clr);
+    border: 2px solid var(--accent-color-2);
     border-radius: 7.5px;
     font-family: var(--ff-primary);
     font-size: var(--h3);
@@ -175,11 +188,11 @@
     height: 50px;
     line-height: 50px;
     cursor: pointer;
-    transition: border-width 0.1s linear;
+    transition: .15s ease-in-out;
 }
 
 .follower-feed-new-post-attach-image:hover{
-    border-width: 4px;
+    opacity: .75;
 }
 
 

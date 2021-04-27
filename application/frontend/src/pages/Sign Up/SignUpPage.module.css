@@ -159,4 +159,6 @@
     border-radius: 0 0 7.5px 7.5px;
     text-align: center;
     color: var(--reversed-txt-clr);
+    font-family: var(--ff-primary);
+    font-size: var(--h3);
 }

@@ -26,9 +26,13 @@
     border-radius: 7.5px;
     align-items: center;
     padding-left: 15px;
-    cursor:pointer;
+    
     transition: .15s ease-in-out;
     font-family: var(--ff-primary);
+}
+
+.my-pets-container-add-pet{
+    cursor: pointer;
 }
 
 .my-pets-container-add-pet:hover,
@@ -44,7 +48,8 @@
 .my-pets-container-add-pet-text,
 .my-pets-container-pet-name{
     margin-left: 15px;
-    font-size:var(--h3);
+    font-size:var(--h2);
+    cursor:pointer;
 }
 
 .my-pets-container-pet-pic{
