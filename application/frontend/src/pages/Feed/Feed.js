@@ -156,7 +156,9 @@ function Feed() {
                         <NavLink to={feedPost.link}>
                             <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic} />
                         </NavLink>
+                        <NavLink style={{textDecoration: 'none'}} to={feedPost.link}>
                         <div className={styles["follower-feed-post-name"]}>{feedPost.user_display_name}</div>
+                        </NavLink>
  
                         <div className={styles["follower-feed-post-timestamp"]}>{feedPost.timestamp}</div>
                         <div className={styles["follower-feed-post-likes"]}>{feedPost.likes}</div>
