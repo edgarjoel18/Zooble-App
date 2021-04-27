@@ -1,0 +1,34 @@
+.Text {
+    white-space: nowrap;
+    color: var(--inactive-txt-clr);
+    margin-left: 20px;
+    transition: .15s ease-in-out;
+}
+
+.Text:hover{
+    color: black;
+}
+
+.Tab {
+    width: 200px;
+    height: 50px;
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.14), 0px 0px 1px -1px rgba(0, 0, 0, 0.12), 0px 0px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 15px 15px 0 0;
+    cursor: pointer;
+    background-color: var(--reversed-txt-clr);
+}
+
+
+.ActiveText {
+    color: white;
+}
+
+.ActiveText:hover {
+    color: white;
+}
+
+.ActiveTab {
+    box-shadow: -2px 1px 1px 0 rgba(0,0,0,0.14), -2px 2px 0px -1px rgba(0,0,0,0.12), -2px 1px 3px 0 rgba(0,0,0,0.20);
+    z-index: 1;
+    background-color: var(--primary-clr);
+}

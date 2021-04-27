@@ -37,7 +37,8 @@
 }
 
 .ButtonContainer {
-    display: inline;
+    display: flex;
+    flex-wrap: nowrap;
     height: 42px;
     font-size: 20px;
     font-weight: 400;
