@@ -117,6 +117,10 @@
     border-radius: 7.5px;
 }
 
+.follower-feed-post-prof_pic:hover {
+    opacity: .75;
+}
+
 .follower-feed-new-post{
     /* position: sticky;
     position: -webkit-sticky;  */
