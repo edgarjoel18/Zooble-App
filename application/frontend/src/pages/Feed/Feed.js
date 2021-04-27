@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import {NavLink, useHistory} from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import styles from './Feed.module.css'
 import bus_prof_pic from '../../images/businessProfile.jpg'
 import shel_prof_pic from '../../images/shelterProfile.jpg'
@@ -16,6 +16,7 @@ function Feed() {
         {
             post_id: 1,
             user_display_name: 'Paw Spa',
+            link: "/Profile/BusinessId=2",
             profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
             likes: 0,
@@ -25,6 +26,7 @@ function Feed() {
         {
             post_id: 2,
             user_display_name: 'Burgsdale Pet Shelter',
+            link: "/Profile/ShelterId=2",
             profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
             likes: 10,
@@ -34,6 +36,7 @@ function Feed() {
         {
             post_id: 3,
             user_display_name: 'Alex',
+            link: "/Profile/PetOwnerId=1",
             profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
             likes: 20,
@@ -54,7 +57,7 @@ function Feed() {
     const [attachImageBackgroundColor, setAttachImageBackgroundColor] = useState('#ffffff');
     const [attachImageText, setAttachImageText] = useState('Add Image');
     const [attachImageBorderColor, setAttachImageBorderColor] = useState('#131b49')
-    const [attachedImage,setAttachedImage] = useState(false);  //real thing will be null or attached image?
+    const [attachedImage, setAttachedImage] = useState(false);  //real thing will be null or attached image?
 
 
     function openPostModal(feedPost) {
@@ -85,34 +88,34 @@ function Feed() {
         }
     }
 
-    function attachImage(){
-        if(attachedImage === false){
+    function attachImage() {
+        if (attachedImage === false) {
             setAttachImageFontColor('#ffffff')
             setAttachImageBackgroundColor('#131b49')
             setAttachImageBorderColor('#131b49')
             setAttachImageText('Image Added')
             setAttachedImage(true);
         }
-        else if(attachedImage === true){
+        else if (attachedImage === true) {
             setAttachImageFontColor('#131b49')
             setAttachImageBackgroundColor('#ffffff')
             setAttachImageBorderColor('#131b49')
             setAttachImageText('Add Image')
             setAttachedImage(false);
         }
-        
+
     }
 
-    function attachImageHover(){
-        if(attachedImage === true){
-                setAttachImageBackgroundColor('#EB1B1B')
-                setAttachImageBorderColor('#EB1B1B')
-                setAttachImageText('Remove Image')
+    function attachImageHover() {
+        if (attachedImage === true) {
+            setAttachImageBackgroundColor('#EB1B1B')
+            setAttachImageBorderColor('#EB1B1B')
+            setAttachImageText('Remove Image')
         }
     }
 
-    function attachImageLeave(){
-        if(attachedImage === true){
+    function attachImageLeave() {
+        if (attachedImage === true) {
             setAttachImageBackgroundColor('#131b49')
             setAttachImageBorderColor('#131b49')
             setAttachImageText('Image Added')
@@ -143,15 +146,18 @@ function Feed() {
                     <img className={styles["follower-feed-new-post-pic"]} src={feedPosts[0].pic} />
                     <div className={styles["follower-feed-new-post-name"]}>Bob</div>
                     <textarea className={styles["follower-feed-new-post-body"]} style={{ display: createPostOverlayDisplay.display }} placeholder="Update your followers on what's going on with you and your pets" />
-                    <button className={styles["follower-feed-new-post-attach-image"]} style={{ display: createPostOverlayDisplay.display, color: attachImageFontColor, backgroundColor: attachImageBackgroundColor, borderColor: attachImageBorderColor}} onClick={attachImage} onMouseOver={attachImageHover} onMouseLeave={attachImageLeave}>{attachImageText}</button>
+                    <button className={styles["follower-feed-new-post-attach-image"]} style={{ display: createPostOverlayDisplay.display, color: attachImageFontColor, backgroundColor: attachImageBackgroundColor, borderColor: attachImageBorderColor }} onClick={attachImage} onMouseOver={attachImageHover} onMouseLeave={attachImageLeave}>{attachImageText}</button>
                     <button className={styles["follower-feed-new-post-submit"]} style={{ display: createPostOverlayDisplay.display }}>Submit</button>
                     {/* <button className={styles["follower-feed-new-post-expand-collapse"]} /> onClick={createPostOverlayToggle} */}
                 </div>
                 {feedPosts.length == 0 && <li>No Feed Posts</li>}
                 {feedPosts && feedPosts.map((feedPost) => (
                     <div className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
-                        <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic} />
+                        <NavLink to={feedPost.link}>
+                            <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic} />
+                        </NavLink>
                         <div className={styles["follower-feed-post-name"]}>{feedPost.user_display_name}</div>
+ 
                         <div className={styles["follower-feed-post-timestamp"]}>{feedPost.timestamp}</div>
                         <div className={styles["follower-feed-post-likes"]}>{feedPost.likes}</div>
                         <button className={styles['follower-feed-post-like']} />
