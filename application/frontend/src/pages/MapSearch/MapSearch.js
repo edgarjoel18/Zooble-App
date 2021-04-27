@@ -306,16 +306,16 @@ function MapSearch(props) {
                                 }
 
                                 {recievedSearchResults && searchCategory == 'Pets' && recievedSearchResults.map((searchResult) => (
-                                    <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={searchResult.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                    <Link className={styles['profile-link']} to={"/Profile/" + searchResult.name}><li className={styles['search-result']} key={searchResult.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                 ))}
                                 {recievedSearchResults && searchCategory == 'Businesses' && recievedSearchResults.map((searchResult) => (
-                                    <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={searchResult.reg_business_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                    <Link className={styles['profile-link']} to={"/Profile/" + "BusinessId=" +searchResult.reg_business_id}><li className={styles['search-result']} key={searchResult.reg_business_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                 ))}
                                 {recievedSearchResults && searchCategory == 'Shelters' && recievedSearchResults.map((searchResult) => (
-                                    <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={searchResult.reg_shelter_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                    <Link className={styles['profile-link']} to={"/Profile/" + "ShelterId=" +searchResult.reg_shelter_id}><li className={styles['search-result']} key={searchResult.reg_shelter_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                 ))}
                                 {recievedSearchResults && searchCategory == 'Pet Owners' && recievedSearchResults.map((searchResult) => (
-                                    <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={searchResult.reg_pet_owner_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                    <Link className={styles['profile-link']} to={"/Profile/" + "PetOwnerId=" +searchResult.reg_pet_owner_id}><li className={styles['search-result']} key={searchResult.reg_pet_owner_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                 ))}
 
                             </ul>

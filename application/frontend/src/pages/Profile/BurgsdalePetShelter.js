@@ -10,9 +10,9 @@ import styles from './Profile.module.css'
 
 const shelterProfile = {
     accountType: 'shelter',
-    id: '1',
+    id: '2',
     userName: 'Burgsdale Pet Shelter',
-    userPicture: 'shelterImage',
+    userPicture: 'shelter2Image',
     about: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. ',
     contactInfo: {
         phone: '(415) 465-8544', 
@@ -50,43 +50,61 @@ const shelterProfile = {
         }
     ],
     photos: [
-        {   pet_id: 3,
-            name: 'Juju',
-            size_name: 'larg',
-            age_name: 'ten',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg' 
+        { 
+            post_id: 1,
+            user_display_name: 'Burgsdale Pet Shelter',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
+            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
+            likes: 0,
+            timestamp: '12/25/20 at 11:05 AM',
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         },
-        {   pet_id: 2,
-            name: 'Max',
-            size_name: 'small',
-            age_name: 'two',
-            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
+        { 
+            post_id: 2,
+            user_display_name: 'Burgsdale Pet Shelter',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
+            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
+            likes: 0,
+            timestamp: '12/25/20 at 11:05 AM',
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         },
-        { pet_id: 1,
-            name: 'Mimi',
-            size_name: 'medium',
-            age_name: 'six',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg' 
+        { 
+            post_id: 3,
+            user_display_name: 'Burgsdale Pet Shelter',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
+            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
+            likes: 0,
+            timestamp: '12/25/20 at 11:05 AM',
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         }
     ],
     petProfiles: [
-        { pet_id: 1,
-            name: 'Mimi',
-            size_name: 'medium',
-            age_name: 'six',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg' 
+        { 
+            post_id: 4,
+            user_display_name: 'Burgsdale Pet Shelter',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
+            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
+            likes: 0,
+            timestamp: '12/25/20 at 11:05 AM',
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         },
-        {   pet_id: 3,
-            name: 'Juju',
-            size_name: 'larg',
-            age_name: 'ten',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg' 
+        { 
+            post_id: 5,
+            user_display_name: 'Burgsdale Pet Shelter',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
+            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
+            likes: 0,
+            timestamp: '12/25/20 at 11:05 AM',
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         },
-        {   pet_id: 2,
-            name: 'Max',
-            size_name: 'small',
-            age_name: 'two',
-            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
+        { 
+            post_id: 6,
+            user_display_name: 'Burgsdale Pet Shelter',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
+            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
+            likes: 0,
+            timestamp: '12/25/20 at 11:05 AM',
+            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         }
     ]
 };

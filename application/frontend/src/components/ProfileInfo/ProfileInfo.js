@@ -82,15 +82,24 @@ function ProfileInfo(props) {
     console.log('[Image] is ' + props.profile.userPicture);
     let img = null;
     switch(props.profile.userPicture) {
-        case 'shelterImage' :
-            img = shelterImg;
+        case 'shelter1Image' :
+            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/BadBoysDogPoundPic.jpg';
             break;
-        case 'businessImage' :
+        case 'shelter2Image' :
+            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/BurgsdalePetShelterPic.jpg';
+            break;
+        case 'business1Image' :
+            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/BoomingPoodleGroomingPic.jpg';
+            break;
+        case 'business2Image' :
             img = businessImg;
             break;
-        case 'petOwnerImage' :
-            img = petOwnerImg;
+        case 'petOwner1Image' :
+            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/AlexPic.jpg';
             break;
+        case 'petOwner2Image' :
+        img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaryPic.jpg';
+        break;
         case 'petImage-Sasha' :
             img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg';
             break;
