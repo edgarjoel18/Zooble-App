@@ -8,12 +8,16 @@ import EditButton from '../../components/Buttons/EditButton';
 
 
 function Photo() {
-    const [name, setName] = useState(''); 
+    const [name, setName] = useState('');
+    const [photos, setPhotos] = useState([])
+    console.log(name);
+    
 
     useEffect(() => {
         const query = new URLSearchParams(location.search);
         setName(query.get('name'));
-    } , [])
+        setPhotos(dummyPhotos);
+    } , [name,photos])
 
     
     const dummyPhotos = [
@@ -72,10 +76,11 @@ function Photo() {
             body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
         }
     ];
+    console.log(dummyPhotos[0].user_display_name);
 
     
     const [editing, setEditing] = useState(false);
-    const [photos, setPhotos] = useState(dummyPhotos)
+
     let location = useLocation();
     let history = useHistory();
 
@@ -93,6 +98,7 @@ function Photo() {
         setPostModalDisplay(false);
     }
     function presentPostModal(post){
+        console.log(post);
         setSelectedPost(post);
         console.log('clicked on image');
         setPostModalDisplay(true);
@@ -107,8 +113,8 @@ function Photo() {
 
     let displayEditing = (
         <div className={styles.PhotosContainer} >
-            {photos.map((photo) => (
-                <div className={styles.PhotoDiv} onClick={() =>presentPostModal(photo)}>
+            {photos.map((photo, index) => (
+                <div key={index} className={styles.PhotoDiv} onClick={() =>presentPostModal(photo)}>
                  {/* <div onClick={() => deletePhoto(photo.pet_id)}> */}
                     <img key={photo.post_id} className={styles.Image} src={photo.pic} alt='No Image Found' />
                 </div>

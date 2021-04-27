@@ -64,6 +64,16 @@ function ShelterSignUpPage2() {
         }
     }
 
+
+    const customStyles = {
+        control: (base, state) => ({
+          ...base,
+          height: '54.5px',
+          'min-height': '54.5px',
+          'border-radius': '7.5px',
+        }),
+    };
+
     const history= useHistory();
 
     function OnClickHandler(){
@@ -170,6 +180,7 @@ function ShelterSignUpPage2() {
                         options={typeOptions}
                         placeholder="Animal Types"
                         theme={customTheme}
+                        styles={customStyles}
                         isSearchable
                         isMulti
                         components={animatedComponents}

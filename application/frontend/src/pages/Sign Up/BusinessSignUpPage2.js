@@ -72,19 +72,24 @@ function BusinessSignUpPage2() {
 
     function customTheme(theme) { //move this a separate file and import maybe?
         return {
-            control: base => ({
-                ...base,
-                height: 54.5,
-                minHeight: 54.5
-            }),
             ...theme,
             colors: {
                 ...theme.colors,
                 primary25: '#B3B3B3',
                 primary: '#1CB48F',
             }
+
         }
     }
+
+    const customStyles = {
+        control: (base, state) => ({
+          ...base,
+          height: '54.5px',
+          'min-height': '54.5px',
+          'border-radius': '7.5px',
+        }),
+    };
 
     const animatedComponents = makeAnimated();
 
@@ -187,6 +192,7 @@ function BusinessSignUpPage2() {
                             options={typeOptions}
                             placeholder="Business Categories"
                             theme={customTheme}
+                            styles={customStyles}
                             isSearchable
                             isMulti
                             components={animatedComponents}

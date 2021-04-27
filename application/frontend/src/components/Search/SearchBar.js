@@ -83,7 +83,7 @@ function SearchBar() {
   function searchForLatLng(lat,lng){
     const location = {
       pathname:'/MapSearch',
-      state: {lat:lat, lng:lng}
+      state: {lat:lat, lng:lng, searchCategoryParam: searchCategory}
     }
     history.push(location);
   }
