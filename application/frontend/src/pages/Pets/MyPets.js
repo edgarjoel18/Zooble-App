@@ -73,6 +73,12 @@ function MyPets() {
         setDeletionModalDisplay(false);
     }
 
+    function profileClicked(profile){
+        console.log(profile);
+        console.log("Profile Clicked");
+        history.push(profile);
+    }
+
     return (
         <>
 
@@ -85,9 +91,9 @@ function MyPets() {
                 <img className={styles['my-pets-container-add-pet-icon']} src={AddIcon}/>
                 <div className={styles['my-pets-container-add-pet-text']}>Add a Pet</div>
              </div>
-            {myPets && myPets.map((pet) =>(
-                    <div className={styles['my-pets-container-pet']} >
-                        <Link to={"/Profile/" + pet.pet_name}>
+            {myPets && myPets.map((pet,index) =>(
+                    <div key={index} className={styles['my-pets-container-pet']} >  {/*onClick={() => profileClicked('/Profile/' + pet.pet_name)}*/}
+                        <Link className={styles['my-pets-container-profile-link']} to={"/Profile/" + pet.pet_name} >
                             <div className={styles.LinkDiv}>
                                 <img className={styles['my-pets-container-pet-pic']} src={pet.pet_prof_pic}/>
                                 <div className={styles['my-pets-container-pet-name']}>{pet.pet_name}</div>

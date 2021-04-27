@@ -7,7 +7,20 @@ import Select from 'react-select'
 
 import makeAnimated from 'react-select/animated';
 
+//For address input and suggestions
+import {
+    Combobox,
+    ComboboxInput,
+    ComboboxPopover,
+    ComboboxList,
+    ComboboxOption,
+  } from "@reach/combobox";
+  import "@reach/combobox";
 
+  import usePlacesAutocomplete,{
+    getGeocode,
+    getLatLng,
+  } from "use-places-autocomplete";
 
 import TermsAndConditions from '../../components/Modals/TermsAndConditions'
 import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
@@ -86,6 +99,20 @@ function BusinessSignUpPage2() {
         }
     }
 
+        //Use Places Autocomplete call
+        const {
+            ready, 
+            value, 
+            suggestions: {status, data}, 
+            setValue, 
+            clearSuggestions,
+          } = usePlacesAutocomplete({
+            requestOptions:{
+                location: {lat: () => 37.773972,lng: () => -122.431297},
+                radius: 200 * 1000,
+            },
+          });
+
     return (
         <>
         <form className={styles['signup-container']}>
@@ -120,13 +147,38 @@ function BusinessSignUpPage2() {
 
                     <div className={styles['address-input-container']}>
                         <label className={styles['address-input-label']} for='business-address'>Business Address</label>
-                        <input
-                            type='text'
-                            placeholder='1600 Holloway Ave, San Francisco, CA, 94132'
-                            name='business-address'
-                            required
-                            onChange={e => setAddress(e.target.value)}
-                        />
+                        <Combobox 
+                            onSelect={async (address)=>{
+                            setValue(address,false);
+                            clearSuggestions();
+                            try{
+                                const results = await getGeocode({address});
+                                const{lat,lng} = await getLatLng(results[0]);
+                                console.log(lat,lng);
+                            } catch(error){
+                                console.log("error!")
+                            }
+                                console.log(address)
+                            }}
+                            >
+                            <ComboboxInput 
+                                value={value}
+                                placeholder= "Start Typing your Business's Address"
+                                onChange={(e)=> {
+                                    setValue(e.target.value);
+                                    //record lat lng to store in database
+                                }}
+                                required
+                                disabled={!ready}
+                            />
+                            <ComboboxPopover>
+                                <ComboboxList className={styles['combobox-list']}>
+                                    {status === "OK" && data.map(({id,description}) => 
+                                    <ComboboxOption key={id} value={description}/>
+                                )}
+                                </ComboboxList>
+                            </ComboboxPopover>
+                        </Combobox>
                     </div>
                 <div className={styles['types-input-container']}>
                     <label className={styles['types-input-label']} for='business-categories'>Business Categories</label>
@@ -154,7 +206,7 @@ function BusinessSignUpPage2() {
                 </div>
 
                 <div className={styles['btn-container']}>
-                    <button type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
+                    <button type='submit' className={styles['submit-btn']}>Sign Up</button>
                 </div>
 
         </form>
