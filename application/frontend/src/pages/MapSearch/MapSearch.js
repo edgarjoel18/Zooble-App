@@ -283,7 +283,7 @@ function MapSearch(props) {
                         </div>
                         <div className={styles['map-search-results-text-list']}>
                             <ul>
-                                {recievedSearchResults.length == 0 && <li className={styles['no-results']}>No Results that Match your Search. But here are some {searchCategory} you might like: </li>}
+                                {recievedSearchResults.length == 0 && <li className={styles['no-results']}>No {searchCategory} that Match your Search. But here are some {searchCategory} you might like: </li>}
                                 {recievedSearchResults.length == 0 && searchCategory == 'Pets' &&
                                     recommendedPets.map((searchResult) => (
                                         <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={recommendedPets.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
