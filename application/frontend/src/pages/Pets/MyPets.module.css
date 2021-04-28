@@ -46,6 +46,7 @@
 
 .my-pets-container-add-pet{
     cursor: pointer;
+    padding-left: 15px;
 }
 
 .my-pets-container-add-pet:hover,
