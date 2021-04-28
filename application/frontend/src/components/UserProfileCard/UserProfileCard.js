@@ -1,7 +1,7 @@
 import {AppBar, Card, Typography, Grid } from "@material-ui/core";
 // import { Card, CardColumns, Col } from "react-bootstrap";
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import Tab from './Tab/Tab';
 
@@ -206,6 +206,8 @@ function UserProfileCard(props) {
     },
   ]);
 
+  let history = useHistory();
+
   const EuCard = ({ title, src, thethingyintheplace }) => {
     return (
       <Card className="eu-card" key={`${thethingyintheplace}_Card_Item`}>
@@ -260,7 +262,13 @@ function UserProfileCard(props) {
         </Tabs>
       </div> */}
       <div className={styles.Tabs} >
-        {tabs}
+        <div style={{display: 'flex'}} >
+          {tabs}
+        </div>
+        <div style={{cursor: 'pointer'}}  >
+            {/* <button>filter</button> */}
+            <p onClick={() => history.goBack()} >Back to Profile</p>
+        </div>
       </div>
       {selectedTab === 0 && (
         <div>
