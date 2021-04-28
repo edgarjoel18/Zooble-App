@@ -8,11 +8,11 @@ import styles from './NavBar.module.css'
 function NavBarLeft({appUser}) {
   return (
     <span  className={styles["navbar-left"]}>
-      {!appUser && <NavLink to="/">
+      {!appUser && <NavLink to="/" activeClassName={styles["current"]}>
         <img className={styles["logo-img"]} src={LogoPng}/>
       </NavLink>
       }
-      {appUser && <NavLink to="/Feed">
+      {appUser && <NavLink to="/Feed" activeClassName={styles["current"]}>
         <img className={styles["logo-img"]} src={LogoPng}/>
       </NavLink>
       }
