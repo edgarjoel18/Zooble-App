@@ -29,6 +29,7 @@
 
 .edit-pet-details-name{
     grid-area: name;
+    width: 100%;
 }
 
 .edit-pet-details-size{

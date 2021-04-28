@@ -8,7 +8,7 @@ import PostModal from '../../components/Modals/PostModal'
 
 import ArrowIcon from '../../images/Created Icons/Arrow.svg'
 
-import ClipLoader from "react-spinners/ClipLoader";
+// import ClipLoader from "react-spinners/ClipLoader";
 
 function Feed() {
     const [postModalDisplay, setPostModalDisplay] = useState(false);
@@ -141,7 +141,7 @@ function Feed() {
                 </div>
             </NavLink> */}
             <div className={styles["follower-feed-container"]}>
-                <div className={styles["follower-feed-header"]}>Feed</div>
+                <div className={styles["follower-feed-header"]}></div>
                 <div className={styles["follower-feed-new-post"]} style={{ height: createPostOverlayDisplay.height }}>
                     <img className={styles["follower-feed-new-post-pic"]} src={feedPosts[0].pic} />
                     <div className={styles["follower-feed-new-post-name"]}>Bob</div>

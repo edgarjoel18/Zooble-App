@@ -132,10 +132,11 @@
 
 .no-results{
     list-style: none;
-    text-align: center;
+    text-align: left;
     font-size: var(--h1);
     color: var(--inactive-txt-clr);
     font-family: var(--ff-primary);
+    padding: 15px 15px 15px 0;
 }
 
 

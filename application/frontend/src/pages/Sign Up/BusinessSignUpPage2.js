@@ -3,9 +3,15 @@ import {useHistory} from 'react-router'
 import React from 'react';
 import styles from './SignUpPage2.module.css';
 
-import Select from 'react-select'
-
+import BaseSelect from "react-select";
+import FixRequiredSelect from "./FixRequiredSelect";
 import makeAnimated from 'react-select/animated';
+
+import TermsAndConditions from '../../components/Modals/TermsAndConditions'
+import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
+
+
+
 
 //For address input and suggestions
 import {
@@ -22,21 +28,27 @@ import {
     getLatLng,
   } from "use-places-autocomplete";
 
-import TermsAndConditions from '../../components/Modals/TermsAndConditions'
-import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
+
+const typeOptions = [  // final product will fetch from database
+    {value: 'Grooming', label: 'Grooming'},
+    {value: 'Supplies', label: 'Supplies'},
+    {value: 'Training', label: 'Training'},
+    {value: 'Kennels', label: 'Kennels'},
+    {value: 'Pet Stores', label: 'Pet Stores'}
+];
+  
+const Select = props => (
+    <FixRequiredSelect
+      {...props}
+      SelectComponent={BaseSelect}
+      options={props.options || typeOptions}
+    />
+);
 
 function BusinessSignUpPage2() {
-    const typeOptions = [  // final product will fetch from database
-        {value: 'Grooming', label: 'Grooming'},
-        {value: 'Supplies', label: 'Supplies'},
-        {value: 'Training', label: 'Training'},
-        {value: 'Kennels', label: 'Kennels'},
-        {value: 'Pet Stores', label: 'Pet Stores'}
-    ];
-
+    
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
     const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
-
 
     const [email, setEmail] = useState('')
     const [uname, setUname] = useState('')
@@ -196,6 +208,7 @@ function BusinessSignUpPage2() {
                             isSearchable
                             isMulti
                             components={animatedComponents}
+                            required
                         />
                 </div>
             </div>

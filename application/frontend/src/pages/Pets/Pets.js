@@ -56,19 +56,25 @@ function Pets() {
 
     return (
         <>
-        <div className={styles['my-pets-header']}>
-            Pets
-        </div>
         <div className={styles['my-pets-container']}>
-            {Pets.length == 0 && <div className={styles['my-pets-container-no-pets']}>This User has No Pets :(</div>}
-            {Pets && Pets.map((pet) =>(
-                <Link to={"/Profile/" + pet.pet_name} >
-                <div className={styles['my-pets-container-pet']}>
-                    <img className={styles['my-pets-container-pet-pic']} src={pet.pet_prof_pic}/>
-                    <div className={styles['my-pets-container-pet-name']}>{pet.pet_name}</div>
-                </div>
-                </Link>
-            ))}
+            <div className={styles['my-pets-header']}>
+                Pets
+            </div>
+            <div className={styles['my-pets-container-pets']}>
+                {Pets.length == 0 && <div className={styles['my-pets-container-no-pets']}>This User has No Pets :(</div>}
+                {Pets && Pets.map((pet) =>(
+                    
+                    <div className={styles['my-pets-container-pet']}>
+                        <Link className={styles['my-pets-container-profile-link']} to={"/Profile/" + pet.pet_name} >
+                        <div className={styles.LinkDiv}>
+                        <img className={styles['my-pets-container-pet-pic']} src={pet.pet_prof_pic}/>
+                        <div className={styles['my-pets-container-pet-name']}>{pet.pet_name}</div>
+                        </div>
+                        </Link>
+                    </div>
+                    
+                ))}
+            </div>
         </div>
         </>
     )

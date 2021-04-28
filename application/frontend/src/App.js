@@ -94,17 +94,39 @@ const App = () => {
         <Route path="/business-signup2" exact component={BusinessSignUpPage2}/>
         <Route path="/Feed" component={Feed}/>
         <Route path="/MapSearch" component={MapSearch}/>
-        <Route path="/Profile" exact component={ProfilePage}/>
-        <Route path="/Profile/PetOwnerId=1" component={PetOwner1Page}/>
-        <Route path="/Profile/PetOwnerId=2" component={PetOwner2Page}/>
-        <Route path="/Profile/Mimi" component={MimiProfilePage}/>
-        <Route path="/Profile/Max" component={MaxProfilePage}/>
-        <Route path="/Profile/Juju" component={JujuProfilePage}/>
-        <Route path="/Profile/ShelterId=1" component={Shelter1ProfilePage}/>
-        <Route path="/Profile/ShelterId=2" component={Shelter2ProfilePage}/>
-        <Route path="/Profile/BusinessId=1" component={Business1ProfilePage}/>
-        <Route path="/Profile/BusinessId=2" component={Business2ProfilePage}/>
-        <Route path="/Profile/PetCreate" component={PetProfileCreatePage}/>
+        <Route exact path="/Profile">
+          <ProfilePage appUser={appUser}/>
+        </Route>
+        <Route path="/Profile/PetOwnerId=1">
+          <PetOwner1Page appUser={appUser}/>
+        </Route>
+        <Route path="/Profile/PetOwnerId=2">
+          <PetOwner2Page appUser={appUser}/>
+        </Route>
+        <Route path="/Profile/Mimi">
+          <MimiProfilePage appUser={appUser}/>
+        </Route>
+        <Route path="/Profile/Max">
+          <MaxProfilePage appUser={appUser}/>
+        </Route>
+        <Route path="/Profile/Juju">
+          <JujuProfilePage appUser={appUser}/>
+        </Route>
+        <Route path="/Profile/ShelterId=1">
+          <Shelter1ProfilePage appUser={appUser}/>
+        </Route>
+        <Route path="/Profile/ShelterId=2">
+          <Shelter2ProfilePage appUser={appUser}/>
+        </Route>
+        <Route path="/Profile/BusinessId=1">
+          <Business1ProfilePage appUser={appUser}/>
+        </Route>
+        <Route path="/Profile/BusinessId=2">
+          <Business2ProfilePage appUser={appUser}/>
+        </Route>
+        <Route path="/Profile/PetCreate">
+          <PetProfileCreatePage appuser={appUser}/>
+        </Route>
         <Route path="/Photo" component={Photo}/>
         <Route path="/Messages" component={Messages}/>
         <Route path="/MyPets" component={MyPets}/>

@@ -260,6 +260,15 @@ padding-bottom: 10%; */
     color: var(--primary-clr)
 }
 
+.current{
+    cursor: default;
+}
+
+.current img:hover{
+    opacity:1;
+}
+
+
 
 
 

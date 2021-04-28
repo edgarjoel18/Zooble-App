@@ -211,7 +211,7 @@ function UserProfileCard(props) {
   const EuCard = ({ title, src, thethingyintheplace }) => {
     return (
       <Card className="eu-card" key={`${thethingyintheplace}_Card_Item`}>
-        <div style={{ display: "flex", width: "100%", padding: "14px" }}>
+        <div style={{ display: "flex", width: "200px", padding: "14px" }}>
           <div style={{ marginRight: "10px" }}>
             <img src={src} className="eu-card-img" />
           </div>
@@ -241,7 +241,8 @@ function UserProfileCard(props) {
   ));
 
   return (
-    <div className="tabContainer">
+    <div className={styles['followers-container']}>
+    <div className={styles["tabContainer"]}>
       {/* <div
         position="relative"
         elevation={0}
@@ -274,15 +275,18 @@ function UserProfileCard(props) {
         <div>
           <div
             style={{
-              columns: "2",
-              maxWidth: "1440px",
-              minHeight: '649.5px',
-              maxHeight: '650px',
-              overflowX: 'scroll',
+              // columns: "2",
+              width: '100%',
+              height: 'calc(100vh - 344px)',
+              // maxHeight: 'calc(100vh - 344px)',
+              // overflowX: 'scroll',
+              overflowY: 'auto',
               margin: "1px auto",
               boxShadow: 'var(--elevation-2)',
               borderRadius: '0 0 15px 15px',
-              padding:'16px'
+              padding:'16px',
+              display: 'flex',
+              flexDirection: 'column'
             }}
           >
             {" "}
@@ -310,18 +314,21 @@ function UserProfileCard(props) {
       )}
 
       {selectedTab === 1 && (
-        <Card elevation={0}>
+        <div>
           <div
             style={{
-              columns: "2",
-              maxWidth: "1440px",
-              minHeight: '649.5px',
-              maxHeight: '650px',
-              overflowX: 'scroll',
+              // columns: "2",
+              width: '100%',
+              height: 'calc(100vh - 344px)',
+              // maxHeight: 'calc(100vh - 344px)',
+              // overflowX: 'scroll',
+              overflowY: 'auto',
               margin: "1px auto",
               boxShadow: 'var(--elevation-2)',
               borderRadius: '0 0 15px 15px',
-              padding:'16px'
+              padding:'16px',
+              display: 'flex',
+              flexDirection: 'column'
             }}
           >
             {" "}
@@ -345,8 +352,9 @@ function UserProfileCard(props) {
               </Link>
             ))}
           </div>
-        </Card>
+        </div>
       )}
+    </div>
     </div>
   );
 }
