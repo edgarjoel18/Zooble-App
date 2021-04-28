@@ -12,10 +12,12 @@ import styles from './ProfileInfo.module.css';
 import SendAMessage from '../../components/Modals/SendAMessage';
 import EditPetDetails from '../Modals/EditPetDetails';
 import EditButton from '../Buttons/EditButton';
+import LoginRequired from '../Modals/LoginRequired';
 
 
 
 function ProfileInfo(props) {
+    console.log(props.appUser);
     //const [profilePic, setProfilePic] = useState('');
     //const [profileTitle, setProfileTitle] = useState('');
     const [editing, setEditing] = useState(false);
@@ -30,6 +32,8 @@ function ProfileInfo(props) {
     const [sendAMessageDisplay,setSendAMessageDisplay] = useState(false);
 
     const[editPetDetailsDisplay, setEditPetDetailsDisplay] = useState(false);
+
+    const [loginRequiredDisplay, setLoginRequiredDisplay] = useState(false);
 
    
 
@@ -51,7 +55,12 @@ function ProfileInfo(props) {
     }
 
     function sendAMessage(){
-        setSendAMessageDisplay(true);
+        if(props.appUser){
+            setSendAMessageDisplay(true);
+        }
+        else{
+            setLoginRequiredDisplay(true);
+        }
     }
 
     // function uploadPhotoHandler(rowFiles) {
@@ -79,9 +88,15 @@ function ProfileInfo(props) {
     // }
 
     function onFollowHandler() {
-        let dropdownButton = document.getElementById('dropdownButton');
-        setFollow(!follow);
-        follow ? dropdownButton.className = styles.FollowingButton : dropdownButton.className = styles.DropdownButton;
+        console.log('Follow button clicked')
+        if(props.appUser){
+            // let dropdownButton = document.getElementById('dropdownButton');
+            setFollow(!follow);
+            // follow ? dropdownButton.className = styles.FollowingButton : dropdownButton.className = styles.DropdownButton;
+        }
+        else{
+            setLoginRequiredDisplay(true);
+        }
     }
 
     console.log('[Image] is ' + props.profile.userPicture);
@@ -138,7 +153,7 @@ function ProfileInfo(props) {
                 </h1> 
             )
             displayAccountInfo = (
-                <div className={styles.ButtonContainer} onClick={() => setFollow(!follow)} >
+                <div className={styles.ButtonContainer} onClick={() => onFollowHandler()} >
                     {!props.isSelfView ? (
                         <div style={{position: 'relative'}}>
                             <button className={dropdownButtonStyle} >
@@ -176,7 +191,7 @@ function ProfileInfo(props) {
                 </h1> 
             )
             displayAccountInfo = (
-                <div className={styles.ButtonContainer} onClick={() => setFollow(!follow)} >
+                <div className={styles.ButtonContainer} onClick={() => onFollowHandler()} >
                     {!props.isSelfView ? (
                         <div style={{position: 'relative'}}>
                             <button className={dropdownButtonStyle} >
@@ -215,7 +230,7 @@ function ProfileInfo(props) {
                 </h1> 
             )
             displayAccountInfo = (
-                <div className={styles.ButtonContainer} onClick={() => setFollow(!follow)} >
+                <div className={styles.ButtonContainer} onClick={() => onFollowHandler()} >
                     {!props.isSelfView ? (
                         <div style={{position: 'relative'}}>
                             <button className={dropdownButtonStyle} >
@@ -263,7 +278,7 @@ function ProfileInfo(props) {
                 </React.Fragment>
             )
             displayAccountInfo = (
-                <div className={styles.ButtonContainer} onClick={() => setFollow(!follow)} >
+                <div className={styles.ButtonContainer} onClick={() => onFollowHandler()} >
                     {!props.isSelfView ? (
                         <div style={{position: 'relative'}}>
                             <button className={dropdownButtonStyle} id="dropdownButton" >
@@ -341,7 +356,8 @@ function ProfileInfo(props) {
                 </div>
                 {displayAccountInfo}
             </div>
-            <SendAMessage display={sendAMessageDisplay} onClose={()=> setSendAMessageDisplay(false)}/>         
+            <SendAMessage display={sendAMessageDisplay} onClose={()=> setSendAMessageDisplay(false)}/>
+            <LoginRequired display={loginRequiredDisplay} onClose={() =>setLoginRequiredDisplay(false)}/>    
         </div>
     );
 }

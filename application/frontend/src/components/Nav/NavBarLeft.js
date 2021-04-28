@@ -13,7 +13,7 @@ function NavBarLeft({appUser}) {
       </NavLink>
       }
       {appUser && <NavLink to="/Feed">
-        <img className={styles["logo-img-inactive"]} src={LogoPng}/>
+        <img className={styles["logo-img"]} src={LogoPng}/>
       </NavLink>
       }
     </span>

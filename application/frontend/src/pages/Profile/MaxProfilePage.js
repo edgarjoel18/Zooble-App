@@ -116,7 +116,8 @@ const petProfile = {
     ]
 };
 
-function Profile() {
+function Profile({appUser}) {
+    console.log(appUser);
     const [userProfile, setUserProfile] = useState(petProfile);
     const [selfView, setSelfView] = useState(true);
     const [vistor, setVistor] = useState(true);
@@ -152,7 +153,7 @@ function Profile() {
 
     return (
         <div className={styles.Profile} >
-            <ProfileInfo isSelfView={selfView} profile={userProfile} updateProfile={updateProfileHandler} />
+            <ProfileInfo appUser={appUser} isSelfView={selfView} profile={userProfile} updateProfile={updateProfileHandler} />
             <div className={styles.SwitchDiv} onClick={toggleSelfViewHandler} >
                 <span 
                     className={styles.SwitchView} 
