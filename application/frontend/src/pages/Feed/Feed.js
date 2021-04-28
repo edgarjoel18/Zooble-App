@@ -8,7 +8,7 @@ import PostModal from '../../components/Modals/PostModal'
 
 import ArrowIcon from '../../images/Created Icons/Arrow.svg'
 
-import ClipLoader from "react-spinners/ClipLoader";
+// import ClipLoader from "react-spinners/ClipLoader";
 
 function Feed() {
     const [postModalDisplay, setPostModalDisplay] = useState(false);

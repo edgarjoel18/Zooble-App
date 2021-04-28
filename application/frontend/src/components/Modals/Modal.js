@@ -5,15 +5,15 @@ import styles from './Modal.module.css'
 
 function Modal({display,children, onClose}) {
 
-    useEffect(()=>{
-        if(display){
+    useEffect(()=>{  //to disable scrolling behind modal
+        if(display){  //componentDidMount
             document.body.style.overflow = 'hidden';
         }
 
-        return () =>{
+        return () =>{  //componentWillUnmount
             document.body.style.overflow='unset';
         }
-    },[display])
+    },[display]) //if display changes
 
     // console.log("Children: " + {children});
     if(!display) return null
