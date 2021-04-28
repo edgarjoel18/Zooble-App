@@ -10,7 +10,7 @@
 }
 
 .Tab {
-    width: 25%;
+    width: 200px;
     height: 50px;
     box-shadow: var(--elevation-1);
     border-radius: 7.5px 7.5px 0 0;

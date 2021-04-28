@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import styles from './MyPets.module.css'  //same style as my pets without add pet button 
 
@@ -54,23 +54,24 @@ function Pets() {
     },
     ])
 
+    let history = useHistory();
+
     return (
         <>
         <div className={styles['my-pets-container']}>
             <div className={styles['my-pets-header']}>
                 Pets
+                <span onClick={() => history.goBack()} >Back to Profile</span>
             </div>
             <div className={styles['my-pets-container-pets']}>
                 {Pets.length == 0 && <div className={styles['my-pets-container-no-pets']}>This User has No Pets :(</div>}
                 {Pets && Pets.map((pet) =>(
                     
-                    <div className={styles['my-pets-container-pet']}>
-                        <Link className={styles['my-pets-container-profile-link']} to={"/Profile/" + pet.pet_name} >
+                    <div className={styles['my-pets-container-pet']} onClick={() => history.push('/Profile/' + pet.pet_name)}>
                         <div className={styles.LinkDiv}>
                         <img className={styles['my-pets-container-pet-pic']} src={pet.pet_prof_pic}/>
                         <div className={styles['my-pets-container-pet-name']}>{pet.pet_name}</div>
                         </div>
-                        </Link>
                     </div>
                     
                 ))}
