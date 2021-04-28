@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styles from './SignUpPage2.module.css';
 
-import Select from 'react-select'
-
+import BaseSelect from "react-select";
+import FixRequiredSelect from "./FixRequiredSelect";
 import makeAnimated from 'react-select/animated';
 
 import TermsAndConditions from '../../components/Modals/TermsAndConditions'
@@ -23,6 +23,22 @@ import {
     getGeocode,
     getLatLng,
   } from "use-places-autocomplete";
+
+  const typeOptions = [   //Real version will fetch from database
+    { value: 'Dog', label: 'Dog' },
+    { value: 'Cat', label: 'Cat' },
+    { value: 'Lizard', label: 'Lizard' },
+    { value: 'Monkey', label: 'Monkey' },
+];
+
+  const Select = props => (
+    <FixRequiredSelect
+      {...props}
+      SelectComponent={BaseSelect}
+      options={props.options || typeOptions}
+    />
+);
+
 
 function ShelterSignUpPage2() {
     const typeOptions = [   //Real version will fetch from database
@@ -131,6 +147,7 @@ function ShelterSignUpPage2() {
                         placeholder='(000) 000-0000'
                         name='shelter-phone-number'
                         pattern="[0-9]*"
+                        maxLength={10}
                         required
                         onChange={e => setPhoneNumber(e.target.value)}
                     />
@@ -184,6 +201,7 @@ function ShelterSignUpPage2() {
                         isSearchable
                         isMulti
                         components={animatedComponents}
+                        required
                     />
                 </div>
 
