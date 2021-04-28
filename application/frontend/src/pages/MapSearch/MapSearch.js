@@ -154,10 +154,10 @@ function MapSearch(props) {
             profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/AlexPic.jpg' 
         },
         { 
-            reg_business_id: 2,
+            reg_pet_owner_id: 2,
             reg_user_id: 4,
-            name: 'Paw Spa',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/PawSpaPic.jpg' 
+            name: 'Mary',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaryPic.jpg' 
         },
     ]
 
@@ -286,22 +286,22 @@ function MapSearch(props) {
                                 {recievedSearchResults.length == 0 && <li className={styles['no-results']}>No {searchCategory} that Match your Search. But here are some {searchCategory} you might like: </li>}
                                 {recievedSearchResults.length == 0 && searchCategory == 'Pets' &&
                                     recommendedPets.map((searchResult) => (
-                                        <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={recommendedPets.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                        <Link className={styles['profile-link']} to={"/Profile/" + searchResult.name} ><li className={styles['search-result']} key={recommendedPets.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                     ))
                                 }
                                 {recievedSearchResults.length == 0 && searchCategory == 'Businesses' &&
                                     recommendedBusinesses.map((searchResult) => (
-                                        <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={recommendedBusinesses.reg_business_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                        <Link className={styles['profile-link']} to={"/Profile/" + "BusinessId=" + searchResult.reg_business_id} ><li className={styles['search-result']} key={recommendedBusinesses.reg_business_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                     ))
                                 }
                                 {recievedSearchResults.length == 0 && searchCategory == 'Shelters' &&
                                     recommendedShelters.map((searchResult) => (
-                                        <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={recommendedShelters.reg_shelter_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                        <Link className={styles['profile-link']} to={"/Profile/" + "ShelterId=" + searchResult.reg_shelter_id} ><li className={styles['search-result']} key={recommendedShelters.reg_shelter_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                     ))
                                 }
                                 {recievedSearchResults.length == 0 && searchCategory == 'Pet Owners' &&
                                     recommendedPetOwners.map((searchResult) => (
-                                        <Link className={styles['profile-link']} to="/Profile"><li className={styles['search-result']} key={recommendedPetOwners.reg_pet_owner_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                        <Link className={styles['profile-link']} to={"/Profile/" + "PetOwnerId=" +searchResult.reg_pet_owner_id} ><li className={styles['search-result']} key={recommendedPetOwners.reg_pet_owner_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                     ))
                                 }
 
