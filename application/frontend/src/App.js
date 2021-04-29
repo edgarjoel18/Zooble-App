@@ -52,7 +52,11 @@ const App = () => {
   console.log("rerendering app");
 
   useEffect(() => {
+<<<<<<< Updated upstream
     axios.get("http://localhost:5000/login").then((response) =>{
+=======
+    axios.get("/api/login").then((response) =>{
+>>>>>>> Stashed changes
       console.log(response.data);
       console.log(response.data.user);
       setAppUser(response.data.user);
