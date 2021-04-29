@@ -74,6 +74,8 @@ const App = () => {
 
 
 
+
+
   return (
     <Router>
       <NavBar
@@ -81,7 +83,9 @@ const App = () => {
             updateLoginState={updateLoginState} 
       />
        <Switch>
-        <Route path="/" exact component={Home}/>
+        <Route exact path="/" >
+          <Home appUser={appUser} />
+        </Route>
         <Route exact path="/login-page" >
           <LoginPage appUser={appUser} updateLoginState={updateLoginState}/>
         </Route>

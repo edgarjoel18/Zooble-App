@@ -4,8 +4,15 @@ import SiteDemo2 from '../../components/SiteDemo2/SiteDemo2'
 import Footer from '../../components/Footer/Footer.js'
 
 import styles from "./Home.module.css"
+import { Redirect } from 'react-router'
 
-function Home() {
+function Home({appUser}) {
+
+    if(appUser){
+        console.log('User is Logged In');
+       return <Redirect to='/Feed'/>;
+     }
+
     return (
         <div>
             <HeroContainer/>
