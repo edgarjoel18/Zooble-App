@@ -1,0 +1,63 @@
+.edit-pet-details-header{
+    padding:15px 30px 30px 30px;
+    font-size: var(--h1);
+    font-weight: 600;
+    font-family: var(--ff-tertiary);
+}
+
+.edit-pet-details-container{
+    display: grid;
+    grid-template-areas: 'name name  name'
+                        'color .... type'
+                        'size  ....  breed'
+                        'submit submit submit';
+    grid-template-rows: auto auto auto 100px;
+    justify-items: center;
+    height: 700px
+}
+
+
+.edit-pet-details-name,
+.edit-pet-details-type,
+.edit-pet-details-breed,
+.edit-pet-details-colors,
+.edit-pet-details-submit,
+.edit-pet-details-size{
+    width: 250px;
+    margin: 30px;
+}
+
+.edit-pet-details-name{
+    grid-area: name;
+    width: 100%;
+}
+
+.edit-pet-details-size{
+    grid-area: size;
+}
+
+.edit-pet-details-color{
+    grid-area: colors;
+}
+
+.edit-pet-details-type{
+    grid-area: type;
+}
+
+.edit-pet-details-breed{
+    grid-area: breed;
+}
+
+
+.edit-pet-details-submit{
+    background-color: var(--primary-clr);
+    font-size: var(--h3);
+    line-height: 32px;
+    padding:0px;
+    color: white;
+    border: none;
+    border-radius: 7.5px;
+    box-shadow: var(--elevation-1);
+    cursor: pointer;
+    grid-area: submit;
+}

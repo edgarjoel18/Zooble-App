@@ -1,0 +1,151 @@
+.map-search-results-container{
+    display:grid;
+    grid-template-areas: 'map map map map search-results search-results';
+    grid-template-columns: repeat(4, 1fr) repeat(2, 1fr);
+    width: 100%;
+    height: calc(100vh - 100px); /*Need to find a better way to make container fill whole screen*/
+}
+
+/* MAP */
+.map-search-results-map{
+    background-color: var(--site-preview-2-container-color);
+    grid-area: map;
+}
+
+.map-search-results-map img{
+    width: 100%;
+    height: calc(100vh - 100px);
+    object-fit: cover;
+}
+
+
+.map-search-header{
+    padding-left: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--ff-primary);
+}
+
+.map-search-header-text{
+    font-family: var(--ff-tertiary);
+    font-weight: 600;
+    font-size: var(--h1);
+}
+
+.sort-dropdown-select{
+    border: none;
+    border-radius: 5px;
+    background-color: var(--reversed-txt-clr);
+    cursor:pointer;
+    padding-left:5px;
+}
+
+.map-search-results-header-action{
+    color:var(--secondary-txt-clr);
+    display: inline;
+    margin-left: 10px;
+    margin-bottom: 2px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.sort-dropdown-label{
+    font-size: var(--h3);
+    font-family: var(--ff-primary);
+    font-weight: 600;
+
+}
+
+.sort-dropdown img{
+    margin-right: 36px;
+}
+
+.map-search-results-text,
+.map-search-results-filter{
+    grid-area: search-results;
+    box-shadow: var(--elevation-1);
+    overflow: auto;
+}
+
+.map-search-results-filter{
+    display: flex;
+    flex-direction: column;
+}
+
+.search-result{
+    list-style: none;
+    display: block;
+    box-shadow: var(--elevation-1);
+    width: 95%;
+    margin-bottom: 25px;
+    padding: 10px 0 10px 10px;
+    border-radius: 10px;
+  }
+  
+  .search-result-pic{
+    width: 100px;
+    height:100px;
+    object-fit: cover;
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 10px;
+  
+  }
+
+  .profile-link{
+      text-decoration: none;
+  }
+
+  .search-result-name{
+      padding-left: 15px;
+      font-family: var(--ff-primary);
+      font-size: var(--h2);
+  }
+  
+  /* .map-search-results-text {
+    display:inline-block;
+    margin:0 15px auto 5px;
+    font-size: 20px;
+    text-align: left;
+    line-height: 1.6;
+    top: 0;
+    font-family: var(--ff-primary);
+    font-weight: 600;
+  } */
+
+
+  /* Filter Styling */
+
+.filter-business-categories,
+.filter-pet-types,
+.filter-pet-size,
+.filter-pet-colors,
+.filter-pet-age,
+.filter-pet-breed,
+.filter-shelter-pets{
+    padding-top: 25px;
+    width: 75%;
+    margin: 0 auto;
+}
+
+.no-results{
+    list-style: none;
+    text-align: left;
+    font-size: var(--h1);
+    color: var(--inactive-txt-clr);
+    font-family: var(--ff-primary);
+    padding: 15px 15px 15px 0;
+}
+
+
+.map-coming-soon{
+    text-align: center;
+    font-size: var(--h1);
+    color: var(--primary-txt-clr);
+    font-family: var(--ff-tertiary);
+    margin-top: calc(50vh - 100px);
+    font-weight: 600;
+    color: var(--accent-color-1)
+}

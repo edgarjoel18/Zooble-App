@@ -1,0 +1,104 @@
+.hero-container {
+    display: flex;
+    max-width: 100%;
+    height: 576px;
+}
+
+.left-side {
+    width: 50%;
+}
+
+.left-side-dog{
+    position: relative;
+    height: 576px;
+    float: right;
+    grid-area: 1 / 2 / span 2 / span 1;
+    /* border-right: 30px solid var(--primary-clr); */
+}
+
+.right-side{
+    position: relative;
+    width: 50%;
+    display: grid;
+    grid-template-rows: 30% auto auto auto 30%;
+    grid-template-columns: auto;
+    /* background-color: var(--primary-clr); */
+    /* padding-left: 30px; */
+    /* border-left: 30px solid var(--primary-clr);; */
+    padding-left: 10%;
+}
+
+.right-side-dog{
+    float: right;
+    margin-right: 50px;
+    height: 576px;
+}
+
+.right-side-text {
+    font-family: var(--ff-tertiary);
+    display: block;
+    grid-row: 2 / span 1;
+    /* color: var(--accent-color-1); */
+    color: var(--accent-color-2);;
+    font-weight: 600;
+    font-size: var(--hero);
+}
+
+.right-side-subtext {
+    /* color:rgba(29, 10, 10, 0.9); */
+    padding: 15px 0 15px 0;
+    grid-row: 3 /span 1;
+    color: var(--inactive-txt-clr);
+    font-size: var(--h2);
+    font-family: var(--ff-secondary);
+}
+
+.signup-button {
+    width: 195px;
+    height: 62px;
+    background-color: var(--primary-clr);
+    color: var(--reversed-txt-clr);
+    box-shadow: var(--elevation-1);
+    border: none;
+    border-radius: 7.5px;
+    cursor: pointer;
+}
+
+.signup-button span h3{
+    font-weight: 600;
+}
+
+.find-friend-button {
+    margin: 20px 0px  0px 50px;
+    width: 195px;
+    height: 62px;
+    cursor: default;
+    background-color: var(--reversed-txt-clr);
+    color: var(--accent-color-2);
+    border: 2px solid var(--accent-color-2);
+    border-radius: 7.5px;
+    cursor: pointer;
+    transition: .15s ease-in-out;
+    font-size: var(--h2);
+}
+
+.signup-button:hover, .find-friend-button:hover{  
+    transition: 0.15s;
+    transform: translateY(-4px);
+}
+
+.find-friend-button:hover{
+    color:var(--reversed-txt-clr);
+    background-color: var(--accent-color-2);
+}
+
+/* button span {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+}*/
+
+.button-container{
+    grid-row: 4 / span 1;
+}

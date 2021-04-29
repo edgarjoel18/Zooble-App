@@ -1,9 +1,0 @@
-.assignment-info{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: xx-large;
-    min-height: 95vh;
-}

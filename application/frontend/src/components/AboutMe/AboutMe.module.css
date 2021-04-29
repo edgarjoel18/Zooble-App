@@ -1,0 +1,81 @@
+.AboutMe {
+    display: flex;
+}
+
+.AboutMe button {
+    outline: none;
+}
+
+.AboutMe textarea:read-only {
+    border: none;
+}
+
+.Container {
+    width: 733px;
+    height: 585px;
+    padding: 20px;
+    border-radius: 0px 25px 25px 25px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: var(--elevation-2);
+}
+
+.Content {
+    max-width: 660px;
+    font-size: 1.5em;
+}
+
+.Content input {
+    outline: none;
+    border: var(--primary-clr) solid 2px;
+    border-radius: 10px;
+    width: 50%;
+    margin-bottom: 7px;
+    text-overflow: ellipsis;
+}
+
+.Content input:read-only {
+    outline: none;
+    border: none;
+}
+
+.TextArea:read-only {
+    resize: none;
+    outline: none;
+    background-color: unset;
+    box-shadow: unset;
+}
+
+.TextArea {
+    resize: none;
+    outline: none;
+    border: 1px solid var(--inactive-txt-clr);
+    border-radius: 7.5px;
+    width: 100%;  
+    padding-left: 10px;
+
+}
+
+.AddressTextArea {
+    resize: none;
+    outline: none;
+    border: var(--primary-clr) solid 2px;
+    border-radius: 5px;
+}
+
+.PetOwnerLinkLabel {
+    font-weight: 600;
+}
+
+.HoursDiv {
+    width: 50%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Days {
+    display: flex;
+    justify-content: space-between;
+}
+

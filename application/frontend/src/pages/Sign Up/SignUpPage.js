@@ -13,10 +13,24 @@ function SignUpPage() {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [password, setPassword] = useState('')
-    const [redonePassword, setRedonePassword] = useState('');
+
+    const [redonePassword, setRedonePassword] = useState(/*{
+        inputConfig: {
+            type: 'password',
+            placeholder: 'Confirm password',
+            name: 'psw-repeat'
+        },
+        value: '', 
+        valid: false,
+        touched: false
+    }*/)
+
+    const[acceptTerms, setAcceptTerms] = useState();
 
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
     const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
+
+
 
     function openTermsAndConditionsModal() {
         setTermsAndConditionsDisplay(true);
@@ -34,23 +48,75 @@ function SignUpPage() {
         setPrivacyPolicyDisplay(false);
     }
 
+    //states for sign up error display
+    const [error, setError] = useState(null);
+
+    const errorDisplay = error ? 
+    <div className={styles['signup-error-container']}>
+        {error}
+    </div> : "";
+
     const history = useHistory();
 
-    function OnClickHandler(e) {
+    function signUp(event) {
+        event.preventDefault();
         console.log(email)
         console.log(uname)
         console.log(firstName)
         console.log(lastName)
         console.log(password)
         console.log(redonePassword)
-        Axios.get('/sign-up', {
-                params: {
+        console.log(acceptTerms)
+        // if(email && uname && firstName && lastName && password && redonePassword && acceptTerms){
+            Axios.post('/sign-up', {
                     email: email,
                     firstName: firstName,
                     lastName: lastName,
                     uname: uname,
                     password: password,
                     redonePassword: redonePassword
+            },{withCredentials:true}).then(response => {
+                console.log(response);
+                console.log(response.data);
+                if(response.data.affectedRows === 1){
+                    history.push("/SignUpSuccess");
+                }
+ 
+            }).catch(error => {
+                if (error.response.data === "exists"){
+                    setError("An Account using that Email or Username already exists");
+                    console.log(error);
+                }
+                else if (error.response.data === "passwords not matching"){
+                    setError("The Passwords Entered Do Not Match");
+                    console.log(error);
+                }
+                else if (error.response.data === "password requirements"){
+                    setError("Your Password Must Have: 8-50 Characters and Contain: 1 Capital Letter, 1 Number, 1 Special Character");
+                    console.log(error);
+                }
+                console.log(error);
+            })
+        // }
+    }
+
+    function handleCheck(e) {
+        setAcceptTerms(e.target.checked);
+    }
+
+    // function onPasswordChangedHandler(event) {
+    //     const updatedPassword = {
+    //         ...redonePassword,
+    //         value: event.target.value,
+    //         valid: event.target.value === password,
+    //         touched: true
+    //     };
+    //     setRedonePassword(updatedPassword);
+    // }
+
+    return (
+        <>
+            <form className={styles['signup-container']} onSubmit={signUp}>
                 }
             }).then(response => {
                 console.log(response)
@@ -134,23 +200,22 @@ function SignUpPage() {
                             required
                         />
                     </div>
-
-                    <div className={styles['confirmpassword-input-container']}>
+                    <div className={styles['confirm-password-input-container']}>
                         <label className={styles['repeat-password-input-label']} for='psw-repeat'>Confirm Password</label>
-                        {/* <input
+                        <input
                             type='password'
                             placeholder='Confirm password'
                             name='psw-repeat'
                             onChange={e => setRedonePassword(e.target.value)}
                             required
-                        /> */}
-                        <Input
+                        />
+                        {/* <Input
                             config={redonePassword.inputConfig}
                             value={redonePassword.value}
                             valid={redonePassword.valid}
                             touched={redonePassword.touched}
                             changed={event => onPasswordChangedHandler(event)}
-                        />
+                        /> */}
                     </div>
                 </div>
 
@@ -158,14 +223,19 @@ function SignUpPage() {
                     <p>By creating an account you agree to our <button className={styles['terms-button']} onClick={openTermsAndConditionsModal}>Terms</button> &<button className={styles['policy-button']} onClick={openPrivacyPolicyModal}>Privacy Policy</button>
                         <input
                             type='checkbox'
-                            required name='remember'
+                            required 
+                            name='remember'
+                            onChange={e => handleCheck(e)}
                         />
                     </p>
                 </div>
                 <div className={styles['btn-container']}>
-                    {/* <button className={styles['submit-btn']} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button> */}
-                    <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button>
+
+                    <button className={styles['submit-btn']} type='submit' className={styles['submit-btn']} >Sign Up</button>
+                    {/* <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button> */}
                 </div>
+                {errorDisplay}
+
             </form>
             {/* Modals */}
             <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal} />
