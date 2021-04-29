@@ -2,6 +2,7 @@ import axios from "axios";
 import {useRef, useEffect, useState} from "react";
 import {NavLink, useHistory} from "react-router-dom";
 import parrotPng from '../../images/parrot.png';
+import DropdownArrow from '../../images/Created Icons/Arrow.svg';
 
 import styles from './NavBar.module.css'
 
@@ -30,7 +31,7 @@ let useClickOutside = (handler) =>{
 function NavBarRight({appUser, updateLoginState}) {
   const history = useHistory();
 
-  const [accountMenuDisplay, setAccountMenuDisplay] = useState('none');
+  const [accountMenuDisplay, setAccountMenuDisplay] = useState({display: 'none'});
 
   function logoutHandler(){
     axios.get("/api/logout").then((response) =>{
@@ -46,13 +47,13 @@ function NavBarRight({appUser, updateLoginState}) {
   }
 
   function accountMenuToggle(){
-    if(accountMenuDisplay == 'block')
-    {
-      setAccountMenuDisplay('none');
+    if(accountMenuDisplay =={display:'block'}){
+      setAccountMenuDisplay({display: 'none'});
     }
     else{
-      setAccountMenuDisplay('block');
+      setAccountMenuDisplay({display: 'block'});
     }
+    
   }
 
   // useEffect(() =>{
@@ -60,16 +61,16 @@ function NavBarRight({appUser, updateLoginState}) {
   // },[appUser])
 
   let domNode = useClickOutside(()=>{
-    setAccountMenuDisplay('none')
+    setAccountMenuDisplay({display: 'none'})
   })
 
   return (
         <>
         {!appUser && <button className={styles["login-link"]} onClick={()=>history.push("/login-page")}>Login</button>}
         {appUser && <NavLink to="/Messages" className={styles["messages-menu"]}>Messages</NavLink>}
-        {appUser &&<span className="account-menu-dropdown">
-          <button className={styles["account-menu-dropdown-button"]} onClick={accountMenuToggle}>Account</button>
-          <ul ref={domNode} className={styles["account-menu-dropdown-content"]} style={{display: accountMenuDisplay}}>
+        {appUser &&<span ref={domNode} className="account-menu-dropdown">
+          <button className={styles["account-menu-dropdown-button"]} onClick={accountMenuToggle}>Account<img className={styles["account-menu-dropdown-arrow"]} src={DropdownArrow}/></button>
+          <ul  className={styles["account-menu-dropdown-content"]} style={ accountMenuDisplay}>
             <li><NavLink className={styles["account-menu-dropdown-link"]} to="/Profile">My Profile</NavLink></li>
             <li><NavLink className={styles["account-menu-dropdown-link"]} to="/MyPets">My Pets</NavLink></li>
             <li><NavLink className={styles["account-menu-dropdown-link"]} to="/" onClick={logoutHandler}>Logout</NavLink></li>

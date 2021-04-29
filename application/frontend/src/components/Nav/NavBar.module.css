@@ -93,6 +93,9 @@
     line-height: 75px;
     /* background: url('../../images/Created\ Icons/Account.svg') no-repeat; */
     transition: .15s ease-in-out;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
 }
 
 .account-menu-dropdown-button:hover{
@@ -101,15 +104,14 @@
 
 
 .account-menu-dropdown-content{
-    opacity: 1;
-    /* visibility: hidden; */
+    /* opacity: 1; */
     /* transform: translateY(-10px); */
     /* transition: all 0.4s ease; */
     margin-top: 0px;
     list-style: none;
     border-radius: 7.5px;
     position:absolute;
-    right: 10px;
+    right: 20px;
     top: 65px;
     background-color: white;
     box-shadow: var(--elevation-1);
@@ -139,6 +141,11 @@
     visibility: visible;
     transform: translateY(0px);
 } */
+
+.account-menu-dropdown-arrow{
+    transform: rotate(180deg);
+    margin-left: 10px;
+}
 
 select {
   -webkit-appearance: none;
