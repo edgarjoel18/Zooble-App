@@ -197,7 +197,7 @@ function MapSearch(props) {
             console.log('Search Term: ' + state.searchTermParam);
             setSearchCategory(state.searchCategoryParam);
             setSearchTerm(state.searchTermParam);
-            Axios.get('/search', {  //take in filters here? for final version
+            Axios.get('http://localhost:5000/search', {  //take in filters here? for final version
                 params: {
                   searchTerm: state.searchTermParam,
                   searchCategory:state.searchCategoryParam}})

@@ -1,18 +1,25 @@
-const path = require("path");
+// const path = require("path");
 const express = require("express");
 const app = express();
 //const db = require('./database.js')
 const mysql = require('mysql2');
-const { copyFileSync } = require("fs");
+// const { copyFileSync } = require("fs");
 const bcrypt = require('bcrypt');
-const { request } = require("http");
-const { response } = require("express");
+// const { request } = require("http");
+// const { response } = require("express");
 const session = require('express-session');
 
 const cookieParser = require('cookie-parser');
-const { traceDeprecation } = require("process");
+// const { traceDeprecation } = require("process");
 
-// const cors = require('cors');
+const cors = require('cors');
+
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true
+}
+
+app.use(cors(corsOptions));
 
 const connection = mysql.createConnection({
     host:'csc648project-database.ceh0a99r5rym.us-west-2.rds.amazonaws.com',
@@ -26,7 +33,7 @@ connection.connect(function(err){
     console.log("Connected!");
 })
 
-app.use(cookieParser());
+// app.use(cookieParser());
 
 app.use(session({
     key: "userId",
@@ -47,10 +54,11 @@ app.use(express.urlencoded({extended : true}));
 app.use(express.json());
 
 app.get("/login",(req, res) =>{
+    console.log("req.session.username: ", req.session.username);
     if(req.session.username){
         res.send({loggedIn: true, user: req.session.username})
     } else{
-        res.send({loggedIn: false})
+        res.send({loggedIn: false}) 
     }
 })
 
@@ -74,7 +82,7 @@ app.post("/login", (req, res) =>{
                     }else if(result){
                         req.session.loggedin = true;
                         req.session.username = username;
-                        console.log(req.session.username);
+                        console.log("Req.session.username: ", req.session.username);
                         console.log(result);
                         res.status(200).json(result)
                         console.log("Logged in.");

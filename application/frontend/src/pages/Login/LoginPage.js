@@ -27,7 +27,7 @@ function LoginPage({appUser, updateLoginState}) {
         console.log(password);
             
             console.log("AppUser in Login Handler: " + appUser);
-            Axios.post('/login', {
+            Axios.post('http://localhost:5000/login', {
                     username: username,
                     password: password,
                 },{withCredentials:true})

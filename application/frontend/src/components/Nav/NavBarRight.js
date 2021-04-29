@@ -9,7 +9,7 @@ function NavBarRight({appUser, updateLoginState}) {
   const history = useHistory();
 
   function logoutHandler(){
-    axios.get("/logout").then((response) =>{
+    axios.get("http://localhost:5000/logout").then((response) =>{
       console.log(response.data.loggedIn);
       console.log(response.data.user);
       updateLoginState(response.data.loggedIn,response.data.user);
