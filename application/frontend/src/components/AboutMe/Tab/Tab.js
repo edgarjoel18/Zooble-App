@@ -1,33 +1,33 @@
 import React from 'react';
 
-import styles from './Tag.module.css';
+import styles from './Tab.module.css';
 
-function Tag(props) {
+function Tab(props) {
 
     let textStyle = styles.Text;
-    let tagStyle = styles.Tag
+    let tabStyle = styles.Tab
     if (props.id === props.selected) {
         textStyle = [styles.Text, styles.ActiveText].join(' ');
-        tagStyle = [styles.Tag, styles.ActiveTag].join(' ');
+        tabStyle = [styles.Tab, styles.ActiveTab].join(' ');
     }
 
-    let tagText = props.section;
+    let tabText = props.section;
     let aboutStyle = {};
-    if (tagText === 'About') {
+    if (tabText === 'About') {
         aboutStyle = {marginTop: '35px'};
         if (props.accountType === 'pet owner' || props.accountType === 'pet')
-            tagText = props.section + ' Me';
+            tabText = props.section + ' Me';
         else 
-            tagText = props.section + ' Us';
+            tabText = props.section + ' Us';
     }
 
     return (
-        <div className={tagStyle} id="tag" onClick={() => props.clicked(props.id)}>
+        <div className={tabStyle} onClick={() => props.clicked(props.id)}>
             <p className={textStyle} style={aboutStyle}  >
-                {tagText}
+                {tabText}
             </p>
         </div>
     );
 }
 
-export default Tag;
+export default Tab;

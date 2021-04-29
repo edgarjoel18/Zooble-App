@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import Tag from './Tag/Tag';
+import Tab from './Tab/Tab';
 import EditButton from '../Buttons/EditButton'
 
 import styles from './AboutMe.module.css';
@@ -8,9 +8,9 @@ import styles from './AboutMe.module.css';
 
 import EditBusinessHours from '../../components/Modals/EditBusinessHours'
 
-const shelterProfileTags = ["About", "Contact Info"]//, "Recent Posts"]
-const businessProfileTags = ["About", "Business Info"]//, "Recent Posts"]
-const petOwnerProfileTags = ["About"]//, "Recent Posts"]
+const shelterProfileTabs = ["About", "Contact Info"]//, "Recent Posts"]
+const businessProfileTabs = ["About", "Business Info"]//, "Recent Posts"]
+const petOwnerProfileTabs = ["About"]//, "Recent Posts"]
 
 function AboutMe(props) {
     const [selected, setSelected] = useState('About');
@@ -44,7 +44,7 @@ function AboutMe(props) {
 
     // }, [address, phone, changing])
 
-    function onTagClickHandler(id) {
+    function onTabClickHandler(id) {
         setSelected(id);
     }
 
@@ -60,20 +60,20 @@ function AboutMe(props) {
         console.log('cancel')
     }
 
-    let profileTags = null;
+    let profileTabs = null;
     // let displayPetOwnerLink = null;
     switch (props.profile.accountType) {
         case 'shelter':
-            profileTags = shelterProfileTags;
+            profileTabs = shelterProfileTabs;
             break;
         case 'business':
-            profileTags = businessProfileTags;
+            profileTabs = businessProfileTabs;
             break;
         case 'pet owner':
-            profileTags = petOwnerProfileTags;
+            profileTabs = petOwnerProfileTabs;
             break;
         case 'pet':
-            profileTags = petOwnerProfileTags;
+            profileTabs = petOwnerProfileTabs;
             // displayPetOwnerLink = (
             //     <div>
             //         <span className={styles.PetOwnerLinkLabel} >My Owner: </span>
@@ -82,11 +82,11 @@ function AboutMe(props) {
             // )
             break;
         default:
-            profileTags = null;
+            profileTabs = null;
     }
 
-    let tags = profileTags.map(tag => (
-        <Tag key={tag} id={tag} section={tag} selected={selected} clicked={onTagClickHandler} accountType={props.profile.accountType} />
+    let tabs = profileTabs.map(tab => (
+        <Tab key={tab} id={tab} section={tab} selected={selected} clicked={onTabClickHandler} accountType={props.profile.accountType} />
     ))
 
     let content = null; 
@@ -198,7 +198,7 @@ function AboutMe(props) {
         <>
         <div className={styles.AboutMe} >
             <div style={{display: "flex", flexDirection: "column"}} >
-                {tags}
+                {tabs}
             </div>
             <div className={styles.Container} >
                 <div className={styles.Content} >

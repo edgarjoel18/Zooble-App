@@ -28,8 +28,16 @@
 }
 
 .edit-pet-details-name{
+    display: block;
     grid-area: name;
     width: 100%;
+    margin-left: 97px;
+}
+
+.edit-pet-details-name input{
+    display: block;
+    border: solid #ccc 1px;
+    border-radius: 5px;
 }
 
 .edit-pet-details-size{

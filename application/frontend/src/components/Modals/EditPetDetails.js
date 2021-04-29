@@ -72,6 +72,7 @@ function EditPetDetails(props) {
                         type="text" 
                         id="name" 
                         name="pet_name" 
+                        maxLength="25"
                         value={props.profile.userName}
                         onChange={event => props.updateProfile('userName', event.target.value)} />
                 </div>
