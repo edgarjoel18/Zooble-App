@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Modal from './Modal'
 import {NavLink} from 'react-router-dom'
+import { RedirectPathContext } from '../../context/redirectPath';
 
 import styles from './LoginRequired.module.css';
 
-function LoginRequired({display, onClose}) {
+function LoginRequired({display, onClose, redirect}) {
+    const redirectContext = useContext(RedirectPathContext);
+
+    useEffect(() => {
+        console.log('[LoginRequired: redirect] ' + redirect);
+        redirectContext.redirectTo(redirect);
+        console.log(redirectContext.redirectPath)
+    }, [display])
+
     if(!display) return null;
     return (
         <Modal display={display} onClose={onClose}>
