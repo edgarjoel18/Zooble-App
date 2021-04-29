@@ -35,15 +35,24 @@ function ImageContainer(props) {
         console.log('displayImageStack');
         console.log(props.image);
         console.log(props.image[0]);
-        if (props.image.length === 0)
+        if (val === 0)
             return (
                 <Link onMouseEnter={() => setText('Photo upload coming soon')} onMouseLeave={() => setText('')}>
                     <div className={styles.EmptyDiv} >
                     </div>
                 </Link>
             );
+        // set limited amount of photos displayed 
         let marginToRight = null;
-        accountType === 'shelter' ? marginToRight = 40 : marginToRight = 67.6;
+        if (accountType === 'shelter') {
+            marginToRight = 40;
+            val = Math.min(val, 3);
+        }
+        else {
+            marginToRight = 67.6;
+            val = Math.min(val, 6);
+        }
+        // accountType === 'shelter' ? marginToRight = 40 : marginToRight = 67.6;
         let imageStack = [];
         for (let i = 0; i < val; i++) {
             imageStack.push(i);
@@ -82,7 +91,7 @@ function ImageContainer(props) {
                             </Img>
                         </div>
                     )
-                    if (props.title === 'My Siblings' || props.title === 'My Pets')
+                    if (props.title === 'My Siblings' || props.title === 'My Pets' || props.title === 'Pets')
                         displayPostModal = (
                             <Link to={"/Profile/" + props.image[index].name} key={props.image[index].timestamp + index} >
                                 <Img 
@@ -93,12 +102,7 @@ function ImageContainer(props) {
                                 </Img>
                             </Link>
                         )
-                    return (
-                        // <a href={props.image[index].profile_pic} key={props.image[index].pet_id} > //Removed to test post modal functionality
-                        // <Link to={"/Profile/" + props.image[index].name} ></Link>
-                        displayPostModal
-                        //</a>
-                    );
+                    return displayPostModal
                 })}
             </div>
         );
