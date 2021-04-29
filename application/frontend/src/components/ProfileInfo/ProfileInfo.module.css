@@ -115,7 +115,7 @@
     transform: translateY(0px);
 } */
 
-.DropdownButton:hover + ul, .FollowingButton:hover + ul{
+.DropdownButton:hover + ul, .UnfollowButton:hover + ul{
     opacity:1;
     visibility: visible;
     transform: translateY(0px);
@@ -150,7 +150,7 @@
     border-radius:7px;
     box-sizing: border-box;
     border: none;
-    box-shadow: var(--elevation-1);
+    /* box-shadow: var(--elevation-1); */
     text-align: center;
     align-items: center;
     outline: none;
@@ -173,16 +173,15 @@
     flex-grow: 1;
 }
 
-.FollowingButton {
+.UnfollowButton {
     background-color: #ccc;
     border: none;
     width: 170px;
     height: 100%;
     margin-right: 30px;
-    color: white;
+    color: #545454;
     border-radius:7px;
     box-sizing: border-box;
-    box-shadow: var(--elevation-1);
     outline: none;
     cursor: pointer;
 }

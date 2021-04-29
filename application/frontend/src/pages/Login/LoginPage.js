@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Axios from "axios";
 import styles from './LoginPage.module.css';
 import { Redirect, useHistory } from "react-router-dom";
 import ForgotPassword from "../../components/Modals/ForgotPassword";
+
+import { RedirectPathContext } from '../../context/redirectPath';
 
 function LoginPage({appUser, updateLoginState}) {
 
@@ -13,6 +15,8 @@ function LoginPage({appUser, updateLoginState}) {
     const [forgotPasswordModalDisplay, setForgotPasswordModalDisplay] = useState(false);
 
     const [error, setError] = useState(null);
+
+    const redirectContext = useContext(RedirectPathContext);
 
     let history = useHistory();
 
@@ -37,7 +41,7 @@ function LoginPage({appUser, updateLoginState}) {
                     if(response.data === true){
                         console.log(username);
                         updateLoginState(response.data,username);
-                        history.push('/Feed')
+                        history.push(redirectContext.redirectPath)
                     }
                 })
                 .catch(error => {
@@ -49,7 +53,7 @@ function LoginPage({appUser, updateLoginState}) {
 
     if(appUser){
          console.log('User is Logged In');
-        return <Redirect to="/Feed"/>
+        return <Redirect to={redirectContext.redirectPath} />
     }
 
     return (

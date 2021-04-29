@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-
-import { Link, NavLink, useHistory } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 
 import shelterImg from '../../images/shelterProfile.jpg';
 import businessImg from '../../images/businessProfile.jpg';
@@ -13,6 +12,7 @@ import SendAMessage from '../../components/Modals/SendAMessage';
 import EditPetDetails from '../Modals/EditPetDetails';
 import EditButton from '../Buttons/EditButton';
 import LoginRequired from '../Modals/LoginRequired';
+import { RedirectPathContext } from '../../context/redirectPath';
 
 
 
@@ -30,18 +30,19 @@ function ProfileInfo(props) {
     // const [petSize, setPetSize] = useState();
 
     const [sendAMessageDisplay,setSendAMessageDisplay] = useState(false);
-
     const[editPetDetailsDisplay, setEditPetDetailsDisplay] = useState(false);
-
     const [loginRequiredDisplay, setLoginRequiredDisplay] = useState(false);
 
-   
+    const history = useHistory();
+    const location = useLocation();
 
-    let history = useHistory();
+    const redirectContext = useContext(RedirectPathContext);
 
     useEffect(() => {
         setPetType(props.profile.petType);
         setPetBreed(props.profile.petBreeds);
+        if (redirectContext.redirectPath === location.pathname)
+            redirectContext.redirectTo('/Feed');
     },[]);
 
     function openEditModal(){
@@ -90,9 +91,7 @@ function ProfileInfo(props) {
     function onFollowHandler() {
         console.log('Follow button clicked')
         if(props.appUser){
-            // let dropdownButton = document.getElementById('dropdownButton');
             setFollow(!follow);
-            // follow ? dropdownButton.className = styles.FollowingButton : dropdownButton.className = styles.DropdownButton;
         }
         else{
             setLoginRequiredDisplay(true);
@@ -139,7 +138,7 @@ function ProfileInfo(props) {
     let displayName = null;
     let displayAccountInfo = null;
     let dropdownButtonStyle = null;
-    follow ? dropdownButtonStyle = styles.FollowingButton : dropdownButtonStyle = styles.DropdownButton;
+    follow ? dropdownButtonStyle = styles.UnfollowButton : dropdownButtonStyle = styles.DropdownButton;
     switch(props.profile.accountType) {
         case 'shelter' :
             displayName = (
@@ -357,7 +356,7 @@ function ProfileInfo(props) {
                 {displayAccountInfo}
             </div>
             <SendAMessage display={sendAMessageDisplay} onClose={()=> setSendAMessageDisplay(false)}/>
-            <LoginRequired display={loginRequiredDisplay} onClose={() =>setLoginRequiredDisplay(false)}/>    
+            <LoginRequired display={loginRequiredDisplay} onClose={() =>setLoginRequiredDisplay(false)} redirect={location.pathname} />    
         </div>
     );
 }
