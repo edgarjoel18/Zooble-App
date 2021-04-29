@@ -12,7 +12,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 // const { traceDeprecation } = require("process");
 
-const cors = require('cors');
+// const cors = require('cors');
 
 // const corsOptions = {
 //     origin: 'http://localhost:3000',
