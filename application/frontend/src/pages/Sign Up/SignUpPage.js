@@ -13,6 +13,7 @@ function SignUpPage() {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [password, setPassword] = useState('')
+
     const [redonePassword, setRedonePassword] = useState(/*{
         inputConfig: {
             type: 'password',
@@ -28,6 +29,7 @@ function SignUpPage() {
 
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
     const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
+
 
 
     function openTermsAndConditionsModal() {
@@ -115,6 +117,31 @@ function SignUpPage() {
     return (
         <>
             <form className={styles['signup-container']} onSubmit={signUp}>
+                }
+            }).then(response => {
+                console.log(response)
+                console.log(response.data)
+                console.log(response.data.searchResults)
+            }).catch(error => {
+                console.log("Error");
+            })
+
+        history.push("/SignUpSuccess");
+    }
+
+    function onPasswordChangedHandler(event) {
+        const updatedPassword = {
+            ...redonePassword,
+            value: event.target.value,
+            valid: event.target.value === password,
+            touched: true
+        };
+        setRedonePassword(updatedPassword);
+    }
+
+    return (
+        <>
+            <form className={styles['signup-container']}>
                 <div className={styles['signup-container-header']}>
                     Sign Up
                 </div>
@@ -173,7 +200,6 @@ function SignUpPage() {
                             required
                         />
                     </div>
-
                     <div className={styles['confirm-password-input-container']}>
                         <label className={styles['repeat-password-input-label']} for='psw-repeat'>Confirm Password</label>
                         <input
@@ -204,10 +230,12 @@ function SignUpPage() {
                     </p>
                 </div>
                 <div className={styles['btn-container']}>
+
                     <button className={styles['submit-btn']} type='submit' className={styles['submit-btn']} >Sign Up</button>
                     {/* <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button> */}
                 </div>
                 {errorDisplay}
+
             </form>
             {/* Modals */}
             <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal} />
