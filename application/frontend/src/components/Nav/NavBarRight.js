@@ -10,8 +10,10 @@ let useClickOutside = (handler) =>{
 
   useEffect(() =>{
     let maybeHandler = (event)=>{
-      if(!domNode.current.contains(event.target)){
-        handler();
+      if(domNode){
+        if(domNode.current && !domNode.current.contains(event.target)){
+          handler();
+        }
       }
     }
   
