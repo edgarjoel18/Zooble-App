@@ -75,18 +75,20 @@ app.post("/api/login", (req, res) =>{
     if(username && password){
         connection.query('SELECT * FROM User WHERE username = ?', [username], function(error, results, fields){
             if(results.length > 0 && username == results[0].username){
-                bcrypt.compare(password, results[0].password, function(err, result){
-                    if (err) { 
-                        console.log("Error.");
-                    }else if(result){
-                        req.session.loggedin = true;
-                        req.session.username = username;
-                        console.log("Req.session.username: ", req.session.username);
-                        console.log(result);
-                        res.status(200).json(result)
-                        console.log("Logged in.");
-                    }
-                });
+                var result = bcrypt.compareSync(password, results[0].password);
+                if (result) { 
+                    req.session.loggedin = true;
+                    req.session.username = username;
+                    console.log("Req.session.username: ", req.session.username);
+                    console.log(result);
+                    res.status(200).json(result)
+                    console.log("Logged in.");    
+                }
+                else{
+                    console.log("Username or password is incorrect");
+                    res.status(400).json("no match");
+                }
+            
             }else{
                 console.log("Username or password is incorrect");
                 res.status(400).json("no match");

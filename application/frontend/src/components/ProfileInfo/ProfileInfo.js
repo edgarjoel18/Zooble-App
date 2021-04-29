@@ -111,7 +111,7 @@ function ProfileInfo(props) {
             img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/BoomingPoodleGroomingPic.jpg';
             break;
         case 'business2Image' :
-            img = businessImg;
+            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/PawSpaPic.jpg';
             break;
         case 'petOwner1Image' :
             img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/AlexPic.jpg';

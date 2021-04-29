@@ -10,199 +10,161 @@ import styles from "./UserProfileCard.module.css";
 function UserProfileCard(props) {
   const [followersList, setFollowersList] = useState([
     {
-      pet_id: 1,
-      name: "Max",
-      size_name: "small",
-      age_name: "two",
+      follower_id: 1,
+      name: "Mary",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaryPic.jpg",
+      url: 'PetOwnerId=2'
     },
     {
-      pet_id: 2,
-      name: "Juju",
-      size_name: "larg",
-      age_name: "ten",
+      follower_id: 2,
+      name: "Paw Spa",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/PawSpaPic.jpg",
+      url: 'BusinessId=2'
     },
     {
-      pet_id: 3,
-      name: "Mimi",
-      size_name: "medium",
-      age_name: "six",
+      follower_id: 3,
+      name: "Booming Poodle Grooming",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/BoomingPoodleGroomingPic.jpg",
+      url: 'BusinessId=1'
     },
     {
-      pet_id: 4,
-      name: "Max",
-      size_name: "small",
-      age_name: "two",
+      follower_id: 4,
+      name: "Burgsdale Pet Shelter",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/BurgsdalePetShelterPic.jpg",
+      url: 'ShelterId=2'
     },
     {
-      pet_id: 5,
-      name: "Juju",
-      size_name: "larg",
-      age_name: "ten",
+      follower_id: 5,
+      name: "Bad Boys Dog Pound",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/BadBoysDogPoundPic.jpg",
+      url: 'ShelterId=1'
     },
     {
-      pet_id: 6,
-      name: "Mimi",
-      size_name: "medium",
-      age_name: "six",
+      follower_id: 6,
+      name: "Mary",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaryPic.jpg",
+        url: 'PetOwnerId=2'
     },
     {
-      pet_id: 1,
-      name: "Max",
-      size_name: "small",
-      age_name: "two",
+      follower_id: 7,
+      name: "Paw Spa",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/PawSpaPic.jpg",
+      url: 'BusinessId=2'
     },
     {
-      pet_id: 2,
-      name: "Juju",
-      size_name: "larg",
-      age_name: "ten",
+      follower_id: 8,
+      name: "Booming Poodle Grooming",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/BoomingPoodleGroomingPic.jpg",
+      url: 'BusinessId=1'
     },
     {
-      pet_id: 3,
-      name: "Mimi",
-      size_name: "medium",
-      age_name: "six",
+      follower_id: 9,
+      name: "Burgsdale Pet Shelter",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/BurgsdalePetShelterPic.jpg",
+      url: 'ShelterId=2'
     },
     {
-      pet_id: 4,
-      name: "Max",
-      size_name: "small",
-      age_name: "two",
+      follower_id: 10,
+      name: "Bad Boys Dog Pound",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/BadBoysDogPoundPic.jpg",
+      url: 'ShelterId=1'
     },
     {
-      pet_id: 5,
-      name: "Juju",
-      size_name: "larg",
-      age_name: "ten",
+      follower_id: 10,
+      name: "Mary",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaryPic.jpg",
+        url: 'PetOwnerId=2'
     },
     {
-      pet_id: 6,
-      name: "Mimi",
-      size_name: "medium",
-      age_name: "six",
+      follower_id: 11,
+      name: "Paw Spa",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/PawSpaPic.jpg",
+      url: 'BusinessId=2'
     },
     {
-      pet_id: 1,
-      name: "Max",
-      size_name: "small",
-      age_name: "two",
+      follower_id: 12,
+      name: "Booming Poodle Grooming",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/BoomingPoodleGroomingPic.jpg",
+      url: 'BusinessId=1'
     },
     {
-      pet_id: 2,
-      name: "Juju",
-      size_name: "larg",
-      age_name: "ten",
+      follower_id: 13,
+      name: "Burgsdale Pet Shelter",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/BurgsdalePetShelterPic.jpg",
+      url: 'ShelterId=2'
     },
     {
-      pet_id: 3,
-      name: "Mimi",
-      size_name: "medium",
-      age_name: "six",
+      follower_id: 14,
+      name: "Bad Boys Dog Pound",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/BadBoysDogPoundPic.jpg",
+      url: 'ShelterId=1'
     },
-    {
-      pet_id: 4,
-      name: "Max",
-      size_name: "small",
-      age_name: "two",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
-    },
-    {
-      pet_id: 5,
-      name: "Juju",
-      size_name: "larg",
-      age_name: "ten",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
-    },
-    {
-      pet_id: 6,
-      name: "Mimi",
-      size_name: "medium",
-      age_name: "six",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
-    }
   ]);
 
   const [followingList, setFollowingList] = useState([
     {
-      pet_id: 6,
+      follower_id: 1,
       name: "Max",
-      size_name: "small",
-      age_name: "two",
       profile_pic:
         "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
+      url: 'Max'
     },
     {
-      pet_id: 5,
+      follower_id: 2,
       name: "Juju",
-      size_name: "larg",
-      age_name: "ten",
       profile_pic:
         "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
+      url: 'Juju'
     },
     {
-      pet_id: 4,
+      follower_id: 3,
       name: "Mimi",
-      size_name: "medium",
-      age_name: "six",
       profile_pic:
         "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
+      url: 'Mimi'
     },
     {
-      pet_id: 1,
-      name: "Max",
-      size_name: "small",
-      age_name: "two",
+      follower_id: 4,
+      name: "Paw Spa",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/PawSpaPic.jpg",
+      url: 'BusinessId=2'
     },
     {
-      pet_id: 2,
-      name: "Juju",
-      size_name: "larg",
-      age_name: "ten",
+      follower_id: 5,
+      name: "Booming Poodle Grooming",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/BoomingPoodleGroomingPic.jpg",
+      url: 'BusinessId=1'
     },
     {
-      pet_id: 3,
-      name: "Mimi",
-      size_name: "medium",
-      age_name: "six",
+      follower_id: 6,
+      name: "Burgsdale Pet Shelter",
       profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/BurgsdalePetShelterPic.jpg",
+      url: 'ShelterId=2'
+    },
+    {
+      follower_id: 6,
+      name: "Bad Boys Dog Pound",
+      profile_pic:
+        "https://csc648groupproject.s3-us-west-2.amazonaws.com/BadBoysDogPoundPic.jpg",
+      url: 'ShelterId=1'
     },
   ]);
 
@@ -211,7 +173,7 @@ function UserProfileCard(props) {
   const EuCard = ({ title, src, thethingyintheplace }) => {
     return (
       <Card className="eu-card" key={`${thethingyintheplace}_Card_Item`}>
-        <div style={{ display: "flex", width: "200px", padding: "14px" }}>
+        <div style={{ display: "flex", width: "100%", padding: "14px" }}>
           <div style={{ marginRight: "10px" }}>
             <img src={src} className="eu-card-img" />
           </div>
@@ -283,7 +245,7 @@ function UserProfileCard(props) {
               overflowY: 'auto',
               margin: "1px auto",
               boxShadow: 'var(--elevation-2)',
-              borderRadius: '0 0 15px 15px',
+              borderRadius: '0 0 7.5px 7.5px',
               padding:'16px',
               display: 'flex',
               flexDirection: 'column'
@@ -293,8 +255,8 @@ function UserProfileCard(props) {
             {followersList.map((item, index) => (
               <Link
                 style={{ textDecoration: "none" }}
-                key={item.pet_id + index}
-                to={"/Profile/" + item.name}
+                key={item.follower_id}
+                to={"/Profile/" + item.url}
               >
                 <div
                   style={{
@@ -325,7 +287,7 @@ function UserProfileCard(props) {
               overflowY: 'auto',
               margin: "1px auto",
               boxShadow: 'var(--elevation-2)',
-              borderRadius: '0 0 15px 15px',
+              borderRadius: '0 0 7.5px 7.5px',
               padding:'16px',
               display: 'flex',
               flexDirection: 'column'
@@ -335,8 +297,8 @@ function UserProfileCard(props) {
             {followingList.map((item, index) => (
               <Link
                 style={{ textDecoration: "none" }}
-                key={item.pet_id}
-                to={"/Profile/" + item.name}
+                key={item.follower_id}
+                to={"/Profile/" + item.url}
               >
                 <div
                   style={{

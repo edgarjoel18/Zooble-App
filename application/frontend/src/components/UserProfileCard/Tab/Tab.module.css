@@ -13,7 +13,7 @@
     width: 200px;
     height: 50px;
     box-shadow: var(--elevation-1);
-    border-radius: 7.5px 7.5px 0 0;
+    border-radius: 15px 15px 0 0;
     cursor: pointer;
     background-color: var(--reversed-txt-clr);
     font-family: var(--ff-primary);

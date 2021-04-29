@@ -17,7 +17,7 @@ function Feed() {
             post_id: 1,
             user_display_name: 'Paw Spa',
             link: "/Profile/BusinessId=2",
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/PawSpaPic.jpg',
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
             likes: 0,
             timestamp: '12/25/20 at 11:05 AM',
@@ -27,7 +27,7 @@ function Feed() {
             post_id: 2,
             user_display_name: 'Burgsdale Pet Shelter',
             link: "/Profile/ShelterId=2",
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/BurgsdalePetShelterPic.jpg',
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
             likes: 10,
             timestamp: '12/25/20 at 11:05 AM',
@@ -37,7 +37,7 @@ function Feed() {
             post_id: 3,
             user_display_name: 'Alex',
             link: "/Profile/PetOwnerId=1",
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
+            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/AlexPic.jpg',
             pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
             likes: 20,
             timestamp: '12/25/20 at 11:05 AM',
@@ -143,8 +143,8 @@ function Feed() {
             <div className={styles["follower-feed-container"]}>
                 <div className={styles["follower-feed-header"]}></div>
                 <div className={styles["follower-feed-new-post"]} style={{ height: createPostOverlayDisplay.height }}>
-                    <img className={styles["follower-feed-new-post-pic"]} src={feedPosts[0].pic} />
-                    <div className={styles["follower-feed-new-post-name"]}>Bob</div>
+                    <img className={styles["follower-feed-new-post-pic"]} src={'https://csc648groupproject.s3-us-west-2.amazonaws.com/AlexPic.jpg'} />
+                    <div className={styles["follower-feed-new-post-name"]}>Alex</div>
                     <textarea className={styles["follower-feed-new-post-body"]} style={{ display: createPostOverlayDisplay.display }} placeholder="Update your followers on what's going on with you and your pets" />
                     <button className={styles["follower-feed-new-post-attach-image"]} style={{ display: createPostOverlayDisplay.display, color: attachImageFontColor, backgroundColor: attachImageBackgroundColor, borderColor: attachImageBorderColor }} onClick={attachImage} onMouseOver={attachImageHover} onMouseLeave={attachImageLeave}>{attachImageText}</button>
                     <button className={styles["follower-feed-new-post-submit"]} style={{ display: createPostOverlayDisplay.display }}>Submit</button>
