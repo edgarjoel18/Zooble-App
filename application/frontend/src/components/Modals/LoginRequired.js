@@ -14,6 +14,13 @@ function LoginRequired({display, onClose, redirect}) {
         console.log(redirectContext.redirectPath)
     }, [display])
 
+    // function onLoginHandler() {
+    //     console.log('[LoginRequired: redirect] ' + redirect);
+    //     redirectContext.redirectTo(redirect);
+    //     console.log(redirectContext.redirectPath)
+    //     history.push('/login-page');
+    // }
+
     if(!display) return null;
     return (
         <Modal display={display} onClose={onClose}>
