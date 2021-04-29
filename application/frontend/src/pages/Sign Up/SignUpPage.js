@@ -66,7 +66,7 @@ function SignUpPage() {
         console.log(redonePassword)
         console.log(acceptTerms)
         // if(email && uname && firstName && lastName && password && redonePassword && acceptTerms){
-            Axios.post('/sign-up', {
+            Axios.post('/api/sign-up', {
                     email: email,
                     firstName: firstName,
                     lastName: lastName,
