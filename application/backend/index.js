@@ -1,18 +1,25 @@
-const path = require("path");
+// const path = require("path");
 const express = require("express");
 const app = express();
 //const db = require('./database.js')
 const mysql = require('mysql2');
-const { copyFileSync } = require("fs");
+// const { copyFileSync } = require("fs");
 const bcrypt = require('bcrypt');
-const { request } = require("http");
-const { response } = require("express");
+// const { request } = require("http");
+// const { response } = require("express");
 const session = require('express-session');
 
 const cookieParser = require('cookie-parser');
-const { traceDeprecation } = require("process");
+// const { traceDeprecation } = require("process");
 
-// const cors = require('cors');
+const cors = require('cors');
+
+// const corsOptions = {
+//     origin: 'http://localhost:3000',
+//     credentials: true
+// }
+
+// app.use(cors(corsOptions));
 
 const connection = mysql.createConnection({
     host:'csc648project-database.ceh0a99r5rym.us-west-2.rds.amazonaws.com',
@@ -26,7 +33,7 @@ connection.connect(function(err){
     console.log("Connected!");
 })
 
-app.use(cookieParser());
+// app.use(cookieParser());
 
 app.use(session({
     key: "userId",
@@ -46,21 +53,21 @@ app.listen(5000, () =>{
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
 
-app.get("/login",(req, res) =>{
+app.get("/api/login",(req, res) =>{
     if(req.session.username){
         res.send({loggedIn: true, user: req.session.username})
     } else{
-        res.send({loggedIn: false})
+        res.send({loggedIn: false}) 
     }
 })
 
-app.get("/logout",(req,res) =>{
+app.get("/api/logout",(req,res) =>{
     req.session.loggedin = false;
     req.session.username = null;
     res.send({loggedIn:false})
 })
 
-app.post("/login", (req, res) =>{
+app.post("/api/login", (req, res) =>{
     console.log("/login")
     const username = req.body.username;
     const password = req.body.password;
@@ -74,7 +81,7 @@ app.post("/login", (req, res) =>{
                     }else if(result){
                         req.session.loggedin = true;
                         req.session.username = username;
-                        console.log(req.session.username);
+                        console.log("Req.session.username: ", req.session.username);
                         console.log(result);
                         res.status(200).json(result)
                         console.log("Logged in.");
@@ -95,7 +102,7 @@ app.post("/login", (req, res) =>{
 );
 
 
-app.post("/sign-up", (req,res) =>{
+app.post("/api/sign-up", (req,res) =>{
     console.log("/sign-up");
     const givenEmail = req.body.email;
     const givenUsername = req.body.uname;
@@ -156,7 +163,7 @@ app.post("/sign-up", (req,res) =>{
                             })
 })
 
-app.get("/search", (req,res) =>{
+app.get("/api/search", (req,res) =>{
     console.log("/search");
     if(req.query.searchTerm){
         var name = req.query.searchTerm.toLowerCase();

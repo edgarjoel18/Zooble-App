@@ -43,7 +43,6 @@ import SignUpSuccess from './pages/Sign Up/SignUpSuccess'
 
 import MapSearch from './pages/MapSearch/MapSearch.js'
 
-import Map from './pages/MapSearch/Map'
 import axios from 'axios';
 
 const App = () => {
@@ -53,7 +52,7 @@ const App = () => {
   console.log("rerendering app");
 
   useEffect(() => {
-    axios.get("/login").then((response) =>{
+    axios.get("/api/login").then((response) =>{
       console.log(response.data);
       console.log(response.data.user);
       setAppUser(response.data.user);
@@ -141,7 +140,6 @@ const App = () => {
         <Route path="/Cameron" component={Cameron}/>
         <Route path="/Wameedh" component={Wameedh}/>
         <Route path="/SignUpSuccess" component={SignUpSuccess}/>
-        <Route path="/Map" component={Map}/>
         <Redirect to="/" />
       </Switch>
     </Router>
