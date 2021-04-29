@@ -5,7 +5,7 @@ export const RedirectPathContext = React.createContext({
     redirectTo: (newPath) => {}
 });
 
- function RedirectPathContextProvider(props) {
+function RedirectPathContextProvider(props) {
     const [path, setPath] = useState('/Feed');
 
     function redirectHandler(newPath) {

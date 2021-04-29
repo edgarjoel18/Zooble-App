@@ -152,10 +152,10 @@ function ProfileInfo(props) {
                 </h1> 
             )
             displayAccountInfo = (
-                <div className={styles.ButtonContainer} onClick={() => onFollowHandler()} >
+                <div className={styles.ButtonContainer} >
                     {!props.isSelfView ? (
                         <div style={{position: 'relative'}}>
-                            <button className={dropdownButtonStyle} >
+                            <button className={dropdownButtonStyle} onClick={() => onFollowHandler()} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <span className={styles.DropdownText} >
                                         {follow ? 'Unfollow' : 'Follow'}
@@ -190,10 +190,10 @@ function ProfileInfo(props) {
                 </h1> 
             )
             displayAccountInfo = (
-                <div className={styles.ButtonContainer} onClick={() => onFollowHandler()} >
+                <div className={styles.ButtonContainer} >
                     {!props.isSelfView ? (
                         <div style={{position: 'relative'}}>
-                            <button className={dropdownButtonStyle} >
+                            <button className={dropdownButtonStyle} onClick={() => onFollowHandler()} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <span className={styles.DropdownText} >
                                         {follow ? 'Unfollow' : 'Follow'}
@@ -229,10 +229,10 @@ function ProfileInfo(props) {
                 </h1> 
             )
             displayAccountInfo = (
-                <div className={styles.ButtonContainer} onClick={() => onFollowHandler()} >
+                <div className={styles.ButtonContainer} >
                     {!props.isSelfView ? (
                         <div style={{position: 'relative'}}>
-                            <button className={dropdownButtonStyle} >
+                            <button className={dropdownButtonStyle} onClick={() => onFollowHandler()} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <span className={styles.DropdownText} >
                                         {follow ? 'Unfollow' : 'Follow'}
@@ -277,10 +277,10 @@ function ProfileInfo(props) {
                 </React.Fragment>
             )
             displayAccountInfo = (
-                <div className={styles.ButtonContainer} onClick={() => onFollowHandler()} >
+                <div className={styles.ButtonContainer} >
                     {!props.isSelfView ? (
                         <div style={{position: 'relative'}}>
-                            <button className={dropdownButtonStyle} id="dropdownButton" >
+                            <button className={dropdownButtonStyle} id="dropdownButton" onClick={() => onFollowHandler()} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <span className={styles.DropdownText}>
                                         {follow ? 'Unfollow' : 'Follow'}
