@@ -10,6 +10,7 @@ const bcrypt = require('bcrypt');
 const session = require('express-session');
 
 const cookieParser = require('cookie-parser');
+const e = require("express");
 // const { traceDeprecation } = require("process");
 
 // const cors = require('cors');
@@ -25,7 +26,7 @@ const connection = mysql.createConnection({
     host:'csc648project-database.ceh0a99r5rym.us-west-2.rds.amazonaws.com',
     user:'admin',
     password:'7Fb!Ve35',
-    database: 'petsdb'
+    database: 'M4'
 });
 
 connection.connect(function(err){
@@ -36,14 +37,14 @@ connection.connect(function(err){
 // app.use(cookieParser());
 
 app.use(session({
-    key: "userId",
-    secret: "zooble",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        expires: 60 * 60 * 24 * 1000, //1 day expiration
-    }
-}))
+     key: "userId",
+     secret: "zooble",
+     resave: false,
+     saveUninitialized: false,
+     cookie: {
+         expires: 60 * 60 * 24 * 1000, //1 day expiration
+     }
+ }))
 
 //start express server on port 5000
 app.listen(5000, () =>{
@@ -53,12 +54,12 @@ app.listen(5000, () =>{
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
 
-app.get("/api/login",(req, res) =>{
-    if(req.session.username){
-        res.send({loggedIn: true, user: req.session.username})
-    } else{
-        res.send({loggedIn: false}) 
-    }
+ app.get("/api/login",(req, res) =>{
+     if(req.session.username){
+         res.send({loggedIn: true, user: req.session.username})
+     } else{
+         res.send({loggedIn: false}) 
+     }
 })
 
 app.get("/api/logout",(req,res) =>{
@@ -71,9 +72,11 @@ app.post("/api/login", (req, res) =>{
     console.log("/login")
     const username = req.body.username;
     const password = req.body.password;
+    console.log(username);
+    console.log(password);
     
     if(username && password){
-        connection.query('SELECT * FROM User WHERE username = ?', [username], function(error, results, fields){
+        connection.query('SELECT * FROM Credentials WHERE username = ?', [username], function(error, results, fields){
             if(results.length > 0 && username == results[0].username){
                 var result = bcrypt.compareSync(password, results[0].password);
                 if (result) { 
@@ -85,12 +88,12 @@ app.post("/api/login", (req, res) =>{
                     console.log("Logged in.");    
                 }
                 else{
-                    console.log("Username or password is incorrect");
+                    console.log("Password is incorrect");
                     res.status(400).json("no match");
                 }
             
             }else{
-                console.log("Username or password is incorrect");
+                console.log("Username is incorrect");
                 res.status(400).json("no match");
                 // res.send("Username or password is incorrect");
             }
@@ -134,31 +137,68 @@ app.post("/api/sign-up", (req,res) =>{
                
     }
 
-    connection.query("SELECT user_id, password FROM User WHERE username=? OR email=?", [givenUsername, givenEmail],
-                            function(err, result, field){
-                                if(result.length === 0){
-                                    if(passwordValidate(givenPassword)){
-                                        if(givenPassword === givenResubmitted){
-                                            const hash = bcrypt.hashSync(givenPassword, 10);
-                                            connection.query(`INSERT INTO User (email, first_name, last_name, password, username)
-                                                            VALUES ('${givenEmail}','${givenFirstName}', '${givenLastName}', 
-                                                            '${hash}', '${givenUsername}')`,
-                                                            function(err, result){
+    connection.query("SELECT user_id FROM User WHERE email=?", givenEmail,  //check if email is taken
+                            function(err, users, field){
+                                if(users.length === 0){
+                                    connection.query("SELECT username FROM Credentials WHERE username=?", givenUsername, function(err,usernames, field){  //check if username is taken
+                                        if(usernames.length===0){
+                                            if(passwordValidate(givenPassword)){  //if password is valid
+                                                if(givenPassword === givenResubmitted){  //if password and confirmed password match
+                                                    const hash = bcrypt.hashSync(givenPassword, 10);
+
+                                                    connection.query(`INSERT INTO User (email,first_name, last_name) VALUES ('${givenEmail}','${givenFirstName}', '${givenLastName}')`, function(err, insertedUser){
+                                                        if(err){
+                                                            res.status(500).json(err);
+                                                        }
+                                                        else{
+                                                            console.log('User Created');
+                                                            console.log(insertedUser.insertId); //user id of newly created user
+                                                            connection.query(`INSERT INTO Account (user_id)  VALUES  ('${insertedUser.insertId}')`, //create new account in database with returned user_id //registered user entry and profile automatically created
+                                                            function(err,account){
                                                                 if(err){
-                                                                    throw err;
-                                                                } else{
-                                                                    res.status(201).json(result);
+                                                                    res.status(500).json(err);
                                                                 }
-                                                            })
-                                        }else{
-                                            console.log("Passwords do not match.");
-                                            res.status(400).json("passwords not matching");
+                                                                console.log('Account Created');
+                                                                console.log(account.insertId); //account id of newly created account
+                                                                connection.query(`INSERT INTO Credentials (acct_id, username, password) VALUES ('${account.insertId}', '${givenUsername}', '${hash}')`, 
+                                                                function(err,insertedCredentials){
+                                                                    if(err){
+                                                                        res.status(500).json(err);
+                                                                    }
+                                                                    console.log('Credentials Created');
+                                                                    console.log(insertedCredentials.insertId);
+                                                                })
+                                                            }); 
+                                                            res.status(200).json(insertedUser);
+                                                        }
+                                                    })
+                                                    
+                                                    // connection.query(`INSERT INTO Credentials (email, first_name, last_name, password, username)
+                                                    //                 VALUES ('${givenEmail}','${givenFirstName}', '${givenLastName}', 
+                                                    //                 '${hash}', '${givenUsername}')`,
+                                                    //                 function(err, result){
+                                                    //                     if(err){
+                                                    //                         throw err;
+                                                    //                     } else{
+                                                    //                         res.status(201).json(result);
+                                                    //                     }
+                                                    //                 })
+                                                }else{
+                                                    console.log("Passwords do not match.");
+                                                    res.status(400).json("passwords not matching");
+                                                }
+                                            }else{
+                                                console.log("Password must have SUCH AND SUCH values")
+                                                res.status(400).json("password requirements");
+                                            }
                                         }
-                                    }else{
-                                        console.log("Password must have SUCH AND SUCH values")
-                                        res.status(400).json("password requirements");
-                                    }
-                                } else if(result.length != 0){
+                                        else if(usernames.length != 0){  //if username is taken
+                                            console.log("Username already taken")
+                                            res.status(400).json("exists");
+                                        }
+                                    })
+                                    
+                                } else if(users.length != 0){
                                     console.log("User does exist")
                                     res.status(400).json("exists");
                                 }
