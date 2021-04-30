@@ -52,7 +52,10 @@ function SignUpPage() {
     const errorDisplay = error ? 
     <div className={styles['signup-error-container']}>
         {error}
-    </div> : "";
+    </div> : 
+    <div className={styles['signup-requirements-container']}>
+        Your Password Must Have: 8-50 Characters and Contain: 1 Capital Letter, 1 Number, 1 Special Character
+    </div>;
 
     const history = useHistory();
 

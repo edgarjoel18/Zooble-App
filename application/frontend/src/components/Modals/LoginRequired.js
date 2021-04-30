@@ -27,7 +27,7 @@ function LoginRequired({display, onClose, redirect}) {
             <div className={styles['account-required-container']}>
                 <div className={styles['account-required-message']}>Please Create an Account or Login to Continue</div>
                 <div className={styles['account-required-redirect-buttons-container']}>
-                    <NavLink to={'/signup-page'}>
+                    <NavLink to={'/account-type'}>
                         <button className={styles['account-required-redirect-signup']}>Sign Up</button>
                     </NavLink>
                     <NavLink to={'/login-page'}>
