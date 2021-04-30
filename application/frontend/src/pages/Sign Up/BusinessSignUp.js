@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import { NavLink, useHistory } from "react-router-dom";
-import {Axios} from "axios";
+import axios, {Axios} from "axios";
 import styles from './SignUpPage.module.css';
 
 import TermsAndConditions from '../../components/Modals/TermsAndConditions'
@@ -13,7 +13,7 @@ function BusinessSignUpPage() {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [password, setPassword] = useState('')
-    const [redonePassword, setRedonePassword] = useState({
+    const [redonePassword, setRedonePassword] = useState(''/*{
         inputConfig: {
             type: 'password',
             placeholder: 'Confirm password',
@@ -22,7 +22,7 @@ function BusinessSignUpPage() {
         value: '', 
         valid: false,
         touched: false
-    })
+    }*/)
 
     const [termsAndConditionsDisplay,setTermsAndConditionsDisplay]= useState(false);
     const [privacyPolicyDisplay,setPrivacyPolicyDisplay]= useState(false);
@@ -43,29 +43,80 @@ function BusinessSignUpPage() {
       setPrivacyPolicyDisplay(false);
     }
 
+            //states for sign up error display
+            const [error, setError] = useState(null);
+
+            const errorDisplay = error ? 
+            <div className={styles['signup-error-container']}>
+                {error}
+            </div> : 
+            <div className={styles['signup-requirements-container']}>
+                Your Password Must Have: 8-50 Characters and Contain: 1 Capital Letter, 1 Number, 1 Special Character
+            </div>;
+
     const history = useHistory();
 
-    function OnClickHandler(e) {
-        if(email && uname && firstName && lastName && password && redonePassword){
-            history.push('/business-signup2');
+    function signUp(event) {
+        event.preventDefault();
+        console.log(email)
+        console.log(uname)
+        console.log(firstName)
+        console.log(lastName)
+        console.log(password)
+        console.log(redonePassword)
+
+        axios.post('/api/sign-up', {
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            uname: uname,
+            password: password,
+            redonePassword: redonePassword
+    },{withCredentials:true}).then(response => {
+        console.log(response);
+        console.log(response.data);
+        if(response.data.affectedRows === 1){
+            history.push("/business-signup2");
         }
+
+    }).catch(error => {
+        if (error.response.data === "exists"){
+            setError("An Account using that Email or Username already exists");
+            console.log(error);
+        }
+        else if (error.response.data === "passwords not matching"){
+            setError("The Passwords Entered Do Not Match");
+            console.log(error);
+        }
+        else if (error.response.data === "password requirements"){
+            setError("Your Password Must Have: 8-50 Characters and Contain: 1 Capital Letter, 1 Number, 1 Special Character");
+            console.log(error);
+        }
+        console.log(error);
+        })
     }
 
-    function onPasswordChangedHandler(event) {
-        const updatedPassword = {
-            ...redonePassword,
-            value: event.target.value,
-            valid: event.target.value === password,
-            touched: true
-        };
-        setRedonePassword(updatedPassword);
-    }
+    // function OnClickHandler(e) {
+    //     if(email && uname && firstName && lastName && password && redonePassword){
+    //         history.push('/business-signup2');
+    //     }
+    // }
+
+    // function onPasswordChangedHandler(event) {
+    //     const updatedPassword = {
+    //         ...redonePassword,
+    //         value: event.target.value,
+    //         valid: event.target.value === password,
+    //         touched: true
+    //     };
+    //     setRedonePassword(updatedPassword);
+    // }
 
 
-    console.log(redonePassword)
+    // console.log(redonePassword)
     return (
             <>
-            <form className={styles['signup-container']}>
+            <form className={styles['signup-container']} onSubmit={signUp}>
                 <div className={styles['signup-container-header']}>
                     Create an Account for your Business
                 </div>
@@ -125,27 +176,28 @@ function BusinessSignUpPage() {
                             />
                         </div>
 
-                        <div className={styles['confirmpassword-input-container']}>
+                        <div className={styles['confirm-password-input-container']}>
                             <label className={styles['repeat-password-input-label']} for='psw-repeat'>Confirm Password</label>
-                            {/* <input
+                            <input
                                 type='password'
                                 placeholder='Confirm password'
                                 name='psw-repeat'
                                 onChange={e => setRedonePassword(e.target.value)}
                                 required
-                            /> */}
-                            <Input
+                            />
+                            {/*<Input
                                 config={redonePassword.inputConfig}
                                 value={redonePassword.value}
                                 valid={redonePassword.valid}
                                 touched={redonePassword.touched}
                                 changed={event => onPasswordChangedHandler(event)}
-                            />
+                            />*/}
                         </div>
                     </div>
                     <div className={styles['btn-container']}>
-                        <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']} onClick={(e) => OnClickHandler(e)}>Next: Business Details</button>
+                        <button type='submit' className={styles['submit-btn']}>Next: Business Details</button>
                     </div>
+                    {errorDisplay}
             </form>
         </>
 

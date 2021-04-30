@@ -108,12 +108,7 @@ function BusinessSignUpPage2() {
     const history= useHistory();
 
     function OnClickHandler(){
-        if( name && phoneNumber && address){
             history.push("/SignUpSuccess");
-        }
-        else{
-            setFailedSubmit(true);  //set border color of fields to red if failed submit happens
-        }
     }
 
         //Use Places Autocomplete call
@@ -132,7 +127,7 @@ function BusinessSignUpPage2() {
 
     return (
         <>
-        <form className={styles['signup-container']}>
+        <form className={styles['signup-container']} onSubmit={OnClickHandler}>
             <div className={styles['signup-container-header']}>
                 Business Details
             </div>
