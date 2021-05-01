@@ -251,7 +251,8 @@ router.post('/api/sign-up/shelter', (req,res) =>{
     connection.query("SELECT user_id FROM User WHERE email=?", givenEmail,  //check if email is taken
                             function(err, users, field){
                                 if(users.length === 0){
-                                    connection.query("SELECT username FROM Credentials WHERE username=?", givenUsername, function(err,usernames, field){  //check if username is taken
+                                    connection.query("SELECT username FROM Credentials WHERE username=?", givenUsername, 
+                                    function(err,usernames, field){  //check if username is taken
                                         if(usernames.length===0){
                                             if(passwordValidate(givenPassword)){  //if password is valid
                                                 if(givenPassword === givenResubmitted){  //if password and confirmed password match
@@ -340,6 +341,49 @@ router.post('/api/sign-up/shelter', (req,res) =>{
                                     res.status(400).json("exists");
                                 }
                             })
+})
+
+
+router.post('/api/sign-up/validate', (req,res) =>{  //for sign up page 1 on business and shelter pages
+    console.log("/sign-up/validate");
+    const givenEmail = req.body.email;
+    const givenUsername = req.body.username;
+    const givenPassword = req.body.password;
+    const givenResubmitted = req.body.redonePassword;
+
+    connection.query("SELECT user_id FROM User WHERE email=?", givenEmail,  //check if email is taken
+    function(err, users){
+        if(users.length === 0){ //if email isn't taken
+            connection.query("SELECT username FROM Credentials WHERE username=?", givenUsername, 
+            function(err, usernames){  //check if username is taken
+                if(err)
+                    console.log(err);
+                if(usernames.length === 0){  //if username isn't taken
+                    if(givenPassword === givenResubmitted){
+                        if(passwordValidate(givenPassword)){  //if password is valid
+                            res.status(200).json("valid");
+                        }
+                        else{ //password doesn't meet requirements
+                            console.log("Password must have SUCH AND SUCH values")
+                            res.status(400).json("password requirements");
+                        }
+                    }
+                    else{
+                        console.log("Passwords do not match.");
+                        res.status(400).json("passwords not matching");
+                    }
+                }
+                else if (usernames.length != 0){ //username is taken
+                    console.log("Username is taken")
+                    res.status(400).json("exists");
+                }
+            })
+        }
+        else if(users.length != 0){
+            console.log("Email is taken")
+            res.status(400).json("exists");
+        }
+    })
 })
 
 module.exports = router
