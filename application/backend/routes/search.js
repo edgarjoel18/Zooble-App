@@ -9,9 +9,9 @@ router.get("/api/search", (req,res) =>{
         var name = req.query.searchTerm.toLowerCase();
     }
     
-    console.log(name);
+    console.log("Name: ",name);
     var category = req.query.searchCategory
-    console.log(category);
+    console.log("Category: ",category);
     var requestedSearchResults = {searchResults:[]}
 
     if(category == 'Pets'){
@@ -50,11 +50,15 @@ router.get("/api/search", (req,res) =>{
         });
     }
     else if(category == 'Businesses'){
+        console.log("Category == Businesses")
         connection.query(
             `SELECT * 
-            FROM RegisteredBusiness
+            FROM Business
+            LEFT JOIN Shelter
+            ON Business.business_id = Shelter.business_id
             WHERE LOWER(name) LIKE '%${name}%'
-            `, 
+            AND Shelter.business_id IS NULL
+            `,
             function(err, result) {
             if(err){
                 throw err;
@@ -68,10 +72,9 @@ router.get("/api/search", (req,res) =>{
                     // console.log(row.size_id);
                     // console.log(row.age_id);
                     requestedSearchResults.searchResults.push({
-                        "reg_business_id":row.reg_business_id,
+                        "business_id":row.business_id,
                         "reg_user_id":row.reg_user_id,
-                        "name": row.name,
-                        "profile_pic": row.profile_pic
+                        "name": row.name
                     });
                   });
                 console.log(requestedSearchResults);
@@ -81,8 +84,10 @@ router.get("/api/search", (req,res) =>{
     }
     else if(category == 'Shelters'){
         connection.query(
-            `SELECT * 
-            FROM RegisteredShelter
+            `SELECT *
+            FROM Business
+            INNER JOIN Shelter
+            ON Business.business_id = Shelter.business_id
             WHERE LOWER(name) LIKE '%${name}%'
             `, 
             function(err, result) {
@@ -98,10 +103,9 @@ router.get("/api/search", (req,res) =>{
                     // console.log(row.size_id);
                     // console.log(row.age_id);
                     requestedSearchResults.searchResults.push({
-                        "reg_shelter_id":row.reg_shelter_id,
+                        "shelter_id":row.shelter_id,
                         "reg_user_id":row.reg_user_id,
                         "name": row.name,
-                        "profile_pic": row.profile_pic
                     });
                   });
                 console.log(requestedSearchResults);
