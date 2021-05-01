@@ -147,7 +147,7 @@ function ShelterSignUpPage2(props) { //recieve form data from sign up page 1
             password: state.password,
             redonePassword: state.redonePassword,
             businessName: name,
-            businessPhoneNumber: phoneNumber,
+            phoneNumber: phoneNumber,
             address: address,
             latitude: latitude,
             longitude: longitude,

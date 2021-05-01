@@ -112,8 +112,19 @@ function BusinessSignUpPage2(props) {
         });
 
     function signUpBusiness(event){
-        console.log(selectedBusinessType.value);
         event.preventDefault();
+        console.log('Email: ', state.email)
+        console.log('FirstName: ', state.firstName)
+        console.log('LastName: ', state.lastName)
+        console.log('Username: ', state.username)
+        console.log('Password: ', state.password)
+        console.log('RedonePassword: ', state.redonePassword)
+        console.log('Shelter Name: ', name)
+        console.log('Shelter Phone Number: ', phoneNumber)
+        console.log('Address: ', address)
+        console.log('Latitude: ', latitude)
+        console.log('Longitude: ', longitude)
+        console.log('Business Type: ', selectedBusinessType.value)
         Axios.post('/api/sign-up/business', { 
             email: state.email,
             firstName: state.firstName,
@@ -122,7 +133,7 @@ function BusinessSignUpPage2(props) {
             password: state.password,
             redonePassword: state.redonePassword,
             businessName: name,
-            businessPhoneNumber: phoneNumber,
+            phoneNumber: phoneNumber,
             address: address,
             latitude: latitude,
             longitude: longitude,

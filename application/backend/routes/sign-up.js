@@ -165,22 +165,30 @@ router.post('/api/sign-up/business', (req,res) =>{
                                                                     }
                                                                     console.log('Credentials Created');
                                                                     console.log(insertedCredentials.insertId);
-                                                                    connection.query(`INSERT INTO Business (name, phone_num, reg_user_id) VALUES ('${givenBusinessName}', '${givenPhoneNumber}', (SELECT reg_user_id FROM RegisteredUser WHERE user_id= ${userId}))`,
-                                                                    function(err, insertedBusiness){
+                                                                    connection.query(`INSERT INTO Address (address, latitude, longitude, reg_user_id) VALUES ('${givenAddress}', '${givenLatitude}', '${givenLongitude}',(SELECT reg_user_id FROM RegisteredUser WHERE user_id= ${userId}))`,
+                                                                    function(err, insertedAddress){
                                                                         if(err){
                                                                             console.log(err);
-                                                                            // res.status(500).json(err);
                                                                         }
-                                                                        console.log('Business Created');
-                                                                        console.log(insertedBusiness.insertId);
-                                                                        connection.query(`INSERT INTO Commerce (business_id, business_type_id) VALUES ('${insertedBusiness.insertId}', '${givenBusinessType}')`,
-                                                                        function(err, insertedCommerce){
+                                                                        console.log('Address Inserted');
+                                                                        console.log(insertedAddress.insertId);
+                                                                        connection.query(`INSERT INTO Business (name, phone_num, reg_user_id) VALUES ('${givenBusinessName}', '${givenPhoneNumber}', (SELECT reg_user_id FROM RegisteredUser WHERE user_id= ${userId}))`,
+                                                                        function(err, insertedBusiness){
                                                                             if(err){
                                                                                 console.log(err);
                                                                                 // res.status(500).json(err);
                                                                             }
-                                                                            console.log('Commerce Created');
-                                                                            console.log(insertedCommerce.insertId);
+                                                                            console.log('Business Created');
+                                                                            console.log(insertedBusiness.insertId);
+                                                                            connection.query(`INSERT INTO Commerce (business_id, business_type_id) VALUES ('${insertedBusiness.insertId}', '${givenBusinessType}')`,
+                                                                            function(err, insertedCommerce){
+                                                                                if(err){
+                                                                                    console.log(err);
+                                                                                    // res.status(500).json(err);
+                                                                                }
+                                                                                console.log('Commerce Created');
+                                                                                console.log(insertedCommerce.insertId);
+                                                                            })
                                                                         })
                                                                     })
                                                                 })
@@ -271,34 +279,42 @@ router.post('/api/sign-up/shelter', (req,res) =>{
                                                                     }
                                                                     console.log('Credentials Created');
                                                                     console.log(insertedCredentials.insertId);
-                                                                    connection.query(`INSERT INTO Business (name, phone_num, reg_user_id) VALUES ('${givenBusinessName}', '${givenPhoneNumber}', (SELECT reg_user_id FROM RegisteredUser WHERE user_id= ${userId}))`,
-                                                                    function(err, insertedBusiness){
+                                                                    connection.query(`INSERT INTO Address (address, latitude, longitude, reg_user_id) VALUES ('${givenAddress}', '${givenLatitude}', '${givenLongitude}',(SELECT reg_user_id FROM RegisteredUser WHERE user_id= ${userId}))`,
+                                                                    function(err, insertedAddress){
                                                                         if(err){
                                                                             console.log(err);
-                                                                            // res.status(500).json(err);
                                                                         }
-                                                                        console.log('Business Created');
-                                                                        console.log(insertedBusiness.insertId);
-                                                                        connection.query(`INSERT INTO Shelter (business_id) VALUES ('${insertedBusiness.insertId}')`,
-                                                                        function(err, insertedShelter){
+                                                                        console.log('Address Inserted');
+                                                                        connection.query(`INSERT INTO Business (name, phone_num, reg_user_id) VALUES ('${givenBusinessName}', '${givenPhoneNumber}', (SELECT reg_user_id FROM RegisteredUser WHERE user_id= ${userId}))`,
+                                                                        function(err, insertedBusiness){
                                                                             if(err){
                                                                                 console.log(err);
                                                                                 // res.status(500).json(err);
                                                                             }
-                                                                            console.log('Shelter Created');
-                                                                            console.log(insertedShelter.insertId);
-                                                                            for(let i = 0; i < givenPetTypes.length; i++){
-                                                                                connection.query(`INSERT INTO ShelterTypes (shelter_id, type_id) VALUES ('${insertedShelter.insertId}', ${givenPetTypes[i].value})`,
-                                                                                function(err, insertedPetType){
-                                                                                    if(err){
-                                                                                        console.log(err);
-                                                                                    }
-                                                                                    console.log(givenPetTypes[i].label, " inserted");
-                                                                                })
-                                                                            }
+                                                                            console.log('Business Created');
+                                                                            console.log(insertedBusiness.insertId);
+                                                                            connection.query(`INSERT INTO Shelter (business_id) VALUES ('${insertedBusiness.insertId}')`,
+                                                                            function(err, insertedShelter){
+                                                                                if(err){
+                                                                                    console.log(err);
+                                                                                    // res.status(500).json(err);
+                                                                                }
+                                                                                console.log('Shelter Created');
+                                                                                console.log(insertedShelter.insertId);
+                                                                                for(let i = 0; i < givenPetTypes.length; i++){
+                                                                                    connection.query(`INSERT INTO ShelterTypes (shelter_id, type_id) VALUES ('${insertedShelter.insertId}', ${givenPetTypes[i].value})`,
+                                                                                    function(err, insertedPetType){
+                                                                                        if(err){
+                                                                                            console.log(err);
+                                                                                        }
+                                                                                        console.log(givenPetTypes[i].label, " inserted");
+                                                                                    })
+                                                                                }
+                                                                            })
+    
                                                                         })
-
                                                                     })
+
                                                                 })
                                                             }); 
                                                             res.status(200).json(insertedUser);
