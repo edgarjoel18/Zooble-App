@@ -287,6 +287,15 @@ router.post('/api/sign-up/shelter', (req,res) =>{
                                                                             }
                                                                             console.log('Shelter Created');
                                                                             console.log(insertedShelter.insertId);
+                                                                            for(let i = 0; i < givenPetTypes.length; i++){
+                                                                                connection.query(`INSERT INTO ShelterTypes (shelter_id, type_id) VALUES ('${insertedShelter.insertId}', ${givenPetTypes[i].value})`,
+                                                                                function(err, insertedPetType){
+                                                                                    if(err){
+                                                                                        console.log(err);
+                                                                                    }
+                                                                                    console.log(givenPetTypes[i].label, " inserted");
+                                                                                })
+                                                                            }
                                                                         })
 
                                                                     })
