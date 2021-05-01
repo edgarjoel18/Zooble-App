@@ -1,17 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {useHistory} from 'react-router'
-import React from 'react';
+import {useLocation} from "react-router-dom";
+import Axios from 'axios';
 import styles from './SignUpPage2.module.css';
 
 import BaseSelect from "react-select";
 import FixRequiredSelect from "./FixRequiredSelect";
 import makeAnimated from 'react-select/animated';
 
+//Import Modals
 import TermsAndConditions from '../../components/Modals/TermsAndConditions'
 import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
-
-
-
 
 //For address input and suggestions
 import {
@@ -23,20 +22,13 @@ import {
   } from "@reach/combobox";
   import "@reach/combobox";
 
-  import usePlacesAutocomplete,{
-    getGeocode,
-    getLatLng,
-  } from "use-places-autocomplete";
+import usePlacesAutocomplete,{
+getGeocode,
+getLatLng,
+} from "use-places-autocomplete";
 
+const typeOptions = []; //for storing business type options
 
-const typeOptions = [  // final product will fetch from database
-    {value: 'Grooming', label: 'Grooming'},
-    {value: 'Supplies', label: 'Supplies'},
-    {value: 'Training', label: 'Training'},
-    {value: 'Kennels', label: 'Kennels'},
-    {value: 'Pet Stores', label: 'Pet Stores'}
-];
-  
 const Select = props => (
     <FixRequiredSelect
       {...props}
@@ -45,17 +37,14 @@ const Select = props => (
     />
 );
 
-function BusinessSignUpPage2() {
+function BusinessSignUpPage2(props) {
+    
+    const location = useLocation();
+    let state = props.location.state;
+    console.log(state);
     
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
     const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
-
-    const [email, setEmail] = useState('')
-    const [uname, setUname] = useState('')
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [password, setPassword] = useState('')
-    const [redonePassword, setRedonePassword] = useState('')
 
     const [failedSubmit, setFailedSubmit] = useState(false)
 
@@ -75,11 +64,13 @@ function BusinessSignUpPage2() {
         setPrivacyPolicyDisplay(false);
     }
 
-    const [selectedBusinessCategories, setSelectedBusinessCategories] = useState([]);
+    const [selectedBusinessType, setSelectedBusinessType] = useState();
 
     const [name, setName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
+    const [latitude, setLatitude] = useState();
+    const [longitude, setLongitude] = useState();
 
 
     function customTheme(theme) { //move this a separate file and import maybe?
@@ -90,7 +81,6 @@ function BusinessSignUpPage2() {
                 primary25: '#B3B3B3',
                 primary: '#1CB48F',
             }
-
         }
     }
 
@@ -107,27 +97,77 @@ function BusinessSignUpPage2() {
 
     const history= useHistory();
 
-    function OnClickHandler(){
-            history.push("/SignUpSuccess");
+    //Use Places Autocomplete call
+    const {
+        ready, 
+        value, 
+        suggestions: {status, data}, 
+        setValue, 
+        clearSuggestions,
+        } = usePlacesAutocomplete({
+        requestOptions:{
+            location: {lat: () => 37.773972,lng: () => -122.431297},
+            radius: 200 * 1000,
+        },
+        });
+
+    function signUpBusiness(event){
+        console.log(selectedBusinessType.value);
+        event.preventDefault();
+        Axios.post('/api/sign-up/business', { 
+            email: state.email,
+            firstName: state.firstName,
+            lastName: state.lastName,
+            uname: state.username,
+            password: state.password,
+            redonePassword: state.redonePassword,
+            businessName: name,
+            businessPhoneNumber: phoneNumber,
+            address: address,
+            latitude: latitude,
+            longitude: longitude,
+            type: selectedBusinessType.value
+        },{withCredentials:true}).then(response => {
+            console.log(response);
+            console.log(response.data);
+            // if(response.data.affectedRows === 1){
+                history.push("/SignUpSuccess");
+            // }
+
+        }).catch(error => {
+            console.log("Error");
+            // if (error.response.data === "exists"){
+            //     // setError("An Account using that Email or Username already exists");
+            //     console.log(error);
+            // }
+            // else if (error.response.data === "passwords not matching"){
+            //     // setError("The Passwords Entered Do Not Match");
+            //     console.log(error);
+            // }
+            // else if (error.response.data === "password requirements"){
+            //     // setError("Your Password Must Have: 8-50 Characters and Contain: 1 Capital Letter, 1 Number, 1 Special Character");
+            //     console.log(error);
+            // }
+            console.log(error);
+        })
     }
 
-        //Use Places Autocomplete call
-        const {
-            ready, 
-            value, 
-            suggestions: {status, data}, 
-            setValue, 
-            clearSuggestions,
-          } = usePlacesAutocomplete({
-            requestOptions:{
-                location: {lat: () => 37.773972,lng: () => -122.431297},
-                radius: 200 * 1000,
-            },
-          });
+    useEffect(() => {  //run once when page loads/refresh
+        Axios.get('/api/business-types')   //get business types from database
+        .then(response =>{
+            console.log(response);
+            console.log(response.data)
+            console.log(response.data[0]);
+            for(let i= 0 ; i < response.data.length; i++){
+                typeOptions.push({value: response.data[i].business_type_id, label: response.data[i].business_type_name});
+            }
+            console.log(typeOptions);
+        })
+    }, [])
 
     return (
         <>
-        <form className={styles['signup-container']} onSubmit={OnClickHandler}>
+        <form className={styles['signup-container']} onSubmit={signUpBusiness}>
             <div className={styles['signup-container-header']}>
                 Business Details
             </div>
@@ -167,10 +207,13 @@ function BusinessSignUpPage2() {
                                 const results = await getGeocode({address});
                                 const{lat,lng} = await getLatLng(results[0]);
                                 console.log(lat,lng);
+                                setLatitude(lat);
+                                setLongitude(lng);
                             } catch(error){
                                 console.log("error!")
                             }
                                 console.log(address)
+                                setAddress(address);
                             }}
                             >
                             <ComboboxInput 
@@ -194,14 +237,14 @@ function BusinessSignUpPage2() {
                     </div>
                 <div className={styles['types-input-container']}>
                     <label className={styles['types-input-label']} for='business-categories'>Business Categories</label>
-                        <Select id="shelter-animal-types" name="shelter_animal_types" className={styles['Select']}
-                            onChange={setSelectedBusinessCategories}
+                        <Select id="business-type" name="business_type" className={styles['Select']}
+                            onChange={setSelectedBusinessType}
                             options={typeOptions}
-                            placeholder="Business Categories"
+                            placeholder="Business Type"
                             theme={customTheme}
                             styles={customStyles}
                             isSearchable
-                            isMulti
+                            // isMulti
                             components={animatedComponents}
                             required
                         />

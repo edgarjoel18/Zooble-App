@@ -84,7 +84,7 @@ function MapSearch(props) {
         {value: 'Monkey', label: 'Monkey'},
     ];
 
-    //Recieve search params for searchbar.js
+    //Recieve search params from searchbar.js
     let state = props.location.state;
     console.log(state);
 

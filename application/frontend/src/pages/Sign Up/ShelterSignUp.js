@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import { NavLink, useHistory } from "react-router-dom";
 
-import axios from 'axios'
+import Axios from "axios";
 import styles from './SignUpPage.module.css';
 
 import Input from '../../components/UI/Input/Input';
@@ -43,16 +43,16 @@ function ShelterSignUpPage() {
       setPrivacyPolicyDisplay(false);
     }
 
-        //states for sign up error display
-        const [error, setError] = useState(null);
+    //states for sign up error display
+    const [error, setError] = useState(null);
 
-        const errorDisplay = error ? 
-        <div className={styles['signup-error-container']}>
+    const errorDisplay = error ? 
+    <div className={styles['signup-error-container']}>
             {error}
-        </div> : 
-        <div className={styles['signup-requirements-container']}>
-            Your Password Must Have: 8-50 Characters and Contain: 1 Capital Letter, 1 Number, 1 Special Character
-        </div>;
+    </div> : 
+    <div className={styles['signup-requirements-container']}>
+        Your Password Must Have: 8-50 Characters and Contain: 1 Capital Letter, 1 Number, 1 Special Character
+    </div>;
 
     function signUp(event) {
         event.preventDefault();
@@ -63,35 +63,12 @@ function ShelterSignUpPage() {
         console.log(password)
         console.log(redonePassword)
 
-        axios.post('/api/sign-up', {
-            email: email,
-            firstName: firstName,
-            lastName: lastName,
-            uname: uname,
-            password: password,
-            redonePassword: redonePassword
-    },{withCredentials:true}).then(response => {
-        console.log(response);
-        console.log(response.data);
-        if(response.data.affectedRows === 1){
-            history.push("/shelter-signup2");
+        const ShelterSignUpPage2 = {
+            pathname: '/shelter-signup2',
+            state: {email: email, username: uname, firstName: firstName, lastName: lastName, password: password, redonePassword: redonePassword}
         }
 
-    }).catch(error => {
-        if (error.response.data === "exists"){
-            setError("An Account using that Email or Username already exists");
-            console.log(error);
-        }
-        else if (error.response.data === "passwords not matching"){
-            setError("The Passwords Entered Do Not Match");
-            console.log(error);
-        }
-        else if (error.response.data === "password requirements"){
-            setError("Your Password Must Have: 8-50 Characters and Contain: 1 Capital Letter, 1 Number, 1 Special Character");
-            console.log(error);
-        }
-        console.log(error);
-        })
+        history.push(ShelterSignUpPage2);
     }
 
     // function onPasswordChangedHandler(event) {

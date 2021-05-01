@@ -13,6 +13,7 @@ const loginRouter = require('./routes/login.js');
 const logoutRouter = require('./routes/logout.js');
 const signupRouter = require('./routes/sign-up.js');
 const searchRouter = require('./routes/search.js');
+const dropdownRouter = require('./routes/dropdown-options.js');
 
 const app = express();
 
@@ -47,6 +48,9 @@ app.use(logoutRouter);
 
 //Search
 app.use(searchRouter);
+
+//Dropdown Options
+app.use(dropdownRouter)
 
 
 
