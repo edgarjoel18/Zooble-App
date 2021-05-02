@@ -147,9 +147,14 @@ router.get("/api/search", (req,res) =>{
     else if(category == 'Pet Owners'){
         console.log('searching through RegisteredPetOwner')
         connection.query(
-            `SELECT * 
-            FROM PetOwner
-            WHERE LOWER(name) LIKE '%${name}%'
+            `SELECT User.first_name, RegisteredUser.reg_user_id
+            FROM User
+            LEFT JOIN RegisteredUser
+            ON User.user_id = RegisteredUser.user_id
+            LEFT JOIN Business
+            ON RegisteredUser.reg_user_id = Business.reg_user_id
+            WHERE LOWER(User.first_name) LIKE '%${name}%'
+            AND Business.business_id IS NULL
             `, 
             function(err, result) {
             if(err){
@@ -164,10 +169,10 @@ router.get("/api/search", (req,res) =>{
                     // console.log(row.size_id);
                     // console.log(row.age_id);
                     requestedSearchResults.searchResults.push({
-                        "reg_pet_owner_id":row.reg_pet_owner_id,
+                        // "reg_pet_owner_id":row._id,
                         "reg_user_id":row.reg_user_id,
-                        "name": row.name,
-                        "profile_pic": row.profile_pic
+                        "name": row.first_name,
+                        // "profile_pic": row.profile_pic
                     });
                   });
                 console.log(requestedSearchResults);
