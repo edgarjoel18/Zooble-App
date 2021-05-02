@@ -26,6 +26,7 @@ const options = {
 }
 
 function MapSearch(props) {
+    
 
     const location = useLocation();
     let history = useHistory();
@@ -97,7 +98,9 @@ function MapSearch(props) {
     const[searchCategory, setSearchCategory] = useState();
     const[searchTerm, setSearchTerm] = useState();
     const[resultsSortOption, setResultsSortOption] = useState('');
-    const[recievedSearchResults, setRecievedSearchResults] = useState([]);  //store search results
+    const[recievedSearchResults, setRecievedSearchResults] = useState([]);  
+    // const recievedSearchResults = [];//store search results
+    console.log('Initial Recieved Search Results: ', recievedSearchResults); //1
 
 
     //for storing whether filter tab is displaying
@@ -200,36 +203,38 @@ function MapSearch(props) {
             Axios.get('/api/search', {  //take in filters here? for final version
                 params: {
                   searchTerm: state.searchTermParam,
-                  searchCategory:state.searchCategoryParam}})
+                  searchCategory:state.searchCategoryParam
+                }})
                 .then(response =>{
-                console.log(response)
-                console.log(response.data)
-                console.log(response.data.searchResults)
-                setRecievedSearchResults(response.data.searchResults)
-                // setOverlayDisplay(true);
-                displaySearchResults();
-                console.log("Recieved Search Results: " + recievedSearchResults)
-                
-              })
-              .catch(error =>{
-                console.log("Error");
-              })
+                    console.log("response: ",response)
+                    console.log("response.data: ",response.data)
+                    console.log("response.data.searchResults: ",response.data.searchResults)
+                    // for(let i = 0; i < response.data.searchResults.length; i++){
+                    //     setRecievedSearchResults( recievedSearchResults => recievedSearchResults.concat(response.data.searchResults[i]))
+                    // }
+                    displaySearchResults();
+                    setRecievedSearchResults(response.data.searchResults);
+                    console.log("Recieved Search Results: ", recievedSearchResults)
+                    // setOverlayDisplay(true);
+                })
+                .catch(error =>{
+                    console.log("Error");
+                })
         }
         else if(state.lat && state.lng){
         }
-
-    },[state]);  //only fetch and reload when search params change
+    },[state,]);  //only fetch and reload when search params change
 
 
     //toggle display of filter overlay
     function displayFilterOverlay(){
-        console.log("Filter overlay display turning on")
+        // console.log("Filter overlay display turning on")
         setFilterOverlayDisplay('block');
         setSearchResultsDisplay('none');
     }
 
     function displaySearchResults(){
-        console.log("Filter overlay display turning off")
+        // console.log("Filter overlay display turning off")
         setFilterOverlayDisplay('none');
         setSearchResultsDisplay('block');
     }
@@ -247,7 +252,7 @@ function MapSearch(props) {
 
     const animatedComponents = makeAnimated();
 
-    console.log(petTypeFilters);
+    // console.log(petTypeFilters);
 
     return (
             <>
@@ -260,9 +265,21 @@ function MapSearch(props) {
                         options={options}
                         onLoad={onMapLoad}
                         >
-                        <Marker 
-                            position={{lat:state.lat,lng:state.lng}}
-                        />
+                        {recievedSearchResults && recievedSearchResults.map((searchResult) => (
+                            <>
+                             {/* <Marker position={{lat: state.lat, lng: state.lng}}/> */}
+                            <Marker 
+                            //     key={searchResult.address_id}
+                                 position={{lat: parseFloat(searchResult.lat), lng: parseFloat(searchResult.lng)}}
+                                
+                            />
+                            </>
+                        ))}
+{/* 
+                        {!recievedSearchResults &&
+                            // <Marker position={{lat: state.lat, lng: state.lng}}/>
+                        } */}
+
                     </GoogleMap>}
                     {!state.lat && !state.lng && <div className={styles['map-coming-soon']}>Location Results Feature Coming Soon</div>}
                     {/* {state.lat && state.lng && <img src={`https://maps.googleapis.com/maps/api/staticmap?center=`+ state.lat +","+ state.lng +`&zoom=8&size=640x640&markers=color=gray%7C` + latitude +","+ longitude + "&key=AIzaSyDGz7t7D1PRi8X2Or-SHAie2OgWoFH--Bs"}/>} */}

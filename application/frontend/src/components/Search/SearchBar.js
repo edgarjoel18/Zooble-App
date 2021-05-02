@@ -44,10 +44,11 @@ function SearchBar() {
   const history = useHistory();
   const [searchTerm, setSearchTerm] = useState('')
   const [searchCategory, setSearchCategory] = useState('Pets');
-  const [overlayDisplay, setOverlayDisplay] = useState(false);
+  // const [overlayDisplay, setOverlayDisplay] = useState(false);
   const [recievedSearchResults, setRecievedSearchResults] = useState([]);
 
-  const [latLng, setLatLng] = useState(null);
+  const [searchLocationLat, setSearchLocationLat] = useState(null);
+  const [searchLocationLng, setSearchLocationLng] = useState(null);
 
   //load google maps
   // const  {isLoaded, loadError} = useLoadScript({
@@ -68,28 +69,22 @@ function SearchBar() {
     },
   });
 
-  useEffect(()=>{
-    console.log('useEffect');
-    if(overlayDisplay){
-      console.log('modal open')
-      document.body.style.overflow = "hidden";
-    }
-    else{
-      console.log('modal closed')
-      document.body.style.overflow = "auto";
-    }
-  },[overlayDisplay])
-
-  function searchForLatLng(lat,lng){
-    const location = {
-      pathname:'/MapSearch',
-      state: {lat:lat, lng:lng, searchCategoryParam: searchCategory}
-    }
-    history.push(location);
-  }
+  useEffect(() => {
+    console.log(searchLocationLat, searchLocationLng);
+  }, [searchLocationLat, searchLocationLng])
 
 
-  const overlayStyle = {display: overlayDisplay};
+
+  // function searchForLatLng(lat,lng){
+  //   const location = {
+  //     pathname:'/MapSearch',
+  //     state: {lat:lat, lng:lng, searchCategoryParam: searchCategory}
+  //   }
+  //   history.push(location);
+  // }
+
+
+  // const overlayStyle = {display: overlayDisplay};
 
   return (
     <>
@@ -107,12 +102,13 @@ function SearchBar() {
             onSelect={async (address)=>{
                 setValue(address,false);
                 clearSuggestions();
-
                 try{
                     const results = await getGeocode({address});
                     const{lat,lng} = await getLatLng(results[0]);
                     console.log(lat,lng);
-                    searchForLatLng(lat, lng); //
+                    setSearchLocationLat(lat);
+                    setSearchLocationLng(lng);
+                    // searchForLatLng(lat, lng); //
                 } catch(error){
                     console.log("error!")
                 }
@@ -120,13 +116,31 @@ function SearchBar() {
                 console.log(address)
             }}
           >
-          {searchCategory=="Pet Owners" && 
+          {searchCategory=="Pet Owners" &&
+          <>
+          <input 
+            type="text" 
+            placeholder="Enter a username, or first name"
+            onChange={(e)=> {
+              setSearchTerm(e.target.value);
+            }}
+            onKeyPress={event => {
+              if(event.key === 'Enter'){
+                history.push(
+                  {
+                    pathname:"/MapSearch",
+                    state:{searchCategoryParam: searchCategory, searchTermParam: searchTerm}
+                  }
+                  )
+              }
+            }}
+          />
           <ComboboxInput 
             value={value}
-            placeholder= {"Search " + searchCategory.toLowerCase()}
+            placeholder= {"Near:"}
             onChange={(e)=> {
                 setValue(e.target.value);
-                setSearchTerm(e.target.value);
+                // setSearchTerm(e.target.value);
             }}
             required
             disabled={!ready}
@@ -140,15 +154,34 @@ function SearchBar() {
                   )
               }
             }}
-        />
+          />
+        </>
         }
         {searchCategory != "Pet Owners" &&
+          <>
+            <input
+              type="text" 
+              placeholder="Enter a username, or first name"
+              onChange={(e)=> {
+                setSearchTerm(e.target.value);
+              }}
+              onKeyPress={event => {
+                if(event.key === 'Enter'){
+                  history.push(
+                    {
+                      pathname:"/MapSearch",
+                      state:{searchCategoryParam: searchCategory, searchTermParam: searchTerm}
+                    }
+                    )
+                }
+              }}
+            />
             <ComboboxInput 
               value={value}
-              placeholder= {"Search " + searchCategory.toLowerCase() + " near you"}
+              placeholder= {"Near:"}
               onChange={(e)=> {
                 setValue(e.target.value);
-                setSearchTerm(e.target.value);
+                // setSearchTerm(e.target.value);
               }}
               disabled={!ready}
               onKeyPress={event => {
@@ -161,7 +194,9 @@ function SearchBar() {
                           )
                       }
                     }}
-                />
+            />
+          </>
+
         }
         {searchCategory != "Pet Owners" && <ComboboxPopover className={styles['combobox-popover']}>
             {status === "OK" && data.map(({id,description}) => 
@@ -176,8 +211,7 @@ function SearchBar() {
       <Link className={styles["searchbar-search"]}
             to={
               {pathname:"/MapSearch",
-              state:{searchCategoryParam: searchCategory,
-                     searchTermParam: searchTerm}}
+              state:{searchCategoryParam: searchCategory, lat: searchLocationLat, lng: searchLocationLng, searchTermParam: searchTerm}}
             }
       />
       {/* <button className={styles["searchbar-search"]} onClick={OnClickHandler} ></button> */}
