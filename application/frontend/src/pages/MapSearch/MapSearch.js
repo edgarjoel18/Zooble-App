@@ -177,7 +177,9 @@ function MapSearch(props) {
             Axios.get('/api/search', {  //take in filters here? for final version
                 params: {
                   searchTerm: state.searchTermParam,
-                  searchCategory:state.searchCategoryParam
+                  searchCategory:state.searchCategoryParam,
+                  searchLatitude: state.lat,
+                  searchLongitude: state.lng
                 }})
                 .then(response =>{
                     console.log("response: ",response)

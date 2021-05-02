@@ -41,6 +41,11 @@ router.get("/api/search", (req,res) =>{
     console.log("Category: ",category);
     var requestedSearchResults = {searchResults:[]}
 
+    let givenLatitude = req.query.searchLatitude;
+    let givenLongitude = req.query.searchLongitude;
+    console.log("Given Latitude: ",givenLatitude);
+    console.log("Given Longitude: ", givenLongitude);
+
     if(category == 'Pets'){
         connection.query(
             `SELECT * 
@@ -100,13 +105,17 @@ router.get("/api/search", (req,res) =>{
                     // console.log(row.name);
                     // console.log(row.size_id);
                     // console.log(row.age_id);
-                    requestedSearchResults.searchResults.push({
-                        "business_id":row.business_id,
-                        "reg_user_id":row.reg_user_id,
-                        "name": row.name,
-                        "lat": row.latitude,
-                        "lng": row.longitude
-                    });
+                    const proximityInMiles = distance(row.latitude, givenLatitude, row.longitude, givenLongitude);
+                    console.log("Proximity in Miles: ", proximityInMiles);
+                    if(proximityInMiles < 5){
+                        requestedSearchResults.searchResults.push({
+                            "business_id":row.business_id,
+                            "reg_user_id":row.reg_user_id,
+                            "name": row.name,
+                            "lat": row.latitude,
+                            "lng": row.longitude
+                        });
+                    }
                   });
                 console.log(requestedSearchResults);
                 res.json(requestedSearchResults);
@@ -135,13 +144,17 @@ router.get("/api/search", (req,res) =>{
                     // console.log(row.name);
                     // console.log(row.size_id);
                     // console.log(row.age_id);
-                    requestedSearchResults.searchResults.push({
-                        "shelter_id":row.shelter_id,
-                        "reg_user_id":row.reg_user_id,
-                        "name": row.name,
-                        "lat": row.latitude,
-                        "lng": row.longitude
-                    });
+                    const proximityInMiles = distance(row.latitude, givenLatitude, row.longitude, givenLongitude);
+                    console.log("Proximity in Miles: ", proximityInMiles);
+                    if(proximityInMiles < 5){
+                        requestedSearchResults.searchResults.push({
+                            "shelter_id":row.shelter_id,
+                            "reg_user_id":row.reg_user_id,
+                            "name": row.name,
+                            "lat": row.latitude,
+                            "lng": row.longitude
+                        });
+                    }
                   });
                 console.log(requestedSearchResults);
                 res.json(requestedSearchResults);

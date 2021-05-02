@@ -9,7 +9,7 @@ router.get('/api/business-types', (req,res) =>{
             console.log(err);
             res.status(500).json(err);
         }
-        console.log(businessTypes)
+        // console.log(businessTypes)
         res.status(200).json(businessTypes);
     })
 })
@@ -20,7 +20,7 @@ router.get('/api/pet-types', (req,res) =>{
             console.log(err);
             res.status(500).json(err);
         }
-        console.log(petTypes)
+        // console.log(petTypes)
         res.status(200).json(petTypes);
     })
 })
@@ -31,7 +31,7 @@ router.get('/api/dog-breeds', (req,res) =>{
             console.log(err);
             res.status(500).json(err);
         }
-        console.log(dogBreeds)
+        // console.log(dogBreeds)
         res.status(200).json(dogBreeds);
     })
 })
@@ -42,7 +42,7 @@ router.get('/api/cat-breeds', (req,res) =>{
             console.log(err);
             res.status(500).json(err);
         }
-        console.log(catBreeds)
+        // console.log(catBreeds)
         res.status(200).json(catBreeds);
     })
 })
@@ -53,7 +53,7 @@ router.get('/api/ages', (req,res) =>{
             console.log(err);
             res.status(500).json(err);
         }
-        console.log(ages)
+        // console.log(ages)
         res.status(200).json(ages);
     })
 })
@@ -64,7 +64,7 @@ router.get('/api/sizes', (req,res) =>{
             console.log(err);
             res.status(500).json(err);
         }
-        console.log(sizes)
+        // console.log(sizes)
         res.status(200).json(sizes);
     })
 })
@@ -75,7 +75,7 @@ router.get('/api/colors', (req,res) =>{
             console.log(err);
             res.status(500).json(err);
         }
-        console.log(colors)
+        // console.log(colors)
         res.status(200).json(colors);
     })
 })
