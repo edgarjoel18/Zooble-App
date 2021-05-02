@@ -83,6 +83,8 @@ router.get("/api/search", (req,res) =>{
             FROM Business
             LEFT JOIN Shelter
             ON Business.business_id = Shelter.business_id
+            LEFT JOIN Address
+            ON Business.reg_user_id = Address.reg_user_id
             WHERE LOWER(name) LIKE '%${name}%'
             AND Shelter.business_id IS NULL
             `,
@@ -101,7 +103,9 @@ router.get("/api/search", (req,res) =>{
                     requestedSearchResults.searchResults.push({
                         "business_id":row.business_id,
                         "reg_user_id":row.reg_user_id,
-                        "name": row.name
+                        "name": row.name,
+                        "lat": row.latitude,
+                        "lng": row.longitude
                     });
                   });
                 console.log(requestedSearchResults);

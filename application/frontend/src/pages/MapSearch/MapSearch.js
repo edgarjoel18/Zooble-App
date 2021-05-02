@@ -21,8 +21,7 @@ const mapContainerStyle = {
 
 const options = {
     disableDefaultUI: true,
-    zoomControl: false,
-    gestureHandling:"none",
+    // zoomControl: false,
 }
 
 const typeOptions = [];
@@ -40,6 +39,7 @@ function MapSearch(props) {
     let history = useHistory();
 
     const panTo = useCallback(({lat,lng}) =>{
+        console.log({lat,lng});
         mapRef.current.panTo({lat,lng});
         mapRef.current.setZoom(14);
     },[]);
@@ -87,75 +87,6 @@ function MapSearch(props) {
     const[longitude,setLongitude] = useState();
     const[mapUrl,setMapUrl] = useState();
     const center = {lat: state.lat, lng: state.lng};
-
-    //Recommended results for horizontal prototype
-    const recommendedPets = [
-        { 
-            pet_id: 1,
-            name: 'Max',
-            size_name: 'small',
-            age_name: 'two',
-            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg' 
-        },
-        {
-            pet_id: 2,
-            name: 'Mimi',
-            size_name: 'small',
-            age_name: 'two',
-            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg' 
-        },
-        {
-            pet_id: 3,
-            name: 'Juju',
-            size_name: 'small',
-            age_name: 'two',
-            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'
-        },
-    ]
-
-    const recommendedPetOwners = [
-        { 
-            reg_pet_owner_id: 1,
-            reg_user_id: 5,
-            name: 'Alex',
-            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/AlexPic.jpg' 
-        },
-        { 
-            reg_pet_owner_id: 2,
-            reg_user_id: 4,
-            name: 'Mary',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaryPic.jpg' 
-        },
-    ]
-
-    const recommendedBusinesses = [
-        { reg_business_id: 1,
-            reg_user_id: 2,
-            name: 'Booming Poodle Grooming',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/BoomingPoodleGroomingPic.jpg' 
-        },
-        { 
-            reg_business_id: 2,
-            reg_user_id: 4,
-            name: 'Paw Spa',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/PawSpaPic.jpg' 
-        },
-    ]
-
-    const recommendedShelters = [
-        { 
-            reg_shelter_id: 1,
-            reg_user_id: 1,
-            name: 'Bad Boys Dog Pound',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/BadBoysDogPoundPic.jpg' 
-        },
-        { 
-            reg_shelter_id: 2,
-            reg_user_id: 3,
-            name: 'Burgsdale Pet Shelter',
-            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/BurgsdalePetShelterPic.jpg' 
-        }
-    ]
 
     useEffect(() => {  //run once when page loads/refresh
         Axios.get('/api/pet-types')   //get business types from database
@@ -252,9 +183,6 @@ function MapSearch(props) {
                     console.log("response: ",response)
                     console.log("response.data: ",response.data)
                     console.log("response.data.searchResults: ",response.data.searchResults)
-                    // for(let i = 0; i < response.data.searchResults.length; i++){
-                    //     setRecievedSearchResults( recievedSearchResults => recievedSearchResults.concat(response.data.searchResults[i]))
-                    // }
                     displaySearchResults();
                     setRecievedSearchResults(response.data.searchResults);
                     console.log("Recieved Search Results: ", recievedSearchResults)
@@ -344,7 +272,7 @@ function MapSearch(props) {
                         <div className={styles['map-search-results-text-list']}>
                             <ul>
                                 {recievedSearchResults.length == 0 && <li className={styles['no-results']}>No {searchCategory} that Match your Search. But here are some {searchCategory} you might like: </li>}
-                                {recievedSearchResults.length == 0 && searchCategory == 'Pets' &&
+                                {/* {recievedSearchResults.length == 0 && searchCategory == 'Pets' &&
                                     recommendedPets.map((searchResult) => (
                                         <Link className={styles['profile-link']} to={"/Profile/" + searchResult.name} ><li className={styles['search-result']} key={recommendedPets.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                     ))
@@ -363,16 +291,16 @@ function MapSearch(props) {
                                     recommendedPetOwners.map((searchResult) => (
                                         <Link className={styles['profile-link']} to={"/Profile/" + "PetOwnerId=" +searchResult.reg_pet_owner_id} ><li className={styles['search-result']} key={recommendedPetOwners.reg_pet_owner_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                     ))
-                                }
+                                } */}
 
                                 {recievedSearchResults && searchCategory == 'Pets' && recievedSearchResults.map((searchResult) => (
                                     <Link className={styles['profile-link']} to={"/Profile/" + searchResult.name}><li className={styles['search-result']} key={searchResult.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                 ))}
                                 {recievedSearchResults && searchCategory == 'Businesses' && recievedSearchResults.map((searchResult) => (
-                                    <Link className={styles['profile-link']} to={"/Profile/" + "BusinessId=" +searchResult.reg_business_id}><li className={styles['search-result']} key={searchResult.reg_business_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                    <BusinessSearchResult searchResult={searchResult} panTo={panTo}/>
                                 ))}
                                 {recievedSearchResults && searchCategory == 'Shelters' && recievedSearchResults.map((searchResult) => (
-                                    <Link className={styles['profile-link']} to={"/Profile/" + "ShelterId=" +searchResult.reg_shelter_id}><li className={styles['search-result']} key={searchResult.reg_shelter_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                    <ShelterSearchResult searchResult={searchResult} panTo={panTo}/>
                                 ))}
                                 {recievedSearchResults && searchCategory == 'Pet Owners' && recievedSearchResults.map((searchResult) => (
                                     <Link className={styles['profile-link']} to={"/Profile/" + "PetOwnerId=" +searchResult.reg_pet_owner_id}><li className={styles['search-result']} key={searchResult.reg_pet_owner_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
@@ -498,6 +426,19 @@ function MapSearch(props) {
             </div>
             </>     
     );
+}
+
+function BusinessSearchResult({searchResult,panTo}){
+    return (
+        <li className={styles['search-result']} key={searchResult.reg_business_id} onClick={() => {panTo({lat: parseFloat(searchResult.lat), lng:parseFloat(searchResult.lng)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li>
+    )
+}
+
+function ShelterSearchResult({searchResult,panTo}){
+    return (
+        <li className={styles['search-result']} key={searchResult.reg_shelter_id} onClick={() => {panTo({lat: parseFloat(searchResult.lat), lng:parseFloat(searchResult.lng)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li>
+    )
+
 }
 
 export default MapSearch;
