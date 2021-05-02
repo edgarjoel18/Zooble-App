@@ -207,6 +207,7 @@ function SignUpPage() {
                     </p>
                 </div>
                 <div className={styles['btn-container']}>
+                    {/*Why do we have two className for referencing the same style "submit-btn" - Wameedh */}
                     <button className={styles['submit-btn']} type='submit' className={styles['submit-btn']} >Sign Up</button>
                     {/* <button disabled={!redonePassword.valid} type='submit' className={styles['submit-btn']} onClick={OnClickHandler}>Sign Up</button> */}
                 </div>

@@ -14,7 +14,7 @@ const logoutRouter = require('./routes/logout.js');
 const signupRouter = require('./routes/sign-up.js');
 const searchRouter = require('./routes/search.js');
 const dropdownRouter = require('./routes/dropdown-options.js');
-
+const uploadPostRouter = require('./routes/upload-post.js');
 const app = express();
 
 // app.use(cookieParser());
@@ -52,6 +52,8 @@ app.use(searchRouter);
 //Dropdown Options
 app.use(dropdownRouter)
 
+//upload Post
+app.use(uploadPostRouter)
 
 
 
