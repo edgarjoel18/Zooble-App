@@ -24,13 +24,13 @@ const options = {
     // zoomControl: false,
 }
 
-const typeOptions = [];
-const businessCategoryOptions = [];
-const ageOptions = [];
-const dogBreedOptions = [];
-const catBreedOptions = [];
-const colorOptions = [];
-const sizeOptions = [];
+let typeOptions = [];
+let businessCategoryOptions = [];
+let ageOptions = [];
+let dogBreedOptions = [];
+let catBreedOptions = [];
+let colorOptions = [];
+let sizeOptions = [];
 
 const distanceOptions = [
     {value: 1, label:'Walking Distance (1 Mile)'},
@@ -70,6 +70,8 @@ function MapSearch(props) {
     const[searchTerm, setSearchTerm] = useState();
     const[resultsSortOption, setResultsSortOption] = useState('');
     const [searchDistance, setSearchDistance] = useState({value: 5, label: 'Driving Distance (5 Miles)'});
+
+    //For storing Map attributes
     
     //For Storing Search Results
     const[recievedSearchResults, setRecievedSearchResults] = useState([]);
@@ -102,63 +104,43 @@ function MapSearch(props) {
         //Convert this to array assignments not iterate/push
         Axios.get('/api/pet-types')   //get business types from database
         .then(response =>{
-            for(let i= 0 ; i < response.data.length; i++){
-                typeOptions.push({value: response.data[i].pet_type_id, label: response.data[i].pet_type_name});
-            }
+            typeOptions =  response.data;
             console.log('typeOptions: ',typeOptions);
         })
 
         Axios.get('/api/business-types')   //get business types from database
         .then(response =>{
-            for(let i= 0 ; i < response.data.length; i++){
-                businessCategoryOptions.push({value: response.data[i].business_type_id, label: response.data[i].business_type_name});
-            }
+            businessCategoryOptions = response.data;
             console.log('businessCategoryOptions: ',businessCategoryOptions);
         })
 
         Axios.get('/api/dog-breeds')   //get business types from database
         .then(response =>{
-            for(let i= 0 ; i < response.data.length; i++){
-                dogBreedOptions.push({value: response.data[i].dog_breed_id, label: response.data[i].dog_breed_name});
-            }
+            dogBreedOptions = response.data;
             console.log('dogBreedOptions: ',dogBreedOptions);
         })
 
         Axios.get('/api/cat-breeds')   //get business types from database
         .then(response =>{
-            for(let i= 0 ; i < response.data.length; i++){
-                catBreedOptions.push({value: response.data[i].cat_breed_id, label: response.data[i].cat_breed_name});
-            }
+            catBreedOptions = response.data;
             console.log('catBreedOptions: ',catBreedOptions);
         })
 
         Axios.get('/api/ages')   //get business types from database
         .then(response =>{
-            for(let i= 0 ; i < response.data.length; i++){
-                ageOptions.push({value: response.data[i].age_id, label: response.data[i].age_name});
-            }
+            ageOptions = response.data;
             console.log('ageOptions: ',ageOptions);
         })
 
         Axios.get('/api/sizes')   //get business types from database
         .then(response =>{
-            console.log(response);
-            console.log(response.data)
-            console.log(response.data[0]);
-            for(let i= 0 ; i < response.data.length; i++){
-                sizeOptions.push({value: response.data[i].size_id, label: response.data[i].size_name});
-            }
+            sizeOptions = response.data;
             console.log('sizeOptions: ',sizeOptions);
         })
 
         Axios.get('/api/colors')   //get business types from database
         .then(response =>{
-            console.log(response);
-            console.log(response.data)
-            console.log(response.data[0]);
-            for(let i= 0 ; i < response.data.length; i++){
-                colorOptions.push({value: response.data[i].color_id, label: response.data[i].color_name});
-            }
+            colorOptions = response.data;
             console.log('colorOptions: ',colorOptions);
         })
     }, [])

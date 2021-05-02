@@ -27,7 +27,7 @@ getGeocode,
 getLatLng,
 } from "use-places-autocomplete";
 
-const typeOptions = []; //for storing business type options
+let typeOptions = []; //for storing business type options
 
 const Select = props => (
     <FixRequiredSelect
@@ -38,6 +38,16 @@ const Select = props => (
 );
 
 function BusinessSignUpPage2(props) {
+
+    const [typeOptions, setTypeOptions] = useState([]);
+
+
+    useEffect(() => {  //run once when page loads/refresh
+        Axios.get('/api/business-types')   //get business types from database
+        .then(response =>{
+            setTypeOptions(response.data);
+        })
+    }, [])
     
     const location = useLocation();
     let state = props.location.state;
@@ -150,18 +160,6 @@ function BusinessSignUpPage2(props) {
         })
     }
 
-    useEffect(() => {  //run once when page loads/refresh
-        Axios.get('/api/business-types')   //get business types from database
-        .then(response =>{
-            console.log(response);
-            console.log(response.data)
-            console.log(response.data[0]);
-            for(let i= 0 ; i < response.data.length; i++){
-                typeOptions.push({value: response.data[i].business_type_id, label: response.data[i].business_type_name});
-            }
-            console.log(typeOptions);
-        })
-    }, [])
 
     return (
         <>

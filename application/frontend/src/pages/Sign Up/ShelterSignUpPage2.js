@@ -36,19 +36,28 @@ import usePlacesAutocomplete,{
 
 
 
-const typeOptions = []; //empty pet type options to be populated from database
+// let typeOptions = []; //empty pet type options to be populated from database
 
 //Replacing react-select with version that can have required attribute
 const Select = props => (  
     <FixRequiredSelect
       {...props}
       SelectComponent={BaseSelect}
-      options={props.options || typeOptions}
+      options={props.options}
     />
 );
 
 
 function ShelterSignUpPage2(props) { //recieve form data from sign up page 1
+
+    const [typeOptions, setTypeOptions] = useState([]);
+
+    useEffect(() => {  //run once when page loads/refresh
+        Axios.get('/api/pet-types')   //get business types from database
+        .then(response =>{
+            setTypeOptions(response.data);
+        })
+    }, [])
 
     //to get form data from sign up page 1
     const location = useLocation();
@@ -60,6 +69,7 @@ function ShelterSignUpPage2(props) { //recieve form data from sign up page 1
     const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
 
     //Pet Type Dropdown state
+    
     const [selectedPetTypes, setSelectedPetTypes] = useState([]);
 
     //Form input states
@@ -178,18 +188,7 @@ function ShelterSignUpPage2(props) { //recieve form data from sign up page 1
 
     const animatedComponents = makeAnimated();
 
-    useEffect(() => {  //run once when page loads/refresh
-        Axios.get('/api/pet-types')   //get business types from database
-        .then(response =>{
-            console.log(response);
-            console.log(response.data)
-            console.log(response.data[0]);
-            for(let i= 0 ; i < response.data.length; i++){
-                typeOptions.push({value: response.data[i].pet_type_id, label: response.data[i].pet_type_name});
-            }
-            console.log(typeOptions);
-        })
-    }, [])
+
 
     return (
         <>

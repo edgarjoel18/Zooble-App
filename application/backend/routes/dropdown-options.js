@@ -9,8 +9,12 @@ router.get('/api/business-types', (req,res) =>{
             console.log(err);
             res.status(500).json(err);
         }
+        let businessCategoryOptions = []
+        for(let i= 0 ; i < businessTypes.length; i++){
+            businessCategoryOptions.push({value: businessTypes[i].business_type_id, label: businessTypes[i].business_type_name});
+        }
         // console.log(businessTypes)
-        res.status(200).json(businessTypes);
+        res.status(200).json(businessCategoryOptions);
     })
 })
 
@@ -20,8 +24,12 @@ router.get('/api/pet-types', (req,res) =>{
             console.log(err);
             res.status(500).json(err);
         }
-        // console.log(petTypes)
-        res.status(200).json(petTypes);
+        let petTypeOptions = [];
+        for(let i= 0 ; i < petTypes.length; i++){
+            petTypeOptions.push({value: petTypes[i].pet_type_id, label: petTypes[i].pet_type_name});
+        }
+        console.log("Pet Type Option: ", petTypeOptions);
+        res.status(200).json(petTypeOptions);
     })
 })
 
@@ -31,8 +39,13 @@ router.get('/api/dog-breeds', (req,res) =>{
             console.log(err);
             res.status(500).json(err);
         }
+        let dogBreedOptions = [];
+        for(let i= 0 ; i < dogBreeds.length; i++){
+            dogBreedOptions.push({value: dogBreeds[i].dog_breed_id, label: dogBreeds[i].dog_breed_name});
+        }
+        console.log("Pet Type Dropdown Content: ", dogBreedOptions);
         // console.log(dogBreeds)
-        res.status(200).json(dogBreeds);
+        res.status(200).json(dogBreedOptions);
     })
 })
 
@@ -42,8 +55,12 @@ router.get('/api/cat-breeds', (req,res) =>{
             console.log(err);
             res.status(500).json(err);
         }
+        let catBreedOptions = [];
+        for(let i= 0 ; i < catBreeds.length; i++){
+            catBreedOptions.push({value: catBreeds[i].cat_breed_id, label: catBreeds[i].cat_breed_name});
+        }
         // console.log(catBreeds)
-        res.status(200).json(catBreeds);
+        res.status(200).json(catBreedOptions);
     })
 })
 
@@ -53,8 +70,12 @@ router.get('/api/ages', (req,res) =>{
             console.log(err);
             res.status(500).json(err);
         }
+        let ageOptions = [];
+        for(let i= 0 ; i < ages.length; i++){
+            ageOptions.push({value: ages[i].age_id, label: ages[i].age_name});
+        }
         // console.log(ages)
-        res.status(200).json(ages);
+        res.status(200).json(ageOptions);
     })
 })
 
@@ -64,8 +85,12 @@ router.get('/api/sizes', (req,res) =>{
             console.log(err);
             res.status(500).json(err);
         }
+        let sizeOptions = [];
+        for(let i= 0 ; i < sizes.length; i++){
+            sizeOptions.push({value: sizes[i].size_id, label: sizes[i].size_name});
+        }
         // console.log(sizes)
-        res.status(200).json(sizes);
+        res.status(200).json(sizeOptions);
     })
 })
 
@@ -75,8 +100,12 @@ router.get('/api/colors', (req,res) =>{
             console.log(err);
             res.status(500).json(err);
         }
+        let colorOptions = [];
+        for(let i= 0 ; i < colors.length; i++){
+            colorOptions.push({value: colors[i].color_id, label: colors[i].color_name});
+        }
         // console.log(colors)
-        res.status(200).json(colors);
+        res.status(200).json(colorOptions);
     })
 })
 
