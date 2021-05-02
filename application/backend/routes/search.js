@@ -46,6 +46,9 @@ router.get("/api/search", (req,res) =>{
     console.log("Given Latitude: ",givenLatitude);
     console.log("Given Longitude: ", givenLongitude);
 
+    let preferredSearchDistance = req.query.searchDistance;
+    console.log("Preferred Search Distance: ", preferredSearchDistance);
+
     if(category == 'Pets'){
         connection.query(
             `SELECT * 
@@ -107,7 +110,7 @@ router.get("/api/search", (req,res) =>{
                     // console.log(row.age_id);
                     const proximityInMiles = distance(row.latitude, givenLatitude, row.longitude, givenLongitude);
                     console.log("Proximity in Miles: ", proximityInMiles);
-                    if(proximityInMiles < 5){
+                    if(proximityInMiles < preferredSearchDistance){
                         requestedSearchResults.searchResults.push({
                             "business_id":row.business_id,
                             "reg_user_id":row.reg_user_id,
@@ -146,7 +149,7 @@ router.get("/api/search", (req,res) =>{
                     // console.log(row.age_id);
                     const proximityInMiles = distance(row.latitude, givenLatitude, row.longitude, givenLongitude);
                     console.log("Proximity in Miles: ", proximityInMiles);
-                    if(proximityInMiles < 5){
+                    if(proximityInMiles < preferredSearchDistance){
                         requestedSearchResults.searchResults.push({
                             "shelter_id":row.shelter_id,
                             "reg_user_id":row.reg_user_id,

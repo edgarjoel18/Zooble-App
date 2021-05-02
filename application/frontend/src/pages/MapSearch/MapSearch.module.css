@@ -124,7 +124,8 @@
 .filter-pet-colors,
 .filter-pet-age,
 .filter-pet-breed,
-.filter-shelter-pets{
+.filter-shelter-pets,
+.filter-distance{
     padding-top: 25px;
     width: 75%;
     margin: 0 auto;

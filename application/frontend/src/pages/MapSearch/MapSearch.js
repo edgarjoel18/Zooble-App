@@ -32,6 +32,12 @@ const catBreedOptions = [];
 const colorOptions = [];
 const sizeOptions = [];
 
+const distanceOptions = [
+    {value: 1, label:'Walking Distance (1 Mile)'},
+    {value: 2, label: 'Biking Distance (2 Miles)'},
+    {value: 5, label: 'Driving Distance (5 Miles)'}
+];
+
 function MapSearch(props) {
     
 
@@ -59,11 +65,14 @@ function MapSearch(props) {
         history.push('/');
     }
 
+    //For storing searchOptions
     const[searchCategory, setSearchCategory] = useState();
     const[searchTerm, setSearchTerm] = useState();
     const[resultsSortOption, setResultsSortOption] = useState('');
-    const[recievedSearchResults, setRecievedSearchResults] = useState([]);  
-    // const recievedSearchResults = [];//store search results
+    const [searchDistance, setSearchDistance] = useState({value: 5, label: 'Driving Distance (5 Miles)'});
+    
+    //For Storing Search Results
+    const[recievedSearchResults, setRecievedSearchResults] = useState([]);
     console.log('Initial Recieved Search Results: ', recievedSearchResults); //1
 
 
@@ -89,11 +98,10 @@ function MapSearch(props) {
     const center = {lat: state.lat, lng: state.lng};
 
     useEffect(() => {  //run once when page loads/refresh
+
+        //Convert this to array assignments not iterate/push
         Axios.get('/api/pet-types')   //get business types from database
         .then(response =>{
-            console.log(response);
-            console.log(response.data)
-            console.log(response.data[0]);
             for(let i= 0 ; i < response.data.length; i++){
                 typeOptions.push({value: response.data[i].pet_type_id, label: response.data[i].pet_type_name});
             }
@@ -102,9 +110,6 @@ function MapSearch(props) {
 
         Axios.get('/api/business-types')   //get business types from database
         .then(response =>{
-            console.log(response);
-            console.log(response.data)
-            console.log(response.data[0]);
             for(let i= 0 ; i < response.data.length; i++){
                 businessCategoryOptions.push({value: response.data[i].business_type_id, label: response.data[i].business_type_name});
             }
@@ -113,9 +118,6 @@ function MapSearch(props) {
 
         Axios.get('/api/dog-breeds')   //get business types from database
         .then(response =>{
-            console.log(response);
-            console.log(response.data)
-            console.log(response.data[0]);
             for(let i= 0 ; i < response.data.length; i++){
                 dogBreedOptions.push({value: response.data[i].dog_breed_id, label: response.data[i].dog_breed_name});
             }
@@ -124,9 +126,6 @@ function MapSearch(props) {
 
         Axios.get('/api/cat-breeds')   //get business types from database
         .then(response =>{
-            console.log(response);
-            console.log(response.data)
-            console.log(response.data[0]);
             for(let i= 0 ; i < response.data.length; i++){
                 catBreedOptions.push({value: response.data[i].cat_breed_id, label: response.data[i].cat_breed_name});
             }
@@ -135,9 +134,6 @@ function MapSearch(props) {
 
         Axios.get('/api/ages')   //get business types from database
         .then(response =>{
-            console.log(response);
-            console.log(response.data)
-            console.log(response.data[0]);
             for(let i= 0 ; i < response.data.length; i++){
                 ageOptions.push({value: response.data[i].age_id, label: response.data[i].age_name});
             }
@@ -172,6 +168,7 @@ function MapSearch(props) {
             console.log('Fetching Search Results');
             console.log('Search Category: '+ state.searchCategoryParam);
             console.log('Search Term: ' + state.searchTermParam);
+            console.log('Search Distance: ', searchDistance.value);
             setSearchCategory(state.searchCategoryParam);
             setSearchTerm(state.searchTermParam);
             Axios.get('/api/search', {  //take in filters here? for final version
@@ -179,7 +176,8 @@ function MapSearch(props) {
                   searchTerm: state.searchTermParam,
                   searchCategory:state.searchCategoryParam,
                   searchLatitude: state.lat,
-                  searchLongitude: state.lng
+                  searchLongitude: state.lng,
+                 searchDistance: searchDistance.value
                 }})
                 .then(response =>{
                     console.log("response: ",response)
@@ -196,7 +194,7 @@ function MapSearch(props) {
         }
         else if(state.lat && state.lng){
         }
-    },[state,]);  //only fetch and reload when search params change
+    },[state,searchDistance]);  //only fetch and reload when search params change
 
 
     //toggle display of filter overlay
@@ -318,18 +316,31 @@ function MapSearch(props) {
                         <span><span className={styles['map-search-header-text']}>Filters</span><button className={styles['map-search-results-header-action']} onClick={displaySearchResults}>Back to Results</button></span>
                         </div>
                         {searchCategory=="Businesses" && 
-                        <div className={styles['filter-business-categories']}>
-                            <label for="business-categories">Categories</label>
-                                <Select id="business-categories" name="business_categories"
-                                    onChange={setBusinessCategoryFilters}
-                                    options={businessCategoryOptions}
-                                    placeholder="Select Business Categories"
-                                    theme={customTheme}
-                                    isSearchable
-                                    isMulti
-                                    components={animatedComponents}
-                                />
-                        </div>
+                        <>
+                            <div className={styles['filter-business-categories']}>
+                                <label for="business-categories">Categories</label>
+                                    <Select id="business-categories" name="business_categories"
+                                        onChange={setBusinessCategoryFilters}
+                                        options={businessCategoryOptions}
+                                        placeholder="Select Business Categories"
+                                        theme={customTheme}
+                                        isSearchable
+                                        isMulti
+                                        components={animatedComponents}
+                                    />
+                            </div>
+                            <div className={styles['filter-distance']}>
+                                <label for="distance">Distance</label>
+                                    <Select id="distance" name="distance"
+                                        onChange={setSearchDistance}
+                                        options={distanceOptions}
+                                        placeholder="Select Preferred Distance"
+                                        theme={customTheme}
+                                        isSearchable
+                                        components={animatedComponents}
+                                    />
+                            </div>
+                        </>
                         }
                         {searchCategory=="Pets" &&
                         <>
@@ -409,18 +420,31 @@ function MapSearch(props) {
                         </>
                         }
                         {searchCategory=="Shelters" &&
-                            <div className={styles['filter-shelter-pets']}>
-                                <label for="shelter-pet-types">Available Types of Pets</label>
-                                    <Select id="shelter-pet-types" name="shelter_pet_types"
-                                        onChange={setShelterPetTypeFilters}
-                                        options={typeOptions}
-                                        placeholder="Select Types of Pets"
-                                        theme={customTheme}
-                                        isSearchable
-                                        isMulti
-                                        components={animatedComponents}
-                                    />
-                            </div>
+                            <>
+                                <div className={styles['filter-shelter-pets']}>
+                                    <label for="shelter-pet-types">Available Types of Pets</label>
+                                        <Select id="shelter-pet-types" name="shelter_pet_types"
+                                            onChange={setShelterPetTypeFilters}
+                                            options={typeOptions}
+                                            placeholder="Select Types of Pets"
+                                            theme={customTheme}
+                                            isSearchable
+                                            isMulti
+                                            components={animatedComponents}
+                                        />
+                                </div>
+                                <div className={styles['filter-distance']}>
+                                    <label for="distance">Distance</label>
+                                        <Select id="distance" name="distance"
+                                            onChange={setSearchDistance}
+                                            options={distanceOptions}
+                                            placeholder="Select Preferred Distance"
+                                            theme={customTheme}
+                                            isSearchable
+                                            components={animatedComponents}
+                                        />
+                                </div>
+                            </>
                         }
 
                     </>

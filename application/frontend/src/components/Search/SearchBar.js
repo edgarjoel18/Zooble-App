@@ -44,17 +44,10 @@ function SearchBar() {
   const history = useHistory();
   const [searchTerm, setSearchTerm] = useState('')
   const [searchCategory, setSearchCategory] = useState('Pets');
-  // const [overlayDisplay, setOverlayDisplay] = useState(false);
   const [recievedSearchResults, setRecievedSearchResults] = useState([]);
 
   const [searchLocationLat, setSearchLocationLat] = useState(null);
   const [searchLocationLng, setSearchLocationLng] = useState(null);
-
-  //load google maps
-  // const  {isLoaded, loadError} = useLoadScript({
-  //   googleMapsApiKey: `AIzaSyDGz7t7D1PRi8X2Or-SHAie2OgWoFH--Bs`,
-  //   libraries,
-  // });
 
   const {
     ready, 
@@ -72,19 +65,6 @@ function SearchBar() {
   useEffect(() => {
     console.log(searchLocationLat, searchLocationLng);
   }, [searchLocationLat, searchLocationLng])
-
-
-
-  // function searchForLatLng(lat,lng){
-  //   const location = {
-  //     pathname:'/MapSearch',
-  //     state: {lat:lat, lng:lng, searchCategoryParam: searchCategory}
-  //   }
-  //   history.push(location);
-  // }
-
-
-  // const overlayStyle = {display: overlayDisplay};
 
   return (
     <>
@@ -108,7 +88,6 @@ function SearchBar() {
                     console.log(lat,lng);
                     setSearchLocationLat(lat);
                     setSearchLocationLng(lng);
-                    // searchForLatLng(lat, lng); //
                 } catch(error){
                     console.log("error!")
                 }
@@ -140,7 +119,6 @@ function SearchBar() {
             placeholder= {"Near:"}
             onChange={(e)=> {
                 setValue(e.target.value);
-                // setSearchTerm(e.target.value);
             }}
             required
             disabled={!ready}
@@ -214,8 +192,6 @@ function SearchBar() {
               state:{searchCategoryParam: searchCategory, lat: searchLocationLat, lng: searchLocationLng, searchTermParam: searchTerm}}
             }
       />
-      {/* <button className={styles["searchbar-search"]} onClick={OnClickHandler} ></button> */}
-      
       </div>
   </>
   );
