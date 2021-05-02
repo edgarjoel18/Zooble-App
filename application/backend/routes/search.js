@@ -148,7 +148,7 @@ router.get("/api/search", (req,res) =>{
         console.log('searching through RegisteredPetOwner')
         connection.query(
             `SELECT * 
-            FROM RegisteredPetOwner
+            FROM PetOwner
             WHERE LOWER(name) LIKE '%${name}%'
             `, 
             function(err, result) {

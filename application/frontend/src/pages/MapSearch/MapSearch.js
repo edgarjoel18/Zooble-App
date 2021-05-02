@@ -25,6 +25,14 @@ const options = {
     gestureHandling:"none",
 }
 
+const typeOptions = [];
+const businessCategoryOptions = [];
+const ageOptions = [];
+const dogBreedOptions = [];
+const catBreedOptions = [];
+const colorOptions = [];
+const sizeOptions = [];
+
 function MapSearch(props) {
     
 
@@ -40,50 +48,6 @@ function MapSearch(props) {
     const onMapLoad = useCallback((map) =>{
         mapRef.current = map;
     }, []);
-    
-    //Only for horizontal prototype, real thing should fetch from db
-    const businessCategoryOptions = [
-        {value: 'Grooming', label: 'Grooming'},
-        {value: 'Supplies', label: 'Supplies'},
-        {value: 'Training', label: 'Training'},
-        {value: 'Kennels', label: 'Kennels'},
-        {value: 'Pet Stores', label: 'Pet Stores'}
-    ];
-
-    const dogBreedOptions = [
-        {value: 'German Shepherd', label: 'German Shepherd'},
-        {value: 'Labrador Retriever', label: 'Labrador Retriever'}
-    ];
-
-    const catBreedOptions = [
-        {value: 'Manx', label: 'Manx'},
-        {value: 'Siamese', label: 'Siamese'}
-    ];
-
-    const colorOptions = [
-        {value: 'Black', label: 'Black'},
-        {value: 'White', label: 'White'},
-        {value: 'Brown', label: 'Brown'}
-    ];
-
-    const sizeOptions = [
-        {value: 'Small', label: 'Small'},
-        {value: 'Medium', label: 'Medium'},
-        {value: 'Large', label: 'Large'}
-    ];
-
-    const ageOptions = [
-        {value: 'Young', label: 'Young'},
-        {value: 'Adult', label: 'Adult'},
-        {value: 'Senior', label: 'Senior'}
-    ];
-
-    const typeOptions = [
-        {value: 'Dog', label: 'Dog'},
-        {value: 'Cat', label: 'Cat'},
-        {value: 'Lizard', label:'Lizard'},
-        {value: 'Monkey', label: 'Monkey'},
-    ];
 
     //Recieve search params from searchbar.js
     let state = props.location.state;
@@ -192,6 +156,85 @@ function MapSearch(props) {
             profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/BurgsdalePetShelterPic.jpg' 
         }
     ]
+
+    useEffect(() => {  //run once when page loads/refresh
+        Axios.get('/api/pet-types')   //get business types from database
+        .then(response =>{
+            console.log(response);
+            console.log(response.data)
+            console.log(response.data[0]);
+            for(let i= 0 ; i < response.data.length; i++){
+                typeOptions.push({value: response.data[i].pet_type_id, label: response.data[i].pet_type_name});
+            }
+            console.log('typeOptions: ',typeOptions);
+        })
+
+        Axios.get('/api/business-types')   //get business types from database
+        .then(response =>{
+            console.log(response);
+            console.log(response.data)
+            console.log(response.data[0]);
+            for(let i= 0 ; i < response.data.length; i++){
+                businessCategoryOptions.push({value: response.data[i].business_type_id, label: response.data[i].business_type_name});
+            }
+            console.log('businessCategoryOptions: ',businessCategoryOptions);
+        })
+
+        Axios.get('/api/dog-breeds')   //get business types from database
+        .then(response =>{
+            console.log(response);
+            console.log(response.data)
+            console.log(response.data[0]);
+            for(let i= 0 ; i < response.data.length; i++){
+                dogBreedOptions.push({value: response.data[i].dog_breed_id, label: response.data[i].dog_breed_name});
+            }
+            console.log('dogBreedOptions: ',dogBreedOptions);
+        })
+
+        Axios.get('/api/cat-breeds')   //get business types from database
+        .then(response =>{
+            console.log(response);
+            console.log(response.data)
+            console.log(response.data[0]);
+            for(let i= 0 ; i < response.data.length; i++){
+                catBreedOptions.push({value: response.data[i].cat_breed_id, label: response.data[i].cat_breed_name});
+            }
+            console.log('catBreedOptions: ',catBreedOptions);
+        })
+
+        Axios.get('/api/ages')   //get business types from database
+        .then(response =>{
+            console.log(response);
+            console.log(response.data)
+            console.log(response.data[0]);
+            for(let i= 0 ; i < response.data.length; i++){
+                ageOptions.push({value: response.data[i].age_id, label: response.data[i].age_name});
+            }
+            console.log('ageOptions: ',ageOptions);
+        })
+
+        Axios.get('/api/sizes')   //get business types from database
+        .then(response =>{
+            console.log(response);
+            console.log(response.data)
+            console.log(response.data[0]);
+            for(let i= 0 ; i < response.data.length; i++){
+                sizeOptions.push({value: response.data[i].size_id, label: response.data[i].size_name});
+            }
+            console.log('sizeOptions: ',sizeOptions);
+        })
+
+        Axios.get('/api/colors')   //get business types from database
+        .then(response =>{
+            console.log(response);
+            console.log(response.data)
+            console.log(response.data[0]);
+            for(let i= 0 ; i < response.data.length; i++){
+                colorOptions.push({value: response.data[i].color_id, label: response.data[i].color_name});
+            }
+            console.log('colorOptions: ',colorOptions);
+        })
+    }, [])
 
     useEffect(()=>{
         if(state.searchTermParam || state.searchCategoryParam){
