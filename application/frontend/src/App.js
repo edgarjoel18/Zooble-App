@@ -144,6 +144,10 @@ const App = () => {
         <Route path="/Cameron" component={Cameron}/>
         <Route path="/Wameedh" component={Wameedh}/>
         <Route path="/SignUpSuccess" component={SignUpSuccess}/>
+        <Route path="/user/:user" component={ProfilePage}/>
+        <Route path="/pet/:pet" component={ProfilePage}/>
+        <Route path="/shelter/:shelter" component={ProfilePage}/>
+        <Route path="/business/:business" component={ProfilePage}/>
         <Redirect to="/" />
       </Switch>
     </Router>
