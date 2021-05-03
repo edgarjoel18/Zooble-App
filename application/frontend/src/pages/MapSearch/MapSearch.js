@@ -145,7 +145,7 @@ function MapSearch(props) {
         })
     }, [])
 
-    useEffect(()=>{
+    function search(){
         if(state.searchTermParam || state.searchCategoryParam){
             console.log('Fetching Search Results');
             console.log('Search Category: '+ state.searchCategoryParam);
@@ -156,7 +156,7 @@ function MapSearch(props) {
 
             let businessCategoryFilterValues = [];
             for(let i = 0; i < businessCategoryFilters.length; i++){
-                businessCategoryFilterValues += businessCategoryFilters[i].value;
+                businessCategoryFilterValues.push(businessCategoryFilters[i].value);
             }
             setSearchCategory(state.searchCategoryParam);
             setSearchTerm(state.searchTermParam);
@@ -229,13 +229,17 @@ function MapSearch(props) {
         }
         else if(state.lat && state.lng){
         }
-    },[state,searchDistance, businessCategoryFilters]);  //only fetch results when search params or filters change
+    }
+
+    useEffect(()=>{
+        search();
+    },[state,searchDistance]);  //only fetch results when search params or filters change
 
 
     //toggle display of filter overlay
     function displayFilterOverlay(){
         // console.log("Filter overlay display turning on")
-        setFilterOverlayDisplay('block');
+        setFilterOverlayDisplay('flex');
         setSearchResultsDisplay('none');
     }
 
@@ -243,6 +247,10 @@ function MapSearch(props) {
         // console.log("Filter overlay display turning off")
         setFilterOverlayDisplay('none');
         setSearchResultsDisplay('block');
+    }
+
+    function applyFilters(){
+        search();
     }
 
     function customTheme(theme){
@@ -459,7 +467,7 @@ function MapSearch(props) {
                                 </div>
                             </>
                         }
-
+                        <button className={styles['filter-button']} onClick={applyFilters}>Apply Filters</button>
                     </>
                 </div>
             </div>

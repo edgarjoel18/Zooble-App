@@ -131,6 +131,23 @@
     margin: 0 auto;
 }
 
+.filter-button{
+    width: 75%;
+    margin: 25px auto;
+    background-color: var(--primary-clr);
+    border: none;
+    border-radius: 7.5px;
+    box-shadow: var(--elevation-1);
+    color: var(--reversed-txt-clr);
+    text-align: center;
+    font-weight: 600;
+    font-family: var(--ff-primary);
+    font-size: var(--h3);
+    cursor: pointer;
+}
+
+
+
 .no-results{
     list-style: none;
     text-align: left;

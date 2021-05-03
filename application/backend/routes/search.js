@@ -98,7 +98,7 @@ router.get("/api/search", (req,res) =>{
         let query = '';
 
 
-        if(typeof givenBizCategories !== 'undefined'){
+        if(givenBizCategories[0] !== 'undefined'){
             query =             
             `SELECT * 
             FROM Business
