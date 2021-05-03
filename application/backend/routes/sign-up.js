@@ -51,7 +51,7 @@ router.post("/api/sign-up", (req,res) =>{
                                                         else{
                                                             console.log('User Created');
                                                             console.log(insertedUser.insertId); //user id of newly created user
-                                                            connection.query(`INSERT INTO Account (user_id)  VALUES  ('${insertedUser.insertId}')`, //create new account in database with returned user_id //registered user entry and profile automatically created
+                                                            connection.query(`INSERT INTO Account (user_id, role_id)  VALUES  ('${insertedUser.insertId}', 1)`, //create new account in database with returned user_id  and assign role of pet owner//registered user entry and profile automatically created 
                                                             function(err,account){
                                                                 if(err){
                                                                     res.status(500).json(err);
@@ -151,7 +151,7 @@ router.post('/api/sign-up/business', (req,res) =>{
                                                             console.log('User Created');
                                                             console.log(insertedUser.insertId); //user id of newly created user
                                                             userId = insertedUser.insertId;
-                                                            connection.query(`INSERT INTO Account (user_id)  VALUES  ('${insertedUser.insertId}')`, //create new account in database with returned user_id //registered user entry and profile automatically created
+                                                            connection.query(`INSERT INTO Account (user_id, role_id)  VALUES  ('${insertedUser.insertId}', 2)`, //create new account in database with returned user_id //registered user entry and profile automatically created
                                                             function(err,account){
                                                                 if(err){
                                                                     res.status(500).json(err);

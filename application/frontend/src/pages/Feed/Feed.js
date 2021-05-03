@@ -69,9 +69,9 @@ function Feed() {
         axios.get('/api/get-feed-user')
         .then(response =>{
             console.log(response.data);
-            console.log(response.data[0].first_name);
-            setCreatePostDisplayName(response.data[0].first_name);
-            setCreatePostProfilePic(response.data[0].profile_pic_link);
+            console.log(response.data.displayName);
+            setCreatePostDisplayName(response.data.displayName);
+            setCreatePostProfilePic(response.data.profile_pic_link);
         })
         .catch(err =>{
             console.log("Error: ");
