@@ -14,6 +14,8 @@ const dropdownRouter = require('./routes/dropdown-options.js');
 const uploadPostRouter = require('./routes/upload-post.js');
 const editPostRouter = require('./routes/edit-post.js');
 const deletePostRouter = require('./routes/delete-post.js');
+const feedRouter = require('./routes/feed.js');
+
 const app = express();
 
 //Session Store
@@ -65,6 +67,9 @@ app.use(editPostRouter)
 
 //Delete Post
 app.use(deletePostRouter)
+
+//Feed
+app.use(feedRouter);
 
 
 

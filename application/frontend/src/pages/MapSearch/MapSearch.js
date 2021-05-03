@@ -246,8 +246,8 @@ function MapSearch(props) {
                 console.log("Recieved Search Results: ", recievedSearchResults)
                 // setOverlayDisplay(true);
             })
-            .catch(error =>{
-                console.log("Error");
+            .catch(err =>{
+                console.log(err);
             })
         }
         else if(state.lat && state.lng){

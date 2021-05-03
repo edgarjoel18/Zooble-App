@@ -7,6 +7,7 @@ import own_prof_pic from '../../images/petOwnerProfile.jpg'
 import PostModal from '../../components/Modals/PostModal'
 
 import ArrowIcon from '../../images/Created Icons/Arrow.svg'
+import axios from 'axios';
 
 // import ClipLoader from "react-spinners/ClipLoader";
 
@@ -58,6 +59,25 @@ function Feed() {
     const [attachImageText, setAttachImageText] = useState('Add Image');
     const [attachImageBorderColor, setAttachImageBorderColor] = useState('#131b49')
     const [attachedImage, setAttachedImage] = useState(false);  //real thing will be null or attached image?
+
+    //creating a post display
+    const [createPostDisplayName, setCreatePostDisplayName] = useState('');
+    const [createPostProfilePic, setCreatePostProfilePic] = useState('');
+
+    useEffect(() => { //get profile pic and name of user
+        console.log('/api/get-feed-user');
+        axios.get('/api/get-feed-user')
+        .then(response =>{
+            console.log(response.data);
+            console.log(response.data[0].first_name);
+            setCreatePostDisplayName(response.data[0].first_name);
+            setCreatePostProfilePic(response.data[0].profile_pic_link);
+        })
+        .catch(err =>{
+            console.log("Error: ");
+            console.log(err);
+        })
+    }, [])
 
 
     function openPostModal(feedPost) {
@@ -143,8 +163,8 @@ function Feed() {
             <div className={styles["follower-feed-container"]}>
                 <div className={styles["follower-feed-header"]}></div>
                 <div className={styles["follower-feed-new-post"]} style={{ height: createPostOverlayDisplay.height }}>
-                    <img className={styles["follower-feed-new-post-pic"]} src={'https://csc648groupproject.s3-us-west-2.amazonaws.com/AlexPic.jpg'} />
-                    <div className={styles["follower-feed-new-post-name"]}>Alex</div>
+                    <img className={styles["follower-feed-new-post-pic"]} src={createPostProfilePic} />
+                    <div className={styles["follower-feed-new-post-name"]}>{createPostDisplayName}</div>
                     <textarea className={styles["follower-feed-new-post-body"]} style={{ display: createPostOverlayDisplay.display }} placeholder="Update your followers on what's going on with you and your pets" />
                     <button className={styles["follower-feed-new-post-attach-image"]} style={{ display: createPostOverlayDisplay.display, color: attachImageFontColor, backgroundColor: attachImageBackgroundColor, borderColor: attachImageBorderColor }} onClick={attachImage} onMouseOver={attachImageHover} onMouseLeave={attachImageLeave}>{attachImageText}</button>
                     <button className={styles["follower-feed-new-post-submit"]} style={{ display: createPostOverlayDisplay.display }}>Submit</button>
@@ -152,7 +172,7 @@ function Feed() {
                 </div>
                 {feedPosts.length == 0 && <li>No Feed Posts</li>}
                 {feedPosts && feedPosts.map((feedPost) => (
-                    <div className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
+                    <div key={feedPost.post_id} className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
                         <NavLink to={feedPost.link}>
                             <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic} />
                         </NavLink>

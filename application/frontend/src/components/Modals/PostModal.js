@@ -57,7 +57,7 @@ function PostModal({display,onClose,selectedPost}) {
                     <ul className={styles["post-comments"]}>
                         {comments.length == 0 && <li>No Comments</li>}
                         {comments && comments.map((comment)=>(
-                            <li key={comment.id}>
+                            <li key={comment.comment_id}>
                                 <div className={styles['post-comment']}>
                                     <img className={styles['post-comment-pic']} src={comment.prof_pic}/>
                                     <div className={styles['post-comment-name']}><h4>{comment.name}</h4></div>

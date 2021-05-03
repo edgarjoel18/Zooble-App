@@ -95,7 +95,7 @@ const App = () => {
         <Route path="/shelter-signup2" exact component={ShelterSignUpPage2}/>
         <Route path="/business-signup" exact component={BusinessSignUpPage}/>
         <Route path="/business-signup2" exact component={BusinessSignUpPage2}/>
-        <Route path="/Feed" component={Feed}/>
+        <Route path="/Feed" component={Feed} appUser={appUser}/>
         <Route path="/MapSearch" component={MapSearch}/>
         <Route exact path="/Profile">
           <ProfilePage appUser={appUser}/>
