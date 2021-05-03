@@ -28,7 +28,7 @@ router.get('/api/pet-types', (req,res) =>{
         for(let i= 0 ; i < petTypes.length; i++){
             petTypeOptions.push({value: petTypes[i].pet_type_id, label: petTypes[i].pet_type_name});
         }
-        console.log("Pet Type Option: ", petTypeOptions);
+        //console.log("Pet Type Option: ", petTypeOptions);
         res.status(200).json(petTypeOptions);
     })
 })
@@ -43,7 +43,7 @@ router.get('/api/dog-breeds', (req,res) =>{
         for(let i= 0 ; i < dogBreeds.length; i++){
             dogBreedOptions.push({value: dogBreeds[i].dog_breed_id, label: dogBreeds[i].dog_breed_name});
         }
-        console.log("Pet Type Dropdown Content: ", dogBreedOptions);
+        //console.log("Pet Type Dropdown Content: ", dogBreedOptions);
         // console.log(dogBreeds)
         res.status(200).json(dogBreedOptions);
     })

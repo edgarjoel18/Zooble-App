@@ -47,7 +47,7 @@ function MapSearch(props) {
     const panTo = useCallback(({lat,lng}) =>{
         console.log({lat,lng});
         mapRef.current.panTo({lat,lng});
-        mapRef.current.setZoom(14);
+        mapRef.current.setZoom(18);
     },[]);
     
     const mapRef = useRef(); //retain state without causing re-renders
@@ -84,7 +84,7 @@ function MapSearch(props) {
 
 
     //For storing filter states
-    const [businessCategoryFilters,setBusinessCategoryFilters] = useState([]);
+    const [businessCategoryFilters,setBusinessCategoryFilters] = useState([{}]);
     const [petTypeFilters,setPetTypeFilters] = useState([]);
     const [dogBreedFilters, setDogBreedFilters] = useState([]);
     const [catBreedFilters, setCatBreedFilters] = useState([]);
@@ -105,43 +105,43 @@ function MapSearch(props) {
         Axios.get('/api/pet-types')   //get business types from database
         .then(response =>{
             typeOptions =  response.data;
-            console.log('typeOptions: ',typeOptions);
+            // console.log('typeOptions: ',typeOptions);
         })
 
         Axios.get('/api/business-types')   //get business types from database
         .then(response =>{
             businessCategoryOptions = response.data;
-            console.log('businessCategoryOptions: ',businessCategoryOptions);
+            // console.log('businessCategoryOptions: ',businessCategoryOptions);
         })
 
         Axios.get('/api/dog-breeds')   //get business types from database
         .then(response =>{
             dogBreedOptions = response.data;
-            console.log('dogBreedOptions: ',dogBreedOptions);
+            // console.log('dogBreedOptions: ',dogBreedOptions);
         })
 
         Axios.get('/api/cat-breeds')   //get business types from database
         .then(response =>{
             catBreedOptions = response.data;
-            console.log('catBreedOptions: ',catBreedOptions);
+            // console.log('catBreedOptions: ',catBreedOptions);
         })
 
         Axios.get('/api/ages')   //get business types from database
         .then(response =>{
             ageOptions = response.data;
-            console.log('ageOptions: ',ageOptions);
+            // console.log('ageOptions: ',ageOptions);
         })
 
         Axios.get('/api/sizes')   //get business types from database
         .then(response =>{
             sizeOptions = response.data;
-            console.log('sizeOptions: ',sizeOptions);
+            // console.log('sizeOptions: ',sizeOptions);
         })
 
         Axios.get('/api/colors')   //get business types from database
         .then(response =>{
             colorOptions = response.data;
-            console.log('colorOptions: ',colorOptions);
+            // console.log('colorOptions: ',colorOptions);
         })
     }, [])
 
@@ -151,32 +151,85 @@ function MapSearch(props) {
             console.log('Search Category: '+ state.searchCategoryParam);
             console.log('Search Term: ' + state.searchTermParam);
             console.log('Search Distance: ', searchDistance.value);
+            console.log('Business Category Filters: ', businessCategoryFilters);
+            console.log(typeof businessCategoryFilters);
+
+            let businessCategoryFilterValues = [];
+            for(let i = 0; i < businessCategoryFilters.length; i++){
+                businessCategoryFilterValues += businessCategoryFilters[i].value;
+            }
             setSearchCategory(state.searchCategoryParam);
             setSearchTerm(state.searchTermParam);
-            Axios.get('/api/search', {  //take in filters here? for final version
-                params: {
-                  searchTerm: state.searchTermParam,
-                  searchCategory:state.searchCategoryParam,
-                  searchLatitude: state.lat,
-                  searchLongitude: state.lng,
-                 searchDistance: searchDistance.value
-                }})
-                .then(response =>{
-                    console.log("response: ",response)
-                    console.log("response.data: ",response.data)
-                    console.log("response.data.searchResults: ",response.data.searchResults)
-                    displaySearchResults();
-                    setRecievedSearchResults(response.data.searchResults);
-                    console.log("Recieved Search Results: ", recievedSearchResults)
-                    // setOverlayDisplay(true);
-                })
-                .catch(error =>{
-                    console.log("Error");
-                })
+
+            let searchParams = {};
+
+            switch(state.searchCategoryParam){
+                case 'Businesses':
+                    console.log("Switch: Businesses")
+                    searchParams = {
+                        searchTerm: state.searchTermParam,
+                        searchCategory:state.searchCategoryParam,
+                        searchLatitude: state.lat,
+                        searchLongitude: state.lng,
+                        searchDistance: searchDistance.value,
+                        searchBizCategories : businessCategoryFilterValues
+                    }
+                    break
+                case 'Shelters':
+                    searchParams = {
+                        searchTerm: state.searchTermParam,
+                        searchCategory:state.searchCategoryParam,
+                        searchLatitude: state.lat,
+                        searchLongitude: state.lng,
+                        searchDistance: searchDistance.value,
+                        searchBizCategories : businessCategoryFilters
+                    }
+                    break;
+                case 'Pets':
+                    searchParams = {
+                        searchTerm: state.searchTermParam,
+                        searchCategory:state.searchCategoryParam,
+                        searchLatitude: state.lat,
+                        searchLongitude: state.lng,
+                        searchDistance: searchDistance.value,
+                        searchPetTypes: petTypeFilters,
+                        searchPetColors: petColorFilters,
+                        searchPetSizes: petSizeFilters,
+                        searchPetAges: petAgeFilters
+                    }
+                    break;
+                case 'Pet Owners':
+                    searchParams = {
+                        searchTerm: state.searchTermParam,
+                        searchCategory:state.searchCategoryParam,
+                        searchLatitude: state.lat,
+                        searchLongitude: state.lng,
+                        searchDistance: searchDistance.value,
+                    }
+                    break;
+                
+            }
+
+            console.log("Search Params: ", searchParams)
+
+
+            Axios.get('/api/search', {params: searchParams})
+            .then(response =>{
+                console.log("response: ",response)
+                console.log("response.data: ",response.data)
+                console.log("response.data.searchResults: ",response.data.searchResults)
+                displaySearchResults();
+                setRecievedSearchResults(response.data.searchResults);
+                console.log("Recieved Search Results: ", recievedSearchResults)
+                // setOverlayDisplay(true);
+            })
+            .catch(error =>{
+                console.log("Error");
+            })
         }
         else if(state.lat && state.lng){
         }
-    },[state,searchDistance]);  //only fetch and reload when search params change
+    },[state,searchDistance, businessCategoryFilters]);  //only fetch results when search params or filters change
 
 
     //toggle display of filter overlay
@@ -211,7 +264,7 @@ function MapSearch(props) {
             <>
             <div className={styles['map-search-results-container']}>
                 <div className={styles['map-search-results-map']}>
-                    {state.lat && state.lng && <GoogleMap 
+                    {!state.lat && !state.lng && <GoogleMap 
                         mapContainerStyle={mapContainerStyle}
                         zoom={14}
                         center={center}
@@ -234,8 +287,7 @@ function MapSearch(props) {
                         } */}
 
                     </GoogleMap>}
-                    {!state.lat && !state.lng && <div className={styles['map-coming-soon']}>Location Results Feature Coming Soon</div>}
-                    {/* {state.lat && state.lng && <img src={`https://maps.googleapis.com/maps/api/staticmap?center=`+ state.lat +","+ state.lng +`&zoom=8&size=640x640&markers=color=gray%7C` + latitude +","+ longitude + "&key=AIzaSyDGz7t7D1PRi8X2Or-SHAie2OgWoFH--Bs"}/>} */}
+                    {state.lat && state.lng && <div className={styles['map-coming-soon']}>Location Results Feature Coming Soon</div>}
                 </div>
                 
                 <div className={styles['map-search-results-text']} style={{display: searchResultsDisplay}}>
@@ -254,27 +306,6 @@ function MapSearch(props) {
                         <div className={styles['map-search-results-text-list']}>
                             <ul>
                                 {recievedSearchResults.length == 0 && <li className={styles['no-results']}>No {searchCategory} that Match your Search. But here are some {searchCategory} you might like: </li>}
-                                {/* {recievedSearchResults.length == 0 && searchCategory == 'Pets' &&
-                                    recommendedPets.map((searchResult) => (
-                                        <Link className={styles['profile-link']} to={"/Profile/" + searchResult.name} ><li className={styles['search-result']} key={recommendedPets.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
-                                    ))
-                                }
-                                {recievedSearchResults.length == 0 && searchCategory == 'Businesses' &&
-                                    recommendedBusinesses.map((searchResult) => (
-                                        <Link className={styles['profile-link']} to={"/Profile/" + "BusinessId=" + searchResult.reg_business_id} ><li className={styles['search-result']} key={recommendedBusinesses.reg_business_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
-                                    ))
-                                }
-                                {recievedSearchResults.length == 0 && searchCategory == 'Shelters' &&
-                                    recommendedShelters.map((searchResult) => (
-                                        <Link className={styles['profile-link']} to={"/Profile/" + "ShelterId=" + searchResult.reg_shelter_id} ><li className={styles['search-result']} key={recommendedShelters.reg_shelter_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
-                                    ))
-                                }
-                                {recievedSearchResults.length == 0 && searchCategory == 'Pet Owners' &&
-                                    recommendedPetOwners.map((searchResult) => (
-                                        <Link className={styles['profile-link']} to={"/Profile/" + "PetOwnerId=" +searchResult.reg_pet_owner_id} ><li className={styles['search-result']} key={recommendedPetOwners.reg_pet_owner_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
-                                    ))
-                                } */}
-
                                 {recievedSearchResults && searchCategory == 'Pets' && recievedSearchResults.map((searchResult) => (
                                     <Link className={styles['profile-link']} to={"/Profile/" + searchResult.name}><li className={styles['search-result']} key={searchResult.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                 ))}

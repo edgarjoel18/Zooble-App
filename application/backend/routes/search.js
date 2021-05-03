@@ -35,6 +35,9 @@ router.get("/api/search", (req,res) =>{
     if(req.query.searchTerm){
         var name = req.query.searchTerm.toLowerCase();
     }
+    else{
+        name= '';
+    }
     
     console.log("Name: ",name);
     var category = req.query.searchCategory
@@ -48,6 +51,8 @@ router.get("/api/search", (req,res) =>{
 
     let preferredSearchDistance = req.query.searchDistance;
     console.log("Preferred Search Distance: ", preferredSearchDistance);
+
+    // console.log("Search Biz Categories: ", req.query.searchBizCategories);
 
     if(category == 'Pets'){
         connection.query(
@@ -86,7 +91,41 @@ router.get("/api/search", (req,res) =>{
     }
     else if(category == 'Businesses'){
         console.log("Category == Businesses")
-        connection.query(
+        let givenBizCategories = req.query.searchBizCategories;
+        console.log("Given Biz Categories: ", givenBizCategories);
+        console.log(typeof givenBizCategories);
+
+        let query = '';
+
+
+        if(typeof givenBizCategories !== 'undefined'){
+            query =             
+            `SELECT * 
+            FROM Business
+            LEFT JOIN Shelter
+            ON Business.business_id = Shelter.business_id
+            LEFT JOIN Address
+            ON Business.reg_user_id = Address.reg_user_id
+            LEFT JOIN Commerce
+            ON Business.business_id = Commerce.business_id
+            WHERE LOWER(name) LIKE '%${name}%'
+            AND Shelter.business_id IS NULL
+            AND (
+            `
+            for(let i = 0; i < givenBizCategories.length; i++){  //build sql query with filters
+                console.log("Given Biz Categories [", i,"]: " , givenBizCategories[i]);
+                console.log(typeof givenBizCategories[i]);
+                if(i == (givenBizCategories.length - 1))
+                    query += 'Commerce.business_type_id = ' + givenBizCategories[i];
+                else
+                    query += 'Commerce.business_type_id = ' + givenBizCategories[i] + ' OR ';
+                    
+            }
+            query += ");"
+            console.log(query);
+        }
+        else{
+            query =             
             `SELECT * 
             FROM Business
             LEFT JOIN Shelter
@@ -95,15 +134,23 @@ router.get("/api/search", (req,res) =>{
             ON Business.reg_user_id = Address.reg_user_id
             WHERE LOWER(name) LIKE '%${name}%'
             AND Shelter.business_id IS NULL
-            `,
+            `;
+        }
+        console.log('Query: ',query);
+
+        connection.query(query,
             function(err, result) {
             if(err){
                 throw err;
-            } else {
+            } 
+            else {
               
-
-                Object.keys(result).forEach(function(key) {
-                    var row = result[key];
+                let offset = 0;
+                for(let i = 0; i < result.length; i++){
+                    offset++;
+                    // if(i < 10)
+                    //     continue;
+                    var row = result[i];
                     // console.log(row);
                     // console.log(row.name);
                     // console.log(row.size_id);
@@ -118,11 +165,15 @@ router.get("/api/search", (req,res) =>{
                             "lat": row.latitude,
                             "lng": row.longitude
                         });
+
                     }
-                  });
+                    if(requestedSearchResults.searchResults.length == 10)
+                        break;
+                }  
+        
                 console.log(requestedSearchResults);
                 res.json(requestedSearchResults);
-            }
+            }       
         });
     }
     else if(category == 'Shelters'){
@@ -134,6 +185,7 @@ router.get("/api/search", (req,res) =>{
             LEFT JOIN Address
             ON Business.reg_user_id = Address.reg_user_id
             WHERE LOWER(name) LIKE '%${name}%'
+            LIMIT 10
             `, 
             function(err, result) {
             if(err){
