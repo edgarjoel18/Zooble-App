@@ -33,6 +33,7 @@ import Messages from './pages/Messages/Messages'
 import MyPets from './pages/Pets/MyPets'
 import Pets from './pages/Pets/Pets'
 
+import AdminFeed from './pages/Feed/AdminFeed.js';
 import Feed from './pages/Feed/Feed.js'
 import Photo from './pages/Photo/Photo';
 import Followers from './pages/Followers/Followers';
@@ -96,6 +97,7 @@ const App = () => {
         <Route path="/business-signup" exact component={BusinessSignUpPage}/>
         <Route path="/business-signup2" exact component={BusinessSignUpPage2}/>
         <Route path="/Feed" component={Feed} appUser={appUser}/>
+        <Route path="/AdminFeed" component={AdminFeed}/>
         <Route path="/MapSearch" component={MapSearch}/>
         <Route exact path="/Profile">
           <ProfilePage appUser={appUser}/>
