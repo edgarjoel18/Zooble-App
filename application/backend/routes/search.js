@@ -55,12 +55,85 @@ router.get("/api/search", (req,res) =>{
     // console.log("Search Biz Categories: ", req.query.searchBizCategories);
 
     if(category == 'Pets'){
+        let requestedPetTypes = req.query.searchPetTypes;
+        let requestedPetColors = req.query.searchPetColors;
+        let requestedPetSizes = req.query.searchPetSizes;
+        let requestedPetAges =  req.query.searchPetAges;
+
+        let query = '';
+
+        if(requestedPetTypes[0] == undefined && requestedPetColors[0] == undefined && requestedPetSizes[0] == undefined && requestedPetAges[0] == undefined){
+            query = 
+            `SELECT * 
+            FROM ((Pet
+            LEFT JOIN Age
+            ON Pet.age_id = Age.age_id)
+            LEFT JOIN Size
+            ON Pet.size_id = Size.size_id)
+            WHERE LOWER(name) LIKE '%${name}%'
+            `;
+        }
+        else{
+            query = 
+            `SELECT * 
+            FROM ((Pet
+            LEFT JOIN Age
+            ON Pet.age_id = Age.age_id)
+            LEFT JOIN Size
+            ON Pet.size_id = Size.size_id)
+            WHERE LOWER(name) LIKE '%${name}%'
+            `;
+
+            if(requestedPetTypes[0] !== undefined){
+                query += 'AND ('
+                for(let i = 0; i < requestedPetTypes.length; i++){ //build sql query for pet types
+                    if(i == (requestedPetTypes.length - 1))
+                        query += 'Pet.pet_type_id = ' + requestedPetTypes[i] + ' OR ';
+                    else
+                        query += 'Pet.pet_type_id = ' + requestedPetTypes[i];
+                }
+                query += ")"
+            }
+            // if(requestedPetColors[0] !== undefined){
+            //     for(let i = 0; i < requestedPetColors.length; i++){ //build sql query for pet types
+            //         if(i == (requestedPetColors.length - 1))
+            //             query += 'Pet.pet_type_id = ' + requestedPetColors[i] + ' OR ';
+            //         else
+            //             query += 'Pet.pet_type_id = ' + requestedPetColors[i];
+            //     }
+            //     query += ")"
+            // }
+            if(requestedPetAges[0] !== undefined){
+                query += 'AND ('
+                for(let i = 0; i < requestedPetAges.length; i++){ //build sql query for pet types
+                    if(i == (requestedPetAges.length - 1))
+                        query += 'Pet.age_id = ' + requestedPetAges[i] + ' OR ';
+                    else
+                        query += 'Pet.age_id = ' + requestedPetAges[i];
+                }
+                query += ")"
+            }
+            if(requestedPetSizes[0] !== undefined){
+                query += 'AND ('
+                for(let i = 0; i < requestedPetSizes.length; i++){ //build sql query for pet types
+                    if(i == (requestedPetSizes.length - 1))
+                        query += 'Pet.size_id = ' + requestedPetSizes[i] + ' OR ';
+                    else
+                        query += 'Pet.size_id = ' + requestedPetSizes[i];
+                }
+                query += ")"
+            }
+
+            query += ");"
+            console.log(query);
+        }
+
         connection.query(
             `SELECT * 
             FROM ((Pet
-            INNER JOIN Age
+            LEFT JOIN Age
             ON Pet.age_id = Age.age_id)
-            INNER JOIN Size
+            LEFT JOIN Size
             ON Pet.size_id = Size.size_id)
             WHERE LOWER(name) LIKE '%${name}%'
             `, 
@@ -145,10 +218,9 @@ router.get("/api/search", (req,res) =>{
             } 
             else {
               
-                let offset = 0;
+                let offset = 0;  //let offset equal page number value * 10
                 for(let i = 0; i < result.length; i++){
-                    offset++;
-                    // if(i < 10)
+                    // if(i < offset)  //if these search results were already given than skip adding to returned search results
                     //     continue;
                     var row = result[i];
                     // console.log(row);
@@ -177,6 +249,45 @@ router.get("/api/search", (req,res) =>{
         });
     }
     else if(category == 'Shelters'){
+        let givenPetTypes = req.query.searchPetTypes;
+
+        let query = '';
+
+        if(givenPetTypes[0] !== 'undefined'){
+            query =
+            `SELECT *
+            FROM Business
+            INNER JOIN Shelter
+            ON Business.business_id = Shelter.business_id
+            LEFT JOIN Address
+            ON Business.reg_user_id = Address.reg_user_id
+            WHERE LOWER(name) LIKE '%${name}%'
+            AND (
+            `
+
+            for(let i = 0; i < givenPetTypes.length; i++){  //build sql query with filters
+                console.log("Given Pet Types [", i,"]: " , givenPetTypes[i]);
+                console.log(typeof givenPetTypes[i]);
+                if(i == (givenPetTypes.length - 1))
+                    query += 'Commerce.business_type_id = ' + givenPetTypes[i];
+                else
+                    query += 'Commerce.business_type_id = ' + givenPetTypes[i] + ' OR ';
+                    
+            }
+            query += ");"
+            console.log(query);
+        }
+        else{
+            query =
+            `SELECT *
+            FROM Business
+            INNER JOIN Shelter
+            ON Business.business_id = Shelter.business_id
+            LEFT JOIN Address
+            ON Business.reg_user_id = Address.reg_user_id
+            WHERE LOWER(name) LIKE '%${name}%'
+            `
+        }
         connection.query(
             `SELECT *
             FROM Business

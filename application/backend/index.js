@@ -1,12 +1,9 @@
 const express = require("express");
 
-const mysql = require('mysql2');
-
 const session = require('express-session');
-const cookieParser = require('cookie-parser');
 
 //DB Connection
-// const connection = require('./db');
+const connection = require('./db');
 
 //Routes
 const loginRouter = require('./routes/login.js');
@@ -19,6 +16,11 @@ const editPostRouter = require('./routes/edit-post.js');
 const deletePostRouter = require('./routes/delete-post.js');
 const app = express();
 
+//Session Store
+const sessionStore = require('./session-store');
+
+
+
 // app.use(cookieParser());
 
 app.use(express.urlencoded({extended : true}));
@@ -29,6 +31,7 @@ app.use(session({
      secret: "zooble",
      resave: false,
      saveUninitialized: false,
+     store: sessionStore,
      cookie: {
          expires: 60 * 60 * 24 * 1000, //1 day expiration
      }

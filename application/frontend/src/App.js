@@ -52,7 +52,7 @@ const App = () => {
   console.log("rerendering app");
 
   useEffect(() => {
-    axios.get("/api/login").then((response) =>{
+    axios.get("/api/login",{withCredentials: true}).then((response) =>{
       console.log(response.data);
       console.log(response.data.user);
       setAppUser(response.data.user);

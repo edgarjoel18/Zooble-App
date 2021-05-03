@@ -154,10 +154,9 @@ function MapSearch(props) {
             console.log('Business Category Filters: ', businessCategoryFilters);
             console.log(typeof businessCategoryFilters);
 
-            let businessCategoryFilterValues = [];
-            for(let i = 0; i < businessCategoryFilters.length; i++){
-                businessCategoryFilterValues.push(businessCategoryFilters[i].value);
-            }
+
+
+
             setSearchCategory(state.searchCategoryParam);
             setSearchTerm(state.searchTermParam);
 
@@ -165,6 +164,10 @@ function MapSearch(props) {
 
             switch(state.searchCategoryParam){
                 case 'Businesses':
+                    let businessCategoryFilterValues = [];
+                    for(let i = 0; i < businessCategoryFilters.length; i++){
+                        businessCategoryFilterValues.push(businessCategoryFilters[i].value);
+                    }
                     console.log("Switch: Businesses")
                     searchParams = {
                         searchTerm: state.searchTermParam,
@@ -176,16 +179,36 @@ function MapSearch(props) {
                     }
                     break
                 case 'Shelters':
+                    let shelterTypeFilterValues = [];
+                    for(let i = 0; i < petTypeFilters.length; i++){
+                        shelterTypeFilterValues.push(petTypeFilters[i].value);
+                    }
                     searchParams = {
                         searchTerm: state.searchTermParam,
                         searchCategory:state.searchCategoryParam,
                         searchLatitude: state.lat,
                         searchLongitude: state.lng,
                         searchDistance: searchDistance.value,
-                        searchBizCategories : businessCategoryFilters
+                        searchPetTypes : shelterTypeFilterValues
                     }
                     break;
                 case 'Pets':
+                    let petTypeFilterValues = [];
+                    let petColorFilterValues = [];
+                    let petSizeFilterValues = [];
+                    let petAgeFilterValues = [];
+                    for(let i = 0; i < petTypeFilters.length; i++){
+                        petTypeFilterValues.push(petTypeFilters[i].value);
+                    }
+                    for(let i = 0; i < petColorFilters.length; i++){
+                        petTypeFilterValues.push(petColorFilters[i].value);
+                    }
+                    for(let i = 0; i < petSizeFilters.length; i++){
+                        petTypeFilterValues.push(petSizeFilters[i].value);
+                    }
+                    for(let i = 0; i < petAgeFilters.length; i++){
+                        petTypeFilterValues.push(petAgeFilters[i].value);
+                    }
                     searchParams = {
                         searchTerm: state.searchTermParam,
                         searchCategory:state.searchCategoryParam,
