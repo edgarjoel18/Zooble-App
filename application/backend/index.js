@@ -16,6 +16,7 @@ const searchRouter = require('./routes/search.js');
 const dropdownRouter = require('./routes/dropdown-options.js');
 const uploadPostRouter = require('./routes/upload-post.js');
 const editPostRouter = require('./routes/edit-post.js');
+const deletePostRouter = require('./routes/delete-post.js');
 const app = express();
 
 // app.use(cookieParser());
@@ -53,11 +54,14 @@ app.use(searchRouter);
 //Dropdown Options
 app.use(dropdownRouter)
 
-//upload Post
+//Upload Post
 app.use(uploadPostRouter)
 
-//edit Post
+//Edit Post
 app.use(editPostRouter)
+
+//Delete Post
+app.use(deletePostRouter)
 
 
 
