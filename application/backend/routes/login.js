@@ -13,7 +13,6 @@ router.get("/api/login",(req, res) =>{ //check if user is logged in
     }
 })
 
-
 router.post("/api/login", (req, res) =>{ //login user
     console.log("/login")
     const username = req.body.username;

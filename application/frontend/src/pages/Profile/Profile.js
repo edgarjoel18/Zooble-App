@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Axios from "axios";
 
 // Import components
 import ProfileInfo from '../../components/ProfileInfo/ProfileInfo'
@@ -505,6 +506,39 @@ const newPetProfile = {
 
 
 function Profile({appUser}) {
+
+    // ROUTING FOR THE DYNAMIC PROFILE PAGES 
+
+    const [email, setEmail] = useState('')
+    const [username, setUname] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    var currUrl = window.location.pathname
+    
+    console.log(email)
+    console.log(username)
+    console.log(firstName)
+    console.log(lastName)
+
+    Axios.get('/api/user/:user', {
+        params: {
+            id: currUrl,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            username: username,
+        }
+    })
+    .then(response => {
+        console.log(response)
+        console.log(response.data)
+        console.log(response.data.searchResults)
+    })
+    .catch(error =>{
+        console.log("Error");
+    })
+
+    
     console.log(appUser);
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
     const [userProfile, setUserProfile] = useState(petOwnerProfile);
