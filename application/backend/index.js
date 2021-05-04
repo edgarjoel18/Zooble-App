@@ -16,7 +16,7 @@ const editPostRouter = require('./routes/edit-post.js');
 const deletePostRouter = require('./routes/delete-post.js');
 const feedRouter = require('./routes/feed.js');
 const commentPostRouter = require('./routes/comment-post.js');
-
+const followUserRouter = require('./routes/follow-unfollow-user.js');
 const app = express();
 
 //Session Store
@@ -75,6 +75,9 @@ app.use(feedRouter);
 // comment post
 app.use(commentPostRouter);
 
+
+// Follow a user
+app.use(followUserRouter);
 
 
 
