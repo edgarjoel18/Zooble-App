@@ -15,6 +15,7 @@ const uploadPostRouter = require('./routes/upload-post.js');
 const editPostRouter = require('./routes/edit-post.js');
 const deletePostRouter = require('./routes/delete-post.js');
 const feedRouter = require('./routes/feed.js');
+const commentPostRouter = require('./routes/comment-post.js');
 
 const app = express();
 
@@ -70,6 +71,9 @@ app.use(deletePostRouter)
 
 //Feed
 app.use(feedRouter);
+
+// comment post
+app.use(commentPostRouter);
 
 
 
