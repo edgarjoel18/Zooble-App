@@ -62,6 +62,27 @@ function SearchBar() {
     },
   });
 
+  function search(){
+    if(searchLocationLat == null || searchLocationLng == null){
+      navigator.geolocation.getCurrentPosition((position)=>{
+        const location = {
+          pathname:'/MapSearch',
+          state: {lat:position.coords.latitude, lng:position.coords.longitude, searchTermParam: searchTerm, searchCategoryParam: searchCategory}
+        }
+        history.push(location)
+      })
+    }
+    else{
+      const location = {
+        pathname:'/MapSearch',
+        state: {lat:searchLocationLat, lng:searchLocationLng, searchTermParam: searchTerm, searchCategoryParam: searchCategory}
+      }
+      history.push(location)
+    }
+
+    
+  }
+
   useEffect(() => {
     console.log(searchLocationLat, searchLocationLng);
   }, [searchLocationLat, searchLocationLng])
@@ -83,6 +104,7 @@ function SearchBar() {
                 setValue(address,false);
                 clearSuggestions();
                 try{
+                    console.log(address);
                     const results = await getGeocode({address});
                     const{lat,lng} = await getLatLng(results[0]);
                     console.log(lat,lng);
@@ -156,7 +178,7 @@ function SearchBar() {
             />
             <ComboboxInput 
               value={value}
-              placeholder= {"Near:"}
+              placeholder= {"Near Current Location"}
               onChange={(e)=> {
                 setValue(e.target.value);
                 // setSearchTerm(e.target.value);
@@ -186,11 +208,9 @@ function SearchBar() {
       </span>
 
       
-      <Link className={styles["searchbar-search"]}
-            to={
-              {pathname:"/MapSearch",
-              state:{searchCategoryParam: searchCategory, lat: searchLocationLat, lng: searchLocationLng, searchTermParam: searchTerm}}
-            }
+      <button  
+        className={styles["searchbar-search"]}
+        onClick={search}
       />
       </div>
   </>

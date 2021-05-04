@@ -52,6 +52,10 @@ router.get("/api/search", (req,res) =>{
     let preferredSearchDistance = req.query.searchDistance;
     console.log("Preferred Search Distance: ", preferredSearchDistance);
 
+    let givenPage = req.query.searchPage;
+
+    console.log("Given Page: ", givenPage);
+
     // console.log("Search Biz Categories: ", req.query.searchBizCategories);
 
     if(category == 'Pets'){
@@ -61,71 +65,73 @@ router.get("/api/search", (req,res) =>{
         let requestedPetAges =  req.query.searchPetAges;
 
         let query = '';
-
-        if(requestedPetTypes[0] == undefined && requestedPetColors[0] == undefined && requestedPetSizes[0] == undefined && requestedPetAges[0] == undefined){
-            query = 
-            `SELECT * 
-            FROM ((Pet
-            LEFT JOIN Age
-            ON Pet.age_id = Age.age_id)
-            LEFT JOIN Size
-            ON Pet.size_id = Size.size_id)
-            WHERE LOWER(name) LIKE '%${name}%'
-            `;
+        if(requestedPetTypes){
+            if(requestedPetTypes[0] == undefined && requestedPetColors[0] == undefined && requestedPetSizes[0] == undefined && requestedPetAges[0] == undefined){
+                query = 
+                `SELECT * 
+                FROM ((Pet
+                LEFT JOIN Age
+                ON Pet.age_id = Age.age_id)
+                LEFT JOIN Size
+                ON Pet.size_id = Size.size_id)
+                WHERE LOWER(name) LIKE '%${name}%'
+                `;
+            }
+            else{
+                query = 
+                `SELECT * 
+                FROM ((Pet
+                LEFT JOIN Age
+                ON Pet.age_id = Age.age_id)
+                LEFT JOIN Size
+                ON Pet.size_id = Size.size_id)
+                WHERE LOWER(name) LIKE '%${name}%'
+                `;
+    
+                if(requestedPetTypes[0] !== undefined){
+                    query += 'AND ('
+                    for(let i = 0; i < requestedPetTypes.length; i++){ //build sql query for pet types
+                        if(i == (requestedPetTypes.length - 1))
+                            query += 'Pet.pet_type_id = ' + requestedPetTypes[i] + ' OR ';
+                        else
+                            query += 'Pet.pet_type_id = ' + requestedPetTypes[i];
+                    }
+                    query += ")"
+                }
+                // if(requestedPetColors[0] !== undefined){
+                //     for(let i = 0; i < requestedPetColors.length; i++){ //build sql query for pet types
+                //         if(i == (requestedPetColors.length - 1))
+                //             query += 'Pet.pet_type_id = ' + requestedPetColors[i] + ' OR ';
+                //         else
+                //             query += 'Pet.pet_type_id = ' + requestedPetColors[i];
+                //     }
+                //     query += ")"
+                // }
+                if(requestedPetAges[0] !== undefined){
+                    query += 'AND ('
+                    for(let i = 0; i < requestedPetAges.length; i++){ //build sql query for pet types
+                        if(i == (requestedPetAges.length - 1))
+                            query += 'Pet.age_id = ' + requestedPetAges[i] + ' OR ';
+                        else
+                            query += 'Pet.age_id = ' + requestedPetAges[i];
+                    }
+                    query += ")"
+                }
+                if(requestedPetSizes[0] !== undefined){
+                    query += 'AND ('
+                    for(let i = 0; i < requestedPetSizes.length; i++){ //build sql query for pet types
+                        if(i == (requestedPetSizes.length - 1))
+                            query += 'Pet.size_id = ' + requestedPetSizes[i] + ' OR ';
+                        else
+                            query += 'Pet.size_id = ' + requestedPetSizes[i];
+                    }
+                    query += ")"
+                }
+    
+                query += ");"
+                console.log(query);
         }
-        else{
-            query = 
-            `SELECT * 
-            FROM ((Pet
-            LEFT JOIN Age
-            ON Pet.age_id = Age.age_id)
-            LEFT JOIN Size
-            ON Pet.size_id = Size.size_id)
-            WHERE LOWER(name) LIKE '%${name}%'
-            `;
-
-            if(requestedPetTypes[0] !== undefined){
-                query += 'AND ('
-                for(let i = 0; i < requestedPetTypes.length; i++){ //build sql query for pet types
-                    if(i == (requestedPetTypes.length - 1))
-                        query += 'Pet.pet_type_id = ' + requestedPetTypes[i] + ' OR ';
-                    else
-                        query += 'Pet.pet_type_id = ' + requestedPetTypes[i];
-                }
-                query += ")"
-            }
-            // if(requestedPetColors[0] !== undefined){
-            //     for(let i = 0; i < requestedPetColors.length; i++){ //build sql query for pet types
-            //         if(i == (requestedPetColors.length - 1))
-            //             query += 'Pet.pet_type_id = ' + requestedPetColors[i] + ' OR ';
-            //         else
-            //             query += 'Pet.pet_type_id = ' + requestedPetColors[i];
-            //     }
-            //     query += ")"
-            // }
-            if(requestedPetAges[0] !== undefined){
-                query += 'AND ('
-                for(let i = 0; i < requestedPetAges.length; i++){ //build sql query for pet types
-                    if(i == (requestedPetAges.length - 1))
-                        query += 'Pet.age_id = ' + requestedPetAges[i] + ' OR ';
-                    else
-                        query += 'Pet.age_id = ' + requestedPetAges[i];
-                }
-                query += ")"
-            }
-            if(requestedPetSizes[0] !== undefined){
-                query += 'AND ('
-                for(let i = 0; i < requestedPetSizes.length; i++){ //build sql query for pet types
-                    if(i == (requestedPetSizes.length - 1))
-                        query += 'Pet.size_id = ' + requestedPetSizes[i] + ' OR ';
-                    else
-                        query += 'Pet.size_id = ' + requestedPetSizes[i];
-                }
-                query += ")"
-            }
-
-            query += ");"
-            console.log(query);
+        
         }
 
         connection.query(
@@ -199,50 +205,51 @@ router.get("/api/search", (req,res) =>{
         }
         else{
             query =             
-            `SELECT * 
+            `SELECT *,
+            (3959 * acos(cos(radians('${givenLatitude}'))* cos(radians(Address.latitude))* cos(radians(Address.longitude) - radians('${givenLongitude}')) + sin(radians(${givenLatitude})) * sin(radians(Address.latitude)))) as distance
             FROM Business
             LEFT JOIN Shelter
             ON Business.business_id = Shelter.business_id
             LEFT JOIN Address
             ON Business.reg_user_id = Address.reg_user_id
-            WHERE LOWER(name) LIKE '%${name}%'
-            AND Shelter.business_id IS NULL
-            `;
+            HAVING Shelter.business_id IS NULL 
+            AND LOWER(name) LIKE '%${name}%'
+            AND distance <  ${preferredSearchDistance}
+            LIMIT 10 
+            OFFSET ${(givenPage-1)*10}`;
         }
         console.log('Query: ',query);
 
         connection.query(query,
-            function(err, result) {
+            function(err, results) {
             if(err){
                 throw err;
             } 
             else {
-              
-                let offset = 0;  //let offset equal page number value * 10
-                for(let i = 0; i < result.length; i++){
-                    // if(i < offset)  //if these search results were already given than skip adding to returned search results
-                    //     continue;
-                    var row = result[i];
-                    // console.log(row);
-                    // console.log(row.name);
-                    // console.log(row.size_id);
-                    // console.log(row.age_id);
-                    const proximityInMiles = distance(row.latitude, givenLatitude, row.longitude, givenLongitude);
-                    console.log("Proximity in Miles: ", proximityInMiles);
-                    if(proximityInMiles < preferredSearchDistance){
-                        requestedSearchResults.searchResults.push({
-                            "business_id":row.business_id,
-                            "reg_user_id":row.reg_user_id,
-                            "name": row.name,
-                            "lat": row.latitude,
-                            "lng": row.longitude
-                        });
+                // let resultsCount;
+                // let offset = (givenPage-1) * 10;  //let offset equal page number value * 10 (10 for max number of markers allowed by google maps Api)
+                // for(let i = 0; i < result.length; i++){
+                //     if(i < offset)  //if these search results were already given than skip adding to returned search results
+                //         continue;
+                //     var row = result[i];
+                //     const proximityInMiles = distance(row.latitude, givenLatitude, row.longitude, givenLongitude);
+                //     console.log("Proximity in Miles: ", proximityInMiles);
+                //     if(proximityInMiles < preferredSearchDistance){
+                //         requestedSearchResults.searchResults.push({
+                //             "business_id":row.business_id,
+                //             "reg_user_id":row.reg_user_id,
+                //             "name": row.name,
+                //             "lat": row.latitude,
+                //             "lng": row.longitude
+                //         });
 
-                    }
-                    if(requestedSearchResults.searchResults.length == 10)
-                        break;
-                }  
+                //     }
+                //     if(requestedSearchResults.searchResults.length == 10)
+                //         break;
+                // }  
         
+                // let responseObject = {requestedSearchResults: requestedSearchResults, resultsCount: resultsCount};
+                requestedSearchResults = results;
                 console.log(requestedSearchResults);
                 res.json(requestedSearchResults);
             }       

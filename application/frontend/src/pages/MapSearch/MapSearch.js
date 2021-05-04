@@ -77,6 +77,10 @@ function MapSearch(props) {
     const[recievedSearchResults, setRecievedSearchResults] = useState([]);
     console.log('Initial Recieved Search Results: ', recievedSearchResults); //1
 
+    //For Storing Current Page
+    const [currentPage, setCurrentPage] = useState(1);
+    console.log('Current Page Set: ', currentPage);
+
 
     //for storing whether filter tab is displaying
     const [filterOverlayDisplay, setFilterOverlayDisplay] = useState('none');
@@ -152,6 +156,7 @@ function MapSearch(props) {
             console.log('Search Term: ' + state.searchTermParam);
             console.log('Search Distance: ', searchDistance.value);
             console.log('Business Category Filters: ', businessCategoryFilters);
+            console.log('Current Page: ', currentPage);
             console.log(typeof businessCategoryFilters);
 
 
@@ -175,7 +180,8 @@ function MapSearch(props) {
                         searchLatitude: state.lat,
                         searchLongitude: state.lng,
                         searchDistance: searchDistance.value,
-                        searchBizCategories : businessCategoryFilterValues
+                        searchBizCategories : businessCategoryFilterValues,
+                        searchPage: currentPage
                     }
                     break
                 case 'Shelters':
@@ -189,7 +195,8 @@ function MapSearch(props) {
                         searchLatitude: state.lat,
                         searchLongitude: state.lng,
                         searchDistance: searchDistance.value,
-                        searchPetTypes : shelterTypeFilterValues
+                        searchPetTypes : shelterTypeFilterValues,
+                        searchPage: currentPage
                     }
                     break;
                 case 'Pets':
@@ -218,7 +225,8 @@ function MapSearch(props) {
                         searchPetTypes: petTypeFilters,
                         searchPetColors: petColorFilters,
                         searchPetSizes: petSizeFilters,
-                        searchPetAges: petAgeFilters
+                        searchPetAges: petAgeFilters,
+                        searchPage: currentPage
                     }
                     break;
                 case 'Pet Owners':
@@ -228,6 +236,7 @@ function MapSearch(props) {
                         searchLatitude: state.lat,
                         searchLongitude: state.lng,
                         searchDistance: searchDistance.value,
+                        searchPage: currentPage
                     }
                     break;
                 
@@ -240,10 +249,14 @@ function MapSearch(props) {
             .then(response =>{
                 console.log("response: ",response)
                 console.log("response.data: ",response.data)
-                console.log("response.data.searchResults: ",response.data.searchResults)
+                if(response.data.length === 0){
+                    previousPage();
+                }
                 displaySearchResults();
-                setRecievedSearchResults(response.data.searchResults);
+                setRecievedSearchResults(response.data);
                 console.log("Recieved Search Results: ", recievedSearchResults)
+                console.log("Recieved Search Results Length: ", recievedSearchResults.length)
+                // console.log("Results Count: ", response.data.resultsCount);
                 // setOverlayDisplay(true);
             })
             .catch(err =>{
@@ -256,7 +269,7 @@ function MapSearch(props) {
 
     useEffect(()=>{
         search();
-    },[state,searchDistance]);  //only fetch results when search params or filters change
+    },[state, currentPage], );  //only fetch results when search params or filters change
 
 
     //toggle display of filter overlay
@@ -273,7 +286,30 @@ function MapSearch(props) {
     }
 
     function applyFilters(){
+        setCurrentPage(1);
         search();
+    }
+
+    function nextPage(){
+        console.log("On page ", currentPage)
+        console.log("Going to next page");
+        setCurrentPage(prevCurrentPage => prevCurrentPage + 1);
+        console.log("On page ", currentPage);
+        // search();
+    }
+
+    function previousPage(){
+        console.log("On page ", currentPage)
+        if(currentPage > 1){
+            console.log("Going to previous page");
+            setCurrentPage(prevCurrentPage => prevCurrentPage - 1);
+            console.log("On page ", currentPage);
+            // search();
+        }
+        else{
+            console.log("On the first page already!");
+            console.log("On page ", currentPage);
+        }
     }
 
     function customTheme(theme){
@@ -295,7 +331,7 @@ function MapSearch(props) {
             <>
             <div className={styles['map-search-results-container']}>
                 <div className={styles['map-search-results-map']}>
-                    {!state.lat && !state.lng && <GoogleMap 
+                    {state.lat && state.lng && <GoogleMap 
                         mapContainerStyle={mapContainerStyle}
                         zoom={14}
                         center={center}
@@ -307,7 +343,7 @@ function MapSearch(props) {
                              {/* <Marker position={{lat: state.lat, lng: state.lng}}/> */}
                             <Marker 
                             //     key={searchResult.address_id}
-                                 position={{lat: parseFloat(searchResult.lat), lng: parseFloat(searchResult.lng)}}
+                                 position={{lat: parseFloat(searchResult.latitude), lng: parseFloat(searchResult.longitude)}}
                                 
                             />
                             </>
@@ -318,7 +354,7 @@ function MapSearch(props) {
                         } */}
 
                     </GoogleMap>}
-                    {state.lat && state.lng && <div className={styles['map-coming-soon']}>Location Results Feature Coming Soon</div>}
+                    {!state.lat && !state.lng && <div className={styles['map-coming-soon']}>Location Results Feature Coming Soon</div>}
                 </div>
                 
                 <div className={styles['map-search-results-text']} style={{display: searchResultsDisplay}}>
@@ -337,20 +373,24 @@ function MapSearch(props) {
                         <div className={styles['map-search-results-text-list']}>
                             <ul>
                                 {recievedSearchResults.length == 0 && <li className={styles['no-results']}>No {searchCategory} that Match your Search. But here are some {searchCategory} you might like: </li>}
-                                {recievedSearchResults && searchCategory == 'Pets' && recievedSearchResults.map((searchResult) => (
+                                {recievedSearchResults.length != 0 && searchCategory == 'Pets' && recievedSearchResults.map((searchResult) => (
                                     <Link className={styles['profile-link']} to={"/Profile/" + searchResult.name}><li className={styles['search-result']} key={searchResult.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                 ))}
-                                {recievedSearchResults && searchCategory == 'Businesses' && recievedSearchResults.map((searchResult) => (
+                                {recievedSearchResults.length != 0 && searchCategory == 'Businesses' && recievedSearchResults.map((searchResult) => (
                                     <BusinessSearchResult searchResult={searchResult} panTo={panTo}/>
                                 ))}
-                                {recievedSearchResults && searchCategory == 'Shelters' && recievedSearchResults.map((searchResult) => (
+                                {recievedSearchResults.length != 0 && searchCategory == 'Shelters' && recievedSearchResults.map((searchResult) => (
                                     <ShelterSearchResult searchResult={searchResult} panTo={panTo}/>
                                 ))}
-                                {recievedSearchResults && searchCategory == 'Pet Owners' && recievedSearchResults.map((searchResult) => (
+                                {recievedSearchResults.length != 0 && searchCategory == 'Pet Owners' && recievedSearchResults.map((searchResult) => (
                                     <Link className={styles['profile-link']} to={"/Profile/" + "PetOwnerId=" +searchResult.reg_pet_owner_id}><li className={styles['search-result']} key={searchResult.reg_pet_owner_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                 ))}
 
                             </ul>
+                        </div>
+                        <div className={styles['map-search-results-page-navigation']}>
+                            <button className={styles['map-search-results-page-navigation-back']}  onClick={previousPage}>Prev Page</button>
+                            <button className={styles['map-search-results-page-navigation-next']} onClick={nextPage}>Next Page</button>
                         </div>
                     </>
                 </div>
@@ -500,13 +540,13 @@ function MapSearch(props) {
 
 function BusinessSearchResult({searchResult,panTo}){
     return (
-        <li className={styles['search-result']} key={searchResult.reg_business_id} onClick={() => {panTo({lat: parseFloat(searchResult.lat), lng:parseFloat(searchResult.lng)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li>
+        <li className={styles['search-result']} key={searchResult.reg_business_id} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li>
     )
 }
 
 function ShelterSearchResult({searchResult,panTo}){
     return (
-        <li className={styles['search-result']} key={searchResult.reg_shelter_id} onClick={() => {panTo({lat: parseFloat(searchResult.lat), lng:parseFloat(searchResult.lng)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li>
+        <li className={styles['search-result']} key={searchResult.reg_shelter_id} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li>
     )
 
 }
