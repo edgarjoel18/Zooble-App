@@ -571,7 +571,7 @@ function Profile({appUser}) {
 
     function toggleSelfViewHandler() {
         setSelfView(!selfView);
-        let button = document.getElementById('button');
+        let button = document.getElementById('button'); // Maybe change the ID name to somthing more specific - Wameedh
         selfView ? button.className = styles.SwitchSelf : button.className = styles.SwitchVistor;
     }
 
@@ -586,7 +586,7 @@ function Profile({appUser}) {
                         {selfView ? 'switch to vistors view' : 'switch to self view' }
                 </span>
                 <div className={styles.Switch}>
-                    <div className={styles.SwitchVistor} id='button' ></div>
+                    <div className={styles.SwitchVistor} id='button' ></div> 
                 </div>
             </div>
             <div className={styles.Bottom}>
