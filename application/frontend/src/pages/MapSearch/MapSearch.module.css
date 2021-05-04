@@ -187,6 +187,15 @@
     transition: .15s ease-in-out;
 }
 
+.map-search-results-page-navigation-back{
+    align-self: flex-start;
+}
+
+
+.map-search-results-page-navigation-next{
+    float: right;
+}
+
 .map-search-results-page-navigation-next:hover,
 .map-search-results-page-navigation-back:hover{
     color:var(--reversed-txt-clr);

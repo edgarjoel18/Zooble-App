@@ -8,6 +8,17 @@ import styles from './MapSearch.module.css'
 
 import DropdownIcon from '../../images/Created Icons/Dropdown.svg'
 
+import Marker1  from '../../images/Third Party Icons/marker1.png'
+import Marker2  from '../../images/Third Party Icons/marker2.png'
+import Marker3  from '../../images/Third Party Icons/marker3.png'
+import Marker4  from '../../images/Third Party Icons/marker4.png'
+import Marker5  from '../../images/Third Party Icons/marker5.png'
+import Marker6  from '../../images/Third Party Icons/marker6.png'
+import Marker7  from '../../images/Third Party Icons/marker7.png'
+import Marker8  from '../../images/Third Party Icons/marker8.png'
+import Marker9  from '../../images/Third Party Icons/marker9.png'
+import Marker10 from '../../images/Third Party Icons/marker10.png'
+
 import Select from 'react-select';
 
 import makeAnimated from 'react-select/animated';
@@ -31,6 +42,8 @@ let dogBreedOptions = [];
 let catBreedOptions = [];
 let colorOptions = [];
 let sizeOptions = [];
+let markerColors = []
+let markerBaseUrl = "../../images/Third\ Party\ Icons/marker"
 
 const distanceOptions = [
     {value: 1, label:'Walking Distance (1 Mile)'},
@@ -338,13 +351,16 @@ function MapSearch(props) {
                         options={options}
                         onLoad={onMapLoad}
                         >
-                        {recievedSearchResults && recievedSearchResults.map((searchResult) => (
+                        {recievedSearchResults && recievedSearchResults.map((searchResult, index) => (
                             <>
                              {/* <Marker position={{lat: state.lat, lng: state.lng}}/> */}
                             <Marker 
-                            //     key={searchResult.address_id}
-                                 position={{lat: parseFloat(searchResult.latitude), lng: parseFloat(searchResult.longitude)}}
-                                
+                                key={index}
+                                position={{lat: parseFloat(searchResult.latitude), lng: parseFloat(searchResult.longitude)}}
+                                icon= {{
+                                        url: (`https://csc648groupproject.s3-us-west-2.amazonaws.com/marker${index+1}.png`)
+                                    }
+                                }
                             />
                             </>
                         ))}
@@ -356,6 +372,7 @@ function MapSearch(props) {
                     </GoogleMap>}
                     {!state.lat && !state.lng && <div className={styles['map-coming-soon']}>Location Results Feature Coming Soon</div>}
                 </div>
+                
                 
                 <div className={styles['map-search-results-text']} style={{display: searchResultsDisplay}}>
                     <>
@@ -389,7 +406,7 @@ function MapSearch(props) {
                             </ul>
                         </div>
                         <div className={styles['map-search-results-page-navigation']}>
-                            <button className={styles['map-search-results-page-navigation-back']}  onClick={previousPage}>Prev Page</button>
+                            {currentPage != 1 && <button className={styles['map-search-results-page-navigation-back']} onClick={previousPage}>Prev Page</button>}
                             <button className={styles['map-search-results-page-navigation-next']} onClick={nextPage}>Next Page</button>
                         </div>
                     </>
