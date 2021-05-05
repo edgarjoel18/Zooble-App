@@ -90,7 +90,7 @@ router.get("/api/get-feed-posts",(req,res)=>{
             if(err)
                 console.log(err);
             else{
-                console.log("Posts: ", posts);
+                // console.log("Posts: ", posts);
                 res.status(200).json(posts);
 
             }

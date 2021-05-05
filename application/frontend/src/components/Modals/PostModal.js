@@ -38,13 +38,13 @@ function PostModal({display,onClose,selectedPost}) {
     return (
         <Modal display={display} onClose={onClose}>
             <div className={styles["post-container"]}>
-                <div className={styles["post-image"]}>
-                    <img src={selectedPost.pic}/>
-                </div>
+                {selectedPost.link && <div className={styles["post-image"]}>
+                    <img src={selectedPost.link}/>
+                </div>}
                 <div className={styles["post-content"]}>
                     <div className={styles["post-detail"]}>
-                        <img className={styles["post-detail-pic"]} src={selectedPost.profile_pic}/>
-                        <div className={styles["post-detail-name"]}><h3>{selectedPost.user_display_name}</h3></div>
+                        <img className={styles["post-detail-pic"]} src={selectedPost.profile_pic_link}/>
+                        <div className={styles["post-detail-name"]}><h3>{selectedPost.display_name}</h3></div>
                         <div className={styles["post-detail-timestamp"]}>{selectedPost.timestamp}</div>
                         <div className={styles["post-detail-likes"]}>
                             {selectedPost.likes}
@@ -52,7 +52,7 @@ function PostModal({display,onClose,selectedPost}) {
                         </div>
                         <button className={styles["post-detail-like"]}/>
                         {/* <div className={styles["post-detail-comments-count"]}>{comments.length} comments</div>  */} 
-                        <div className={styles["post-detail-body"]}>{selectedPost.body} comments</div>
+                        <div className={styles["post-detail-body"]}>{selectedPost.body}</div>
                     </div>
                     <ul className={styles["post-comments"]}>
                         {comments.length == 0 && <li>No Comments</li>}

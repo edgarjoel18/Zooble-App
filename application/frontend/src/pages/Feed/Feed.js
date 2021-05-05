@@ -177,6 +177,18 @@ function Feed() {
             .catch((err) =>{
                 console.log(err);
             })
+
+            //refresh feed after posting
+            console.log('/api/get-feed-posts');
+            axios.get('/api/get-feed-posts')
+            .then(response =>{
+                console.log(response.data);
+                setFeedPosts(response.data);
+            })
+            .catch(err =>{
+                console.log("Error: ");
+                console.log(err);
+            })
         }
         else{
             axios.post('/api/upload-post',{
@@ -186,6 +198,18 @@ function Feed() {
                 setCreatedPostBody('');
             })
             .catch((err) =>{
+                console.log(err);
+            })
+
+            //refresh feed after posting
+            console.log('/api/get-feed-posts'); 
+            axios.get('/api/get-feed-posts')
+            .then(response =>{
+                console.log(response.data);
+                setFeedPosts(response.data);
+            })
+            .catch(err =>{
+                console.log("Error: ");
                 console.log(err);
             })
         }
