@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const connection = require('../db');
 
 router.get("/api/login",(req, res) =>{ //check if user is logged in
-    console.log(req.session);
+    // console.log(req.session);
     if(req.session.username){
         res.send({loggedIn: true, user: req.session.username, role: req.session.role})
     } else{

@@ -20,36 +20,36 @@ function Feed() {
 
     const [postModalDisplay, setPostModalDisplay] = useState(false);
     const [feedPosts, setFeedPosts] = useState([
-        {
-            post_id: 1,
-            user_display_name: 'Paw Spa',
-            link: "/Profile/BusinessId=2",
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/PawSpaPic.jpg',
-            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
-            likes: 0,
-            timestamp: '12/25/20 at 11:05 AM',
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        },
-        {
-            post_id: 2,
-            user_display_name: 'Burgsdale Pet Shelter',
-            link: "/Profile/ShelterId=2",
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/BurgsdalePetShelterPic.jpg',
-            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
-            likes: 10,
-            timestamp: '12/25/20 at 11:05 AM',
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        },
-        {
-            post_id: 3,
-            user_display_name: 'Alex',
-            link: "/Profile/PetOwnerId=1",
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/AlexPic.jpg',
-            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
-            likes: 20,
-            timestamp: '12/25/20 at 11:05 AM',
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        }
+        // {
+        //     post_id: 1,
+        //     user_display_name: 'Paw Spa',
+        //     link: "/Profile/BusinessId=2",
+        //     profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/PawSpaPic.jpg',
+        //     pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
+        //     likes: 0,
+        //     timestamp: '12/25/20 at 11:05 AM',
+        //     body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
+        // },
+        // {
+        //     post_id: 2,
+        //     user_display_name: 'Burgsdale Pet Shelter',
+        //     link: "/Profile/ShelterId=2",
+        //     profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/BurgsdalePetShelterPic.jpg',
+        //     pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
+        //     likes: 10,
+        //     timestamp: '12/25/20 at 11:05 AM',
+        //     body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
+        // },
+        // {
+        //     post_id: 3,
+        //     user_display_name: 'Alex',
+        //     link: "/Profile/PetOwnerId=1",
+        //     profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/AlexPic.jpg',
+        //     pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
+        //     likes: 20,
+        //     timestamp: '12/25/20 at 11:05 AM',
+        //     body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
+        // }
     ]);
 
     //creating a post display
@@ -66,8 +66,8 @@ function Feed() {
         console.log('/api/get-feed-user');
         axios.get('/api/get-feed-user')
         .then(response =>{
-            console.log(response.data);
-            console.log(response.data.displayName);
+            // console.log(response.data);
+            // console.log(response.data.displayName);
             setCreatePostDisplayName(response.data.displayName);
             setCreatePostProfilePic(response.data.profile_pic_link);
         })
@@ -75,7 +75,16 @@ function Feed() {
             console.log("Error: ");
             console.log(err);
         })
+
+        console.log('/api/get-feed-posts');
+        axios.get('/api/get-feed-posts')
+        .then(response =>{
+            console.log(response.data);
+            setFeedPosts(response.data);
+        })
     }, [])
+
+
 
 
 
@@ -175,32 +184,40 @@ function Feed() {
                     <img className={styles["follower-feed-new-post-pic"]} src={createPostProfilePic} />
                     <div className={styles["follower-feed-new-post-name"]}>{createPostDisplayName}</div>
                     <textarea maxLength="255" required className={styles["follower-feed-new-post-body"]} placeholder="Update your followers on what's going on with you and your pets"  onChange={e => setCreatedPostBody(e.target.value)}/>
-                        <section className={styles["follower-feed-new-post-attach-image"]}>
-                            <div className={styles["follower-feed-new-post-attach-image-container"]}  {...getRootProps()}>
-                                <input  {...getInputProps()} />
-                                {myFiles.length === 0 && <div className={styles["follower-feed-new-post-attach-image-info"]}>Drag and Drop or Click to Select Image</div>}
-                                {myFiles.length > 0 && <img className={styles["follower-feed-new-post-attach-image-preview"]} src={myFiles[0].preview} onClick={removeAll}/>}
-                            </div>
-                        </section>
+                    <section className={styles["follower-feed-new-post-attach-image"]}>
+                        <div className={styles["follower-feed-new-post-attach-image-container"]}  {...getRootProps()}>
+                            <input  {...getInputProps()} />
+                            {myFiles.length === 0 && <div className={styles["follower-feed-new-post-attach-image-info"]}>Drag and Drop or Click to Select Image</div>}
+                            {myFiles.length > 0 && <img className={styles["follower-feed-new-post-attach-image-preview"]} src={myFiles[0].preview} onClick={removeAll}/>}
+                        </div>
+                    </section>
                     <button className={styles["follower-feed-new-post-submit"]} type='submit'>Submit</button>
                     {/* <button className={styles["follower-feed-new-post-expand-collapse"]} /> onClick={createPostOverlayToggle} */}
                 </form>
-                {feedPosts.length == 0 && <li>No Feed Posts</li>}
+                {feedPosts.length == 0 &&
+                    <>
+                    <div className={styles['follower-feed-no-posts-placeholder-header']}>
+                        No Feed Posts to show :(
+                    </div>
+                    <div className={styles['follower-feed-no-posts-placeholder-detail']}>
+                        Search for a User and Follow them to see their posts here
+                    </div>
+                    </>}
                 {feedPosts && feedPosts.map((feedPost) => (
                     <div key={feedPost.post_id} className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
-                        <NavLink to={feedPost.link}>
-                            <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic} />
+                        <NavLink to={"/Profile/ShelterId=2"}>
+                            <img className={styles["follower-feed-post-prof_pic"]} src={'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'} />
                         </NavLink>
-                        <NavLink style={{textDecoration: 'none'}} to={feedPost.link}>
-                        <div className={styles["follower-feed-post-name"]}>{feedPost.user_display_name}</div>
+                        <NavLink style={{textDecoration: 'none'}} to={"/Profile/ShelterId=2"}>
+                        <div className={styles["follower-feed-post-name"]}>{"Placeholder"}</div>
                         </NavLink>
  
                         <div className={styles["follower-feed-post-timestamp"]}>{feedPost.timestamp}</div>
-                        <div className={styles["follower-feed-post-likes"]}>{feedPost.likes}</div>
+                        <div className={styles["follower-feed-post-likes"]}>{feedPost.like_count}</div>
                         <button className={styles['follower-feed-post-like']} />
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
                         <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
-                        <img className={styles["follower-feed-post-pic"]} src={feedPost.pic} />
+                        <img className={styles["follower-feed-post-pic"]} src={'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'} />
                     </div>
                 ))}
             </div>
