@@ -64,14 +64,6 @@ const App = () => {
       console.log(err);
     })
     // console.log('AppUser in App changed to: ', appUser)
-
-    axios.get('https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL')
-    .then((response) => {
-      console.log(response)
-    })
-    .catch((err) =>{
-      console.log(err);
-    })
   })
 
 

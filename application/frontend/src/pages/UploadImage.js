@@ -3,8 +3,9 @@ import Dropzone from 'react-dropzone'
 
 import axios from 'axios'
 
-const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL'
+import styles from './UploadImage.module.css'
 
+const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL'
 
 function UploadImage() {
     
@@ -31,6 +32,9 @@ function UploadImage() {
             })
             .catch((err) =>{
                 console.log(err);
+                if(err.response.status == 403){
+                    //display error message to user
+                }
             })
         })
         .catch((err) =>{
@@ -41,17 +45,17 @@ function UploadImage() {
 
     return (
         <>
-            <Dropzone onDrop={onDrop} multiple={false} maxSize={0}>
-                {({getRootProps, getInputProps}) => (
-                    <section>
-                        <div {...getRootProps()}>
-                            <input {...getInputProps()} />
-                            <p>Drag 'n' drop some files here, or click to select files</p>
-                        </div>
-                    </section>
-                )}
-            </Dropzone>
-            <img src={image}/>
+                <Dropzone  onDrop={onDrop} accept="image/jpeg"  multiple={false} maxSize={5242880}>
+                    {({getRootProps, getInputProps}) => (
+                        <section>
+                            <div className={styles['dropzone']} {...getRootProps()}>
+                                <input  {...getInputProps()} />
+                                {/* <p>Drag 'n' drop some files here, or click to select files</p> */}
+                            </div>
+                        </section>
+                    )}
+                </Dropzone>
+            {/* <img src={image}/> */}
         </>
     )
 }

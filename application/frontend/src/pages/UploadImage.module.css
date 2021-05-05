@@ -1,0 +1,10 @@
+.dropzone{
+    width: 223px;
+    height: 223px;
+    margin: 0  auto;
+    background-color: aqua;
+    border-radius: 7.5px;
+    background: url('../images/Created\ Icons/Add.svg') 50% no-repeat;
+    box-shadow: var(--elevation-1);
+    cursor:pointer;
+}

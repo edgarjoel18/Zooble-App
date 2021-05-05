@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { NavLink, useHistory } from "react-router-dom";
 import styles from './Feed.module.css'
 import bus_prof_pic from '../../images/businessProfile.jpg'
@@ -6,12 +6,18 @@ import shel_prof_pic from '../../images/shelterProfile.jpg'
 import own_prof_pic from '../../images/petOwnerProfile.jpg'
 import PostModal from '../../components/Modals/PostModal'
 
+import {useDropzone} from 'react-dropzone'
+
 import ArrowIcon from '../../images/Created Icons/Arrow.svg'
 import axios from 'axios';
 
 // import ClipLoader from "react-spinners/ClipLoader";
 
+//make this into environment variable before deploying!
+const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL' 
+
 function Feed() {
+
     const [postModalDisplay, setPostModalDisplay] = useState(false);
     const [feedPosts, setFeedPosts] = useState([
         {
@@ -47,18 +53,9 @@ function Feed() {
     ]);
 
     const [selectedPost, setSelectedPost] = useState({});
-    const [createPostOverlayDisplayBool, setCreatePostOverlayDisplayBool] = useState(true);
-    const [createPostOverlayDisplay, setCreatePostOverlayDisplay] = useState({
-        display: 'grid',
-        height: 360
-    });
 
     //for changing submit image button state
-    const [attachImageFontColor, setAttachImageFontColor] = useState('#131b49');
-    const [attachImageBackgroundColor, setAttachImageBackgroundColor] = useState('#ffffff');
-    const [attachImageText, setAttachImageText] = useState('Add Image');
-    const [attachImageBorderColor, setAttachImageBorderColor] = useState('#131b49')
-    const [attachedImage, setAttachedImage] = useState(false);  //real thing will be null or attached image?
+    const [attachedImage, setAttachedImage] = useState();  
 
     //creating a post display
     const [createPostDisplayName, setCreatePostDisplayName] = useState('');
@@ -80,6 +77,66 @@ function Feed() {
     }, [])
 
 
+
+    const [myFiles, setMyFiles] = useState([])
+
+    useEffect(() => () => {
+        // Make sure to revoke the data uris to avoid memory leaks
+        myFiles.forEach(file => URL.revokeObjectURL(file.preview));
+      }, [myFiles]);
+
+    const onDrop = useCallback(acceptedFiles => {
+        setMyFiles(acceptedFiles.map(file => Object.assign(file, {
+            preview: URL.createObjectURL(file)
+        })))
+        console.log(myFiles)
+    }, [myFiles])
+    
+    const removeAll = () => {
+        setMyFiles([])
+    }
+    
+    const { getRootProps, getInputProps } = useDropzone({
+        onDrop,
+        maxSize: 5242880, 
+        accept: "image/jpeg", 
+        multiple: false
+    })
+
+    function submitPost(){
+        let config = {
+            headers: {
+                'Content-type': 'image/jpeg'  //configure headers for put request to s3 bucket
+            }
+        }
+
+        if(attachedImage){
+            //try to upload photo first
+            axios.get(apiGatewayURL)  //first get the presigned s3 url
+            .then((response) =>{
+                console.log(response)
+                console.log(response.data)
+                let presignedFileURL = response.data.photoFilename;  //save this url to add to database later
+                console.log(attachedImage);
+                axios.put(response.data.uploadURL, attachedImage,config).then((response) =>{  //upload the file to s3
+                    console.log(response);
+                    console.log(response.data);
+                })
+                .catch((err) =>{
+                    console.log(err);
+                    if(err.response.status == 403){
+                        //display error message to user
+                    }
+                    //break out of this function //presigned s3 url will automatically expire so no harm done
+                })
+            })
+            .catch((err) =>{
+                console.log(err);
+            })
+        }
+
+    }
+
     function openPostModal(feedPost) {
         console.log(feedPost);
         setSelectedPost(feedPost);
@@ -91,67 +148,6 @@ function Feed() {
         setPostModalDisplay(false);
     }
 
-    function createPostOverlayToggle() {
-        if (createPostOverlayDisplayBool) {
-            setCreatePostOverlayDisplayBool(false);
-            setCreatePostOverlayDisplay({
-                display: 'none',
-                height: 36
-            });
-        }
-        else {
-            setCreatePostOverlayDisplayBool(true);
-            setCreatePostOverlayDisplay({
-                display: 'grid',
-                height: 330
-            });
-        }
-    }
-
-    function attachImage() {
-        if (attachedImage === false) {
-            setAttachImageFontColor('#ffffff')
-            setAttachImageBackgroundColor('#131b49')
-            setAttachImageBorderColor('#131b49')
-            setAttachImageText('Image Added')
-            setAttachedImage(true);
-        }
-        else if (attachedImage === true) {
-            setAttachImageFontColor('#131b49')
-            setAttachImageBackgroundColor('#ffffff')
-            setAttachImageBorderColor('#131b49')
-            setAttachImageText('Add Image')
-            setAttachedImage(false);
-        }
-
-    }
-
-    function attachImageHover() {
-        if (attachedImage === true) {
-            setAttachImageBackgroundColor('#EB1B1B')
-            setAttachImageBorderColor('#EB1B1B')
-            setAttachImageText('Remove Image')
-        }
-    }
-
-    function attachImageLeave() {
-        if (attachedImage === true) {
-            setAttachImageBackgroundColor('#131b49')
-            setAttachImageBorderColor('#131b49')
-            setAttachImageText('Image Added')
-        }
-    }
-
-    //Loading
-
-    // const [loading, setLoading] = useState(false);
-    // useEffect(() => {
-    //     setLoading(true)
-    //     setTimeout (() =>{
-    //         setLoading(false);
-    //     }, 1000)
-    // }, [])
-
     return (
         <>
             {/* <NavLink to="/Profile/Alex" style={{ textDecoration: 'none' }}>
@@ -162,12 +158,18 @@ function Feed() {
             </NavLink> */}
             <div className={styles["follower-feed-container"]}>
                 <div className={styles["follower-feed-header"]}></div>
-                <div className={styles["follower-feed-new-post"]} style={{ height: createPostOverlayDisplay.height }}>
+                <div className={styles["follower-feed-new-post"]}>
                     <img className={styles["follower-feed-new-post-pic"]} src={createPostProfilePic} />
                     <div className={styles["follower-feed-new-post-name"]}>{createPostDisplayName}</div>
-                    <textarea className={styles["follower-feed-new-post-body"]} style={{ display: createPostOverlayDisplay.display }} placeholder="Update your followers on what's going on with you and your pets" />
-                    <button className={styles["follower-feed-new-post-attach-image"]} style={{ display: createPostOverlayDisplay.display, color: attachImageFontColor, backgroundColor: attachImageBackgroundColor, borderColor: attachImageBorderColor }} onClick={attachImage} onMouseOver={attachImageHover} onMouseLeave={attachImageLeave}>{attachImageText}</button>
-                    <button className={styles["follower-feed-new-post-submit"]} style={{ display: createPostOverlayDisplay.display }}>Submit</button>
+                    <textarea className={styles["follower-feed-new-post-body"]} placeholder="Update your followers on what's going on with you and your pets" />
+                        <section className={styles["follower-feed-new-post-attach-image"]}>
+                            <div  {...getRootProps()}>
+                                <input  {...getInputProps()} />
+                                {myFiles.length === 0 && <div className={styles["follower-feed-new-post-attach-image-info"]}>Drag and Drop or Click to Select Image</div>}
+                                {myFiles.length > 0 && <img className={styles["follower-feed-new-post-attach-image-preview"]} src={myFiles[0].preview} onClick={removeAll}/>}
+                            </div>
+                        </section>
+                    <button className={styles["follower-feed-new-post-submit"]} >Submit</button>
                     {/* <button className={styles["follower-feed-new-post-expand-collapse"]} /> onClick={createPostOverlayToggle} */}
                 </div>
                 {feedPosts.length == 0 && <li>No Feed Posts</li>}
