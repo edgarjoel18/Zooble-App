@@ -158,20 +158,20 @@ function Feed() {
             </NavLink> */}
             <div className={styles["follower-feed-container"]}>
                 <div className={styles["follower-feed-header"]}></div>
-                <div className={styles["follower-feed-new-post"]}>
+                <form className={styles["follower-feed-new-post"]}>
                     <img className={styles["follower-feed-new-post-pic"]} src={createPostProfilePic} />
                     <div className={styles["follower-feed-new-post-name"]}>{createPostDisplayName}</div>
-                    <textarea className={styles["follower-feed-new-post-body"]} placeholder="Update your followers on what's going on with you and your pets" />
+                    <textarea required className={styles["follower-feed-new-post-body"]} placeholder="Update your followers on what's going on with you and your pets" />
                         <section className={styles["follower-feed-new-post-attach-image"]}>
-                            <div  {...getRootProps()}>
+                            <div className={styles["follower-feed-new-post-attach-image-container"]}  {...getRootProps()}>
                                 <input  {...getInputProps()} />
                                 {myFiles.length === 0 && <div className={styles["follower-feed-new-post-attach-image-info"]}>Drag and Drop or Click to Select Image</div>}
                                 {myFiles.length > 0 && <img className={styles["follower-feed-new-post-attach-image-preview"]} src={myFiles[0].preview} onClick={removeAll}/>}
                             </div>
                         </section>
-                    <button className={styles["follower-feed-new-post-submit"]} >Submit</button>
+                    <button className={styles["follower-feed-new-post-submit"]} type='submit'>Submit</button>
                     {/* <button className={styles["follower-feed-new-post-expand-collapse"]} /> onClick={createPostOverlayToggle} */}
-                </div>
+                </form>
                 {feedPosts.length == 0 && <li>No Feed Posts</li>}
                 {feedPosts && feedPosts.map((feedPost) => (
                     <div key={feedPost.post_id} className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
