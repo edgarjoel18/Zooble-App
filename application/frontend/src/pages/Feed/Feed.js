@@ -52,14 +52,15 @@ function Feed() {
         }
     ]);
 
-    const [selectedPost, setSelectedPost] = useState({});
-
-    //for changing submit image button state
-    const [attachedImage, setAttachedImage] = useState();  
-
     //creating a post display
     const [createPostDisplayName, setCreatePostDisplayName] = useState('');
     const [createPostProfilePic, setCreatePostProfilePic] = useState('');
+
+    const [selectedPost, setSelectedPost] = useState({});
+
+    const [createdPostBody, setCreatedPostBody] = useState();
+
+
 
     useEffect(() => { //get profile pic and name of user
         console.log('/api/get-feed-user');
@@ -103,24 +104,36 @@ function Feed() {
         multiple: false
     })
 
-    function submitPost(){
+    function submitPost(event){
+        event.preventDefault();
         let config = {
             headers: {
                 'Content-type': 'image/jpeg'  //configure headers for put request to s3 bucket
             }
         }
 
-        if(attachedImage){
+        if(myFiles.length !== 0){
             //try to upload photo first
             axios.get(apiGatewayURL)  //first get the presigned s3 url
             .then((response) =>{
                 console.log(response)
                 console.log(response.data)
-                let presignedFileURL = response.data.photoFilename;  //save this url to add to database later
-                console.log(attachedImage);
-                axios.put(response.data.uploadURL, attachedImage,config).then((response) =>{  //upload the file to s3
+                let presignedFileURL =  'https://csc648groupproject.s3-us-west-2.amazonaws.com/' + response.data.photoFilename;  //save this url to add to database later
+                console.log(myFiles[0]);
+                axios.put(response.data.uploadURL, myFiles[0],config).then((response) =>{  //upload the file to s3
                     console.log(response);
                     console.log(response.data);
+                    console.log("Created Post Body: ", createdPostBody);
+                    console.log("Presigned File URL: ", presignedFileURL);
+                    axios.post('/api/upload-post',{
+                        postBody: createdPostBody,
+                        photoLink: presignedFileURL,
+                    }).then((response) =>{
+                        console.log(response.data);
+                    })
+                    .catch((err) =>{
+                        console.log(err);
+                    })
                 })
                 .catch((err) =>{
                     console.log(err);
@@ -158,10 +171,10 @@ function Feed() {
             </NavLink> */}
             <div className={styles["follower-feed-container"]}>
                 <div className={styles["follower-feed-header"]}></div>
-                <form className={styles["follower-feed-new-post"]}>
+                <form className={styles["follower-feed-new-post"]} onSubmit={submitPost}>
                     <img className={styles["follower-feed-new-post-pic"]} src={createPostProfilePic} />
                     <div className={styles["follower-feed-new-post-name"]}>{createPostDisplayName}</div>
-                    <textarea required className={styles["follower-feed-new-post-body"]} placeholder="Update your followers on what's going on with you and your pets" />
+                    <textarea maxLength="255" required className={styles["follower-feed-new-post-body"]} placeholder="Update your followers on what's going on with you and your pets"  onChange={e => setCreatedPostBody(e.target.value)}/>
                         <section className={styles["follower-feed-new-post-attach-image"]}>
                             <div className={styles["follower-feed-new-post-attach-image-container"]}  {...getRootProps()}>
                                 <input  {...getInputProps()} />
