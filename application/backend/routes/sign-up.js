@@ -54,33 +54,32 @@ router.post("/api/sign-up", (req,res) =>{
                                                             connection.query(`INSERT INTO Account (user_id, role_id)  VALUES  ('${insertedUser.insertId}', 1)`, //create new account in database with returned user_id  and assign role of pet owner//registered user entry and profile automatically created 
                                                             function(err,account){
                                                                 if(err){
+                                                                    console.log(err);
                                                                     res.status(500).json(err);
                                                                 }
                                                                 console.log('Account Created');
                                                                 console.log(account.insertId); //account id of newly created account
+                                                                let accountId = account.insertId;
                                                                 connection.query(`INSERT INTO Credentials (acct_id, username, password) VALUES ('${account.insertId}', '${givenUsername}', '${hash}')`, 
                                                                 function(err,insertedCredentials){
                                                                     if(err){
+                                                                        console.log(err);
                                                                         res.status(500).json(err);
                                                                     }
                                                                     console.log('Credentials Created');
                                                                     console.log(insertedCredentials.insertId);
+                                                                    connection.query(`UPDATE Profile SET Profile.display_name = '${givenFirstName}' WHERE  Profile.account_id = '${accountId}'`,
+                                                                    function(err, updatedDisplayName){
+                                                                        if(err){
+                                                                            console.log(err);
+                                                                        }
+                                                                        console.log('Updated Display Name');
+                                                                    })
                                                                 })
                                                             }); 
                                                             res.status(200).json(insertedUser);
                                                         }
                                                     })
-                                                    
-                                                    // connection.query(`INSERT INTO Credentials (email, first_name, last_name, password, username)
-                                                    //                 VALUES ('${givenEmail}','${givenFirstName}', '${givenLastName}', 
-                                                    //                 '${hash}', '${givenUsername}')`,
-                                                    //                 function(err, result){
-                                                    //                     if(err){
-                                                    //                         throw err;
-                                                    //                     } else{
-                                                    //                         res.status(201).json(result);
-                                                    //                     }
-                                                    //                 })
                                                 }else{
                                                     console.log("Passwords do not match.");
                                                     res.status(400).json("passwords not matching");
@@ -157,6 +156,7 @@ router.post('/api/sign-up/business', (req,res) =>{
                                                                     res.status(500).json(err);
                                                                 }
                                                                 console.log('Account Created');
+                                                                let accountId = account.insertId;
                                                                 console.log(account.insertId); //account id of newly created account
                                                                 connection.query(`INSERT INTO Credentials (acct_id, username, password) VALUES ('${account.insertId}', '${givenUsername}', '${hash}')`, 
                                                                 function(err,insertedCredentials){
@@ -188,7 +188,16 @@ router.post('/api/sign-up/business', (req,res) =>{
                                                                                 }
                                                                                 console.log('Commerce Created');
                                                                                 console.log(insertedCommerce.insertId);
+                                                                                connection.query(`UPDATE Profile SET Profile.display_name = ${givenBusinessName} WHERE  Profile.account_id = ${accountId}`,
+                                                                                function(err, updatedDisplayName){
+                                                                                    if(err){
+                                                                                        console.log(err);
+                                                                                    }
+                                                                                    console.log('Updated Display Name');
+                                                                                })
                                                                             })
+
+                        
                                                                         })
                                                                     })
                                                                 })
@@ -272,6 +281,7 @@ router.post('/api/sign-up/shelter', (req,res) =>{
                                                                     res.status(500).json(err);
                                                                 }
                                                                 console.log('Account Created');
+                                                                let accountId = account.insertId;
                                                                 console.log(account.insertId); //account id of newly created account
                                                                 connection.query(`INSERT INTO Credentials (acct_id, username, password) VALUES ('${account.insertId}', '${givenUsername}', '${hash}')`, 
                                                                 function(err,insertedCredentials){
@@ -311,6 +321,13 @@ router.post('/api/sign-up/shelter', (req,res) =>{
                                                                                         console.log(givenPetTypes[i].label, " inserted");
                                                                                     })
                                                                                 }
+                                                                                connection.query(`UPDATE Profile SET Profile.display_name = ${givenBusinessName} WHERE  Profile.account_id = ${account_id}`,
+                                                                                function(err, updatedDisplayName){
+                                                                                    if(err){
+                                                                                        console.log(err);
+                                                                                    }
+                                                                                    console.log('Updated Display Name');
+                                                                                })
                                                                             })
     
                                                                         })

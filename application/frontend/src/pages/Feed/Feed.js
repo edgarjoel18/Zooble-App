@@ -233,7 +233,7 @@ function Feed() {
                             <img className={styles["follower-feed-post-prof_pic"]} src={'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'} />
                         </NavLink>
                         <NavLink style={{textDecoration: 'none'}} to={"/Profile/ShelterId=2"}>
-                        <div className={styles["follower-feed-post-name"]}>{"Placeholder"}</div>
+                        <div className={styles["follower-feed-post-name"]}>{feedPost.display_name}</div>
                         </NavLink>
  
                         <div className={styles["follower-feed-post-timestamp"]}>{feedPost.timestamp}</div>
