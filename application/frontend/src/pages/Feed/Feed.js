@@ -230,7 +230,7 @@ function Feed() {
                 {feedPosts && feedPosts.map((feedPost) => (
                     <div key={feedPost.post_id} className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
                         <NavLink to={"/Profile/ShelterId=2"}>
-                            <img className={styles["follower-feed-post-prof_pic"]} src={'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'} />
+                            <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic_link} />
                         </NavLink>
                         <NavLink style={{textDecoration: 'none'}} to={"/Profile/ShelterId=2"}>
                         <div className={styles["follower-feed-post-name"]}>{feedPost.display_name}</div>
