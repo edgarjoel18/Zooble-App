@@ -505,7 +505,7 @@ const newPetProfile = {
 };
 
 
-function Profile({appUser}) {
+function MyProfile({appUser}) {
 
     // ROUTING FOR THE DYNAMIC PROFILE PAGES 
 
@@ -542,7 +542,7 @@ function Profile({appUser}) {
     console.log(appUser);
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
     const [userProfile, setUserProfile] = useState(petOwnerProfile);
-    const [selfView, setSelfView] = useState(false);
+    const [selfView, setSelfView] = useState(true);
 
     useEffect(() => {
 
@@ -579,7 +579,7 @@ function Profile({appUser}) {
     return (
         <div className={styles.Profile} >
             <ProfileInfo appUser={appUser} isSelfView={selfView} profile={userProfile} updateProfile={updateProfileHandler} />
-            {/* <div className={styles.SwitchDiv} onClick={toggleSelfViewHandler} >
+            <div className={styles.SwitchDiv} onClick={toggleSelfViewHandler} >
                 <span 
                     className={styles.SwitchView} 
                     onClick={toggleSelfViewHandler}  >
@@ -588,7 +588,7 @@ function Profile({appUser}) {
                 <div className={styles.Switch}>
                     <div className={styles.SwitchVistor} id='button' ></div> 
                 </div>
-            </div> */}
+            </div>
             <div className={styles.Bottom}>
                 <AboutMe isSelfView={selfView} profile={userProfile} updateProfile={updateProfileHandler} />
                 <ProfileContent isSelfView={selfView} profile={userProfile} updateProfile={updateProfileHandler} />
@@ -597,4 +597,4 @@ function Profile({appUser}) {
     )
 }
 
-export default Profile;
+export default MyProfile;
