@@ -19,6 +19,7 @@ import ShelterSignUpPage2 from './pages/Sign Up/ShelterSignUpPage2.js'
 import BusinessSignUpPage from './pages/Sign Up/BusinessSignUp.js'
 import BusinessSignUpPage2 from './pages/Sign Up/BusinessSignUpPage2.js'
 import ProfilePage from './pages/Profile/Profile';
+import MyProfilePage from './pages/Profile/MyProfile';
 import PetOwner1Page from './pages/Profile/AlexProfilePage';
 import PetOwner2Page from './pages/Profile/MaryProfilePage';
 import MimiProfilePage from './pages/Profile/MimiProfilePage';
@@ -101,7 +102,7 @@ const App = () => {
         <Route path="/AdminFeed" component={AdminFeed}/>
         <Route path="/MapSearch" component={MapSearch}/>
         <Route exact path="/Profile">
-          <ProfilePage appUser={appUser}/>
+          <MyProfilePage appUser={appUser}/>
         </Route>
         <Route path="/Profile/PetOwnerId=1">
           <PetOwner1Page appUser={appUser}/>
