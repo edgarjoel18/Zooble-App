@@ -57,7 +57,8 @@ router.get("/api/get-feed-posts",(req,res)=>{
     connection.query(
         `SELECT *
          FROM Post
-         WHERE Post.reg_user_id 
+         LEFT JOIN Photo ON Post.post_id = Photo.post_id
+         WHERE Post.reg_user_id
          IN 
          (SELECT 
           Follow.reg_user_id

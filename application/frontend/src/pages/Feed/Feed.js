@@ -91,6 +91,7 @@ function Feed() {
     const [myFiles, setMyFiles] = useState([])
 
     useEffect(() => () => {
+        console.log('revoking object urls');
         // Make sure to revoke the data uris to avoid memory leaks
         myFiles.forEach(file => URL.revokeObjectURL(file.preview));
       }, [myFiles]);
@@ -139,6 +140,8 @@ function Feed() {
                         photoLink: presignedFileURL,
                     }).then((response) =>{
                         console.log(response.data);
+                        removeAll();
+                        setCreatedPostBody('');
                     })
                     .catch((err) =>{
                         console.log(err);
@@ -151,6 +154,16 @@ function Feed() {
                     }
                     //break out of this function //presigned s3 url will automatically expire so no harm done
                 })
+            })
+            .catch((err) =>{
+                console.log(err);
+            })
+        }
+        else{
+            axios.post('/api/upload-post',{
+                postBody: createdPostBody,
+            }).then((response) =>{
+                console.log(response.data);
             })
             .catch((err) =>{
                 console.log(err);
@@ -183,7 +196,7 @@ function Feed() {
                 <form className={styles["follower-feed-new-post"]} onSubmit={submitPost}>
                     <img className={styles["follower-feed-new-post-pic"]} src={createPostProfilePic} />
                     <div className={styles["follower-feed-new-post-name"]}>{createPostDisplayName}</div>
-                    <textarea maxLength="255" required className={styles["follower-feed-new-post-body"]} placeholder="Update your followers on what's going on with you and your pets"  onChange={e => setCreatedPostBody(e.target.value)}/>
+                    <textarea value={createdPostBody} maxLength="255" required className={styles["follower-feed-new-post-body"]} placeholder="Update your followers on what's going on with you and your pets"  onChange={e => setCreatedPostBody(e.target.value)}/>
                     <section className={styles["follower-feed-new-post-attach-image"]}>
                         <div className={styles["follower-feed-new-post-attach-image-container"]}  {...getRootProps()}>
                             <input  {...getInputProps()} />
@@ -217,7 +230,7 @@ function Feed() {
                         <button className={styles['follower-feed-post-like']} />
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
                         <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
-                        <img className={styles["follower-feed-post-pic"]} src={'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'} />
+                        <img className={styles["follower-feed-post-pic"]} src={feedPost.link} />
                     </div>
                 ))}
             </div>
