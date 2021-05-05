@@ -17,7 +17,10 @@ const deletePostRouter = require('./routes/delete-post.js');
 const feedRouter = require('./routes/feed.js');
 const commentPostRouter = require('./routes/comment-post.js');
 const followUserRouter = require('./routes/follow-unfollow-user.js');
+const petsRouter = require('./routes/pets.js');
 const app = express();
+
+// const cors = require('cors');
 
 //Session Store
 const sessionStore = require('./session-store');
@@ -78,6 +81,11 @@ app.use(commentPostRouter);
 
 // Follow a user
 app.use(followUserRouter);
+
+//Pets Lists
+app.use(petsRouter);
+
+
 
 
 

@@ -45,6 +45,7 @@ import SignUpSuccess from './pages/Sign Up/SignUpSuccess'
 import MapSearch from './pages/MapSearch/MapSearch.js'
 
 import axios from 'axios';
+import UploadImage from './pages/UploadImage';
 
 const App = () => {
 
@@ -63,6 +64,14 @@ const App = () => {
       console.log(err);
     })
     // console.log('AppUser in App changed to: ', appUser)
+
+    axios.get('https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL')
+    .then((response) => {
+      console.log(response)
+    })
+    .catch((err) =>{
+      console.log(err);
+    })
   })
 
 
@@ -150,6 +159,7 @@ const App = () => {
         <Route path="/pet/:pet" component={ProfilePage}/>
         <Route path="/shelter/:shelter" component={ProfilePage}/>
         <Route path="/business/:business" component={ProfilePage}/>
+        <Route path="/uploadImage" component={UploadImage}/>
         <Redirect to="/" />
       </Switch>
     </Router>

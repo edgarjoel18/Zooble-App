@@ -1,7 +1,8 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 
 import styles from './MyPets.module.css'
+import axios from 'axios'
 
 import AddIcon from '../../images/Created Icons/Add.svg'
 
@@ -15,51 +16,51 @@ function MyPets() {
 
 
     const [myPets,setMyPets] = useState([
-    {
-        pet_id: 1,
-        pet_name: 'Max',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
-    },
-    {
-        pet_id: 2,
-        pet_name: 'Juju',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'
-    },
-    {
-        pet_id: 3,
-        pet_name: 'Mimi',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg'
-    },
-    {
-        pet_id: 4,
-        pet_name: 'Max',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
-    },
-    {
-        pet_id: 5,
-        pet_name: 'Juju',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'
-    },
-    {
-        pet_id: 6,
-        pet_name: 'Mimi',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg'
-    },
-    {
-        pet_id: 7,
-        pet_name: 'Max',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
-    },
-    {
-        pet_id: 8,
-        pet_name: 'Juju',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'
-    },
-    {
-        pet_id: 9,
-        pet_name: 'Mimi',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg'
-    },
+    // {
+    //     pet_id: 1,
+    //     pet_name: 'Max',
+    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
+    // },
+    // {
+    //     pet_id: 2,
+    //     pet_name: 'Juju',
+    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'
+    // },
+    // {
+    //     pet_id: 3,
+    //     pet_name: 'Mimi',
+    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg'
+    // },
+    // {
+    //     pet_id: 4,
+    //     pet_name: 'Max',
+    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
+    // },
+    // {
+    //     pet_id: 5,
+    //     pet_name: 'Juju',
+    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'
+    // },
+    // {
+    //     pet_id: 6,
+    //     pet_name: 'Mimi',
+    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg'
+    // },
+    // {
+    //     pet_id: 7,
+    //     pet_name: 'Max',
+    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
+    // },
+    // {
+    //     pet_id: 8,
+    //     pet_name: 'Juju',
+    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'
+    // },
+    // {
+    //     pet_id: 9,
+    //     pet_name: 'Mimi',
+    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg'
+    // },
     ])
 
     let history = useHistory();
@@ -78,6 +79,18 @@ function MyPets() {
         console.log("Profile Clicked");
         history.push(profile);
     }
+
+    useEffect(() => {axios.get('/api/get-current-user-pets') 
+        .then(response =>{
+            console.log(response.data);
+            setMyPets(response.data);
+            console.log(myPets);
+        })
+        .catch(err =>{
+            console.log("Error: ");
+            console.log(err);
+        })
+    }, [])
 
     return (
         <>
