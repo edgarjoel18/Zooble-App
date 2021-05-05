@@ -155,11 +155,12 @@
     background-color:rgba(255,255,255,0.95);
     border-radius: 7.5px;
     display:grid;
-    grid-template-areas: "pic  user .... submit"
-                         "body body image image";
+    grid-template-areas: "pic  user ........ submit"
+                         "pic  .... dropdown dropdown"
+                         "body body image    image";
     grid-template-columns: 100px auto 150px 150px;
     grid-gap: 15px;
-    grid-template-rows: 100px 200px;
+    grid-template-rows: 50px 50px 200px;
     font-family: var(--ff-primary);
     padding: 15px;
     margin-bottom: 15px;
@@ -192,7 +193,7 @@
 .follower-feed-new-post-attach-image{
     grid-area: image;
     border-radius: 7.5px;
-    box-shadow: var(--elevation-1);
+    border: 2px var(--primary-clr) dashed;
     font-family: var(--ff-primary);
     font-size: var(--h3);
     font-weight: 400;
@@ -211,6 +212,8 @@
 .follower-feed-new-post-attach-image-info{
     font-size: var(--h4);
     color: var(--inactive-txt-clr);
+    width: 50%;
+    text-align: center;
 }
 
 .follower-feed-new-post-attach-image-preview{
@@ -270,4 +273,8 @@
     font-family: var(--ff-primary);
     font-size: var(--h2);
     color: var(--inactive-txt-clr);
+}
+
+.follower-feed-new-post-tag-dropdown{
+    grid-area: dropdown;
 }

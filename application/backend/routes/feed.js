@@ -57,7 +57,12 @@ router.get("/api/get-feed-posts",(req,res)=>{
     connection.query(
         `SELECT *
          FROM Post
-         WHERE Post.reg_user_id 
+         LEFT JOIN Photo ON Post.post_id = Photo.post_id
+         LEFT JOIN RegisteredUser ON RegisteredUser.reg_user_id = Post.reg_user_id
+         LEFT JOIN User ON RegisteredUser.user_id = User.user_id
+         LEFT JOIN Account ON User.user_id = Account.user_id
+         LEFT JOIN Profile ON Account.account_id = Profile.account_id
+         WHERE Post.reg_user_id
          IN 
          (SELECT 
           Follow.reg_user_id
@@ -85,8 +90,9 @@ router.get("/api/get-feed-posts",(req,res)=>{
             if(err)
                 console.log(err);
             else{
-                console.log("Posts: ", posts);
+                // console.log("Posts: ", posts);
                 res.status(200).json(posts);
+
             }
         }
     )
