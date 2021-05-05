@@ -14,7 +14,7 @@ const shelterProfile = {
     accountType: 'shelter',
     id: '1',
     userName: 'Burgsdale Pet Shelter',
-    userPicture: 'shelterImage',
+    userPicture: 'shelter2Image',
     about: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. ',
     contactInfo: {
         phone: '(415) 465-8544', 
@@ -541,7 +541,7 @@ function MyProfile({appUser}) {
     
     console.log(appUser);
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
-    const [userProfile, setUserProfile] = useState(petOwnerProfile);
+    const [userProfile, setUserProfile] = useState(shelterProfile);
     const [selfView, setSelfView] = useState(true);
 
     useEffect(() => {
@@ -571,7 +571,7 @@ function MyProfile({appUser}) {
 
     function toggleSelfViewHandler() {
         setSelfView(!selfView);
-        let button = document.getElementById('button'); // Maybe change the ID name to somthing more specific - Wameedh
+        let button = document.getElementById('profile-button'); // Maybe change the ID name to somthing more specific - Wameedh
         selfView ? button.className = styles.SwitchSelf : button.className = styles.SwitchVistor;
     }
 
@@ -586,7 +586,7 @@ function MyProfile({appUser}) {
                         {selfView ? 'switch to vistors view' : 'switch to self view' }
                 </span>
                 <div className={styles.Switch}>
-                    <div className={styles.SwitchVistor} id='button' ></div> 
+                    <div className={styles.SwitchVistor} id='profile-button' ></div> 
                 </div>
             </div>
             <div className={styles.Bottom}>

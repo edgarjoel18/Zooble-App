@@ -21,7 +21,7 @@
     background-color: var(--reversed-txt-clr);
 }
 
-.ActiveText {
+.ActiveText, .ActiveText:hover {
     color: white;
 }
 

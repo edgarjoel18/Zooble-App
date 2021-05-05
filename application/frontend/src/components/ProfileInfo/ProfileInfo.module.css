@@ -17,7 +17,7 @@
 }
 
 .UserName input {
-    width: 600px;
+    width: 480px;
     outline: none;
     border: solid var(--primary-clr) 2px;
     border-radius: 10px;

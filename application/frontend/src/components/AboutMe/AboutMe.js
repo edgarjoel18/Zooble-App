@@ -122,10 +122,16 @@ function AboutMe(props) {
                         // <button onClick={() => changingInfoHandler('address')} >edit</button>
                         <EditButton edit clicked={() => changingInfoHandler('address')}>Edit</EditButton>
                     }
-                    <label>Address: </label>
+                    <label for="address" >Address: </label>
                     <textarea 
+                        id="address"
                         value={props.profile.contactInfo.address} 
                         readOnly={!changing || !(labelSelected === 'address')}
+                        onKeyPress={event => {
+                            if(event.key === 'Enter'){
+                                cancelEditingHandler();
+                            }
+                        }}
                         onChange={event => props.updateProfile('address', event.target.value)} 
                         className={styles.AddressTextArea}
                         rows='2' 
@@ -142,12 +148,18 @@ function AboutMe(props) {
                         //<button onClick={() => changingInfoHandler('phone number')} >edit</button>
                         <EditButton edit clicked={() => changingInfoHandler('phone number')}>Edit</EditButton>
                     }
-                    <label>Phone Number: </label>
+                    <label for="phone" >Phone Number: </label>
                     <input 
-                        type="text" 
+                        id="phone"
+                        type="tel" 
                         value={props.profile.contactInfo.phone} 
                         readOnly={!changing || !(labelSelected === 'phone number')}
                         maxLength = "25"
+                        onKeyPress={event => {
+                            if(event.key === 'Enter'){
+                                cancelEditingHandler();
+                            }
+                          }}
                         onChange={event => props.updateProfile('phone', event.target.value)} 
                     />
                     {
@@ -172,12 +184,20 @@ function AboutMe(props) {
                             }
                             <label>Hours: </label>
                         </div>
-                        {Object.keys(props.profile.contactInfo.hours).map(key => (
+                        {/* {Object.keys(props.profile.contactInfo.hours).map(key => (
                             <div className={styles.Days} key={key} >
                                 <label>{key}: </label>
                                 <span >{props.profile.contactInfo.hours[key]}</span>
                             </div>
-                        ))}
+                        ))} */}
+                        <table className={styles['hours-table']}  >
+                            {Object.keys(props.profile.contactInfo.hours).map(key => (
+                                <tr className={styles['hours-table-row']} key={key} >
+                                    <th className={styles['hours-table-header']} >{key}: </th>
+                                    <td className={styles['hours-table-cell']} >{props.profile.contactInfo.hours[key]}</td>
+                                </tr>
+                            ))}
+                        </table>
                     </div>
                     {/* {
                         props.isSelfView && (labelSelected === 'hours') && 
