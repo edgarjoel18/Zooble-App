@@ -61,8 +61,8 @@ function Feed() {
     const [createdPostBody, setCreatedPostBody] = useState();
 
 
-
-    useEffect(() => { //get profile pic and name of user
+    //runs on refresh
+    useEffect(() => { //get profile pic and name of user  //
         console.log('/api/get-feed-user');
         axios.get('/api/get-feed-user')
         .then(response =>{
@@ -83,6 +83,16 @@ function Feed() {
             setFeedPosts(response.data);
         })
     }, [])
+
+    //runs whenever the user creates a post
+    useEffect(()=>{
+        console.log('/api/get-feed-posts');
+        axios.get('/api/get-feed-posts')
+        .then(response =>{
+            console.log(response.data);
+            setFeedPosts(response.data);
+        })
+    },[])
 
 
 
@@ -164,6 +174,7 @@ function Feed() {
                 postBody: createdPostBody,
             }).then((response) =>{
                 console.log(response.data);
+                setCreatedPostBody('');
             })
             .catch((err) =>{
                 console.log(err);
@@ -230,7 +241,7 @@ function Feed() {
                         <button className={styles['follower-feed-post-like']} />
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
                         <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
-                        <img className={styles["follower-feed-post-pic"]} src={feedPost.link} />
+                        {feedPost.link && <img className={styles["follower-feed-post-pic"]} src={feedPost.link} />}
                     </div>
                 ))}
             </div>

@@ -31,22 +31,23 @@ router.post("/api/upload-post", (req, res) => { // uploading a post
         } else {
             console.log(post)
 
-
-
-            connection.query(`INSERT INTO Photo (link, post_id) VALUES ('${photoLink}','${post.insertId}')`, (error, photo) => {
-                if (error) {
-                    console.error(error);
-                    res.status(500).json(error);
-                }
-                console.log("image was inserted!")
-            });
-
-            res.status(200).json(post);
+            if(photoLink){
+                connection.query(`INSERT INTO Photo (link, post_id) VALUES ('${photoLink}','${post.insertId}')`, (error, photo) => {
+                    if (error) {
+                        console.error(error);
+                        res.status(500).json(error);
+                    }
+                    console.log("image was inserted!")
+                });
+                res.status(200).json(post);
+            }
+            else{
+                console.log("post was inserted (no image)!")
+                res.status(200).json(post);
+            }
+            
         }
-
     });
-
-
 });
 
 module.exports = router
