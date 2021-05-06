@@ -6,7 +6,10 @@ import styled from 'styled-components';
 
 import PostModal from '../../Modals/PostModal'
 
-function ImageContainer(props) {
+function ImageContainer({previews, profile, title, selfView}) {
+    console.log("previews: ",previews);
+    console.log("previews.length: ",previews.length);
+
     const [postModalDisplay, setPostModalDisplay] = useState(false);
     const [imageStack, setImageStack] = useState();
     const [text, setText] = useState('');
@@ -20,21 +23,22 @@ function ImageContainer(props) {
         setPostModalDisplay(false);
     }
     function presentPostModal(index){
-        setSelectedPost(props.image[index])
+        setSelectedPost(previews[index])
         console.log('clicked on image');
         setPostModalDisplay(true);
     }
 
     useEffect (() => {
-        setImageStack(displayImageStack(props.image.length, props.accountType));
-        console.log(props.profile)
-    }, [])
+        console.log("ImageContainer useEffect");
+        setImageStack(displayImageStack(previews.length, profile.accountType));
+        console.log(profile)
+    }, [previews])
 
     //display a given number of pictures
     const displayImageStack = (val, accountType) => {
         console.log('displayImageStack');
-        console.log(props.image);
-        console.log(props.image[0]);
+        console.log(previews);
+        console.log("val: ",val)
         if (val === 0)
             return (
                 <Link onMouseEnter={() => setText('Photo upload coming soon')} onMouseLeave={() => setText('')}>
@@ -83,22 +87,22 @@ function ImageContainer(props) {
                         box-shadow: var(--elevation-1);
                         `;
                     let displayPostModal = (
-                        <div onClick={() => presentPostModal(index)} key={props.image[index].timestamp + index}>
+                        <div onClick={() => presentPostModal(index)} key={previews[index].timestamp + index}>
                             <Img 
                                 className={styles.ImageStack_pic}
                             >
-                                <img src={props.image[index].profile_pic} alt="No Image Found" className={styles.ImageStack_pic} />
+                                <img src={previews[index].link} alt="No Image Found" className={styles.ImageStack_pic} />
                             </Img>
                         </div>
                     )
-                    if (props.title === 'My Siblings' || props.title === 'My Pets' || props.title === 'Pets')
+                    if (title === 'My Siblings' || title === 'My Pets' || title === 'Pets')
                         displayPostModal = (
-                            <Link to={"/Profile/" + props.image[index].name} key={props.image[index].timestamp + index} >
-                                <Img 
-                                    className={styles.ImageStack_pic}
-                                >
-                                    <img src={props.image[index].profile_pic} alt="No Image Found" className={styles.ImageStack_pic} />
-                                    <div className={styles.ImageStackText} >{props.image[index].name}</div>
+                            <Link to={"/Profile/" + previews[index].name} key={previews[index].timestamp + index} >
+                                    <Img 
+                                        className={styles.ImageStack_pic}
+                                    >
+                                    <img src={previews[index].profile_pic} alt="No Image Found" className={styles.ImageStack_pic} />
+                                    <div className={styles.ImageStackText} >{previews[index].name}</div>
                                 </Img>
                             </Link>
                         )
@@ -110,8 +114,8 @@ function ImageContainer(props) {
 
     function seeAllImageHandler(path) {
         const queryParams = (
-            encodeURIComponent('id') + '=' + encodeURIComponent(props.profile.id) + '&' 
-            + encodeURIComponent('name') + '=' + encodeURIComponent(props.profile.userName)
+            encodeURIComponent('id') + '=' + encodeURIComponent(profile.id) + '&' 
+            + encodeURIComponent('name') + '=' + encodeURIComponent(profile.userName)
             );
         history.push({
             pathname: path,
@@ -121,13 +125,13 @@ function ImageContainer(props) {
     }
     
     let seeAll = null;
-    if (props.title === 'Photos' || props.title === 'My Photos') {
-        props.selfView ? 
+    if (title === 'Photos' || title === 'My Photos') {
+        selfView ? 
         seeAll = <p style={{cursor: 'pointer'}} onClick={() => seeAllImageHandler('/MyPhoto')} >See All</p>
         :
         seeAll = <p style={{cursor: 'pointer'}} onClick={() => seeAllImageHandler('/Photo')} >See All</p>;
     }
-    else if (props.title === 'My Pets') {
+    else if (title === 'My Pets') {
         seeAll = <p style={{cursor: 'pointer'}} onClick={() => history.push("/MyPets")} >See All</p>
     }
     else {
@@ -139,7 +143,8 @@ function ImageContainer(props) {
         {/* for debugging  <button onClick={()=>{setPostModalDisplay(true)}}></button> */}
         <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost}/>
         <div className={styles.ImageContainer} >
-            <h2>{props.title}</h2>
+            {/* {typeof previews[0] !== 'undefined' && <img src={previews[0].link}/>} */}
+            <h2>{title}</h2>
             {text}
             {imageStack}
             {seeAll}

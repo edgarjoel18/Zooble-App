@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 
 import ImageContainer from './ImageContainer/ImageContainer';
@@ -6,8 +6,12 @@ import Reviews from './Reviews/Reviews';
 import WriteAReview from '../Modals/WriteAReview';
 
 import styles from './ProfileContent.module.css';
+import axios from 'axios';
 
 function ProfileContent({photoPosts, pets, profile, isSelfView, updateProfile}) {
+    console.log("photoPosts: ",photoPosts);
+    console.log("pets: ",pets);
+    console.log("profile account type: ", profile.accountType)
     const [writeAReviewDisplay, setWriteAReviewDisplay] = useState(false);
     const [text, setText] = useState('See All');
 
@@ -25,8 +29,8 @@ function ProfileContent({photoPosts, pets, profile, isSelfView, updateProfile}) 
         case 'shelter':
             imageContainer = (
                 <div className={styles.ImageContainerShelter} >
-                    <ImageContainer title='Photos' selfView={isSelfView} image={profile.photos} accountType={profile.accountType} profile={profile} />
-                    <ImageContainer title='Pets' image={profile.petProfiles} accountType={profile.accountType} profile={profile} />
+                    <ImageContainer title='Photos' previews={photoPosts} selfView={isSelfView} accountType={profile.accountType} profile={profile} />
+                    <ImageContainer title='Pets' previews={pets} accountType={profile.accountType} profile={profile} />
                 </div>
             )
             break;
@@ -40,8 +44,8 @@ function ProfileContent({photoPosts, pets, profile, isSelfView, updateProfile}) 
         case 'pet owner':
             imageContainer = (
                 <div className={styles.ImageContainerTwoRows} >
-                    <ImageContainer title='My Photos' selfView={isSelfView} image={profile.photos} accountType={profile.accountType} profile={profile} />
-                    <ImageContainer title='My Pets' image={profile.petProfiles} accountType={profile.accountType} profile={profile} />
+                    <ImageContainer title='My Photos' previews={photoPosts} selfView={isSelfView} image={profile.photos} accountType={profile.accountType} profile={profile} />
+                    <ImageContainer title='Pets' previews={pets} accountType={profile.accountType} profile={profile} />
                 </div>
             )
             break;

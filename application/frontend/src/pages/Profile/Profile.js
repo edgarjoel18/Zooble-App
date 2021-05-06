@@ -511,7 +511,8 @@ const newPetProfile = {
 
 function Profile({appUser}) {
 
-    const [fetchedProfile,setFetchedProfile] = useState({}); 
+    const [fetchedProfile,setFetchedProfile] = useState({});
+    const [fetchedPhotoPosts, setFetchedPhotoPosts] = useState([]);
 
     const {profileID} = useParams();
     console.log("profileID: ",profileID);
@@ -527,7 +528,15 @@ function Profile({appUser}) {
             console.log(err)
         })
 
-
+        axios.get('/api/get-photo-posts',{params: {profileID: profileID}})
+        .then(response =>{
+            console.log(response)
+            console.log(response.data);
+            setFetchedPhotoPosts(response.data);
+        })
+        .catch(err =>{
+            console.log(err)
+        })
     },[])
 
 
@@ -544,10 +553,6 @@ function Profile({appUser}) {
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
     const [userProfile, setUserProfile] = useState(petOwnerProfile);
     const [selfView, setSelfView] = useState(false);
-
-    useEffect(() => {
-
-    }, [])
 
     function updateProfileHandler(type, value) {
         if (type === 'address' || type === 'phone' || type === 'hours') {
@@ -595,7 +600,7 @@ function Profile({appUser}) {
                     updateProfile={updateProfileHandler} 
                 />
                 <ProfileContent
-                    photoPosts={[]}
+                    photoPosts={fetchedPhotoPosts}
                     pets={[]}
                     isSelfView={selfView} 
                     profile={userProfile} 
