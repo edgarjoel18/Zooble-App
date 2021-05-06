@@ -8,7 +8,11 @@ import axios from 'axios';
 
 
 function PostModal({display,onClose,selectedPost}) {
+
     // console.log(selectedPost);
+
+    const [createdCommentBody, setCreatedCommentBody] = useState();
+
     const [comments, setComments] = useState([ //Real version will fetch comments associated with post id of post passed in
         // {
         //     comment_id: 1,            
@@ -42,13 +46,28 @@ function PostModal({display,onClose,selectedPost}) {
         .then(response =>{
             console.log("Response: ",response);
             console.log("Response.data: ", response.data);
+            setComments(response.data);
         })
         .catch(err =>{
             console.log(err);
         })
     },[display]) //this won't refresh until they change posts!
-    
 
+
+    function submitComment(event){
+        event.preventDefault();
+
+        axios.post('/api/comment',{
+            body: createdCommentBody,
+            postId: selectedPost.post_id
+        })
+        .then(response => {
+            console.log("Response: ",response);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
 
     
     return (
@@ -75,23 +94,22 @@ function PostModal({display,onClose,selectedPost}) {
                         {comments && comments.map((comment)=>(
                             <li key={comment.comment_id}>
                                 <div className={styles['post-comment']}>
-                                    <img className={styles['post-comment-pic']} src={comment.prof_pic}/>
-                                    <div className={styles['post-comment-name']}><h4>{comment.name}</h4></div>
+                                    <img className={styles['post-comment-pic']} src={comment.profile_pic_link}/>
+                                    <div className={styles['post-comment-name']}><h4>{comment.display_name}</h4></div>
                                     <div className={styles['post-comment-timestamp']}>{comment.timestamp}</div>
                                     <div className={styles['post-comment-body']}>{comment.body}</div>
                                     <div className={styles['post-comment-likes']}>
-                                        {comment.likes}  
+                                        {comment.like_count}  
                                     </div>
-                                    {/* <button className={styles['post-comment-like']}/> */}
-                                    
+                                    <button className={styles['post-comment-like']}/>
                                 </div>
                             </li>
                         ))}
                     </ul>
-                    <div className={styles["post-leave-comment"]}>
-                        <input placeholder="Write a Comment..."/>
-                        <button><span>Comment</span></button>
-                    </div>
+                    <form className={styles["post-leave-comment"]} onSubmit={submitComment}>
+                        <input value={createdCommentBody} maxLength="255" required placeholder="Write a Comment..." onChange={e => setCreatedCommentBody(e.target.value)}/>
+                        <button onClick><span>Comment</span></button>
+                    </form>
                 </div>
             </div>
         </Modal> 
