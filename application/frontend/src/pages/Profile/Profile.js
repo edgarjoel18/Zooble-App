@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Axios from "axios";
+import {useParams} from 'react-router-dom';
 
 // Import components
 import ProfileInfo from '../../components/ProfileInfo/ProfileInfo'
@@ -9,6 +10,9 @@ import SendAMessage from '../../components/Modals/SendAMessage';
 
 
 import styles from './Profile.module.css'
+import axios from 'axios';
+
+
 
 const shelterProfile = {
     accountType: 'shelter',
@@ -507,6 +511,27 @@ const newPetProfile = {
 
 function Profile({appUser}) {
 
+    const [fetchedProfile,setFetchedProfile] = useState({}); 
+
+    const {profileID} = useParams();
+    console.log("profileID: ",profileID);
+
+    useEffect(() =>{
+        axios.get('/api/profile',{params: {profileID: profileID}})
+        .then(response =>{
+            console.log(response);
+            console.log(response.data);
+            setFetchedProfile(response.data);
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+
+
+    },[])
+
+
+
     // ROUTING FOR THE DYNAMIC PROFILE PAGES 
 
     const [email, setEmail] = useState('')
@@ -515,31 +540,7 @@ function Profile({appUser}) {
     const [lastName, setLastName] = useState('')
     var currUrl = window.location.pathname
     
-    console.log(email)
-    console.log(username)
-    console.log(firstName)
-    console.log(lastName)
-
-    Axios.get('/api/user/:user', {
-        params: {
-            id: currUrl,
-            email: email,
-            firstName: firstName,
-            lastName: lastName,
-            username: username,
-        }
-    })
-    .then(response => {
-        console.log(response)
-        console.log(response.data)
-        console.log(response.data.searchResults)
-    })
-    .catch(error =>{
-        console.log("Error");
-    })
-
-    
-    console.log(appUser);
+    // console.log(appUser);
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
     const [userProfile, setUserProfile] = useState(petOwnerProfile);
     const [selfView, setSelfView] = useState(false);
@@ -550,7 +551,7 @@ function Profile({appUser}) {
 
     function updateProfileHandler(type, value) {
         if (type === 'address' || type === 'phone' || type === 'hours') {
-            console.log('value is ' + value + 'type is ' + type);
+            // console.log('value is ' + value + 'type is ' + type);
             setUserProfile(() => ({
                 ...userProfile,
                 contactInfo: {
@@ -560,13 +561,13 @@ function Profile({appUser}) {
             }));
         }
         else {
-            console.log('[value] is ' + value + ' and [type] is ' + type);
+            // console.log('[value] is ' + value + ' and [type] is ' + type);
             setUserProfile(() => ({
                 ...userProfile,
                 [type]: value
             }));
         }
-        console.log('updateProfileHandler');
+        // console.log('updateProfileHandler');
     }
 
     function toggleSelfViewHandler() {
@@ -575,23 +576,31 @@ function Profile({appUser}) {
         selfView ? button.className = styles.SwitchSelf : button.className = styles.SwitchVistor;
     }
 
-    console.log(userProfile);
+    // console.log(userProfile);
     return (
         <div className={styles.Profile} >
-            <ProfileInfo appUser={appUser} isSelfView={selfView} profile={userProfile} updateProfile={updateProfileHandler} />
-            {/* <div className={styles.SwitchDiv} onClick={toggleSelfViewHandler} >
-                <span 
-                    className={styles.SwitchView} 
-                    onClick={toggleSelfViewHandler}  >
-                        {selfView ? 'switch to vistors view' : 'switch to self view' }
-                </span>
-                <div className={styles.Switch}>
-                    <div className={styles.SwitchVistor} id='profile-button' ></div> 
-                </div>
-            </div> */}
+            <ProfileInfo 
+                displayName={fetchedProfile.display_name} 
+                profilePic={fetchedProfile.profile_pic_link} 
+                appUser={appUser} 
+                isSelfView={selfView} 
+                profile={userProfile} 
+                updateProfile={updateProfileHandler} 
+            />
             <div className={styles.Bottom}>
-                <AboutMe isSelfView={selfView} profile={userProfile} updateProfile={updateProfileHandler} />
-                <ProfileContent isSelfView={selfView} profile={userProfile} updateProfile={updateProfileHandler} />
+                <AboutMe
+                    aboutMeBody={fetchedProfile.about_me}
+                    isSelfView={selfView} 
+                    profile={userProfile} 
+                    updateProfile={updateProfileHandler} 
+                />
+                <ProfileContent
+                    photoPosts={[]}
+                    pets={[]}
+                    isSelfView={selfView} 
+                    profile={userProfile} 
+                    updateProfile={updateProfileHandler} 
+                />
             </div>
         </div>
     )

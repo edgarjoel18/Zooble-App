@@ -7,49 +7,49 @@ import WriteAReview from '../Modals/WriteAReview';
 
 import styles from './ProfileContent.module.css';
 
-function ProfileContent(props) {
+function ProfileContent({photoPosts, pets, profile, isSelfView, updateProfile}) {
     const [writeAReviewDisplay, setWriteAReviewDisplay] = useState(false);
     const [text, setText] = useState('See All');
 
     function onReviewSendHandler(newRating, newReview) {
-        console.log(props.profile.reviews);
-        let updatedReviews = [...props.profile.reviews];
+        console.log(profile.reviews);
+        let updatedReviews = [...profile.reviews];
         updatedReviews.push({user_Id: 2, review: newReview, rating: newRating})
         console.log(updatedReviews)
         console.log('rating is ' + newRating + ' | review is ' + newReview);
-        props.updateProfile('reviews', updatedReviews);
+        updateProfile('reviews', updatedReviews);
     }
 
     let imageContainer = null;
-    switch(props.profile.accountType) {
+    switch(profile.accountType) {
         case 'shelter':
             imageContainer = (
                 <div className={styles.ImageContainerShelter} >
-                    <ImageContainer title='Photos' selfView={props.isSelfView} image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
-                    <ImageContainer title='Pets' image={props.profile.petProfiles} accountType={props.profile.accountType} profile={props.profile} />
+                    <ImageContainer title='Photos' selfView={isSelfView} image={profile.photos} accountType={profile.accountType} profile={profile} />
+                    <ImageContainer title='Pets' image={profile.petProfiles} accountType={profile.accountType} profile={profile} />
                 </div>
             )
             break;
         case 'business':
             imageContainer = (
                 <div className={styles.ImageContainerBusiness} >
-                    <ImageContainer title='Photos' selfView={props.isSelfView} image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
+                    <ImageContainer title='Photos' selfView={isSelfView} image={profile.photos} accountType={profile.accountType} profile={profile} />
                 </div>
             )
             break;
         case 'pet owner':
             imageContainer = (
                 <div className={styles.ImageContainerTwoRows} >
-                    <ImageContainer title='My Photos' selfView={props.isSelfView} image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
-                    <ImageContainer title='My Pets' image={props.profile.petProfiles} accountType={props.profile.accountType} profile={props.profile} />
+                    <ImageContainer title='My Photos' selfView={isSelfView} image={profile.photos} accountType={profile.accountType} profile={profile} />
+                    <ImageContainer title='My Pets' image={profile.petProfiles} accountType={profile.accountType} profile={profile} />
                 </div>
             )
             break;
         case 'pet':
             imageContainer = (
                 <div className={styles.ImageContainerTwoRows} >
-                    <ImageContainer title='My Photos' selfView={props.isSelfView} image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
-                    <ImageContainer title='My Siblings' image={props.profile.petProfiles} accountType={props.profile.accountType} profile={props.profile} />
+                    <ImageContainer title='My Photos' selfView={isSelfView} image={profile.photos} accountType={profile.accountType} profile={profile} />
+                    <ImageContainer title='My Siblings' image={profile.petProfiles} accountType={profile.accountType} profile={profile}/>
                 </div>
             )
             break;
@@ -58,14 +58,14 @@ function ProfileContent(props) {
     }
 
     let displayReview = null;
-    if (props.profile.accountType !== 'pet owner' && props.profile.accountType !== 'pet'){
+    if (profile.accountType !== 'pet owner' && profile.accountType !== 'pet'){
         displayReview = (
             <div className={styles.Reviews} >
                 <h2>Reviews</h2>
-                <Reviews reviews={props.profile.reviews} />
+                <Reviews reviews={profile.reviews} />
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     {
-                        !props.isSelfView && 
+                        !isSelfView && 
                         <span 
                             style={{cursor: 'pointer'}} 
                             onClick={() => setWriteAReviewDisplay(true)} 
@@ -74,7 +74,7 @@ function ProfileContent(props) {
                         </span>
                     }
                     <div></div>
-                    {props.profile.reviews.length > 0 && <Link onMouseEnter={() => setText('Coming Soon')} 
+                    {profile.reviews.length > 0 && <Link onMouseEnter={() => setText('Coming Soon')} 
                     onMouseLeave={() => setText('See All')} >{text}</Link>}
                 </div>
             </div>

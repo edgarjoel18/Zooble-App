@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
+import {BrowserRouter as Router, Switch, Route, Redirect, useParams} from 'react-router-dom'
 
 import {useEffect, useState} from 'react';
 import Home from './pages/Home/Home'
@@ -33,6 +33,8 @@ import Business2ProfilePage from './pages/Profile/PawSpaProfilePage';
 import Messages from './pages/Messages/Messages'
 import MyPets from './pages/Pets/MyPets'
 import Pets from './pages/Pets/Pets'
+
+import ProfileTest from './pages/Profile/ProfileTest'
 
 import AdminFeed from './pages/Feed/AdminFeed.js';
 import Feed from './pages/Feed/Feed.js'
@@ -102,38 +104,8 @@ const App = () => {
         <Route path="/Feed" component={Feed} appUser={appUser}/>
         <Route path="/AdminFeed" component={AdminFeed}/>
         <Route path="/MapSearch" component={MapSearch}/>
-        <Route exact path="/Profile">
-          <MyProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/PetOwnerId=1">
-          <PetOwner1Page appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/PetOwnerId=2">
-          <PetOwner2Page appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/Mimi">
-          <MimiProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/Max">
-          <MaxProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/Juju">
-          <JujuProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/ShelterId=1">
-          <Shelter1ProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/ShelterId=2">
-          <Shelter2ProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/BusinessId=1">
-          <Business1ProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/BusinessId=2">
-          <Business2ProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/PetCreate">
-          <PetProfileCreatePage appuser={appUser}/>
+        <Route exact path="/Profile/:profileID">
+          <ProfilePage appUser={appUser}/>
         </Route>
         <Route path="/Photo" component={Photo}/>
         <Route path="/MyPhoto" component={MyPhoto}/>
