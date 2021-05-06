@@ -80,6 +80,9 @@ function Feed() {
         .then(response =>{
             console.log(response.data);
             setFeedPosts(response.data);
+            var utcDate = response.data[0].timestamp;
+            var localDate = new Date(utcDate);
+            console.log(localDate);
         })
         .catch(err =>{
             console.log("Error: ");
@@ -133,6 +136,30 @@ function Feed() {
         multiple: false
     })
 
+    function likePost(feedPostID){
+        axios.post("/api/like-unlike",{
+            postToLike: feedPostID
+        })
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    }
+
+    function getPosts(){
+        axios.get('/api/get-feed-posts')
+        .then(response =>{
+            console.log(response.data);
+            setFeedPosts(response.data);
+        })
+        .catch(err =>{
+            console.log("Error: ");
+            console.log(err);
+        })
+    }
+
     function submitPost(event){
         event.preventDefault();
         let config = {
@@ -179,16 +206,8 @@ function Feed() {
             })
 
             //refresh feed after posting
-            console.log('/api/get-feed-posts');
-            axios.get('/api/get-feed-posts')
-            .then(response =>{
-                console.log(response.data);
-                setFeedPosts(response.data);
-            })
-            .catch(err =>{
-                console.log("Error: ");
-                console.log(err);
-            })
+            getPosts();
+
         }
         else{
             axios.post('/api/upload-post',{
@@ -202,16 +221,7 @@ function Feed() {
             })
 
             //refresh feed after posting
-            console.log('/api/get-feed-posts'); 
-            axios.get('/api/get-feed-posts')
-            .then(response =>{
-                console.log(response.data);
-                setFeedPosts(response.data);
-            })
-            .catch(err =>{
-                console.log("Error: ");
-                console.log(err);
-            })
+            getPosts();
         }
 
     }
@@ -279,9 +289,9 @@ function Feed() {
                         <div className={styles["follower-feed-post-name"]}>{feedPost.display_name}</div>
                         </NavLink>
  
-                        <div className={styles["follower-feed-post-timestamp"]}>{feedPost.timestamp}</div>
+                        <div className={styles["follower-feed-post-timestamp"]}>{new Date(feedPost.timestamp).toLocaleString()}</div>
                         <div className={styles["follower-feed-post-likes"]}>{feedPost.like_count}</div>
-                        <button className={styles['follower-feed-post-like']} />
+                        <button className={styles['follower-feed-post-like']} onClick={() => likePost(feedPost.post_id)}/>
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
                         <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
                         {feedPost.link && <img className={styles["follower-feed-post-pic"]} src={feedPost.link} />}
