@@ -94,6 +94,10 @@ function Feed() {
             console.log(response.data);
             setTaggablePets(response.data);
         })
+        .catch(err =>{
+            console.log("Error: ");
+            console.log(err);
+        })
     }, [])
 
     // //runs whenever the user creates a post
