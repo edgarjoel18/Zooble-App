@@ -19,9 +19,27 @@ router.post("/api/comment-post", (req, res) => { // comment on a post
             res.sendStatus(200);
         }
     });
-
-
-
 });
+
+router.get("/api/comments", (req,res) =>{
+    console.log("/api/comments");
+    console.log(req.query);
+
+    console.log("Req.query.postId: ", req.query.post_id);
+
+    connection.query(
+        `SELECT * 
+        FROM Comment
+        WHERE Comment.post_id = '${req.query.post_id}'`,
+        function(err, comments){
+            if(err)
+                console.log(err);
+            else{
+                console.log("Comments: ", comments);
+                res.status(200).json(comments);
+
+            }
+        })
+})
 
 module.exports = router

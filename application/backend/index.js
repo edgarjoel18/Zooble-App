@@ -15,7 +15,7 @@ const uploadPostRouter = require('./routes/upload-post.js');
 const editPostRouter = require('./routes/edit-post.js');
 const deletePostRouter = require('./routes/delete-post.js');
 const feedRouter = require('./routes/feed.js');
-const commentPostRouter = require('./routes/comment-post.js');
+const commentsRouter = require('./routes/comments.js');
 const followUserRouter = require('./routes/follow-unfollow-user.js');
 const petsRouter = require('./routes/pets.js');
 const likeRouter = require('./routes/like.js')
@@ -77,8 +77,8 @@ app.use(deletePostRouter)
 //Feed
 app.use(feedRouter);
 
-// comment post
-app.use(commentPostRouter);
+//Insert, Get Comments
+app.use(commentsRouter);
 
 
 // Follow a user

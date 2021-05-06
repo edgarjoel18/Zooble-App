@@ -1,39 +1,55 @@
-import {React, useState} from 'react'
+import {React, useState, useEffect} from 'react'
 
 import styles from './PostModal.module.css'
 
 import Modal from './Modal.js'
 import prof_pic from '../../images/businessProfile.jpg'
+import axios from 'axios';
 
 
 function PostModal({display,onClose,selectedPost}) {
-    console.log(selectedPost);
+    // console.log(selectedPost);
     const [comments, setComments] = useState([ //Real version will fetch comments associated with post id of post passed in
-        {
-            comment_id: 1,            
-            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
-            name: 'Lily',
-            likes : 12,
-            timestamp: '12/25/20 at 11:05 AM',  //need to get real mysql timestamp and convert for final product
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        },
-        {
-            comment_id: 2,            
-            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
-            name: 'Lily',
-            likes : 12,
-            timestamp: '12/25/20 at 11:05 AM',  //need to get real mysql timestamp and convert for final product
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        },
-        {
-            comment_id: 3,            
-            prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
-            name: 'Lily',
-            likes : 12,
-            timestamp: '12/25/20 at 11:05 AM',  //need to get real mysql timestamp and convert for final product
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        },
+        // {
+        //     comment_id: 1,            
+        //     prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
+        //     name: 'Lily',
+        //     likes : 12,
+        //     timestamp: '12/25/20 at 11:05 AM',  //need to get real mysql timestamp and convert for final product
+        //     body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
+        // },
+        // {
+        //     comment_id: 2,            
+        //     prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
+        //     name: 'Lily',
+        //     likes : 12,
+        //     timestamp: '12/25/20 at 11:05 AM',  //need to get real mysql timestamp and convert for final product
+        //     body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
+        // },
+        // {
+        //     comment_id: 3,            
+        //     prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
+        //     name: 'Lily',
+        //     likes : 12,
+        //     timestamp: '12/25/20 at 11:05 AM',  //need to get real mysql timestamp and convert for final product
+        //     body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
+        // },
     ]);
+
+    useEffect(() =>{
+        // console.log(selectedPost.post_id);
+        axios.get('/api/comments',{params: { post_id: selectedPost.post_id}})
+        .then(response =>{
+            console.log("Response: ",response);
+            console.log("Response.data: ", response.data);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+    },[display]) //this won't refresh until they change posts!
+    
+
+
     
     return (
         <Modal display={display} onClose={onClose}>
@@ -66,7 +82,7 @@ function PostModal({display,onClose,selectedPost}) {
                                     <div className={styles['post-comment-likes']}>
                                         {comment.likes}  
                                     </div>
-                                    <button className={styles['post-comment-like']}/>
+                                    {/* <button className={styles['post-comment-like']}/> */}
                                     
                                 </div>
                             </li>
