@@ -59,8 +59,4 @@ router.get("/api/get-photo-posts", (req,res) =>{
     )
 })
 
-router.get("/api/profile-id", (req,res) =>{
-    res.status(200).json(req.session.profile_id);
-})
-
 module.exports = router

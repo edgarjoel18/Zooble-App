@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Axios from "axios";
-import {useParams} from 'react-router-dom';
+import {useLocation, useParams} from 'react-router-dom';
 
 // Import components
 import ProfileInfo from '../../components/ProfileInfo/ProfileInfo'
@@ -510,6 +510,7 @@ const newPetProfile = {
 
 
 function Profile({appUser}) {
+    console.log("appUser: ", appUser);
 
     const [fetchedProfile,setFetchedProfile] = useState({});
     const [fetchedPhotoPosts, setFetchedPhotoPosts] = useState([]);
@@ -518,6 +519,9 @@ function Profile({appUser}) {
     console.log("profileID: ",profileID);
 
     useEffect(() =>{
+
+
+
         axios.get('/api/profile',{params: {profileID: profileID}})
         .then(response =>{
             console.log(response);
@@ -539,15 +543,25 @@ function Profile({appUser}) {
         })
     },[])
 
+    useEffect(()=>{
+        console.log("Type of profileID: ", typeof profileID)
+        console.log("Type of appUser.profileID: ", typeof appUser.profileID)
+
+        if(parseInt(appUser.profileID) == profileID){
+            console.log("Owner of the Profile!")
+            setSelfView(true);
+        }
+    },[appUser])
+
 
 
     // ROUTING FOR THE DYNAMIC PROFILE PAGES 
-
     const [email, setEmail] = useState('')
     const [username, setUname] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
-    var currUrl = window.location.pathname
+
+
     
     // console.log(appUser);
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
