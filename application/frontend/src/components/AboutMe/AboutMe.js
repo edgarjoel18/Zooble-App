@@ -60,6 +60,18 @@ function AboutMe(props) {
         console.log('cancel')
     }
 
+    function autoGrowHandler(event) {
+        let address = document.getElementById('address');
+        address.style.height = '45px';
+        console.log(address.scrollHeight);
+        if (address.scrollHeight < 105) {
+            props.updateProfile('address', event.target.value);
+            address.style.height = address.scrollHeight + 'px' 
+        }
+        else 
+            address.style.height = '105px';
+    }
+
     let profileTabs = null;
     // let displayPetOwnerLink = null;
     switch (props.profile.accountType) {
@@ -127,22 +139,20 @@ function AboutMe(props) {
                         id="address"
                         value={props.profile.contactInfo.address} 
                         readOnly={!changing || !(labelSelected === 'address')}
-                        onKeyPress={event => {
-                            if(event.key === 'Enter'){
-                                cancelEditingHandler();
-                            }
-                        }}
-                        onChange={event => props.updateProfile('address', event.target.value)} 
+                        onChange={event => autoGrowHandler(event)} 
                         className={styles.AddressTextArea}
-                        rows='2' 
-                        cols='50' 
+                        rows='1' 
+                        cols='51' 
                     />
+                    <br />
                     {
                         (labelSelected === 'address') && 
                         //<button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
-                        <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton>
+                        <React.Fragment>
+                            <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton>
+                            <br />
+                        </React.Fragment>
                     }
-                    <br />
                     {
                         props.isSelfView && (labelSelected !== 'phone number') && 
                         //<button onClick={() => changingInfoHandler('phone number')} >edit</button>
@@ -154,7 +164,7 @@ function AboutMe(props) {
                         type="tel" 
                         value={props.profile.contactInfo.phone} 
                         readOnly={!changing || !(labelSelected === 'phone number')}
-                        maxLength = "25"
+                        maxLength = "20"
                         onKeyPress={event => {
                             if(event.key === 'Enter'){
                                 cancelEditingHandler();
