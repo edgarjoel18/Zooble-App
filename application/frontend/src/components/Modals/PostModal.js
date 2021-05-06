@@ -85,7 +85,7 @@ function PostModal({display,onClose,selectedPost}) {
                     <div className={styles["post-detail"]}>
                         <img className={styles["post-detail-pic"]} src={selectedPost.profile_pic_link}/>
                         <div className={styles["post-detail-name"]}><h3>{selectedPost.display_name}</h3></div>
-                        <div className={styles["post-detail-timestamp"]}>{selectedPost.timestamp}</div>
+                        <div className={styles["post-detail-timestamp"]}>{new Date(selectedPost.timestamp).toLocaleString()}</div>
                         <div className={styles["post-detail-likes"]}>
                             {selectedPost.likes}
                             
@@ -101,7 +101,7 @@ function PostModal({display,onClose,selectedPost}) {
                                 <div className={styles['post-comment']}>
                                     <img className={styles['post-comment-pic']} src={comment.profile_pic_link}/>
                                     <div className={styles['post-comment-name']}><h4>{comment.display_name}</h4></div>
-                                    <div className={styles['post-comment-timestamp']}>{comment.timestamp}</div>
+                                    <div className={styles['post-comment-timestamp']}>{new Date(comment.timestamp).toLocaleString()}</div>
                                     <div className={styles['post-comment-body']}>{comment.body}</div>
                                     {/* <div className={styles['post-comment-likes']}>
                                         {comment.like_count}  
