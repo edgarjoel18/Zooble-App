@@ -41,17 +41,8 @@ function PostModal({display,onClose,selectedPost}) {
     ]);
 
     useEffect(() =>{
-        // console.log(selectedPost.post_id);
-        axios.get('/api/comments',{params: { post_id: selectedPost.post_id}})
-        .then(response =>{
-            console.log("Response: ",response);
-            console.log("Response.data: ", response.data);
-            setComments(response.data);
-        })
-        .catch(err =>{
-            console.log(err);
-        })
-    },[display]) //this won't refresh until they change posts!
+        getComments();
+    },[display]) //this will refresh if they close the modal and come back!
 
 
     function submitComment(event){
@@ -65,6 +56,20 @@ function PostModal({display,onClose,selectedPost}) {
             console.log("Response: ",response);
         })
         .catch(err => {
+            console.log(err);
+        })
+
+        getComments(); //refresh so the user knows their comment has posted
+    }
+
+    function getComments(){
+        axios.get('/api/comments',{params: { post_id: selectedPost.post_id}})
+        .then(response =>{
+            console.log("Response: ",response);
+            console.log("Response.data: ", response.data);
+            setComments(response.data);
+        })
+        .catch(err =>{
             console.log(err);
         })
     }

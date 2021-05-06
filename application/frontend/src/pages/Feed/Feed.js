@@ -145,6 +145,18 @@ function Feed() {
         })
     }
 
+    function getPosts(){
+        axios.get('/api/get-feed-posts')
+        .then(response =>{
+            console.log(response.data);
+            setFeedPosts(response.data);
+        })
+        .catch(err =>{
+            console.log("Error: ");
+            console.log(err);
+        })
+    }
+
     function submitPost(event){
         event.preventDefault();
         let config = {
@@ -191,16 +203,8 @@ function Feed() {
             })
 
             //refresh feed after posting
-            console.log('/api/get-feed-posts');
-            axios.get('/api/get-feed-posts')
-            .then(response =>{
-                console.log(response.data);
-                setFeedPosts(response.data);
-            })
-            .catch(err =>{
-                console.log("Error: ");
-                console.log(err);
-            })
+            getPosts();
+
         }
         else{
             axios.post('/api/upload-post',{
@@ -214,16 +218,7 @@ function Feed() {
             })
 
             //refresh feed after posting
-            console.log('/api/get-feed-posts'); 
-            axios.get('/api/get-feed-posts')
-            .then(response =>{
-                console.log(response.data);
-                setFeedPosts(response.data);
-            })
-            .catch(err =>{
-                console.log("Error: ");
-                console.log(err);
-            })
+            getPosts();
         }
 
     }
