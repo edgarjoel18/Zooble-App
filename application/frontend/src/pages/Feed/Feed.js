@@ -80,6 +80,9 @@ function Feed() {
         .then(response =>{
             console.log(response.data);
             setFeedPosts(response.data);
+            var utcDate = response.data[0].timestamp;
+            var localDate = new Date(utcDate);
+            console.log(localDate);
         })
         .catch(err =>{
             console.log("Error: ");
@@ -286,7 +289,7 @@ function Feed() {
                         <div className={styles["follower-feed-post-name"]}>{feedPost.display_name}</div>
                         </NavLink>
  
-                        <div className={styles["follower-feed-post-timestamp"]}>{feedPost.timestamp}</div>
+                        <div className={styles["follower-feed-post-timestamp"]}>{new Date(feedPost.timestamp).toLocaleString()}</div>
                         <div className={styles["follower-feed-post-likes"]}>{feedPost.like_count}</div>
                         <button className={styles['follower-feed-post-like']} onClick={() => likePost(feedPost.post_id)}/>
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}

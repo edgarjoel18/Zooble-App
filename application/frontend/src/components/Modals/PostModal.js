@@ -103,10 +103,10 @@ function PostModal({display,onClose,selectedPost}) {
                                     <div className={styles['post-comment-name']}><h4>{comment.display_name}</h4></div>
                                     <div className={styles['post-comment-timestamp']}>{comment.timestamp}</div>
                                     <div className={styles['post-comment-body']}>{comment.body}</div>
-                                    <div className={styles['post-comment-likes']}>
+                                    {/* <div className={styles['post-comment-likes']}>
                                         {comment.like_count}  
                                     </div>
-                                    <button className={styles['post-comment-like']}/>
+                                    <button className={styles['post-comment-like']}/> */}
                                 </div>
                             </li>
                         ))}
