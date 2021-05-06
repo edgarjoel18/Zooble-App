@@ -6,6 +6,10 @@
     outline: none;
 }
 
+.AboutMe label {
+    font-weight: 600;
+}
+
 .AboutMe textarea:read-only {
     border: none;
 }
@@ -68,14 +72,24 @@
 }
 
 .HoursDiv {
-    width: 50%;
-    text-align: center;
+    width: 300px;
     margin-left: auto;
     margin-right: auto;
+    white-space: nowrap;
 }
 
-.Days {
-    display: flex;
-    justify-content: space-between;
+.hours-table{
+    width: 100%;
 }
 
+.hours-table-row{
+    text-align: left;
+}
+
+.hours-table-header{
+    width: 100px;
+    font-weight: 400;
+}
+
+.hours-table-cell{
+}

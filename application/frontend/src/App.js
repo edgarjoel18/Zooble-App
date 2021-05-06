@@ -37,6 +37,7 @@ import Pets from './pages/Pets/Pets'
 import AdminFeed from './pages/Feed/AdminFeed.js';
 import Feed from './pages/Feed/Feed.js'
 import Photo from './pages/Photo/Photo';
+import MyPhoto from './pages/Photo/MyPhoto';
 import Followers from './pages/Followers/Followers';
 import ExploreUsers from './pages/ExploreUsers/ExploreUsers';
 
@@ -135,6 +136,7 @@ const App = () => {
           <PetProfileCreatePage appuser={appUser}/>
         </Route>
         <Route path="/Photo" component={Photo}/>
+        <Route path="/MyPhoto" component={MyPhoto}/>
         <Route path="/Messages" component={Messages}/>
         <Route path="/MyPets" component={MyPets}/>
         <Route path="/Pets" component={Pets}/>
@@ -153,7 +155,7 @@ const App = () => {
         <Route path="/shelter/:shelter" component={ProfilePage}/>
         <Route path="/business/:business" component={ProfilePage}/>
         <Route path="/uploadImage" component={UploadImage}/>
-        <Redirect to="/" />
+        {/* <Redirect to="/" /> */}
       </Switch>
     </Router>
   );

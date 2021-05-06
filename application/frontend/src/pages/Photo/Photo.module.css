@@ -74,7 +74,7 @@
 }
 
 .NameDiv p {
-    align-self: center;
+    align-self: flex-end;
     cursor: pointer;
 }
 

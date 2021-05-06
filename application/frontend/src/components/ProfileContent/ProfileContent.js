@@ -25,7 +25,7 @@ function ProfileContent(props) {
         case 'shelter':
             imageContainer = (
                 <div className={styles.ImageContainerShelter} >
-                    <ImageContainer title='Photos' image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
+                    <ImageContainer title='Photos' selfView={props.isSelfView} image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
                     <ImageContainer title='Pets' image={props.profile.petProfiles} accountType={props.profile.accountType} profile={props.profile} />
                 </div>
             )
@@ -33,14 +33,14 @@ function ProfileContent(props) {
         case 'business':
             imageContainer = (
                 <div className={styles.ImageContainerBusiness} >
-                    <ImageContainer title='Photos' image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
+                    <ImageContainer title='Photos' selfView={props.isSelfView} image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
                 </div>
             )
             break;
         case 'pet owner':
             imageContainer = (
                 <div className={styles.ImageContainerTwoRows} >
-                    <ImageContainer title='My Photos' image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
+                    <ImageContainer title='My Photos' selfView={props.isSelfView} image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
                     <ImageContainer title='My Pets' image={props.profile.petProfiles} accountType={props.profile.accountType} profile={props.profile} />
                 </div>
             )
@@ -48,7 +48,7 @@ function ProfileContent(props) {
         case 'pet':
             imageContainer = (
                 <div className={styles.ImageContainerTwoRows} >
-                    <ImageContainer title='My Photos' image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
+                    <ImageContainer title='My Photos' selfView={props.isSelfView} image={props.profile.photos} accountType={props.profile.accountType} profile={props.profile} />
                     <ImageContainer title='My Siblings' image={props.profile.petProfiles} accountType={props.profile.accountType} profile={props.profile} />
                 </div>
             )

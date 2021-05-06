@@ -108,13 +108,13 @@ function ImageContainer(props) {
         );
     }
 
-    function seeAllImageHandler() {
+    function seeAllImageHandler(path) {
         const queryParams = (
             encodeURIComponent('id') + '=' + encodeURIComponent(props.profile.id) + '&' 
             + encodeURIComponent('name') + '=' + encodeURIComponent(props.profile.userName)
             );
         history.push({
-            pathname: '/Photo',
+            pathname: path,
             search: '?' + queryParams
         });
 
@@ -122,7 +122,10 @@ function ImageContainer(props) {
     
     let seeAll = null;
     if (props.title === 'Photos' || props.title === 'My Photos') {
-        seeAll = <p style={{cursor: 'pointer'}} onClick={() => seeAllImageHandler()} >See All</p>;
+        props.selfView ? 
+        seeAll = <p style={{cursor: 'pointer'}} onClick={() => seeAllImageHandler('/MyPhoto')} >See All</p>
+        :
+        seeAll = <p style={{cursor: 'pointer'}} onClick={() => seeAllImageHandler('/Photo')} >See All</p>;
     }
     else if (props.title === 'My Pets') {
         seeAll = <p style={{cursor: 'pointer'}} onClick={() => history.push("/MyPets")} >See All</p>
