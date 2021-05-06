@@ -55,7 +55,7 @@ router.get("/api/get-feed-posts",(req,res)=>{
     console.log("/api/get-feed-posts");
     let username = req.session.username;
     connection.query(
-        `SELECT *
+        `SELECT Post.post_id, Post.timestamp, Post.like_count, Post.body, Profile.display_name, Profile.profile_pic_link, Photo.link
          FROM Post
          LEFT JOIN Photo ON Post.post_id = Photo.post_id
          LEFT JOIN RegisteredUser ON RegisteredUser.reg_user_id = Post.reg_user_id
@@ -67,22 +67,11 @@ router.get("/api/get-feed-posts",(req,res)=>{
          (SELECT 
           Follow.reg_user_id
           FROM Follow
-          WHERE Follow.follower_id = 
-            (
-             SELECT RegisteredUser.reg_user_id
-             FROM RegisteredUser
-             JOIN User ON RegisteredUser.user_id = User.user_id
-             JOIN Account ON User.user_id = Account.user_id
-             JOIN Credentials ON Account.account_id = Credentials.acct_id
-             WHERE Credentials.username= '${username}'
-            )
-            UNION
+          WHERE Follow.follower_id = '${req.session.reg_user_id}'
+          UNION
             SELECT RegisteredUser.reg_user_id
             FROM RegisteredUser
-            JOIN User ON RegisteredUser.user_id = User.user_id
-            JOIN Account ON User.user_id = Account.user_id
-            JOIN Credentials ON Account.account_id = Credentials.acct_id
-            WHERE Credentials.username= '${username}'
+            WHERE RegisteredUser.reg_user_id = '${req.session.reg_user_id}'
           )
           ORDER BY Post.timestamp DESC
         `,

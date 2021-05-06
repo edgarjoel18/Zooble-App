@@ -26,6 +26,8 @@ router.post("/api/login", (req, res) =>{ //login user
             `SELECT * 
              FROM Credentials
              LEFT JOIN Account ON Credentials.acct_id = Account.account_id
+             LEFT JOIN User ON Account.user_id = User.user_id
+             LEFT JOIN RegisteredUser ON User.user_id = RegisteredUser.user_id
              WHERE username = ?`, [username], function(error, results, fields){
             if(results.length > 0 && username == results[0].username){
                 var result = bcrypt.compareSync(password, results[0].password);
@@ -33,8 +35,10 @@ router.post("/api/login", (req, res) =>{ //login user
                     req.session.loggedin = true;
                     req.session.username = username;
                     req.session.role = results[0].role_id;
+                    req.session.reg_user_id = results[0].reg_user_id;
                     console.log("Req.session.username: ", req.session.username);
                     console.log(result);
+                    console.log(results);
                     res.status(200).json(result)
                     console.log("Logged in.");    
                 }

@@ -133,6 +133,18 @@ function Feed() {
         multiple: false
     })
 
+    function likePost(feedPostID){
+        axios.post("/api/like-unlike",{
+            postToLike: feedPostID
+        })
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    }
+
     function submitPost(event){
         event.preventDefault();
         let config = {
@@ -281,7 +293,7 @@ function Feed() {
  
                         <div className={styles["follower-feed-post-timestamp"]}>{feedPost.timestamp}</div>
                         <div className={styles["follower-feed-post-likes"]}>{feedPost.like_count}</div>
-                        <button className={styles['follower-feed-post-like']} />
+                        <button className={styles['follower-feed-post-like']} onClick={() => likePost(feedPost.post_id)}/>
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
                         <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
                         {feedPost.link && <img className={styles["follower-feed-post-pic"]} src={feedPost.link} />}

@@ -4,7 +4,6 @@ const router = express.Router();
 const connection = require('../db');
 
 router.post("/api/upload-post", (req, res) => { // uploading a post
-
     console.log("/api/upload-post");
     const postBody = req.body.postBody;
     console.log("Post Body: ", postBody);
@@ -15,13 +14,7 @@ router.post("/api/upload-post", (req, res) => { // uploading a post
 
     connection.query(`INSERT INTO Post (body, reg_user_id, like_count, comment_count) 
     VALUES 
-    ('${postBody}', 
-    (SELECT RegisteredUser.reg_user_id
-     FROM RegisteredUser
-     JOIN User ON RegisteredUser.user_id = User.user_id
-     JOIN Account ON User.user_id = Account.user_id
-     JOIN Credentials ON Account.account_id = Credentials.acct_id
-     WHERE Credentials.username= '${username}'), 
+    ('${postBody}', '${req.session.reg_user_id}', 
      0, 
      0)`, 
      (error, post) => {
@@ -45,7 +38,6 @@ router.post("/api/upload-post", (req, res) => { // uploading a post
                 console.log("post was inserted (no image)!")
                 res.status(200).json(post);
             }
-            
         }
     });
 });
