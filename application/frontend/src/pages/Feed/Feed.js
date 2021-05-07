@@ -80,9 +80,6 @@ function Feed() {
         .then(response =>{
             console.log(response.data);
             setFeedPosts(response.data);
-            var utcDate = response.data[0].timestamp;
-            var localDate = new Date(utcDate);
-            console.log(localDate);
         })
         .catch(err =>{
             console.log("Error: ");

@@ -162,14 +162,16 @@ function ShelterSignUpPage2(props) { //recieve form data from sign up page 1
             latitude: latitude,
             longitude: longitude,
             petTypes: selectedPetTypes
-        },{withCredentials:true}).then(response => {
+        },{withCredentials:true})
+        .then(response => {
             console.log(response);
             console.log(response.data);
             if(response.data.affectedRows === 1){
                 history.push("/SignUpSuccess");
             }
 
-        }).catch(error => {
+        })
+        .catch(error => {
             if (error.response.data === "exists"){
                 // setError("An Account using that Email or Username already exists");
                 console.log(error);

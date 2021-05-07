@@ -11,12 +11,17 @@ import axios from 'axios';
 
 function AddAPet({display,onClose}) {
 
-    const [petColors, setPetColors] = useState([]);
+    //States to be set and sent to db
+    const [petName,setPetName] = useState('');
+    const [petColor, setPetColor] = useState([]);
     const [petSize, setPetSize] = useState();
     const [petAge, setPetAge] = useState();
+    const [petType, setPetType] = useState();
+    const [dogBreed, setDogBreed] = useState([]);
+    const [catBreed, setCatBreed] = useState([]);
 
 
-
+    //States for dropdown menu options
     const [typeOptions, setTypeOptions] = useState([]);
 
     const [dogBreedOptions, setDogBreedOptions] = useState([]);
@@ -29,7 +34,7 @@ function AddAPet({display,onClose}) {
 
     const [ageOptions, setAgeOptions] = useState([]);
 
-    const [petName,setPetName] = useState('')
+
 
     function customTheme(theme){
         return {
@@ -92,8 +97,25 @@ function AddAPet({display,onClose}) {
         })
     }, [])
 
-    function createPetProfile(){
-        axios.post('/api/create-pet-profile')
+    function createPetProfile(event){
+        event.preventDefault();
+        // if(petType.label != 'Cat'){  //make sure Cat or dog breeds are null
+        //     setCatBreed([]);
+        // }
+
+        // if(petType.label != 'Dog'){
+        //     setCatBreed([]);
+        // }
+
+        axios.post('/api/create-pet-profile',{
+            name: petName,
+            type: petType,
+            age: petAge,
+            color: petColor,
+            dogBreed: dogBreed,
+            catBreed: catBreed,
+            size: petSize
+        })
         .then(response =>{
             console.log(response);
         })
@@ -106,80 +128,102 @@ function AddAPet({display,onClose}) {
 
     return (
         <Modal display={display} onClose={onClose}>
-            <>
-            <div className={styles['edit-pet-details-header']}>Add a Pet</div>
-            <div className={styles['edit-pet-details-container']}>
-                <div className={styles['edit-pet-details-name']}>
-                    <label for="name">Name</label>
-                    <input 
-                        type="text" 
-                        id="name" 
-                        name="pet_name" 
-                        maxLength="25"
-                        // value={props.profile.userName}
-                        // onChange={event => props.updateProfile('userName', event.target.value)} 
-                    />
-                </div>
-                <div className={styles['edit-pet-details-type']}>
-                    <label for="type">Type</label>
-                    <Select id="type" name="pet_type"
-                        // onChange={props.updatePetType}
-                        options={typeOptions}
-                        theme={customTheme}
-                        placeholder="Select Pet Type"
-                        isSearchable
-                    />
-                </div>
-                
+            <form onSubmit={createPetProfile}>
+                <div className={styles['edit-pet-details-header']}>Add a Pet</div>
+                <div className={styles['edit-pet-details-container']}>
+                    <div className={styles['edit-pet-details-name']}>
+                        <label for="name">Name</label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="pet_name" 
+                            maxLength="25"
+                            required
+                            value={petName}
+                            // value={props.profile.userName}
+                            // onChange={event => props.updateProfile('userName', event.target.value)} 
+                            onChange={event => setPetName(event.target.value)}
+                        />
+                    </div>
+                    <div className={styles['edit-pet-details-type']}>
+                        <label for="type">Type</label>
+                        <Select id="type" name="pet_type"
+                            // onChange={props.updatePetType}
+                            onChange={setPetType}
+                            options={typeOptions}
+                            theme={customTheme}
+                            value={petType}
+                            placeholder="Select Pet Type"
+                            isSearchable
+                        />
+                    </div>
+                    
 
-                <div className={styles['edit-pet-details-color']}>
-                    <label for="color">Color(s)</label>
-                    <Select id="color" name="pet_color"
-                        onChange={setPetColors}
-                        options={ colorOptions}
-                        theme={customTheme}
-                        placeholder="Select Pet Color(s)"
-                        isSearchable
-                        isMulti
-                    />
-                </div>
+                    <div className={styles['edit-pet-details-color']}>
+                        <label for="color">Color(s)</label>
+                        <Select id="color" name="pet_color"
+                            onChange={setPetColor}
+                            options={ colorOptions}
+                            theme={customTheme}
+                            value={petColor}
+                            placeholder="Select Pet Color(s)"
+                            isSearchable
+                            isMulti
+                        />
+                    </div>
 
-                <div className={styles['edit-pet-details-age']}>
-                    <label for="age">Age</label>
-                    <Select id="age" name="pet_age"
-                        onChange={setPetAge}
-                        options={ageOptions}
-                        theme={customTheme}
-                        placeholder="Select Pet Age"
-                        isSearchable
-                    />
-                </div>
+                    <div className={styles['edit-pet-details-age']}>
+                        <label for="age">Age</label>
+                        <Select id="age" name="pet_age"
+                            onChange={setPetAge}
+                            options={ageOptions}
+                            theme={customTheme}
+                            value={petAge}
+                            placeholder="Select Pet Age"
+                            isSearchable
+                        />
+                    </div>
 
-                <div className={styles['edit-pet-details-size']}>
-                    <label for="size">Size</label>
-                    <Select id="size" name="pet_size"
-                        onChange={setPetSize}
-                        options={ sizeOptions}
-                        theme={customTheme}
-                        placeholder="Select Pet Size"
-                        isSearchable
-                    />
+                    <div className={styles['edit-pet-details-size']}>
+                        <label for="size">Size</label>
+                        <Select id="size" name="pet_size"
+                            onChange={setPetSize}
+                            options={ sizeOptions}
+                            theme={customTheme}
+                            value={petSize}
+                            placeholder="Select Pet Size"
+                            isSearchable
+                        />
+                    </div>
+                    {petType && petType.label == 'Dog' && <div className={styles['edit-pet-details-breed']}>
+                        <label for="breed">Breed</label>
+                        <Select id="breed" name="pet_breed"
+                            // onChange={props.updatePetBreed}
+                            onChange={setDogBreed}
+                            options={ dogBreedOptions}
+                            theme={customTheme}
+                            placeholder="Select Dog Breed"
+                            isSearchable
+                            isMulti
+                            components={animatedComponents}
+                        />
+                    </div>}
+                    {petType && petType.label == 'Cat' && <div className={styles['edit-pet-details-breed']}>
+                        <label for="breed">Breed</label>
+                        <Select id="breed" name="pet_breed"
+                            // onChange={props.updatePetBreed}
+                            onChange={setCatBreed}
+                            options={ catBreedOptions}
+                            theme={customTheme}
+                            placeholder="Select Cat Breed"
+                            isSearchable
+                            isMulti
+                            components={animatedComponents}
+                        />
+                    </div>}
+                    <button className={styles['edit-pet-details-submit']} type='submit'>Submit</button>
                 </div>
-                <div className={styles['edit-pet-details-breed']}>
-                    <label for="breed">Breed</label>
-                    <Select id="breed" name="pet_breed"
-                        // onChange={props.updatePetBreed}
-                        options={ dogBreedOptions}
-                        theme={customTheme}
-                        placeholder="Select Dog Breed"
-                        isSearchable
-                        isMulti
-                        components={animatedComponents}
-                    />
-                </div>
-                <button className={styles['edit-pet-details-submit']} onClick={onClose}>Submit</button>
-            </div>
-            </>
+            </form>
         </Modal>
     )
 }

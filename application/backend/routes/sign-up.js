@@ -321,7 +321,7 @@ router.post('/api/sign-up/shelter', (req,res) =>{
                                                                                         console.log(givenPetTypes[i].label, " inserted");
                                                                                     })
                                                                                 }
-                                                                                connection.query(`UPDATE Profile SET Profile.display_name = ${givenBusinessName} WHERE  Profile.account_id = ${account_id}`,
+                                                                                connection.query(`UPDATE Profile SET Profile.display_name = ${givenBusinessName} WHERE  Profile.account_id = ${account_id}`, //can try to add this code to the profile create trigger?
                                                                                 function(err, updatedDisplayName){
                                                                                     if(err){
                                                                                         console.log(err);
