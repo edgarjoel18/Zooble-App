@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import RedirectPathProvider from './context/redirectPath'
-import RedirectPathContextProvider from './context/redirectPath';
+import RedirectPathContextProvider from './context/redirect-path';
 
 ReactDOM.render(
   <RedirectPathContextProvider>

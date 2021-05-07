@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import Modal from './Modal'
 import {NavLink} from 'react-router-dom'
-import { RedirectPathContext } from '../../context/redirectPath';
+import { RedirectPathContext } from '../../context/redirect-path';
 
 import styles from './LoginRequired.module.css';
 

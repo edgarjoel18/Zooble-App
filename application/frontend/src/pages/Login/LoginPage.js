@@ -4,7 +4,7 @@ import styles from './LoginPage.module.css';
 import { Redirect, useHistory } from "react-router-dom";
 import ForgotPassword from "../../components/Modals/ForgotPassword";
 
-import { RedirectPathContext } from '../../context/redirectPath';
+import { RedirectPathContext } from '../../context/redirect-path';
 
 function LoginPage({appUser, updateLoginState}) {
 
