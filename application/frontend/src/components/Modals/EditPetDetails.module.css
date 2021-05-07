@@ -7,10 +7,10 @@
 
 .edit-pet-details-container{
     display: grid;
-    grid-template-areas: 'name name  name'
-                        'color .... type'
-                        'size  ....  breed'
-                        'submit submit submit';
+    grid-template-areas: 'name  type'
+                        'color  age'
+                        'size   breed'
+                        'submit submit';
     grid-template-rows: auto auto auto 100px;
     justify-items: center;
     height: 700px
@@ -20,8 +20,9 @@
 .edit-pet-details-name,
 .edit-pet-details-type,
 .edit-pet-details-breed,
-.edit-pet-details-colors,
+.edit-pet-details-color,
 .edit-pet-details-submit,
+.edit-pet-details-age,
 .edit-pet-details-size{
     width: 250px;
     margin: 30px;
@@ -30,14 +31,15 @@
 .edit-pet-details-name{
     display: block;
     grid-area: name;
-    width: 100%;
-    margin-left: 97px;
+    margin-left:30px;
 }
 
 .edit-pet-details-name input{
     display: block;
     border: solid #ccc 1px;
     border-radius: 5px;
+    width: 250px;
+    height: 38px;
 }
 
 .edit-pet-details-size{
@@ -45,7 +47,7 @@
 }
 
 .edit-pet-details-color{
-    grid-area: colors;
+    grid-area: color;
 }
 
 .edit-pet-details-type{
@@ -54,6 +56,10 @@
 
 .edit-pet-details-breed{
     grid-area: breed;
+}
+
+.edit-pet-details-age{
+    grid-area: age;
 }
 
 

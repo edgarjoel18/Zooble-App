@@ -519,9 +519,6 @@ function Profile({appUser}) {
     console.log("profileID: ",profileID);
 
     useEffect(() =>{
-
-
-
         axios.get('/api/profile',{params: {profileID: profileID}})
         .then(response =>{
             console.log(response);

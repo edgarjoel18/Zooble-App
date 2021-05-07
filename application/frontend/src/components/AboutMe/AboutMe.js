@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Tab from './Tab/Tab';
 import EditButton from '../Buttons/EditButton'
@@ -7,6 +7,7 @@ import styles from './AboutMe.module.css';
 
 
 import EditBusinessHours from '../../components/Modals/EditBusinessHours'
+import axios from 'axios';
 
 const shelterProfileTabs = ["About", "Contact Info"]//, "Recent Posts"]
 const businessProfileTabs = ["About", "Business Info"]//, "Recent Posts"]
@@ -23,10 +24,12 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
 
     const [editHoursDisplay, setEditHoursDisplay] = useState(false);
 
+    const [aboutMeContent, setAboutMeContent] = useState(aboutMeBody);
+
     // useEffect(() => {
-    //     setPhone(shelterInfo.phone);
-    //     setHours(shelterInfo.hours);
-    //     setAbout(shelterAbout);
+    //      setPhone(shelterInfo.phone);
+    //      setHours(shelterInfo.hours);
+    //      setAbout(shelterAbout);
     // }, [])
     
 
@@ -44,6 +47,19 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
 
     // }, [address, phone, changing])
 
+    function submitAboutMeEdit(){
+        console.log(aboutMeContent)
+        axios.post("/api/edit-about-me",{
+            aboutMeText: aboutMeContent
+        })
+        .then(response =>{
+            console.log(response);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+    }
+
     function onTabClickHandler(id) {
         setSelected(id);
     }
@@ -55,8 +71,10 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
     }
 
     function cancelEditingHandler() {
+        console.log("cancel editing handler");
         setChanging(false);
         setLabelSelected('');
+        submitAboutMeEdit();
         console.log('cancel')
     }
 
@@ -109,7 +127,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
                     {/* {displayPetOwnerLink} */}
                     <textarea 
                         className={styles.TextArea} 
-                        value={aboutMeBody} 
+                        value={aboutMeContent} 
                         onChange={event => updateProfile('about', event.target.value)}
                         readOnly={!changing || !(labelSelected === 'about')}
                         rows='14' 
@@ -148,10 +166,10 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
                     {
                         (labelSelected === 'address') && 
                         //<button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
-                        <React.Fragment>
+                        <>
                             <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton>
                             <br />
-                        </React.Fragment>
+                        </>
                     }
                     {
                         isSelfView && (labelSelected !== 'phone number') && 

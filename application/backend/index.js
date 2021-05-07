@@ -20,6 +20,7 @@ const followUserRouter = require('./routes/follow-unfollow-user.js');
 const petsRouter = require('./routes/pets.js');
 const likeRouter = require('./routes/like.js')
 const profileRouter = require('./routes/profile.js');
+const profileEditRouter = require('./routes/edit-profile.js');
 
 const app = express();
 
@@ -93,6 +94,9 @@ app.use(likeRouter)
 
 //Profile
 app.use(profileRouter)
+
+//Profile edit options
+app.use(profileEditRouter)
 
 
 

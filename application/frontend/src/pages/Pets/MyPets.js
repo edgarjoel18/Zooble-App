@@ -8,60 +8,17 @@ import AddIcon from '../../images/Created Icons/Add.svg'
 
 import DeleteIcon from  '../../images/Created Icons/Exit-Cancel.svg'
 import ConfirmPetDeletion from '../../components/Modals/ConfirmPetDeletion';
+
+import AddAPet from '../../components/Modals/AddAPet';
 function MyPets() {
 
     const [deletionModalDisplay,setDeletionModalDisplay] = useState(false);
+    const [additionModalDisplay, setAdditionModalDisplay] = useState(false);
 
     const [selectedPet, setSelectedPet] = useState({});
 
 
-    const [myPets,setMyPets] = useState([
-    // {
-    //     pet_id: 1,
-    //     pet_name: 'Max',
-    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
-    // },
-    // {
-    //     pet_id: 2,
-    //     pet_name: 'Juju',
-    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'
-    // },
-    // {
-    //     pet_id: 3,
-    //     pet_name: 'Mimi',
-    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg'
-    // },
-    // {
-    //     pet_id: 4,
-    //     pet_name: 'Max',
-    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
-    // },
-    // {
-    //     pet_id: 5,
-    //     pet_name: 'Juju',
-    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'
-    // },
-    // {
-    //     pet_id: 6,
-    //     pet_name: 'Mimi',
-    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg'
-    // },
-    // {
-    //     pet_id: 7,
-    //     pet_name: 'Max',
-    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
-    // },
-    // {
-    //     pet_id: 8,
-    //     pet_name: 'Juju',
-    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'
-    // },
-    // {
-    //     pet_id: 9,
-    //     pet_name: 'Mimi',
-    //     pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg'
-    // },
-    ])
+    const [myPets,setMyPets] = useState([])
 
     let history = useHistory();
 
@@ -70,9 +27,7 @@ function MyPets() {
         setDeletionModalDisplay(true);
     }
 
-    function closeDeletionModal(){
-        setDeletionModalDisplay(false);
-    }
+
 
     function profileClicked(profile){
         console.log(profile);
@@ -101,7 +56,7 @@ function MyPets() {
                 <span onClick={() => history.goBack()} >Back to Profile</span>
             </div>
             <div className={styles['my-pets-container-pets']}>
-            <div className={styles['my-pets-container-add-pet']} onClick={() => history.push('/Profile/PetCreate')}>
+            <div className={styles['my-pets-container-add-pet']} onClick={() => setAdditionModalDisplay(true)}>
                 <img className={styles['my-pets-container-add-pet-icon']} src={AddIcon}/>
                 <div className={styles['my-pets-container-add-pet-text']}>Add a Pet</div>
              </div>
@@ -116,7 +71,8 @@ function MyPets() {
             ))}
             </div>
         </div>
-        <ConfirmPetDeletion display={deletionModalDisplay} onClose={closeDeletionModal} selectedPet={selectedPet}/>
+        <ConfirmPetDeletion display={deletionModalDisplay} onClose={() => setDeletionModalDisplay(false)} selectedPet={selectedPet}/>
+        <AddAPet display={additionModalDisplay} onClose={() => setAdditionModalDisplay()}/>
         </>
     )
 }

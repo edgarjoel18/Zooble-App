@@ -16,35 +16,17 @@ function EditPetDetails(props) {
     const [petColors, setPetColors] = useState([]);
     const [petSize, setPetSize] = useState();
 
-    const typeOptions = [
-        {value: 'Dog', label: 'Dog'},
-        {value: 'Cat', label: 'Cat'},
-        {value: 'Lizard', label:'Lizard'},
-        {value: 'Monkey', label: 'Monkey'},
-    ];
+    const typeOptions = [];
 
-    const dogBreedOptions = [
-        {value: 'German Shepherd', label: 'German Shepherd'},
-        {value: 'Samoyed', label: 'Samoyed'},
-        {value: 'Labrador Retriever', label: 'Labrador Retriever'}
-    ];
+    const dogBreedOptions = [];
 
-    const catBreedOptions = [
-        {value: 'Manx', label: 'Manx'},
-        {value: 'Siamese', label: 'Siamese'}
-    ];
+    const catBreedOptions = [];
 
-    const colorOptions = [
-        {value: 'Black', label: 'Black'},
-        {value: 'White', label: 'White'},
-        {value: 'Brown', label: 'Brown'}
-    ];
+    const colorOptions = [];
 
-    const sizeOptions = [
-        {value: 'Small', label: 'Small'},
-        {value: 'Medium', label: 'Medium'},
-        {value: 'Large', label: 'Large'}
-    ];
+    const sizeOptions = [];
+
+    const ageOptions = [];
 
     function customTheme(theme){
         return {
@@ -98,7 +80,7 @@ function EditPetDetails(props) {
                         components={animatedComponents}
                     />
                 </div>
-                <div className={styles['edit-pet-details-colors']}>
+                <div className={styles['edit-pet-details-color']}>
                     <label for="color">Color(s)</label>
                     <Select id="color" name="pet_color"
                         onChange={setPetColors}
@@ -107,6 +89,16 @@ function EditPetDetails(props) {
                         placeholder="Select Pet Color(s)"
                         isSearchable
                         isMulti
+                    />
+                </div>
+                <div className={styles['edit-pet-details-size']}>
+                    <label for="size">Size</label>
+                    <Select id="size" name="pet_size"
+                        onChange={setPetSize}
+                        options={ sizeOptions}
+                        theme={customTheme}
+                        placeholder="Select Pet Size"
+                        isSearchable
                     />
                 </div>
                 <div className={styles['edit-pet-details-size']}>
