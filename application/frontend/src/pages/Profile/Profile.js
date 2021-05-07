@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import Axios from "axios";
+import { useContext, useEffect, useState } from 'react';
 import {useLocation, useParams} from 'react-router-dom';
 
 // Import components
 import ProfileInfo from '../../components/ProfileInfo/ProfileInfo'
 import ProfileContent from '../../components/ProfileContent/ProfileContent';
 import AboutMe from '../../components/AboutMe/AboutMe';
-import SendAMessage from '../../components/Modals/SendAMessage';
-
+import Spinner from '../../components/UI/Spinner/Spinner';
+import { RedirectPathContext } from '../../context/redirect-path';
 
 import styles from './Profile.module.css'
 import axios from 'axios';
+import React from 'react';
 
 
 
@@ -515,13 +515,13 @@ function Profile({appUser}) {
     const [fetchedProfile,setFetchedProfile] = useState({});
     const [fetchedPhotoPosts, setFetchedPhotoPosts] = useState([]);
 
+    const redirectContext = useContext(RedirectPathContext);
+
     const {profileID} = useParams();
     console.log("profileID: ",profileID);
 
     useEffect(() =>{
-
-
-
+        redirectContext.updateLoading(true);
         axios.get('/api/profile',{params: {profileID: profileID}})
         .then(response =>{
             console.log(response);
@@ -537,8 +537,10 @@ function Profile({appUser}) {
             console.log(response)
             console.log(response.data);
             setFetchedPhotoPosts(response.data);
+            redirectContext.updateLoading(false);
         })
         .catch(err =>{
+            redirectContext.updateLoading(false);
             console.log(err)
         })
     },[])
@@ -596,31 +598,42 @@ function Profile({appUser}) {
     }
 
     // console.log(userProfile);
+
+    let displayProfile = <Spinner />
+
+    if (!redirectContext.loading){
+        displayProfile = (
+            <React.Fragment>
+                <ProfileInfo 
+                    displayName={fetchedProfile.display_name} 
+                    profilePic={fetchedProfile.profile_pic_link} 
+                    appUser={appUser} 
+                    isSelfView={selfView} 
+                    profile={userProfile} 
+                    updateProfile={updateProfileHandler} 
+                />
+                <div className={styles.Bottom}>
+                    <AboutMe
+                        aboutMeBody={fetchedProfile.about_me}
+                        isSelfView={selfView} 
+                        profile={userProfile} 
+                        updateProfile={updateProfileHandler} 
+                    />
+                    <ProfileContent
+                        photoPosts={fetchedPhotoPosts}
+                        pets={[]}
+                        isSelfView={selfView} 
+                        profile={userProfile} 
+                        updateProfile={updateProfileHandler} 
+                    />
+                </div>
+            </React.Fragment>
+        );
+    }
+
     return (
         <div className={styles.Profile} >
-            <ProfileInfo 
-                displayName={fetchedProfile.display_name} 
-                profilePic={fetchedProfile.profile_pic_link} 
-                appUser={appUser} 
-                isSelfView={selfView} 
-                profile={userProfile} 
-                updateProfile={updateProfileHandler} 
-            />
-            <div className={styles.Bottom}>
-                <AboutMe
-                    aboutMeBody={fetchedProfile.about_me}
-                    isSelfView={selfView} 
-                    profile={userProfile} 
-                    updateProfile={updateProfileHandler} 
-                />
-                <ProfileContent
-                    photoPosts={fetchedPhotoPosts}
-                    pets={[]}
-                    isSelfView={selfView} 
-                    profile={userProfile} 
-                    updateProfile={updateProfileHandler} 
-                />
-            </div>
+            {displayProfile}
         </div>
     )
 }
