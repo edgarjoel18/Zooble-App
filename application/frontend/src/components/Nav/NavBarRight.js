@@ -72,7 +72,9 @@ function NavBarRight({appUser, updateLoginState}) {
         {appUser &&<span ref={domNode} className="account-menu-dropdown">
           <button className={styles["account-menu-dropdown-button"]} onClick={accountMenuToggle}>Account<img className={styles["account-menu-dropdown-arrow"]} src={DropdownArrow}/></button>
           <ul  className={styles["account-menu-dropdown-content"]} style={ accountMenuDisplay}>
-            <li><NavLink className={styles["account-menu-dropdown-link"]} to="/Profile">My Profile</NavLink></li>
+            <li>
+              <NavLink className={styles["account-menu-dropdown-link"]} to={`/Profile/${appUser.profileID}`}>My Profile</NavLink>
+            </li>
             <li><NavLink className={styles["account-menu-dropdown-link"]} to="/MyPets">My Pets</NavLink></li>
             <li><NavLink className={styles["account-menu-dropdown-link"]} to="/" onClick={logoutHandler}>Logout</NavLink></li>
           </ul>

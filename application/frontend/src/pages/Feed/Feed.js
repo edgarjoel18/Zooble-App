@@ -102,7 +102,11 @@ function Feed() {
             setTaggablePets(response.data);
             redirectContext.updateLoading(false);
         })
-        
+        .catch(err =>{
+            redirectContext.updateLoading(false);
+            console.log("Error: ");
+            console.log(err);
+        })
     }, [])
 
     // //runs whenever the user creates a post

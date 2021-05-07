@@ -38,9 +38,8 @@ function LoginPage({appUser, updateLoginState}) {
                 .then(response => {
                     console.log(response.data)
 
-                    if(response.data === true){
-                        console.log(username);
-                        updateLoginState(response.data,username);
+                    if(response.data){
+                        updateLoginState(true,response.data);
                         history.push(redirectContext.redirectPath)
                     }
                 })

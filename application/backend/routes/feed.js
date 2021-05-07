@@ -81,7 +81,6 @@ router.get("/api/get-feed-posts",(req,res)=>{
             else{
                 // console.log("Posts: ", posts);
                 res.status(200).json(posts);
-
             }
         }
     )

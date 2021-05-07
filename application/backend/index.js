@@ -19,6 +19,7 @@ const commentsRouter = require('./routes/comments.js');
 const followUserRouter = require('./routes/follow-unfollow-user.js');
 const petsRouter = require('./routes/pets.js');
 const likeRouter = require('./routes/like.js')
+const profileRouter = require('./routes/profile.js');
 
 const app = express();
 
@@ -89,6 +90,9 @@ app.use(petsRouter);
 
 //Liking/unliking a post
 app.use(likeRouter)
+
+//Profile
+app.use(profileRouter)
 
 
 

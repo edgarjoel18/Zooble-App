@@ -16,8 +16,10 @@ import { RedirectPathContext } from '../../context/redirect-path';
 
 
 
-function ProfileInfo(props) {
-    console.log(props.appUser);
+function ProfileInfo({displayName, profilePic, appUser, profile, isSelfView, updateProfile}) {
+    console.log(displayName);
+    console.log(profilePic);
+    console.log(appUser);
     //const [profilePic, setProfilePic] = useState('');
     //const [profileTitle, setProfileTitle] = useState('');
     const [editing, setEditing] = useState(false);
@@ -39,14 +41,14 @@ function ProfileInfo(props) {
     const redirectContext = useContext(RedirectPathContext);
 
     useEffect(() => {
-        setPetType(props.profile.petType);
-        setPetBreed(props.profile.petBreeds);
+        setPetType(profile.petType);
+        setPetBreed(profile.petBreeds);
         if (redirectContext.redirectPath === location.pathname)
             redirectContext.redirectTo('/Feed');
     },[]);
 
     function openEditModal(){
-        props.profile.accountType === 'pet' ?
+        profile.accountType === 'pet' ?
         setEditPetDetailsDisplay(true) :
         setEditing(true);
     }
@@ -56,7 +58,7 @@ function ProfileInfo(props) {
     }
 
     function sendAMessage(){
-        if(props.appUser){
+        if(appUser){
             setSendAMessageDisplay(true);
         }
         else{
@@ -90,7 +92,7 @@ function ProfileInfo(props) {
 
     function onFollowHandler() {
         console.log('Follow button clicked')
-        if(props.appUser){
+        if(appUser){
             setFollow(!follow);
         }
         else{
@@ -98,62 +100,25 @@ function ProfileInfo(props) {
         }
     }
 
-    console.log('[Image] is ' + props.profile.userPicture);
-    let img = null;
-    switch(props.profile.userPicture) {
-        case 'shelter1Image' :
-            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/BadBoysDogPoundPic.jpg';
-            break;
-        case 'shelter2Image' :
-            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/BurgsdalePetShelterPic.jpg';
-            break;
-        case 'business1Image' :
-            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/BoomingPoodleGroomingPic.jpg';
-            break;
-        case 'business2Image' :
-            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/PawSpaPic.jpg';
-            break;
-        case 'petOwner1Image' :
-            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/AlexPic.jpg';
-            break;
-        case 'petOwner2Image' :
-        img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaryPic.jpg';
-        break;
-        case 'petImage-Sasha' :
-            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg';
-            break;
-        case 'petImage-Max' :
-            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
-            break;
-        case 'petImage-Mimi' :
-            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg';
-            break;
-        case 'petImage-Juju' :
-            img = 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg';
-            break;
-        default:
-            img = defaultImg;
-    }
-
-    let displayName = null;
+    let nameDisplay = null;
     let displayAccountInfo = null;
     let dropdownButtonStyle = null;
     follow ? dropdownButtonStyle = styles.UnfollowButton : dropdownButtonStyle = styles.DropdownButton;
-    switch(props.profile.accountType) {
+    switch(profile.accountType) {
         case 'shelter' :
-            displayName = (
+            nameDisplay = (
                 <h1 className={styles.UserName} >
                     <input 
-                        value={props.profile.userName} 
+                        value={displayName} 
                         readOnly={!editing}
                         maxLength = "25"
-                        onChange={event => props.updateProfile('userName', event.target.value)} 
+                        onChange={event => updateProfile('userName', event.target.value)} 
                     />
                 </h1> 
             )
             displayAccountInfo = (
                 <div className={styles.ButtonContainer} >
-                    {!props.isSelfView ? (
+                    {!isSelfView ? (
                         <div style={{position: 'relative'}}>
                             <button className={dropdownButtonStyle} onClick={() => onFollowHandler()} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -174,24 +139,24 @@ function ProfileInfo(props) {
                             <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
                         )
                     }
-                    {!props.isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
+                    {!isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
                 </div>
             )
             break;
         case 'business' :
-            displayName = (
+            nameDisplay = (
                 <h1 className={styles.UserName} >
                     <input 
-                        value={props.profile.userName} 
+                        value={displayName} 
                         readOnly={!editing}
                         maxLength = "25"
-                        onChange={event => props.updateProfile('userName', event.target.value)} 
+                        onChange={event => updateProfile('userName', event.target.value)} 
                     />
                 </h1> 
             )
             displayAccountInfo = (
                 <div className={styles.ButtonContainer} >
-                    {!props.isSelfView ? (
+                    {!isSelfView ? (
                         <div style={{position: 'relative'}}>
                             <button className={dropdownButtonStyle} onClick={() => onFollowHandler()} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -212,25 +177,25 @@ function ProfileInfo(props) {
                             <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
                         )
                     }
-                    {!props.isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
+                    {!isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
                 </div>
                 
             )
             break;
         case 'pet owner' :
-            displayName = (
+            nameDisplay = (
                 <h1 className={styles.UserName} >
                     <input 
-                        value={props.profile.userName} 
+                        value={displayName} 
                         readOnly={!editing}
                         maxLength = "25"
-                        onChange={event => props.updateProfile('userName', event.target.value)} 
+                        onChange={event => updateProfile('userName', event.target.value)} 
                     />
                 </h1> 
             )
             displayAccountInfo = (
                 <div className={styles.ButtonContainer} >
-                    {!props.isSelfView ? (
+                    {!isSelfView ? (
                         <div style={{position: 'relative'}}>
                             <button className={dropdownButtonStyle} onClick={() => onFollowHandler()} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -251,15 +216,15 @@ function ProfileInfo(props) {
                             <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
                         )
                     }
-                    {!props.isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
+                    {!isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
                 </div>
             )
             break;
         case 'pet':
-            displayName = (
+            nameDisplay = (
                 <React.Fragment>
                     <div style={{display: 'flex'}} >
-                        <h1 className={styles.UserName}>{props.profile.userName ? props.profile.userName : 'Name of Your Pet'}</h1>
+                        <h1 className={styles.UserName}>{profile.userName ? profile.userName : 'Name of Your Pet'}</h1>
                         <h3 style={{marginLeft: '10px'}} >
                             {petType.value ? petType.value : 'Type'}
                             /
@@ -268,8 +233,8 @@ function ProfileInfo(props) {
                     </div>
                     <EditPetDetails 
                     display={editPetDetailsDisplay} 
-                    updateProfile={props.updateProfile} 
-                    profile={props.profile} 
+                    updateProfile={updateProfile} 
+                    profile={profile} 
                     onClose={()=> setEditPetDetailsDisplay(false)}
                     updatePetType={setPetType}
                     updatePetBreed={setPetBreed}
@@ -278,7 +243,7 @@ function ProfileInfo(props) {
             )
             displayAccountInfo = (
                 <div className={styles.ButtonContainer} >
-                    {!props.isSelfView ? (
+                    {!isSelfView ? (
                         <div style={{position: 'relative'}}>
                             <button className={dropdownButtonStyle} id="dropdownButton" onClick={() => onFollowHandler()} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -303,7 +268,7 @@ function ProfileInfo(props) {
                             </React.Fragment>
                         )
                     }
-                    {!props.isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
+                    {!isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
                 </div>
             )
             break;
@@ -314,13 +279,13 @@ function ProfileInfo(props) {
     return (
         <div className={styles.ProfileInfo} >
             <div style={{display: 'flex', flexDirection: 'column', maxWidth: '223px'}} >
-                <img className={styles.Image} src={img} alt="No Image Found" />
+                <img className={styles.Image} src={profilePic} alt="No Image Found" />
                 {/* <input type='file' onChange={event => uploadPhotoHandler(event.target.files)} /> */}
             </div>
             <div className={styles.SideContainer} >
                 <div style={{display: 'flex', justifyItems: 'center'}}>
                     {
-                        props.isSelfView && !editing && 
+                        isSelfView && !editing && 
                         //<button className={styles.EditButton} onClick={() => openEditModal()}  >edit</button>
                         <EditButton 
                             style={{
@@ -335,9 +300,9 @@ function ProfileInfo(props) {
                             Edit
                         </EditButton>
                     }
-                    {displayName}
+                    {nameDisplay}
                     {
-                        props.isSelfView && editing && 
+                        isSelfView && editing && 
                         //<button className={styles.EditButton} onClick={cancelEditHandler}  >confirm</button>
                         <EditButton 
                             style={{

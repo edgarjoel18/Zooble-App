@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
+import {BrowserRouter as Router, Switch, Route, Redirect, useParams} from 'react-router-dom'
 
 import {useEffect, useState} from 'react';
 import Home from './pages/Home/Home'
@@ -34,6 +34,8 @@ import Messages from './pages/Messages/Messages'
 import MyPets from './pages/Pets/MyPets'
 import Pets from './pages/Pets/Pets'
 
+import ProfileTest from './pages/Profile/ProfileTest'
+
 import AdminFeed from './pages/Feed/AdminFeed.js';
 import Feed from './pages/Feed/Feed.js'
 import Photo from './pages/Photo/Photo';
@@ -58,15 +60,15 @@ const App = () => {
   useEffect(() => {
     axios.get("/api/login",{withCredentials: true}).then((response) =>{
       console.log(response.data);
-      console.log(response.data.user);
-      setAppUser(response.data.user);
+      console.log(response.data);
+      setAppUser(response.data);
       console.log(appUser);
     })
     .catch((err) =>{
       console.log(err);
     })
     // console.log('AppUser in App changed to: ', appUser)
-  })
+  },[])
 
 
   function updateLoginState(loggedIn, user){
@@ -99,41 +101,23 @@ const App = () => {
         <Route path="/shelter-signup2" exact component={ShelterSignUpPage2}/>
         <Route path="/business-signup" exact component={BusinessSignUpPage}/>
         <Route path="/business-signup2" exact component={BusinessSignUpPage2}/>
+        <Route path="/Edgar" component={Edgar}/>
+        <Route path="/Daniel" component={Daniel}/>
+        <Route path="/Em" component={Em}/>
+        <Route path="/Sabrina" component={Sabrina}/>
+        <Route path="/Wenjie" component={Wenjie}/>
+        <Route path="/Cameron" component={Cameron}/>
+        <Route path="/Wameedh" component={Wameedh}/>
+
+
+
+
+
         <Route path="/Feed" component={Feed} appUser={appUser}/>
         <Route path="/AdminFeed" component={AdminFeed}/>
         <Route path="/MapSearch" component={MapSearch}/>
-        <Route exact path="/Profile">
-          <MyProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/PetOwnerId=1">
-          <PetOwner1Page appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/PetOwnerId=2">
-          <PetOwner2Page appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/Mimi">
-          <MimiProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/Max">
-          <MaxProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/Juju">
-          <JujuProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/ShelterId=1">
-          <Shelter1ProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/ShelterId=2">
-          <Shelter2ProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/BusinessId=1">
-          <Business1ProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/BusinessId=2">
-          <Business2ProfilePage appUser={appUser}/>
-        </Route>
-        <Route path="/Profile/PetCreate">
-          <PetProfileCreatePage appuser={appUser}/>
+        <Route exact path="/Profile/:profileID">
+          <ProfilePage appUser={appUser}/>
         </Route>
         <Route path="/Photo" component={Photo}/>
         <Route path="/MyPhoto" component={MyPhoto}/>
@@ -142,13 +126,7 @@ const App = () => {
         <Route path="/Pets" component={Pets}/>
         <Route path="/Followers" component={Followers}/>
         <Route path="/ExploreUsers" component={ExploreUsers}/>
-        <Route path="/Edgar" component={Edgar}/>
-        <Route path="/Daniel" component={Daniel}/>
-        <Route path="/Em" component={Em}/>
-        <Route path="/Sabrina" component={Sabrina}/>
-        <Route path="/Wenjie" component={Wenjie}/>
-        <Route path="/Cameron" component={Cameron}/>
-        <Route path="/Wameedh" component={Wameedh}/>
+
         <Route path="/SignUpSuccess" component={SignUpSuccess}/>
         <Route path="/user/:user" component={ProfilePage}/>
         <Route path="/pet/:pet" component={ProfilePage}/>

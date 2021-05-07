@@ -12,7 +12,7 @@ const shelterProfileTabs = ["About", "Contact Info"]//, "Recent Posts"]
 const businessProfileTabs = ["About", "Business Info"]//, "Recent Posts"]
 const petOwnerProfileTabs = ["About"]//, "Recent Posts"]
 
-function AboutMe(props) {
+function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
     const [selected, setSelected] = useState('About');
     //const [address, setAddress] = useState('');
     //const [phone, setPhone] = useState('');
@@ -65,7 +65,7 @@ function AboutMe(props) {
         address.style.height = '45px';
         console.log(address.scrollHeight);
         if (address.scrollHeight < 105) {
-            props.updateProfile('address', event.target.value);
+            updateProfile('address', event.target.value);
             address.style.height = address.scrollHeight + 'px' 
         }
         else 
@@ -75,7 +75,7 @@ function AboutMe(props) {
 
     let profileTabs = null;
     // let displayPetOwnerLink = null;
-    switch (props.profile.accountType) {
+    switch (profile.accountType) {
         case 'shelter':
             profileTabs = shelterProfileTabs;
             break;
@@ -99,7 +99,7 @@ function AboutMe(props) {
     }
 
     let tabs = profileTabs.map(tab => (
-        <Tab key={tab} id={tab} section={tab} selected={selected} clicked={onTabClickHandler} accountType={props.profile.accountType} />
+        <Tab key={tab} id={tab} section={tab} selected={selected} clicked={onTabClickHandler} accountType={profile.accountType} />
     ))
 
     let content = null; 
@@ -110,13 +110,13 @@ function AboutMe(props) {
                     {/* {displayPetOwnerLink} */}
                     <textarea 
                         className={styles.TextArea} 
-                        value={props.profile.about} 
-                        onChange={event => props.updateProfile('about', event.target.value)}
+                        value={aboutMeBody} 
+                        onChange={event => updateProfile('about', event.target.value)}
                         readOnly={!changing || !(labelSelected === 'about')}
                         rows='14' 
                         cols='50' 
                     />
-                    { props.isSelfView && ((labelSelected !== 'about') ? 
+                    { isSelfView && ((labelSelected !== 'about') ? 
                         // <button onClick={() => changingInfoHandler('about')} >edit</button>
                         <EditButton edit clicked={() => changingInfoHandler('about')}>Edit</EditButton> 
                         :
@@ -131,14 +131,14 @@ function AboutMe(props) {
             content = (
                 <div>
                     {
-                        props.isSelfView && (labelSelected !== 'address') && 
+                        isSelfView && (labelSelected !== 'address') && 
                         // <button onClick={() => changingInfoHandler('address')} >edit</button>
                         <EditButton edit clicked={() => changingInfoHandler('address')}>Edit</EditButton>
                     }
-                    <label for="address" >Address: </label>
+                    <label for="tab-address" >Address: </label>
                     <textarea 
                         id="tab-address"
-                        value={props.profile.contactInfo.address} 
+                        value={profile.contactInfo.address} 
                         readOnly={!changing || !(labelSelected === 'address')}
                         onChange={event => autoGrowHandler(event)} 
                         className={styles.AddressTextArea}
@@ -155,7 +155,7 @@ function AboutMe(props) {
                         </React.Fragment>
                     }
                     {
-                        props.isSelfView && (labelSelected !== 'phone number') && 
+                        isSelfView && (labelSelected !== 'phone number') && 
                         //<button onClick={() => changingInfoHandler('phone number')} >edit</button>
                         <EditButton edit clicked={() => changingInfoHandler('phone number')}>Edit</EditButton>
                     }
@@ -163,7 +163,7 @@ function AboutMe(props) {
                     <input 
                         id="phone"
                         type="tel" 
-                        value={props.profile.contactInfo.phone} 
+                        value={profile.contactInfo.phone} 
                         readOnly={!changing || !(labelSelected === 'phone number')}
                         maxLength = "20"
                         onKeyPress={event => {
@@ -171,7 +171,7 @@ function AboutMe(props) {
                                 cancelEditingHandler();
                             }
                           }}
-                        onChange={event => props.updateProfile('phone', event.target.value)} 
+                        onChange={event => updateProfile('phone', event.target.value)} 
                     />
                     {
                         (labelSelected === 'phone number') && 
@@ -183,7 +183,7 @@ function AboutMe(props) {
                     <div className={styles.HoursDiv} >
                         <div>
                             {
-                                props.isSelfView && (labelSelected !== 'hours') && 
+                                isSelfView && (labelSelected !== 'hours') && 
                                 //<button onClick={() => changingInfoHandler('hours')} >edit</button>
                                 <EditButton edit clicked={() => {
                                     setEditHoursDisplay(true);
@@ -202,10 +202,10 @@ function AboutMe(props) {
                             </div>
                         ))} */}
                         <table className={styles['hours-table']}  >
-                            {Object.keys(props.profile.contactInfo.hours).map(key => (
+                            {Object.keys(profile.contactInfo.hours).map(key => (
                                 <tr className={styles['hours-table-row']} key={key} >
                                     <th className={styles['hours-table-header']} >{key}: </th>
-                                    <td className={styles['hours-table-cell']} >{props.profile.contactInfo.hours[key]}</td>
+                                    <td className={styles['hours-table-cell']} >{profile.contactInfo.hours[key]}</td>
                                 </tr>
                             ))}
                         </table>
