@@ -12,7 +12,7 @@ import SendAMessage from '../../components/Modals/SendAMessage';
 import EditPetDetails from '../Modals/EditPetDetails';
 import EditButton from '../Buttons/EditButton';
 import LoginRequired from '../Modals/LoginRequired';
-import { RedirectPathContext } from '../../context/redirectPath';
+import { RedirectPathContext } from '../../context/redirect-path';
 
 
 

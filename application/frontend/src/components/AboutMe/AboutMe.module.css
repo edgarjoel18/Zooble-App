@@ -61,7 +61,7 @@
 }
 
 .TextArea::-webkit-scrollbar {
-    width: 20px; 
+    width: 10px; 
     background-color: none;
     box-shadow: unset;
 }

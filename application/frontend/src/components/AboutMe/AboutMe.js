@@ -79,7 +79,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
     }
 
     function autoGrowHandler(event) {
-        let address = document.getElementById('address');
+        let address = document.getElementById('tab-address');
         address.style.height = '45px';
         console.log(address.scrollHeight);
         if (address.scrollHeight < 105) {
@@ -89,6 +89,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
         else 
             address.style.height = '105px';
     }
+
 
     let profileTabs = null;
     // let displayPetOwnerLink = null;
@@ -135,8 +136,8 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
                     />
                     { isSelfView && ((labelSelected !== 'about') ? 
                         // <button onClick={() => changingInfoHandler('about')} >edit</button>
-                        <EditButton edit clicked={() => changingInfoHandler('about')}>Edit</EditButton> :
-                        //<button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
+                        <EditButton edit clicked={() => changingInfoHandler('about')}>Edit</EditButton> 
+                        :
                         <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton>
                         )
                     }
@@ -152,9 +153,9 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
                         // <button onClick={() => changingInfoHandler('address')} >edit</button>
                         <EditButton edit clicked={() => changingInfoHandler('address')}>Edit</EditButton>
                     }
-                    <label for="address" >Address: </label>
+                    <label for="tab-address" >Address: </label>
                     <textarea 
-                        id="address"
+                        id="tab-address"
                         value={profile.contactInfo.address} 
                         readOnly={!changing || !(labelSelected === 'address')}
                         onChange={event => autoGrowHandler(event)} 

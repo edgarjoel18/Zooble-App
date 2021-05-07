@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useContext } from 'react'
 import { NavLink, useHistory } from "react-router-dom";
 import {useDropzone} from 'react-dropzone'
 import axios from 'axios';
@@ -7,6 +7,9 @@ import Select from 'react-select';
 import styles from './Feed.module.css'
 
 import PostModal from '../../components/Modals/PostModal'
+import Spinner from '../../components/UI/Spinner/Spinner';
+
+import { RedirectPathContext } from '../../context/redirect-path';
 
 
 
@@ -39,6 +42,8 @@ function Feed() {
     //image upload array
     const [myFiles, setMyFiles] = useState([])
 
+    const redirectContext = useContext(RedirectPathContext);
+
     function customTheme(theme) { //move this a separate file and import maybe?
         return {
             ...theme,
@@ -62,6 +67,7 @@ function Feed() {
 
     //runs on refresh
     useEffect(() => { //get profile pic and name of user  //
+        redirectContext.updateLoading(true);
         console.log('/api/get-feed-user');
         axios.get('/api/get-feed-user')
         .then(response =>{
@@ -82,6 +88,7 @@ function Feed() {
             setFeedPosts(response.data);
         })
         .catch(err =>{
+            redirectContext.updateLoading(false);
             console.log("Error: ");
             console.log(err);
         })
@@ -90,8 +97,10 @@ function Feed() {
         .then(response =>{
             console.log(response.data);
             setTaggablePets(response.data);
+            redirectContext.updateLoading(false);
         })
         .catch(err =>{
+            redirectContext.updateLoading(false);
             console.log("Error: ");
             console.log(err);
         })
@@ -238,15 +247,8 @@ function Feed() {
         setPostModalDisplay(false);
     }
 
-    return (
-        <>
-            {/* <NavLink to="/Profile/Alex" style={{ textDecoration: 'none' }}>
-                <div className={styles["follower-feed-header-profile"]}>
-                    <img className={styles["follower-feed-header-profile-pic"]} src={own_prof_pic} />
-                    <div className={styles["follower-feed-header-profile-name"]}>Alex</div>
-                </div>
-            </NavLink> */}
-            <div className={styles["follower-feed-container"]}>
+    let displayFeed = (
+        <div className={styles["follower-feed-container"]}>
                 <div className={styles["follower-feed-header"]}></div>
                 <form className={styles["follower-feed-new-post"]} onSubmit={submitPost}>
                     <img className={styles["follower-feed-new-post-pic"]} src={createPostProfilePic} />
@@ -299,6 +301,23 @@ function Feed() {
                     </div>
                 ))}
             </div>
+    )
+
+    console.log(redirectContext.loading)
+
+    if (redirectContext.loading) {
+        displayFeed = <Spinner />
+    }
+
+    return (
+        <>
+            {/* <NavLink to="/Profile/Alex" style={{ textDecoration: 'none' }}>
+                <div className={styles["follower-feed-header-profile"]}>
+                    <img className={styles["follower-feed-header-profile-pic"]} src={own_prof_pic} />
+                    <div className={styles["follower-feed-header-profile-name"]}>Alex</div>
+                </div>
+            </NavLink> */}
+            {displayFeed}
             <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost} />
         </>
     )
