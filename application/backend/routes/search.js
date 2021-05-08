@@ -65,76 +65,8 @@ router.get("/api/search", (req,res) =>{
         let requestedPetAges =  req.query.searchPetAges;
 
         let query = '';
-        if(requestedPetTypes){
-            if(requestedPetTypes[0] == undefined && requestedPetColors[0] == undefined && requestedPetSizes[0] == undefined && requestedPetAges[0] == undefined){
-                query = 
-                `SELECT * 
-                FROM ((Pet
-                LEFT JOIN Age
-                ON Pet.age_id = Age.age_id)
-                LEFT JOIN Size
-                ON Pet.size_id = Size.size_id)
-                WHERE LOWER(name) LIKE '%${name}%'
-                `;
-            }
-            else{
-                query = 
-                `SELECT * 
-                FROM ((Pet
-                LEFT JOIN Age
-                ON Pet.age_id = Age.age_id)
-                LEFT JOIN Size
-                ON Pet.size_id = Size.size_id)
-                WHERE LOWER(name) LIKE '%${name}%'
-                `;
-    
-                if(requestedPetTypes[0] !== undefined){
-                    query += 'AND ('
-                    for(let i = 0; i < requestedPetTypes.length; i++){ //build sql query for pet types
-                        if(i == (requestedPetTypes.length - 1))
-                            query += 'Pet.pet_type_id = ' + requestedPetTypes[i] + ' OR ';
-                        else
-                            query += 'Pet.pet_type_id = ' + requestedPetTypes[i];
-                    }
-                    query += ")"
-                }
-                // if(requestedPetColors[0] !== undefined){
-                //     for(let i = 0; i < requestedPetColors.length; i++){ //build sql query for pet types
-                //         if(i == (requestedPetColors.length - 1))
-                //             query += 'Pet.pet_type_id = ' + requestedPetColors[i] + ' OR ';
-                //         else
-                //             query += 'Pet.pet_type_id = ' + requestedPetColors[i];
-                //     }
-                //     query += ")"
-                // }
-                if(requestedPetAges[0] !== undefined){
-                    query += 'AND ('
-                    for(let i = 0; i < requestedPetAges.length; i++){ //build sql query for pet types
-                        if(i == (requestedPetAges.length - 1))
-                            query += 'Pet.age_id = ' + requestedPetAges[i] + ' OR ';
-                        else
-                            query += 'Pet.age_id = ' + requestedPetAges[i];
-                    }
-                    query += ")"
-                }
-                if(requestedPetSizes[0] !== undefined){
-                    query += 'AND ('
-                    for(let i = 0; i < requestedPetSizes.length; i++){ //build sql query for pet types
-                        if(i == (requestedPetSizes.length - 1))
-                            query += 'Pet.size_id = ' + requestedPetSizes[i] + ' OR ';
-                        else
-                            query += 'Pet.size_id = ' + requestedPetSizes[i];
-                    }
-                    query += ")"
-                }
-    
-                query += ");"
-                console.log(query);
-        }
-        
-        }
-
-        connection.query(
+        if((requestedPetTypes  && requestedPetTypes[0] !== undefined) || (requestedPetColors  && requestedPetColors[0] !== undefined) || (requestedPetSizes  && requestedPetSizes[0] !== undefined) || (requestedPetAges  && requestedPetAges[0] !== undefined)){
+            query = 
             `SELECT * 
             FROM ((Pet
             LEFT JOIN Age
@@ -142,27 +74,71 @@ router.get("/api/search", (req,res) =>{
             LEFT JOIN Size
             ON Pet.size_id = Size.size_id)
             WHERE LOWER(name) LIKE '%${name}%'
-            `, 
-            function(err, result) {
+            `;
+
+            if(requestedPetTypes[0] !== undefined){
+                query += 'AND ('
+                for(let i = 0; i < requestedPetTypes.length; i++){ //build sql query for pet types
+                    if(i == (requestedPetTypes.length - 1))
+                        query += 'Pet.pet_type_id = ' + requestedPetTypes[i] + ' OR ';
+                    else
+                        query += 'Pet.pet_type_id = ' + requestedPetTypes[i];
+                }
+                query += ")"
+            }
+            // if(requestedPetColors[0] !== undefined){
+            //     for(let i = 0; i < requestedPetColors.length; i++){ //build sql query for pet types
+            //         if(i == (requestedPetColors.length - 1))
+            //             query += 'Pet.pet_type_id = ' + requestedPetColors[i] + ' OR ';
+            //         else
+            //             query += 'Pet.pet_type_id = ' + requestedPetColors[i];
+            //     }
+            //     query += ")"
+            // }
+            if(requestedPetAges[0] !== undefined){
+                query += 'AND ('
+                for(let i = 0; i < requestedPetAges.length; i++){ //build sql query for pet types
+                    if(i == (requestedPetAges.length - 1))
+                        query += 'Pet.age_id = ' + requestedPetAges[i] + ' OR ';
+                    else
+                        query += 'Pet.age_id = ' + requestedPetAges[i];
+                }
+                query += ")"
+            }
+            if(requestedPetSizes[0] !== undefined){
+                query += 'AND ('
+                for(let i = 0; i < requestedPetSizes.length; i++){ //build sql query for pet types
+                    if(i == (requestedPetSizes.length - 1))
+                        query += 'Pet.size_id = ' + requestedPetSizes[i] + ' OR ';
+                    else
+                        query += 'Pet.size_id = ' + requestedPetSizes[i];
+                }
+                query += ")"
+            }
+
+            query += ");"
+            console.log(query);
+        }
+        else{
+            query = 
+            `SELECT *,
+            (3959 * acos(cos(radians('${givenLatitude}'))* cos(radians(Address.latitude))* cos(radians(Address.longitude) - radians('${givenLongitude}')) + sin(radians(${givenLatitude})) * sin(radians(Address.latitude)))) as distance
+            FROM Pet
+            LEFT JOIN Profile ON Profile.pet_id = Pet.pet_id
+            LEFT JOIN Address ON Address.reg_user_id = Pet.reg_user_id
+            HAVING LOWER(name) LIKE '%${name}%'
+            AND distance <  ${preferredSearchDistance}
+            LIMIT 10 
+            OFFSET ${(givenPage-1)*10}`;
+        }
+        
+
+        connection.query(query, 
+            function(err, results) {
             if(err){
                 throw err;
             } else {
-              
-                // [ TextRow { pet_id: 1, name: 'Max', size_id: 1, age_id: 1 } ]
-                Object.keys(result).forEach(function(key) {
-                    var row = result[key];
-                    // console.log(row);
-                    // console.log(row.name);
-                    // console.log(row.size_id);
-                    // console.log(row.age_id);
-                    requestedSearchResults.searchResults.push({
-                        "pet_id":row.pet_id,
-                        "name": row.name,
-                        "size_name": row.size_name,
-                        "age_name": row.age_name,
-                        "profile_pic": row.profile_pic
-                    });
-                  });
+                requestedSearchResults = results;
                 console.log(requestedSearchResults);
                 res.json(requestedSearchResults);
             }
