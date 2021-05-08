@@ -25,7 +25,7 @@ router.get("/api/current-user-pets",(req,res)=>{
     
     //get all profiles that are owned by the current user, but only the profiles associated with pets
     connection.query(
-        `SELECT Profile.pet_id, Profile.display_name, Profile.profile_pic_link
+        `SELECT *
          FROM Profile
          WHERE 
          (Profile.account_id = (SELECT Account.account_id FROM Account JOIN Profile ON Profile.profile_id = '${req.session.profile_id}' WHERE Account.account_id = Profile.account_id))  AND (Profile.pet_id IS NOT NULL)`,
