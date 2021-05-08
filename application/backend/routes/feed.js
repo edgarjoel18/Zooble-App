@@ -6,6 +6,7 @@ router.get("/api/get-feed-user",(req,res)=>{
     console.log("/api/get-feed-user");
     let response = {};
 
+    //CAN MERGE THESE TOGETHER
     if(req.session.role === 1){ //if user is a pet owner
         connection.query(
             `SELECT User.first_name, Profile.profile_pic_link

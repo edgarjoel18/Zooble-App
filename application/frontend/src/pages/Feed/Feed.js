@@ -93,10 +93,17 @@ function Feed() {
             console.log(err);
         })
 
-        axios.get('/api/get-current-user-pets')
+        axios.get('/api/current-user-pets')
         .then(response =>{
-            console.log(response.data);
-            setTaggablePets(response.data);
+            console.log("Taggable Pets: ",response.data);
+            let taggablePetOptions = [];
+
+            //construct compatible list of options for react-select from backend response
+            for(let i = 0; i < response.data.length; i++){
+                taggablePetOptions.push({value: response.data[i].pet_id, label: response.data[i].display_name});
+            }
+            console.log("Taggable Pet Options: ",taggablePetOptions)
+            setTaggablePets(taggablePetOptions);
             redirectContext.updateLoading(false);
         })
         .catch(err =>{
@@ -262,6 +269,7 @@ function Feed() {
                             theme={customTheme}
                             styles={customStyles}
                             isSearchable
+                            isMulti
                         />
                     </div>
                     <section className={styles["follower-feed-new-post-attach-image"]}>
