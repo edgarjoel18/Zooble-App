@@ -17,27 +17,41 @@ router.post("/api/upload-post", (req, res) => { // uploading a post
     ('${postBody}', '${req.session.reg_user_id}', 
      0, 
      0)`, 
-     (error, post) => {
+     (error, insertedPost) => {
         if (error) {
             console.error(error);
             res.status(500).json(error);
         } else {
-            console.log(post)
+            console.log(insertedPost)
 
             if(photoLink){
-                connection.query(`INSERT INTO Photo (link, post_id) VALUES ('${photoLink}','${post.insertId}')`, (error, photo) => {
+                connection.query(`INSERT INTO Photo (link, post_id) VALUES ('${photoLink}','${insertedPost.insertId}')`, (error, photo) => {
                     if (error) {
                         console.error(error);
-                        res.status(500).json(error);
                     }
                     console.log("image was inserted!")
                 });
-                res.status(200).json(post);
             }
             else{
                 console.log("post was inserted (no image)!")
-                res.status(200).json(post);
+
             }
+
+            if(req.body.taggedPets){
+                for(let i = 0; i < req.body.taggedPets.length; i++){
+                    connection.query(`INSERT INTO PostTag (post_id, pet_id) VALUES ('${insertedPost.insertId}', '${req.body.taggedPets[i].value}')`,
+                        function (err,insertedTag){
+                            if(err){
+                                console.log(err);
+                            }
+                            else{
+                                console.log('InsertedTag: ', insertedTag);
+                            }
+                        })
+                }
+                
+            }
+            res.status(200).json(insertedPost);
         }
     });
 });

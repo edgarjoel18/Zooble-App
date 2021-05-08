@@ -131,7 +131,7 @@ function Feed() {
 
     useEffect(() => () => {
         console.log('revoking object urls');
-        // Make sure to revoke the data uris to avoid memory leaks
+        //revoke the data urls to avoid memory leaks
         myFiles.forEach(file => URL.revokeObjectURL(file.preview));
       }, [myFiles]);
 
@@ -201,10 +201,12 @@ function Feed() {
                     axios.post('/api/upload-post',{
                         postBody: createdPostBody,
                         photoLink: presignedFileURL,
+                        taggedPets: taggedPets
                     }).then((response) =>{
                         console.log(response.data);
                         removeAll();
                         setCreatedPostBody('');
+                        setTaggedPets([]);
                     })
                     .catch((err) =>{
                         console.log(err);
@@ -229,9 +231,11 @@ function Feed() {
         else{
             axios.post('/api/upload-post',{
                 postBody: createdPostBody,
+                taggedPets: taggedPets
             }).then((response) =>{
                 console.log(response.data);
                 setCreatedPostBody('');
+                setTaggedPets([]);
             })
             .catch((err) =>{
                 console.log(err);
@@ -270,6 +274,7 @@ function Feed() {
                             styles={customStyles}
                             isSearchable
                             isMulti
+                            value={taggedPets}
                         />
                     </div>
                     <section className={styles["follower-feed-new-post-attach-image"]}>
@@ -293,10 +298,10 @@ function Feed() {
                     </>}
                 {feedPosts && feedPosts.map((feedPost) => (
                     <div key={feedPost.post_id} className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
-                        <NavLink to={"/Profile/ShelterId=2"}>
+                        <NavLink to={"/Profile/ShelterId=2"}>  {/* Need to replace these with real links */}
                             <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic_link} />
                         </NavLink>
-                        <NavLink style={{textDecoration: 'none'}} to={"/Profile/ShelterId=2"}>
+                        <NavLink style={{textDecoration: 'none'}} to={"/Profile/ShelterId=2"}>   {/* Need to replace these with real links */}
                         <div className={styles["follower-feed-post-name"]}>{feedPost.display_name}</div>
                         </NavLink>
  
