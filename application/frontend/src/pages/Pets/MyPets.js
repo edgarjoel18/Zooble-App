@@ -35,7 +35,7 @@ function MyPets() {
         history.push(profile);
     }
 
-    useEffect(() => {axios.get('/api/get-current-user-pets') 
+    useEffect(() => {axios.get('/api/current-user-pets') 
         .then(response =>{
             console.log('/api/get-current-user-pets response.data',response.data);
             setMyPets(response.data);
