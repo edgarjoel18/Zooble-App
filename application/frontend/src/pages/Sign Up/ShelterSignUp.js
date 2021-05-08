@@ -51,7 +51,7 @@ function ShelterSignUpPage() {
             {error}
     </div> : 
     <div className={styles['signup-requirements-container']}>
-        Your Password Must Have: 8-50 Characters and Contain: 1 Capital Letter, 1 Number, 1 Special Character
+        Your Password Must Have at least 8 Characters and Contain: 1 Capital Letter, 1 Number, 1 Special Character
     </div>;
 
     function signUp(event) {

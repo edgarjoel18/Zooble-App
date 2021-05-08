@@ -1,17 +1,16 @@
 @import url('https://www.w3schools.com/w3css/4/w3.css');
 
 .navbar{
-    display: grid;
+    display: flex;
     height: 100px;
     align-items: center;
     position: relative;
-
-    grid-template-columns: 100px 50px auto 110px 110px;
     column-gap: 50px;
     padding-left: 25px;
     padding-right: 25px;
     /* background-color: var(--nav-bar-color); */
     /* box-shadow: var(--elevation-2); */
+    justify-content: center;
     z-index:2;
 }
 
@@ -157,7 +156,7 @@ select {
 .search-category-dropdown select{
   background-color: var(--reversed-txt-clr);
   border: none;
-  border-radius:10px;
+  border-radius:7.5px;
   font-size: 2em;
   padding-left:10px;
   padding-right: 25px;
@@ -170,20 +169,19 @@ select {
     display:flex;
     flex-direction: row;
     box-shadow: var(--elevation-2);
-    border-radius:0 0 7.5px 7.5px;
+    border-radius: 7.5px;
     text-align: center;
     align-items: center;
     font-family: var(--ff-secondary);
     flex-shrink: 2;
     background-color: white;
-    grid-column: 3 /span 1;
+    /* grid-column: 3 /span 1; */
     margin: 0 auto;
-    width: 700px;
   }
   
   .searchbar input{
     border: none;
-    flex-grow:2;
+    /* flex-grow:2; */
     font-size: 1.5em;
     text-overflow: ellipsis;
     width: 435px;
@@ -194,7 +192,7 @@ select {
 /* Searchbar button */
 .searchbar-search {  
   width: 100px;
-  height: 100px;
+  height: 50px;
   display:inline-flex;
   border: none;
   padding: 0;
@@ -248,8 +246,8 @@ padding-bottom: 10%; */
 
 .combobox-popover{
     background-color: white;
-    padding: 15px;
-    list-style: none;
+    padding: 5px;
+    
     box-shadow: var(--elevation-1);
     font-family: var(--ff-primary);
     z-index: 1;
@@ -257,7 +255,11 @@ padding-bottom: 10%; */
     position: relative;
 }
 
-.combobox-popover li{
+.combobox-list{
+    list-style: none;
+}
+
+.combobox-list li{
     cursor:pointer;
     padding:5px;
     border-bottom: 1px solid rgba(0,0,0,0.10);

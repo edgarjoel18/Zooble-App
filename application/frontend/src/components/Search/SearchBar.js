@@ -97,9 +97,22 @@ function SearchBar() {
           <option value="Shelters">Shelters</option>
           <option value="Pet Owners">Pet Owners</option>
         </select>
-      </span>   
+      </span>
+      <input 
+          className={styles['searchbar-term-input']}
+          type="text" 
+          placeholder= {"Search for " + searchCategory}
+          onChange={(e)=> {
+            setSearchTerm(e.target.value);
+          }}
+          onKeyPress={event => {
+            if(event.key === 'Enter'){
+              history.push({ pathname:"/MapSearch", state:{searchCategoryParam: searchCategory, searchTermParam: searchTerm}})
+            }
+          }}
+        />
       <span className={styles["searchbar-input"]}>
-        <Combobox 
+        <Combobox className={styles['searchbar-location-input']}
             onSelect={async (address)=>{
                 setValue(address,false);
                 clearSuggestions();
@@ -116,95 +129,35 @@ function SearchBar() {
 
                 console.log(address)
             }}
-          >
-          {searchCategory=="Pet Owners" &&
-          <>
-          <input 
-            type="text" 
-            placeholder="Enter a username, or first name"
-            onChange={(e)=> {
-              setSearchTerm(e.target.value);
-            }}
-            onKeyPress={event => {
-              if(event.key === 'Enter'){
-                history.push(
-                  {
-                    pathname:"/MapSearch",
-                    state:{searchCategoryParam: searchCategory, searchTermParam: searchTerm}
-                  }
-                  )
-              }
-            }}
-          />
-          <ComboboxInput 
+        >
+          {/* Input Box */}
+          <ComboboxInput  
             value={value}
-            placeholder= {"Near:"}
+            placeholder= {searchCategory !== 'Pet Owners' && "Near Current Location"}
             onChange={(e)=> {
-                setValue(e.target.value);
+              setValue(e.target.value);
+              // setSearchTerm(e.target.value);
             }}
-            required
-            disabled={!ready}
+            disabled={!ready || searchCategory == "Pet Owners"}
             onKeyPress={event => {
               if(event.key === 'Enter'){
-                history.push(
-                  {
-                    pathname:"/MapSearch",
-                    state:{searchCategoryParam: searchCategory, searchTermParam: searchTerm}
-                  }
-                  )
+                history.push({ pathname:"/MapSearch", state:{searchCategoryParam: searchCategory, searchTermParam: searchTerm}})
               }
             }}
-          />
-        </>
-        }
-        {searchCategory != "Pet Owners" &&
-          <>
-            <input
-              type="text" 
-              placeholder="Enter a username, or first name"
-              onChange={(e)=> {
-                setSearchTerm(e.target.value);
-              }}
-              onKeyPress={event => {
-                if(event.key === 'Enter'){
-                  history.push(
-                    {
-                      pathname:"/MapSearch",
-                      state:{searchCategoryParam: searchCategory, searchTermParam: searchTerm}
-                    }
-                    )
-                }
-              }}
-            />
-            <ComboboxInput 
-              value={value}
-              placeholder= {"Near Current Location"}
-              onChange={(e)=> {
-                setValue(e.target.value);
-                // setSearchTerm(e.target.value);
-              }}
-              disabled={!ready}
-              onKeyPress={event => {
-                if(event.key === 'Enter'){
-                  history.push(
-                    {
-                            pathname:"/MapSearch",
-                            state:{searchCategoryParam: searchCategory, searchTermParam: searchTerm}
-                          }
-                          )
-                      }
-                    }}
-            />
-          </>
-
-        }
-        {searchCategory != "Pet Owners" && <ComboboxPopover className={styles['combobox-popover']}>
-            {status === "OK" && data.map(({id,description}) => 
+          /> 
+           {/* Dropdown List */}
+          <ComboboxPopover className={styles['combobox-popover']}> 
+            <ComboboxList className={styles['combobox-list']}>
+              {status === "OK" &&
+                data.map(({id,description}) => (
                 <ComboboxOption key={id} value={description}/>
-            )}
-        </ComboboxPopover>
-        }
-      </Combobox>
+              ))}
+            </ComboboxList>
+          </ComboboxPopover>
+        </Combobox>
+          
+
+      
       </span>
 
       

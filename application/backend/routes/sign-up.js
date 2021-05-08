@@ -10,7 +10,7 @@ function passwordValidate(password) {
         'capital' : /[A-Z]/,
         'digit'   : /[0-9]/,
         'special' : /[!@#$%^&*]/,
-        'full'    : /^[A-Za-z0-9!@$%^&*]{8,50}$/
+        'full'    : /^[A-Za-z0-9!@$%^&*]{8,}$/
     };
     return re.capital .test(password) && 
            re.digit   .test(password) && 
@@ -188,7 +188,7 @@ router.post('/api/sign-up/business', (req,res) =>{
                                                                                 }
                                                                                 console.log('Commerce Created');
                                                                                 console.log(insertedCommerce.insertId);
-                                                                                connection.query(`UPDATE Profile SET Profile.display_name = ${givenBusinessName}, Profile.type = 'Business' WHERE  Profile.account_id = ${accountId}`,
+                                                                                connection.query(`UPDATE Profile SET Profile.display_name = '${givenBusinessName}', Profile.type = 'Business' WHERE  Profile.account_id = '${accountId}'`,
                                                                                 function(err, updatedDisplayName){
                                                                                     if(err){
                                                                                         console.log(err);
@@ -269,16 +269,16 @@ router.post('/api/sign-up/shelter', (req,res) =>{
 
                                                     connection.query(`INSERT INTO User (email,first_name, last_name) VALUES ('${givenEmail}','${givenFirstName}', '${givenLastName}')`, function(err, insertedUser){
                                                         if(err){
-                                                            res.status(500).json(err);
+                                                            console.log(err);
                                                         }
                                                         else{
                                                             console.log('User Created');
                                                             console.log(insertedUser.insertId); //user id of newly created user
                                                             userId = insertedUser.insertId;
-                                                            connection.query(`INSERT INTO Account (user_id)  VALUES  ('${insertedUser.insertId}')`, //create new account in database with returned user_id //registered user entry and profile automatically created
+                                                            connection.query(`INSERT INTO Account (user_id, role_id)  VALUES  ('${insertedUser.insertId}', 3)`, //create new account in database with returned user_id //registered user entry and profile automatically created
                                                             function(err,account){
                                                                 if(err){
-                                                                    res.status(500).json(err);
+                                                                    console.log(err);
                                                                 }
                                                                 console.log('Account Created');
                                                                 let accountId = account.insertId;
@@ -286,7 +286,7 @@ router.post('/api/sign-up/shelter', (req,res) =>{
                                                                 connection.query(`INSERT INTO Credentials (acct_id, username, password) VALUES ('${account.insertId}', '${givenUsername}', '${hash}')`, 
                                                                 function(err,insertedCredentials){
                                                                     if(err){
-                                                                        res.status(500).json(err);
+                                                                        console.log(err);
                                                                     }
                                                                     console.log('Credentials Created');
                                                                     console.log(insertedCredentials.insertId);
@@ -321,7 +321,11 @@ router.post('/api/sign-up/shelter', (req,res) =>{
                                                                                         console.log(givenPetTypes[i].label, " inserted");
                                                                                     })
                                                                                 }
-                                                                                connection.query(`UPDATE Profile SET Profile.display_name = ${givenBusinessName}, Profile.type = 'Shelter' WHERE  Profile.account_id = ${account_id}`, //can try to add this code to the profile create trigger?
+                                                                                connection.query(
+                                                                                    `UPDATE Profile 
+                                                                                     SET Profile.display_name = '${givenBusinessName}', 
+                                                                                     Profile.type = 'Shelter' 
+                                                                                     WHERE  Profile.account_id = '${accountId}'`, //can try to add this code to the profile create trigger?
                                                                                 function(err, updatedDisplayName){
                                                                                     if(err){
                                                                                         console.log(err);
