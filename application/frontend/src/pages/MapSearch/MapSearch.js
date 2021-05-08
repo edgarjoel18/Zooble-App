@@ -172,9 +172,6 @@ function MapSearch(props) {
             console.log('Current Page: ', currentPage);
             console.log(typeof businessCategoryFilters);
 
-
-
-
             setSearchCategory(state.searchCategoryParam);
             setSearchTerm(state.searchTermParam);
 
@@ -351,7 +348,7 @@ function MapSearch(props) {
                         options={options}
                         onLoad={onMapLoad}
                         >
-                        {recievedSearchResults && recievedSearchResults.map((searchResult, index) => (
+                        {recievedSearchResults && recievedSearchResults.map((searchResult, index) => (  //need to change index to something else later
                             <>
                              {/* <Marker position={{lat: state.lat, lng: state.lng}}/> */}
                             <Marker 

@@ -13,7 +13,7 @@ const shelterProfileTabs = ["About", "Contact Info"]//, "Recent Posts"]
 const businessProfileTabs = ["About", "Business Info"]//, "Recent Posts"]
 const petOwnerProfileTabs = ["About"]//, "Recent Posts"]
 
-function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
+function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, address, phoneNumber}) {
     console.log("profile: ", profile)
     const [selected, setSelected] = useState('About');
     //const [address, setAddress] = useState('');
@@ -157,7 +157,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
                     <label for="tab-address" >Address: </label>
                     <textarea 
                         id="tab-address"
-                        // value={profile.contactInfo.address} 
+                        value={address} 
                         readOnly={!changing || !(labelSelected === 'address')}
                         onChange={event => autoGrowHandler(event)} 
                         className={styles.AddressTextArea}
@@ -182,7 +182,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
                     <input 
                         id="phone"
                         type="tel" 
-                        // value={profile.contactInfo.phone} 
+                        value={`(${phoneNumber.substring(0,3)}) ${phoneNumber.substring(3,6)}-${phoneNumber.substring(6,10)}`} 
                         readOnly={!changing || !(labelSelected === 'phone number')}
                         maxLength = "20"
                         onKeyPress={event => {
@@ -221,7 +221,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
                             </div>
                         ))} */}
                         <table className={styles['hours-table']}  >
-                            {Object.keys(profile.contactInfo.hours).map(key => (
+                            {Object.keys(hours).map(key => (
                                 <tr className={styles['hours-table-row']} key={key} >
                                     <th className={styles['hours-table-header']} >{key}: </th>
                                     {/* <td className={styles['hours-table-cell']} >{profile.contactInfo.hours[key]}</td> */}

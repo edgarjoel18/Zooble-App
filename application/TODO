@@ -5,3 +5,5 @@ test search bar/decide behavior for entities other than businesses
 Add labels to list of search results to match markers
 Customize Google map to not show businesses (or pet businesses if possible)
 Make latitude and longitude restricted to unique in db
+
+Add link to map search in address name display (about_me)

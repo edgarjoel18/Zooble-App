@@ -10,7 +10,6 @@ import { RedirectPathContext } from '../../context/redirect-path';
 
 import styles from './Profile.module.css'
 import axios from 'axios';
-import React from 'react';
 
 
 
@@ -414,6 +413,9 @@ function Profile({appUser}) {
     const [fetchedPhotoPosts, setFetchedPhotoPosts] = useState([]);
     const [fetchedPets, setFetchedPets] = useState([]);
     const [taggedPosts, setTaggedPosts] = useState([]);
+    const [fetchedHours, setFetchedHours] = useState([]);
+    const [fetchedAddress, setFetchedAddress] = useState([]);
+    const [fetchedPhoneNumber, setFetchedPhoneNumber] = useState([]);
 
     const redirectContext = useContext(RedirectPathContext);
 
@@ -466,6 +468,32 @@ function Profile({appUser}) {
         .catch(err =>{
             redirectContext.updateLoading(false);
             console.log(err)
+        })
+
+        axios.get('/api/business-hours',{params: {profileID: profileID}})
+        .then(response =>{
+            console.log('/api/business-hours: ',response);
+            setFetchedHours(response.data);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+
+        axios.get('/api/business-address',{params: {profileID: profileID}})
+        .then(response =>{
+            setFetchedAddress(response.data.address);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+
+        axios.get('/api/business-phone-number',{params: {profileID: profileID}})
+        .then(response =>{
+            console.log('/api/business-phone-number: ', response.data);
+            setFetchedPhoneNumber(response.data.phone_num);
+        })
+        .catch(err =>{
+            console.log(err);
         })
     },[profileID])
 
@@ -527,7 +555,7 @@ function Profile({appUser}) {
 
     if (!redirectContext.loading){
         displayProfile = (
-            <React.Fragment>
+            <>
                 <ProfileInfo 
                     appUser={appUser} 
                     isSelfView={selfView} 
@@ -537,6 +565,9 @@ function Profile({appUser}) {
                 <div className={styles.Bottom}>
                     <AboutMe
                         aboutMeBody={fetchedProfile.about_me}
+                        hours={fetchedHours}
+                        phoneNumber={fetchedPhoneNumber}
+                        address={fetchedAddress}
                         isSelfView={selfView} 
                         profile={fetchedProfile} 
                         updateProfile={updateProfileHandler} 
@@ -550,7 +581,7 @@ function Profile({appUser}) {
                         updateProfile={updateProfileHandler} 
                     />
                 </div>
-            </React.Fragment>
+            </>
         );
     }
 
