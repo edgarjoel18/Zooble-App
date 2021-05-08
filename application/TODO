@@ -4,3 +4,4 @@ Allow autocomplete of filters for search bar (ie. breeds, business types, etc..)
 test search bar/decide behavior for entities other than businesses
 Add labels to list of search results to match markers
 Customize Google map to not show businesses (or pet businesses if possible)
+Make latitude and longitude restricted to unique in db

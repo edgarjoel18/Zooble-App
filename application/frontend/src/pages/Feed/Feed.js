@@ -68,12 +68,11 @@ function Feed() {
     //runs on refresh
     useEffect(() => { //get profile pic and name of user  //
         redirectContext.updateLoading(true);
-        console.log('/api/get-feed-user');
-        axios.get('/api/get-feed-user')
+        console.log('/api/feed-user');
+        axios.get('/api/feed-user')
         .then(response =>{
-            // console.log(response.data);
-            // console.log(response.data.displayName);
-            setCreatePostDisplayName(response.data.displayName);
+            console.log('/api/get-feed-user response.data: ', response.data);
+            setCreatePostDisplayName(response.data.display_name);
             setCreatePostProfilePic(response.data.profile_pic_link);
         })
         .catch(err =>{
