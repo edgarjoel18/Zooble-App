@@ -21,7 +21,7 @@ router.get("/api/get-profile-pic", (req,res) =>{
 router.get("/api/profile", (req,res) =>{
     console.log("GET /api/profile")
     connection.query(
-        `SELECT Profile.profile_pic_link, Profile.display_name, Profile.about_me
+        `SELECT Profile.profile_pic_link, Profile.display_name, Profile.about_me, Profile.type
          FROM Profile
          WHERE Profile.profile_id = '${req.query.profileID}'`,
          function(err, profile){

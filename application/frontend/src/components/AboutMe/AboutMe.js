@@ -14,6 +14,7 @@ const businessProfileTabs = ["About", "Business Info"]//, "Recent Posts"]
 const petOwnerProfileTabs = ["About"]//, "Recent Posts"]
 
 function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
+    console.log("profile: ", profile)
     const [selected, setSelected] = useState('About');
     //const [address, setAddress] = useState('');
     //const [phone, setPhone] = useState('');
@@ -93,17 +94,17 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
 
     let profileTabs = null;
     // let displayPetOwnerLink = null;
-    switch (profile.accountType) {
-        case 'shelter':
+    switch (profile.type) {
+        case 'Shelter':
             profileTabs = shelterProfileTabs;
             break;
-        case 'business':
+        case 'Business':
             profileTabs = businessProfileTabs;
             break;
-        case 'pet owner':
+        case 'PetOwner':
             profileTabs = petOwnerProfileTabs;
             break;
-        case 'pet':
+        case 'Pet':
             profileTabs = petOwnerProfileTabs;
             // displayPetOwnerLink = (
             //     <div>
@@ -113,11 +114,11 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
             // )
             break;
         default:
-            profileTabs = null;
+            profileTabs = ["No Tabs"];
     }
 
     let tabs = profileTabs.map(tab => (
-        <Tab key={tab} id={tab} section={tab} selected={selected} clicked={onTabClickHandler} accountType={profile.accountType} />
+        <Tab key={tab} id={tab} section={tab} selected={selected} clicked={onTabClickHandler} accountType={profile.type} />
     ))
 
     let content = null; 
@@ -156,7 +157,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
                     <label for="tab-address" >Address: </label>
                     <textarea 
                         id="tab-address"
-                        value={profile.contactInfo.address} 
+                        // value={profile.contactInfo.address} 
                         readOnly={!changing || !(labelSelected === 'address')}
                         onChange={event => autoGrowHandler(event)} 
                         className={styles.AddressTextArea}
@@ -181,7 +182,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
                     <input 
                         id="phone"
                         type="tel" 
-                        value={profile.contactInfo.phone} 
+                        // value={profile.contactInfo.phone} 
                         readOnly={!changing || !(labelSelected === 'phone number')}
                         maxLength = "20"
                         onKeyPress={event => {
@@ -223,7 +224,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView}) {
                             {Object.keys(profile.contactInfo.hours).map(key => (
                                 <tr className={styles['hours-table-row']} key={key} >
                                     <th className={styles['hours-table-header']} >{key}: </th>
-                                    <td className={styles['hours-table-cell']} >{profile.contactInfo.hours[key]}</td>
+                                    {/* <td className={styles['hours-table-cell']} >{profile.contactInfo.hours[key]}</td> */}
                                 </tr>
                             ))}
                         </table>

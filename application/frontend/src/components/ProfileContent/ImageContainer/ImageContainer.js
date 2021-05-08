@@ -36,8 +36,7 @@ function ImageContainer({previews, profile, title, selfView}) {
 
     //display a given number of pictures
     const displayImageStack = (val, accountType) => {
-        console.log('displayImageStack');
-        console.log(previews);
+        console.log('displayImageStack', previews);
         console.log("val: ",val)
         if (val === 0)
             return (
@@ -97,12 +96,12 @@ function ImageContainer({previews, profile, title, selfView}) {
                     )
                     if (title === 'My Siblings' || title === 'My Pets' || title === 'Pets')
                         displayPostModal = (
-                            <Link to={"/Profile/" + previews[index].name} key={previews[index].timestamp + index} >
+                            <Link to={"/Profile/" + previews[index].profile_id} key={index} >
                                     <Img 
                                         className={styles.ImageStack_pic}
                                     >
-                                    <img src={previews[index].profile_pic} alt="No Image Found" className={styles.ImageStack_pic} />
-                                    <div className={styles.ImageStackText} >{previews[index].name}</div>
+                                    <img src={previews[index].profile_pic_link} alt="No Image Found" className={styles.ImageStack_pic} />
+                                    <div className={styles.ImageStackText} >{previews[index].display_name}</div>
                                 </Img>
                             </Link>
                         )

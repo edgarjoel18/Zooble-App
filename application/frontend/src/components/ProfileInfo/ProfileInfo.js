@@ -1,10 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 
-import shelterImg from '../../images/shelterProfile.jpg';
-import businessImg from '../../images/businessProfile.jpg';
-import petOwnerImg from '../../images/petOwnerProfile.jpg';
-import defaultImg from '../../images/noImage.jpg';
 import arrow from '../../images/Arrow.png';
 import styles from './ProfileInfo.module.css';
 
@@ -16,11 +12,11 @@ import { RedirectPathContext } from '../../context/redirect-path';
 
 
 
-function ProfileInfo({displayName, profilePic, appUser, profile, isSelfView, updateProfile}) {
-    console.log(displayName);
-    console.log(profilePic);
+function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
+    console.log(profile.display_name);
+    console.log(profile.profile_pic_link);
     console.log(appUser);
-    //const [profilePic, setProfilePic] = useState('');
+    //const [profile.profile_pic_link, setprofile.profile_pic_link] = useState('');
     //const [profileTitle, setProfileTitle] = useState('');
     const [editing, setEditing] = useState(false);
     const [follow, setFollow] = useState(false); // update this from backend
@@ -40,15 +36,19 @@ function ProfileInfo({displayName, profilePic, appUser, profile, isSelfView, upd
 
     const redirectContext = useContext(RedirectPathContext);
 
-    useEffect(() => {
-        setPetType(profile.petType);
-        setPetBreed(profile.petBreeds);
-        if (redirectContext.redirectPath === location.pathname)
-            redirectContext.redirectTo('/Feed');
-    },[]);
+    // useEffect(() => {
+    //     setPetType(profile.petType);
+    //     setPetBreed(profile.petBreeds);
+    //     if (redirectContext.redirectPath === location.pathname)
+    //         redirectContext.redirectTo('/Feed');
+    // },[]);
+
+    const [displayName, setDisplayName] = useState(profile.display_name);
+    const [profilePic, setProfilePic] = useState(profile.profile_pic_link);
+    const [profileType, setProfileType] = useState(profile.type);
 
     function openEditModal(){
-        profile.accountType === 'pet' ?
+        profileType === 'Pet' ?
         setEditPetDetailsDisplay(true) :
         setEditing(true);
     }
@@ -73,7 +73,7 @@ function ProfileInfo({displayName, profilePic, appUser, profile, isSelfView, upd
     //     files.forEach((file, i) => {
     //     formData.append(i, file)
     //     })
-    //     setProfilePic(formData);
+    //     setprofilePic(formData);
 
     //     console.log(files);
     // }
@@ -104,8 +104,8 @@ function ProfileInfo({displayName, profilePic, appUser, profile, isSelfView, upd
     let displayAccountInfo = null;
     let dropdownButtonStyle = null;
     follow ? dropdownButtonStyle = styles.UnfollowButton : dropdownButtonStyle = styles.DropdownButton;
-    switch(profile.accountType) {
-        case 'shelter' :
+    switch(profileType) {
+        case 'Shelter' :
             nameDisplay = (
                 <h1 className={styles.UserName} >
                     <input 
@@ -143,7 +143,7 @@ function ProfileInfo({displayName, profilePic, appUser, profile, isSelfView, upd
                 </div>
             )
             break;
-        case 'business' :
+        case 'Business' :
             nameDisplay = (
                 <h1 className={styles.UserName} >
                     <input 
@@ -182,7 +182,7 @@ function ProfileInfo({displayName, profilePic, appUser, profile, isSelfView, upd
                 
             )
             break;
-        case 'pet owner' :
+        case 'PetOwner' :
             nameDisplay = (
                 <h1 className={styles.UserName} >
                     <input 
@@ -220,11 +220,11 @@ function ProfileInfo({displayName, profilePic, appUser, profile, isSelfView, upd
                 </div>
             )
             break;
-        case 'pet':
+        case 'Pet':
             nameDisplay = (
                 <React.Fragment>
                     <div style={{display: 'flex'}} >
-                        <h1 className={styles.UserName}>{profile.userName ? profile.userName : 'Name of Your Pet'}</h1>
+                        <h1 className={styles.UserName}>{displayName ? displayName : 'Name of Your Pet'}</h1>
                         <h3 style={{marginLeft: '10px'}} >
                             {petType.value ? petType.value : 'Type'}
                             /

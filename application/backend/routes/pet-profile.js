@@ -30,13 +30,14 @@ router.post("/api/create-pet-profile",(req,res)=>{
                 console.log(userPet);
                  connection.query(
                      `INSERT INTO Profile
-                      (display_name,about_me, account_id, pet_id)
+                      (display_name,about_me, account_id, pet_id, type)
                       VALUES ('${req.body.name}', '', 
                       (SELECT Account.account_id
                         FROM Account
                         JOIN RegisteredUser ON RegisteredUser.reg_user_id = '${req.session.reg_user_id}'
                         WHERE Account.user_id = RegisteredUser.user_id),
-                      '${userPet.insertId}')`,
+                      '${userPet.insertId}',
+                      'Pet')`,
                       function(err, result){
                           if(err){
                               console.log(err);

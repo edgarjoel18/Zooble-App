@@ -68,7 +68,7 @@ router.post("/api/sign-up", (req,res) =>{
                                                                     }
                                                                     console.log('Credentials Created');
                                                                     console.log(insertedCredentials.insertId);
-                                                                    connection.query(`UPDATE Profile SET Profile.display_name = '${givenFirstName}' WHERE  Profile.account_id = '${accountId}'`,
+                                                                    connection.query(`UPDATE Profile SET Profile.display_name = '${givenFirstName}', Profile.type = 'PetOwner' WHERE  Profile.account_id = '${accountId}'`,
                                                                     function(err, updatedDisplayName){
                                                                         if(err){
                                                                             console.log(err);
@@ -188,7 +188,7 @@ router.post('/api/sign-up/business', (req,res) =>{
                                                                                 }
                                                                                 console.log('Commerce Created');
                                                                                 console.log(insertedCommerce.insertId);
-                                                                                connection.query(`UPDATE Profile SET Profile.display_name = ${givenBusinessName} WHERE  Profile.account_id = ${accountId}`,
+                                                                                connection.query(`UPDATE Profile SET Profile.display_name = ${givenBusinessName}, Profile.type = 'Business' WHERE  Profile.account_id = ${accountId}`,
                                                                                 function(err, updatedDisplayName){
                                                                                     if(err){
                                                                                         console.log(err);
@@ -321,7 +321,7 @@ router.post('/api/sign-up/shelter', (req,res) =>{
                                                                                         console.log(givenPetTypes[i].label, " inserted");
                                                                                     })
                                                                                 }
-                                                                                connection.query(`UPDATE Profile SET Profile.display_name = ${givenBusinessName} WHERE  Profile.account_id = ${account_id}`, //can try to add this code to the profile create trigger?
+                                                                                connection.query(`UPDATE Profile SET Profile.display_name = ${givenBusinessName}, Profile.type = 'Shelter' WHERE  Profile.account_id = ${account_id}`, //can try to add this code to the profile create trigger?
                                                                                 function(err, updatedDisplayName){
                                                                                     if(err){
                                                                                         console.log(err);

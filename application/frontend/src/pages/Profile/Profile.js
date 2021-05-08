@@ -279,108 +279,6 @@ const newBusinessProfile = {
     photos: []
 };
 
-const petOwnerProfile = {
-    accountType: 'pet owner',
-    id: '3',
-    userName: 'Alex',
-    userPicture: 'petOwner1Image',
-    about: 'Hello, I\'m Alex.',
-    photos: [
-        { 
-            post_id: 1,
-            user_display_name: 'Paw Spa',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
-            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
-            likes: 0,
-            timestamp: '12/25/20 at 11:05 AM',
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        },
-        { 
-            post_id: 2,
-            user_display_name: 'Paw Spa',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
-            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
-            likes: 0,
-            timestamp: '12/25/20 at 11:05 AM',
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        },
-        { 
-            post_id: 3,
-            user_display_name: 'Paw Spa',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
-            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
-            likes: 0,
-            timestamp: '12/25/20 at 11:05 AM',
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        },
-        { 
-            post_id: 4,
-            user_display_name: 'Paw Spa',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
-            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
-            likes: 0,
-            timestamp: '12/25/20 at 11:05 AM',
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        },
-        { 
-            post_id: 5,
-            user_display_name: 'Paw Spa',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
-            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
-            likes: 0,
-            timestamp: '12/25/20 at 11:05 AM',
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        },
-        { 
-            post_id: 5,
-            user_display_name: 'Paw Spa',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg', 
-            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
-            likes: 0,
-            timestamp: '12/25/20 at 11:05 AM',
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        },
-    ],
-    petProfiles: [
-        { pet_id: 1,
-            name: 'Mimi',
-            size_name: 'medium',
-            age_name: 'six',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg' 
-        },
-        {   pet_id: 3,
-            name: 'Juju',
-            size_name: 'larg',
-            age_name: 'ten',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg' 
-        },
-        {   pet_id: 2,
-            name: 'Max',
-            size_name: 'small',
-            age_name: 'two',
-            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
-        },
-        { pet_id: 4,
-            name: 'Mimi',
-            size_name: 'medium',
-            age_name: 'six',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg' 
-        },
-        {   pet_id: 5,
-            name: 'Juju',
-            size_name: 'larg',
-            age_name: 'ten',
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg' 
-        },
-        {   pet_id: 6,
-            name: 'Max',
-            size_name: 'small',
-            age_name: 'two',
-            profile_pic:'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
-        }
-    ]
-};
-
 const newPetOwnerProfile = {
     accountType: 'pet owner',
     id: '11',
@@ -514,6 +412,7 @@ function Profile({appUser}) {
 
     const [fetchedProfile,setFetchedProfile] = useState({});
     const [fetchedPhotoPosts, setFetchedPhotoPosts] = useState([]);
+    const [fetchedPets, setFetchedPets] = useState([]);
 
     const redirectContext = useContext(RedirectPathContext);
 
@@ -525,7 +424,7 @@ function Profile({appUser}) {
         axios.get('/api/profile',{params: {profileID: profileID}})
         .then(response =>{
             console.log(response);
-            console.log(response.data);
+            console.log('Fetched Profile: ', response.data);
             setFetchedProfile(response.data);
         })
         .catch(err =>{
@@ -543,7 +442,19 @@ function Profile({appUser}) {
             redirectContext.updateLoading(false);
             console.log(err)
         })
-    },[])
+
+        axios.get('/api/get-current-user-pets',{params: {profileID: profileID}})
+        .then(response =>{
+            console.log(response)
+            console.log(response.data);
+            setFetchedPets(response.data);
+            redirectContext.updateLoading(false);
+        })
+        .catch(err =>{
+            redirectContext.updateLoading(false);
+            console.log(err)
+        })
+    },[profileID])
 
     useEffect(()=>{
         console.log("Type of profileID: ", typeof profileID)
@@ -567,7 +478,7 @@ function Profile({appUser}) {
     
     // console.log(appUser);
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
-    const [userProfile, setUserProfile] = useState(petOwnerProfile);
+    const [userProfile, setUserProfile] = useState();
     const [selfView, setSelfView] = useState(false);
 
     function updateProfileHandler(type, value) {
@@ -605,25 +516,23 @@ function Profile({appUser}) {
         displayProfile = (
             <React.Fragment>
                 <ProfileInfo 
-                    displayName={fetchedProfile.display_name} 
-                    profilePic={fetchedProfile.profile_pic_link} 
                     appUser={appUser} 
                     isSelfView={selfView} 
-                    profile={userProfile} 
+                    profile={fetchedProfile}
                     updateProfile={updateProfileHandler} 
                 />
                 <div className={styles.Bottom}>
                     <AboutMe
                         aboutMeBody={fetchedProfile.about_me}
                         isSelfView={selfView} 
-                        profile={userProfile} 
+                        profile={Profile} 
                         updateProfile={updateProfileHandler} 
                     />
                     <ProfileContent
                         photoPosts={fetchedPhotoPosts}
-                        pets={[]}
+                        pets={fetchedPets}
                         isSelfView={selfView} 
-                        profile={userProfile} 
+                        profile={fetchedProfile} 
                         updateProfile={updateProfileHandler} 
                     />
                 </div>
