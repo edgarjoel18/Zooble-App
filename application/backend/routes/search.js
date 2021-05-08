@@ -177,33 +177,7 @@ router.get("/api/search", (req,res) =>{
         let query = '';
 
 
-        if(givenBizCategories[0] !== 'undefined'){
-            query =             
-            `SELECT * 
-            FROM Business
-            LEFT JOIN Shelter
-            ON Business.business_id = Shelter.business_id
-            LEFT JOIN Address
-            ON Business.reg_user_id = Address.reg_user_id
-            LEFT JOIN Commerce
-            ON Business.business_id = Commerce.business_id
-            WHERE LOWER(name) LIKE '%${name}%'
-            AND Shelter.business_id IS NULL
-            AND (
-            `
-            for(let i = 0; i < givenBizCategories.length; i++){  //build sql query with filters
-                console.log("Given Biz Categories [", i,"]: " , givenBizCategories[i]);
-                console.log(typeof givenBizCategories[i]);
-                if(i == (givenBizCategories.length - 1))
-                    query += 'Commerce.business_type_id = ' + givenBizCategories[i];
-                else
-                    query += 'Commerce.business_type_id = ' + givenBizCategories[i] + ' OR ';
-                    
-            }
-            query += ");"
-            console.log(query);
-        }
-        else{
+        if(givenBizCategories && givenBizCategories[0] !== 'undefined'){
             query =             
             `SELECT *,
             (3959 * acos(cos(radians('${givenLatitude}'))* cos(radians(Address.latitude))* cos(radians(Address.longitude) - radians('${givenLongitude}')) + sin(radians(${givenLatitude})) * sin(radians(Address.latitude)))) as distance
@@ -212,6 +186,38 @@ router.get("/api/search", (req,res) =>{
             ON Business.business_id = Shelter.business_id
             LEFT JOIN Address
             ON Business.reg_user_id = Address.reg_user_id
+            JOIN RegisteredUser ON Business.reg_user_id = RegisteredUser.reg_user_id
+            JOIN Account ON RegisteredUser.user_id = Account.user_id
+            LEFT JOIN Profile ON Account.account_id = Profile.account_id
+            HAVING Shelter.business_id IS NULL 
+            AND LOWER(name) LIKE '%${name}%'
+            AND distance <  ${preferredSearchDistance}
+            AND (
+            `
+            for(let i = 0; i < givenBizCategories.length; i++){  //build sql query with filters
+                console.log("Given Biz Categories [", i,"]: " , givenBizCategories[i]);
+                console.log(typeof givenBizCategories[i]);
+                if(i == (givenBizCategories.length - 1))
+                    query += 'Commerce.business_type_id = ' + givenBizCategories[i];
+                else
+                    query += 'Commerce.business_type_id = ' + givenBizCategories[i] + ' OR '; 
+            }
+             //make sure to start from selected page and limit results
+            query += `) 
+            LIMIT 10                       
+            OFFSET '${(givenPage-1)*10}';`
+            console.log(query);
+        }
+        else{
+            query =             
+            `SELECT *,
+            (3959 * acos(cos(radians('${givenLatitude}'))* cos(radians(Address.latitude))* cos(radians(Address.longitude) - radians('${givenLongitude}')) + sin(radians(${givenLatitude})) * sin(radians(Address.latitude)))) as distance
+            FROM Business
+            LEFT JOIN Shelter ON Business.business_id = Shelter.business_id
+            LEFT JOIN Address ON Business.reg_user_id = Address.reg_user_id
+            JOIN RegisteredUser ON Business.reg_user_id = RegisteredUser.reg_user_id
+            JOIN Account ON RegisteredUser.user_id = Account.user_id
+            LEFT JOIN Profile ON Account.account_id = Profile.account_id
             HAVING Shelter.business_id IS NULL 
             AND LOWER(name) LIKE '%${name}%'
             AND distance <  ${preferredSearchDistance}
@@ -226,29 +232,6 @@ router.get("/api/search", (req,res) =>{
                 throw err;
             } 
             else {
-                // let resultsCount;
-                // let offset = (givenPage-1) * 10;  //let offset equal page number value * 10 (10 for max number of markers allowed by google maps Api)
-                // for(let i = 0; i < result.length; i++){
-                //     if(i < offset)  //if these search results were already given than skip adding to returned search results
-                //         continue;
-                //     var row = result[i];
-                //     const proximityInMiles = distance(row.latitude, givenLatitude, row.longitude, givenLongitude);
-                //     console.log("Proximity in Miles: ", proximityInMiles);
-                //     if(proximityInMiles < preferredSearchDistance){
-                //         requestedSearchResults.searchResults.push({
-                //             "business_id":row.business_id,
-                //             "reg_user_id":row.reg_user_id,
-                //             "name": row.name,
-                //             "lat": row.latitude,
-                //             "lng": row.longitude
-                //         });
-
-                //     }
-                //     if(requestedSearchResults.searchResults.length == 10)
-                //         break;
-                // }  
-        
-                // let responseObject = {requestedSearchResults: requestedSearchResults, resultsCount: resultsCount};
                 requestedSearchResults = results;
                 console.log(requestedSearchResults);
                 res.json(requestedSearchResults);
@@ -260,15 +243,17 @@ router.get("/api/search", (req,res) =>{
 
         let query = '';
 
-        if(givenPetTypes[0] !== 'undefined'){
+        if(givenPetTypes && givenPetTypes[0] !== 'undefined'){
             query =
             `SELECT *
             FROM Business
-            INNER JOIN Shelter
-            ON Business.business_id = Shelter.business_id
-            LEFT JOIN Address
-            ON Business.reg_user_id = Address.reg_user_id
-            WHERE LOWER(name) LIKE '%${name}%'
+            JOIN Shelter ON Business.business_id = Shelter.business_id
+            LEFT JOIN Address ON Business.reg_user_id = Address.reg_user_id
+            JOIN RegisteredUser ON Business.reg_user_id = RegisteredUser.reg_user_id
+            JOIN Account ON RegisteredUser.user_id = Account.user_id
+            LEFT JOIN Profile ON Account.account_id = Profile.account_id
+            AND LOWER(name) LIKE '%${name}%'
+            AND distance <  ${preferredSearchDistance}
             AND (
             `
 
@@ -281,54 +266,32 @@ router.get("/api/search", (req,res) =>{
                     query += 'Commerce.business_type_id = ' + givenPetTypes[i] + ' OR ';
                     
             }
-            query += ");"
+            query += `) 
+            LIMIT 10                       
+            OFFSET '${(givenPage-1)*10}';`
             console.log(query);
         }
         else{
-            query =
-            `SELECT *
+            query = 
+            `SELECT *,
+            (3959 * acos(cos(radians('${givenLatitude}'))* cos(radians(Address.latitude))* cos(radians(Address.longitude) - radians('${givenLongitude}')) + sin(radians(${givenLatitude})) * sin(radians(Address.latitude)))) as distance
             FROM Business
-            INNER JOIN Shelter
-            ON Business.business_id = Shelter.business_id
-            LEFT JOIN Address
-            ON Business.reg_user_id = Address.reg_user_id
-            WHERE LOWER(name) LIKE '%${name}%'
-            `
+            JOIN Shelter ON Business.business_id = Shelter.business_id
+            LEFT JOIN Address ON Business.reg_user_id = Address.reg_user_id
+            JOIN RegisteredUser ON Business.reg_user_id = RegisteredUser.reg_user_id
+            JOIN Account ON RegisteredUser.user_id = Account.user_id
+            LEFT JOIN Profile ON Account.account_id = Profile.account_id
+            HAVING LOWER(name) LIKE '%${name}%'
+            AND distance <  ${preferredSearchDistance}
+            LIMIT 10 
+            OFFSET ${(givenPage-1)*10}`
         }
-        connection.query(
-            `SELECT *
-            FROM Business
-            INNER JOIN Shelter
-            ON Business.business_id = Shelter.business_id
-            LEFT JOIN Address
-            ON Business.reg_user_id = Address.reg_user_id
-            WHERE LOWER(name) LIKE '%${name}%'
-            LIMIT 10
-            `, 
-            function(err, result) {
+        connection.query(query, 
+            function(err, results) {
             if(err){
                 throw err;
             } else {
-                console.log("Result: ",result);
-              
-                Object.keys(result).forEach(function(key) {
-                    var row = result[key];
-                    // console.log(row);
-                    // console.log(row.name);
-                    // console.log(row.size_id);
-                    // console.log(row.age_id);
-                    const proximityInMiles = distance(row.latitude, givenLatitude, row.longitude, givenLongitude);
-                    console.log("Proximity in Miles: ", proximityInMiles);
-                    if(proximityInMiles < preferredSearchDistance){
-                        requestedSearchResults.searchResults.push({
-                            "shelter_id":row.shelter_id,
-                            "reg_user_id":row.reg_user_id,
-                            "name": row.name,
-                            "lat": row.latitude,
-                            "lng": row.longitude
-                        });
-                    }
-                  });
+                requestedSearchResults = results;
                 console.log(requestedSearchResults);
                 res.json(requestedSearchResults);
             }
@@ -339,10 +302,8 @@ router.get("/api/search", (req,res) =>{
         connection.query(
             `SELECT User.first_name, RegisteredUser.reg_user_id
             FROM User
-            LEFT JOIN RegisteredUser
-            ON User.user_id = RegisteredUser.user_id
-            LEFT JOIN Business
-            ON RegisteredUser.reg_user_id = Business.reg_user_id
+            LEFT JOIN RegisteredUser ON User.user_id = RegisteredUser.user_id
+            LEFT JOIN Business ON RegisteredUser.reg_user_id = Business.reg_user_id
             WHERE LOWER(User.first_name) LIKE '%${name}%'
             AND Business.business_id IS NULL
             `, 

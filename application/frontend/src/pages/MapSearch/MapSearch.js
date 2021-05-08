@@ -391,7 +391,7 @@ function MapSearch(props) {
                             <ul>
                                 {recievedSearchResults.length == 0 && <li className={styles['no-results']}>No {searchCategory} that Match your Search. But here are some {searchCategory} you might like: </li>}
                                 {recievedSearchResults.length != 0 && searchCategory == 'Pets' && recievedSearchResults.map((searchResult) => (
-                                    <Link className={styles['profile-link']} to={"/Profile/" + searchResult.name}><li className={styles['search-result']} key={searchResult.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                    <Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}><li className={styles['search-result']} key={searchResult.pet_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
                                 ))}
                                 {recievedSearchResults.length != 0 && searchCategory == 'Businesses' && recievedSearchResults.map((searchResult) => (
                                     <BusinessSearchResult searchResult={searchResult} panTo={panTo}/>
@@ -557,13 +557,13 @@ function MapSearch(props) {
 
 function BusinessSearchResult({searchResult,panTo}){
     return (
-        <li className={styles['search-result']} key={searchResult.reg_business_id} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li>
+        <li className={styles['search-result']} key={searchResult.reg_business_id} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/><Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}><span className={styles['search-result-name']}>{searchResult.name}</span></Link></li>
     )
 }
 
 function ShelterSearchResult({searchResult,panTo}){
     return (
-        <li className={styles['search-result']} key={searchResult.reg_shelter_id} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li>
+        <li className={styles['search-result']} key={searchResult.reg_shelter_id} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/><Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}><span className={styles['search-result-name']}>{searchResult.name}</span></Link></li>
     )
 
 }
