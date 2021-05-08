@@ -538,7 +538,7 @@ function Profile({appUser}) {
                     <AboutMe
                         aboutMeBody={fetchedProfile.about_me}
                         isSelfView={selfView} 
-                        profile={Profile} 
+                        profile={fetchedProfile} 
                         updateProfile={updateProfileHandler} 
                     />
                     <ProfileContent

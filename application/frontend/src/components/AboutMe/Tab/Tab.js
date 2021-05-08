@@ -15,7 +15,7 @@ function Tab(props) {
     let aboutStyle = {};
     if (tabText === 'About') {
         aboutStyle = {marginTop: '35px'};
-        if (props.accountType === 'pet owner' || props.accountType === 'pet')
+        if (props.accountType === 'PetOwner' || props.accountType === 'Pet')
             tabText = props.section + ' Me';
         else 
             tabText = props.section + ' Us';
