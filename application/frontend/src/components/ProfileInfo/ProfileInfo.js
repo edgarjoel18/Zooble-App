@@ -15,6 +15,7 @@ import { RedirectPathContext } from '../../context/redirect-path';
 function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
     console.log(profile.display_name);
     console.log(profile.profile_pic_link);
+    
     console.log(appUser);
     //const [profile.profile_pic_link, setprofile.profile_pic_link] = useState('');
     //const [profileTitle, setProfileTitle] = useState('');
@@ -46,6 +47,8 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
     const [displayName, setDisplayName] = useState(profile.display_name);
     const [profilePic, setProfilePic] = useState(profile.profile_pic_link);
     const [profileType, setProfileType] = useState(profile.type);
+
+    console.log("Profile Type: ", profileType);
 
     function openEditModal(){
         profileType === 'Pet' ?

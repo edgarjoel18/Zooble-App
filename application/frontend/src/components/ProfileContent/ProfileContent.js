@@ -38,7 +38,7 @@ function ProfileContent({photoPosts, pets, profile, isSelfView, updateProfile, t
         case 'Business':
             imageContainer = (
                 <div className={styles.ImageContainerBusiness} >
-                    <ImageContainer title='Photos' selfView={isSelfView} image={profile.photos} type={profile.type} profile={profile} />
+                    <ImageContainer title='Photos' selfView={isSelfView} previews={photoPosts} type={profile.type} profile={profile} />
                 </div>
             )
             break;

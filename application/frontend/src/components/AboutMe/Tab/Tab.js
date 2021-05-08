@@ -23,7 +23,7 @@ function Tab(props) {
 
     return (
         <div className={tabStyle} onClick={() => props.clicked(props.id)}>
-            <p className={textStyle} style={aboutStyle}  >
+            <p className={textStyle} style={aboutStyle}>
                 {tabText}
             </p>
         </div>
