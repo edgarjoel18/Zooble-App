@@ -18,7 +18,7 @@ function MyPets() {
     const [selectedPet, setSelectedPet] = useState({});
 
 
-    const [myPets,setMyPets] = useState([])
+    const [myPets,setMyPets] = useState([]);
 
     let history = useHistory();
 
@@ -37,9 +37,9 @@ function MyPets() {
 
     useEffect(() => {axios.get('/api/get-current-user-pets') 
         .then(response =>{
-            console.log(response.data);
+            console.log('/api/get-current-user-pets response.data',response.data);
             setMyPets(response.data);
-            console.log(myPets);
+            console.log("myPets: ", myPets);
         })
         .catch(err =>{
             console.log("Error: ");
@@ -62,9 +62,9 @@ function MyPets() {
              </div>
             {myPets && myPets.map((pet,index) =>(
                     <div key={index} className={styles['my-pets-container-pet']} >  {/*onClick={() => profileClicked('/Profile/' + pet.pet_name)}*/}
-                        <div className={styles.LinkDiv} onClick={() => history.push('/Profile/' + pet.pet_name)}  >
-                            <img className={styles['my-pets-container-pet-pic']} src={pet.pet_prof_pic}/>
-                            <div className={styles['my-pets-container-pet-name']}>{pet.pet_name}</div>
+                        <div className={styles.LinkDiv} onClick={() => history.push('/Profile/' + pet.profile_id)}  >
+                            <img className={styles['my-pets-container-pet-pic']} src={pet.profile_pic_link}/>
+                            <div className={styles['my-pets-container-pet-name']}>{pet.display_name}</div>
                         </div>
                         <img className={styles['my-pets-container-pet-delete']} onClick={()=>viewDeletionModal(pet)}src={DeleteIcon}/>
                     </div>

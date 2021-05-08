@@ -4,13 +4,12 @@ const router = express.Router();
 
 router.get("/api/get-current-user-pets",(req,res)=>{
     connection.query(
-        `SELECT Pet.name
-         FROM Pet
-         LEFT JOIN RegisteredUser on RegisteredUser.reg_user_id = Pet.reg_user_id
-         LEFT JOIN User on User.user_id = RegisteredUser.user_id
-         LEFT JOIN Account on Account.user_id = User.user_id
-         LEFT JOIN Credentials on Credentials.acct_id = Account.account_id
-         WHERE Credentials.username = ?`, [req.session.username],
+        `SELECT *
+         FROM Profile
+         JOIN RegisteredUser ON RegisteredUser.reg_user_id = '${[req.session.reg_user_id]}'
+         JOIN Account ON Account.user_id = RegisteredUser.user_id
+         WHERE (Profile.account_id = Account.account_id
+         && Profile.profile_id != '${req.session.profile_id}')`,
          function(err, userPets){
              if(err){
                  console.log(err);
