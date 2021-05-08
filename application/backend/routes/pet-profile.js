@@ -130,6 +130,31 @@ router.post("/api/create-pet-profile",(req,res)=>{
     // res.status(200).json(userPet);
 })
 
-// router.get("/api/tagged-posts")
+router.get("/api/tagged-posts", (req,res) =>{
+    console.log("GET /api/tagged-posts");
+
+    connection.query(
+        `SELECT * 
+         FROM Photo
+         LEFT JOIN Post ON Photo.post_id = Post.post_id
+         JOIN RegisteredUser ON RegisteredUser.reg_user_id = Post.reg_user_id
+         JOIN Account ON RegisteredUser.user_id = Account.user_id
+         JOIN Profile ON Account.account_id = Profile.account_id
+         WHERE Photo.post_id 
+         IN
+         (SELECT PostTag.post_id
+          FROM PostTag 
+          WHERE PostTag.pet_id = Profile.pet_id)
+          AND Profile.profile_id = '${req.query.profileID}'`,
+         function(err, taggedPosts){
+             if(err){
+                 console.log(err);
+             }
+             else{
+                 console.log(taggedPosts);
+                 res.status(200).json(taggedPosts);
+             }
+         })
+})
 
 module.exports = router

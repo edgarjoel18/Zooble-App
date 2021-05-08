@@ -413,6 +413,7 @@ function Profile({appUser}) {
     const [fetchedProfile,setFetchedProfile] = useState({});
     const [fetchedPhotoPosts, setFetchedPhotoPosts] = useState([]);
     const [fetchedPets, setFetchedPets] = useState([]);
+    const [taggedPosts, setTaggedPosts] = useState([]);
 
     const redirectContext = useContext(RedirectPathContext);
 
@@ -448,6 +449,18 @@ function Profile({appUser}) {
             console.log(response)
             console.log(response.data);
             setFetchedPets(response.data);
+            redirectContext.updateLoading(false);
+        })
+        .catch(err =>{
+            redirectContext.updateLoading(false);
+            console.log(err)
+        })
+
+        axios.get('/api/tagged-posts',{params: {profileID: profileID}})
+        .then(response =>{
+            console.log(response)
+            console.log("taggedPosts: ",response.data);
+            setTaggedPosts(response.data);
             redirectContext.updateLoading(false);
         })
         .catch(err =>{
@@ -530,6 +543,7 @@ function Profile({appUser}) {
                     />
                     <ProfileContent
                         photoPosts={fetchedPhotoPosts}
+                        taggedPosts={taggedPosts}
                         pets={fetchedPets}
                         isSelfView={selfView} 
                         profile={fetchedProfile} 

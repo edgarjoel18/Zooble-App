@@ -8,8 +8,9 @@ import WriteAReview from '../Modals/WriteAReview';
 import styles from './ProfileContent.module.css';
 import axios from 'axios';
 
-function ProfileContent({photoPosts, pets, profile, isSelfView, updateProfile}) {
+function ProfileContent({photoPosts, pets, profile, isSelfView, updateProfile, taggedPosts}) {
     console.log("photoPosts: ",photoPosts);
+    console.log("taggedPosts: ", taggedPosts);
     console.log("pets: ",pets);
     console.log("profile account type: ", profile.type)
     const [writeAReviewDisplay, setWriteAReviewDisplay] = useState(false);
@@ -52,7 +53,7 @@ function ProfileContent({photoPosts, pets, profile, isSelfView, updateProfile}) 
         case 'Pet':
             imageContainer = (
                 <div className={styles.ImageContainerTwoRows} >
-                    <ImageContainer title='My Photos' previews={photoPosts} selfView={isSelfView} type={profile.type} profile={profile} />
+                    <ImageContainer title='My Photos' previews={taggedPosts} selfView={isSelfView} type={profile.type} profile={profile} />
                     <ImageContainer title='My Siblings' previews={pets} type={profile.type} profile={profile}/>
                 </div>
             )
