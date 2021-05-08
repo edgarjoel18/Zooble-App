@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { NavLink, useHistory } from "react-router-dom";
+import axios from 'axios';
+
 import styles from './Feed.module.css'
 import bus_prof_pic from '../../images/businessProfile.jpg'
 import shel_prof_pic from '../../images/shelterProfile.jpg'
@@ -11,7 +13,7 @@ import ArrowIcon from '../../images/Created Icons/Arrow.svg'
 function AdminFeed() {
     const [postModalDisplay, setPostModalDisplay] = useState(false);
     const [feedPosts, setFeedPosts] = useState([
-        {
+        /* {
             post_id: 1,
             user_display_name: 'Burgsdale Pet Shelter',
             link: "/Profile/ShelterId=2",
@@ -40,8 +42,21 @@ function AdminFeed() {
             flags: 9,
             timestamp: '12/25/20 at 11:05 AM',
             body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        }
+        } */
     ]);
+
+    useEffect(() => {
+        console.log('/api/get-admin-feed-posts');
+        axios.get('/api/get-admin-feed-posts')
+            .then(response => {
+                console.log(response.data);
+                setFeedPosts(response.data);
+            })
+            .catch(err => {
+                console.log("Error: ");
+                console.log(err);
+            })
+    }, [])
 
     const [selectedPost, setSelectedPost] = useState({});
     const [createPostOverlayDisplayBool, setCreatePostOverlayDisplayBool] = useState(true);
@@ -70,19 +85,19 @@ function AdminFeed() {
 
     return (
         <>
-          <div className={styles["follower-feed-container"]}>
+            <div className={styles["follower-feed-container"]}>
                 <div className={styles["follower-feed-header"]}></div>
-                
+
                 {feedPosts.length == 0 && <li>No Feed Posts</li>}
                 {feedPosts && feedPosts.map((feedPost) => (
                     <div className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
                         <NavLink to={feedPost.link}>
                             <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic} />
                         </NavLink>
-                        <NavLink style={{textDecoration: 'none'}} to={feedPost.link}>
-                        <div className={styles["follower-feed-post-name"]}>{feedPost.user_display_name}</div>
+                        <NavLink style={{ textDecoration: 'none' }} to={feedPost.link}>
+                            <div className={styles["follower-feed-post-name"]}>{feedPost.user_display_name}</div>
                         </NavLink>
- 
+
                         <div className={styles["follower-feed-post-timestamp"]}>{feedPost.timestamp}</div>
                         <div className={styles["follower-feed-post-flags"]}>{feedPost.flags}</div>
                         <button className={styles['follower-feed-post-flag']} />
