@@ -22,15 +22,15 @@ router.post("/api/reset", (req,res) =>{
             'special' : /[!@#$%^&*]/,
             'full'    : /^[A-Za-z0-9!@$%^&*]{8,50}$/
         };
-        return re.capital .test(password) && 
-               re.digit   .test(password) && 
-               re.special .test(password) &&
-               re.full    .test(password);
+        return re.capital .test(givenPassword) && 
+               re.digit   .test(givenPassword) && 
+               re.special .test(givenPassword) &&
+               re.full    .test(givenPassword);
                
     }
 
-    connection.query("SELECT user_id FROM User WHERE email=?", givenEmail,  //check if email is taken
-                            function(err, users, field){
+    connection.query(`UPDATE Credentials SET password = '${givenPassword}' WHERE email= '${givenEmail}'`, 
+                        (error, post, fields) => {
                                 if(users.length === 0){
                                             if(passwordValidate(givenPassword)){  //if password is valid
                                                 if(givenPassword === givenResubmitted){  //if password and confirmed password match

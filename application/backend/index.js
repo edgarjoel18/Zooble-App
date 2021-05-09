@@ -24,7 +24,8 @@ const profileEditRouter = require('./routes/edit-profile.js');
 const petProfileRouter = require('./routes/pet-profile.js');
 const businessProfileRouter = require('./routes/business-profile.js')
 
-const messageRouter = require('./routes/messages.js')
+const resetRouter = require('./routes/reset.js')
+const resetPasswordRouter = require('./routes/resetpassword.js')
 
 const app = express();
 
@@ -47,7 +48,7 @@ app.use(session({
      saveUninitialized: false,
      store: sessionStore,
      cookie: {
-         maxAge: 60 * 60 * 24 * 1000, //1 day expiration
+         expires: 60 * 60 * 24 * 1000, //1 day expiration
      }
  }))
 
@@ -109,8 +110,11 @@ app.use(petProfileRouter)
 //Business Profile Data and Edit Options
 app.use(businessProfileRouter)
 
-//Message Router
-app.use(messageRouter)
+//Pet Profile Data and Edit options
+app.use(resetRouter)
+
+//Business Profile Data and Edit Options
+app.use(resetPasswordRouter)
 
 
 

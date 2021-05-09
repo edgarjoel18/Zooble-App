@@ -12,6 +12,7 @@ router.get("/api/reset", (req, res) => {
     if(req.body.email == ''){
         res.status(400).send('Email required');
     }
+
     connection.query('SELECT * FROM Credentials WHERE email = ?', [email], function(error, results, fields){
         if(results.length > 0 && email == results[0].email){
             const token = randomToken(16);
