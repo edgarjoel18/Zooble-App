@@ -27,6 +27,8 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
 
     const [aboutMeContent, setAboutMeContent] = useState(aboutMeBody);
 
+    let hoursLabels = [];
+
     // useEffect(() => {
     //      setPhone(shelterInfo.phone);
     //      setHours(shelterInfo.hours);
@@ -44,6 +46,14 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
     //     return (() => {
     //         clearTimeout(timer);
     //     });
+
+    // useEffect(()=>{
+    //     let hoursLabels = ['Sunday: ','Sunday: ', 'Monday: ','Monday: ', 'Tuesday: ', 'Tuesday: ', 'Wednesday: ','Wednesday: ', 'Thursday: ', 'Thursday: ','Friday: ','Friday: ', 'Saturday: ', 'Saturday: '];
+    //     for(let i = 0; i < hours.length; i+=2){
+    //         hoursDisplay.push(<li>{hoursLabels[i]}: {hours[i]}-{hours[i+1]}</li>)
+    //     }
+    //     console.log('hoursDisplay: ', hoursDisplay);
+    // }, [])
 
 
     // }, [address, phone, changing])
@@ -214,20 +224,13 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                             }
                             <label>Hours: </label>
                         </div>
-                        {/* {Object.keys(props.profile.contactInfo.hours).map(key => (
-                            <div className={styles.Days} key={key} >
+                        {Object.keys(hours).map(key => (
+                            <div className={styles.Days} key={key}>
                                 <label>{key}: </label>
-                                <span >{props.profile.contactInfo.hours[key]}</span>
+                                {<span >{hours[key]}</span>}
+                                {hours[key] == null && <span>Closed</span>}
                             </div>
-                        ))} */}
-                        <table className={styles['hours-table']}  >
-                            {Object.keys(hours).map(key => (
-                                <tr className={styles['hours-table-row']} key={key} >
-                                    <th className={styles['hours-table-header']} >{key}: </th>
-                                    {/* <td className={styles['hours-table-cell']} >{profile.contactInfo.hours[key]}</td> */}
-                                </tr>
-                            ))}
-                        </table>
+                        ))}
                     </div>
                     {/* {
                         props.isSelfView && (labelSelected === 'hours') && 

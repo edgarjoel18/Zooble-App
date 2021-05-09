@@ -323,7 +323,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
                 </div>
                 {displayAccountInfo}
             </div>
-            <SendAMessage display={sendAMessageDisplay} onClose={()=> setSendAMessageDisplay(false)}/>
+            <SendAMessage display={sendAMessageDisplay} profile={profile} onClose={()=> setSendAMessageDisplay(false)}/>
             <LoginRequired display={loginRequiredDisplay} onClose={() =>setLoginRequiredDisplay(false)} redirect={location.pathname} />    
         </div>
     );
