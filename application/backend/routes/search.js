@@ -65,58 +65,57 @@ router.get("/api/search", (req,res) =>{
         let requestedPetAges =  req.query.searchPetAges;
 
         let query = '';
-        if((requestedPetTypes  && requestedPetTypes[0] !== undefined) || (requestedPetColors  && requestedPetColors[0] !== undefined) || (requestedPetSizes  && requestedPetSizes[0] !== undefined) || (requestedPetAges  && requestedPetAges[0] !== undefined)){
+        if((requestedPetTypes  && requestedPetTypes !== undefined) || (requestedPetColors  && requestedPetColors !== undefined) || (requestedPetSizes  && requestedPetSizes !== undefined) || (requestedPetAges  && requestedPetAges !== undefined)){
             query = 
             `SELECT * 
-            FROM ((Pet
-            LEFT JOIN Age
-            ON Pet.age_id = Age.age_id)
-            LEFT JOIN Size
-            ON Pet.size_id = Size.size_id)
-            WHERE LOWER(name) LIKE '%${name}%'
-            `;
+             FROM Pet
+             LEFT JOIN Age ON Pet.age_id = Age.age_id
+             LEFT JOIN Size ON Pet.size_id = Size.size_id
+             LEFT JOIN Dog ON Pet.pet_id = Dog.pet_id
+             LEFT JOIN Cat On Pet.pet_id = Cat.pet_id
+             WHERE LOWER(name) LIKE '%${name}%'`;
 
-            if(requestedPetTypes[0] !== undefined){
-                query += 'AND ('
+            if(requestedPetTypes !== undefined){
+                query += ' AND ('
                 for(let i = 0; i < requestedPetTypes.length; i++){ //build sql query for pet types
                     if(i == (requestedPetTypes.length - 1))
-                        query += 'Pet.pet_type_id = ' + requestedPetTypes[i] + ' OR ';
+                        query += 'Pet.type_id = ' + requestedPetTypes[i] ;
                     else
-                        query += 'Pet.pet_type_id = ' + requestedPetTypes[i];
+                        query += 'Pet.type_id = ' + requestedPetTypes[i]  + ' OR ';
                 }
                 query += ")"
             }
             // if(requestedPetColors[0] !== undefined){
             //     for(let i = 0; i < requestedPetColors.length; i++){ //build sql query for pet types
             //         if(i == (requestedPetColors.length - 1))
-            //             query += 'Pet.pet_type_id = ' + requestedPetColors[i] + ' OR ';
+            //             query += 'Pet.pet_type_id = ' + requestedPetColors[i] ;
             //         else
-            //             query += 'Pet.pet_type_id = ' + requestedPetColors[i];
+            //             query += 'Pet.pet_type_id = ' + requestedPetColors[i]  + ' OR ';
             //     }
             //     query += ")"
             // }
-            if(requestedPetAges[0] !== undefined){
+            if(requestedPetAges !== undefined){
                 query += 'AND ('
                 for(let i = 0; i < requestedPetAges.length; i++){ //build sql query for pet types
                     if(i == (requestedPetAges.length - 1))
-                        query += 'Pet.age_id = ' + requestedPetAges[i] + ' OR ';
-                    else
                         query += 'Pet.age_id = ' + requestedPetAges[i];
+                    else
+                        query += 'Pet.age_id = ' + requestedPetAges[i]  + ' OR ';
                 }
                 query += ")"
             }
-            if(requestedPetSizes[0] !== undefined){
+            if(requestedPetSizes !== undefined){
                 query += 'AND ('
                 for(let i = 0; i < requestedPetSizes.length; i++){ //build sql query for pet types
                     if(i == (requestedPetSizes.length - 1))
-                        query += 'Pet.size_id = ' + requestedPetSizes[i] + ' OR ';
-                    else
                         query += 'Pet.size_id = ' + requestedPetSizes[i];
+                    else
+                        query += 'Pet.size_id = ' + requestedPetSizes[i]  + ' OR ';
                 }
                 query += ")"
             }
 
-            query += ` AND 
+            query += ` 
             LIMIT 10                       
             OFFSET ${(givenPage-1)*10}`;
             console.log(query);

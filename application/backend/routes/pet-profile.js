@@ -19,8 +19,8 @@ router.post("/api/create-pet-profile",(req,res)=>{
     //MAKE THIS INTO A TRANSACTION LATER
     connection.query(
          `INSERT INTO Pet
-         (age_id, size_id, reg_user_id, name)
-         VALUES ('${req.body.age.value}','${req.body.size.value}','${req.session.reg_user_id}','${req.body.name}')`,
+         (age_id, size_id, reg_user_id, name, type_id)
+         VALUES ('${req.body.age.value}','${req.body.size.value}','${req.session.reg_user_id}','${req.body.name}', '${req.body.type.value}')`,
          function(err, userPet){
              if(err){
                  console.log(err);
@@ -108,18 +108,6 @@ router.post("/api/create-pet-profile",(req,res)=>{
                                             }
                                             // res.status(200).json(insertedCat);
                                             // res.end();
-                                        }
-                                    })
-                                }
-                                else{
-                                    connection.query(`INSERT INTO OtherPet (pet_id, type_id) VALUES ('${userPet.insertId}','${req.body.type.value}')`,
-                                    function(err, insertedOtherPet){
-                                        if(err){
-                                            console.log(err);
-                                        }
-                                        else{
-                                            console.log(insertedOtherPet);
-                                            // res.status(200).json(insertedOtherPet);
                                         }
                                     })
                                 }

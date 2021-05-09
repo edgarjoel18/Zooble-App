@@ -167,7 +167,7 @@ function MapSearch(props) {
 
     function search(){
         if(state.searchTermParam || state.searchCategoryParam){
-            if(state.prefilter){
+            if(state.prefilter && Object.keys(state.prefilter).length !== 0){  //make sure object is not empty
                 applyPreFilters();
             }
             console.log("search start")
@@ -226,13 +226,13 @@ function MapSearch(props) {
                         petTypeFilterValues.push(petTypeFilters[i].value);
                     }
                     for(let i = 0; i < petColorFilters.length; i++){
-                        petTypeFilterValues.push(petColorFilters[i].value);
+                        petColorFilterValues.push(petColorFilters[i].value);
                     }
                     for(let i = 0; i < petSizeFilters.length; i++){
-                        petTypeFilterValues.push(petSizeFilters[i].value);
+                        petSizeFilterValues.push(petSizeFilters[i].value);
                     }
                     for(let i = 0; i < petAgeFilters.length; i++){
-                        petTypeFilterValues.push(petAgeFilters[i].value);
+                        petAgeFilterValues.push(petAgeFilters[i].value);
                     }
                     searchParams = {
                         searchTerm: state.searchTermParam,
@@ -240,10 +240,10 @@ function MapSearch(props) {
                         searchLatitude: state.lat,
                         searchLongitude: state.lng,
                         searchDistance: searchDistance.value,
-                        searchPetTypes: petTypeFilters,
-                        searchPetColors: petColorFilters,
-                        searchPetSizes: petSizeFilters,
-                        searchPetAges: petAgeFilters,
+                        searchPetTypes: petTypeFilterValues,
+                        searchPetColors: petColorFilterValues,
+                        searchPetSizes: petSizeFilterValues,
+                        searchPetAges: petAgeFilterValues,
                         searchPage: currentPage
                     }
                     break;
