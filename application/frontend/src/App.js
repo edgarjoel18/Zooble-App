@@ -33,6 +33,7 @@ import Business2ProfilePage from './pages/Profile/PawSpaProfilePage';
 import Messages from './pages/Messages/Messages'
 import MyPets from './pages/Pets/MyPets'
 import Pets from './pages/Pets/Pets'
+import ResetPage from './pages/Reset/ResetPage'
 
 import ProfileTest from './pages/Profile/ProfileTest'
 
@@ -132,6 +133,7 @@ const App = () => {
         <Route path="/pet/:pet" component={ProfilePage}/>
         <Route path="/shelter/:shelter" component={ProfilePage}/>
         <Route path="/business/:business" component={ProfilePage}/>
+        <Route path="/business/Register" component={ResetPage}/>
         <Route path="/uploadImage" component={UploadImage}/>
         {/* <Redirect to="/" /> */}
       </Switch>
