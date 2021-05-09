@@ -1,6 +1,8 @@
-import React, {useEffect, useLayoutEffect, useState} from "react";
+import React, {useEffect, useLayoutEffect, useMemo, useState} from "react";
 import {Link, Switch, Route, Redirect, useHistory} from "react-router-dom";
 import Axios from "axios";
+import {useThrottle} from '@react-hook/throttle'
+import {matchSorter} from 'match-sorter'
 
 import { useLoadScript} from '@react-google-maps/api';
 
@@ -25,9 +27,10 @@ import "@reach/combobox";
 //Google Maps
 const libraries = ["places"]
 
-
-
-
+let typeOptions = [];
+let businessCategoryOptions = [];
+let dogBreedOptions = [];
+let catBreedOptions = [];
 
 
 // componentWillMount() and componentWillUnmount() functions work toghther
@@ -48,6 +51,8 @@ function SearchBar() {
 
   const [searchLocationLat, setSearchLocationLat] = useState(null);
   const [searchLocationLng, setSearchLocationLng] = useState(null);
+
+  const [selectedPrefilter, setSelectedPrefilter] = useState({});
 
   const {
     ready, 
@@ -83,9 +88,67 @@ function SearchBar() {
     
   }
 
+  useEffect(() =>{
+    Axios.get('/api/pet-types')   //get business types from database
+    .then(response =>{
+        typeOptions =  response.data;
+        // console.log('typeOptions: ',typeOptions);
+    })
+
+    Axios.get('/api/business-types')   //get business types from database
+    .then(response =>{
+        businessCategoryOptions = response.data;
+        // console.log('businessCategoryOptions: ',businessCategoryOptions);
+    })
+
+    Axios.get('/api/dog-breeds')   //get business types from database
+    .then(response =>{
+        dogBreedOptions = response.data;
+        // console.log('dogBreedOptions: ',dogBreedOptions);
+    })
+
+    Axios.get('/api/cat-breeds')   //get business types from database
+    .then(response =>{
+        catBreedOptions = response.data;
+        // console.log('catBreedOptions: ',catBreedOptions);
+    })
+  },[])
+
   useEffect(() => {
     console.log(searchLocationLat, searchLocationLng);
   }, [searchLocationLat, searchLocationLng])
+
+
+  const [term,setTerm] = useState("");
+  const results = useCategoryMatch(term);
+  console.log(results);
+
+  const handleChange = (event) => setTerm(event.target.value);
+
+  function useCategoryMatch(term){
+    const throttledTerm = useThrottle(term, 100);
+    let filters = [];
+    if(searchCategory == 'Pets'){
+      //set autocompletable prefilters to pet type and breed
+      filters = typeOptions.concat(dogBreedOptions,catBreedOptions);
+    }
+    if(searchCategory == 'Shelters'){
+      //set autocompletable prefilters to pet type
+      filters = typeOptions;
+    }
+    if(searchCategory == 'Businesses'){
+      //set autocompletable prefilters to business type
+      filters = businessCategoryOptions;
+    }
+    return useMemo( () => 
+      term.trim() === ""
+      ? null
+      : matchSorter(filters, term,{
+          keys: [(filter) => `${filter.label}`] 
+      }),
+      [throttledTerm]
+    );
+  }
 
   return (
     <>
@@ -98,7 +161,27 @@ function SearchBar() {
           <option value="Pet Owners">Pet Owners</option>
         </select>
       </span>
-      <input 
+      <Combobox>
+        <ComboboxInput className={styles['searchbar-term-input']} onChange={handleChange}/>
+        {results && (
+          <ComboboxPopover className={styles['combobox-popover']}>
+            {results.length > 0 ? (
+              <ComboboxList className={styles['combobox-list']}>
+                 {results.slice(0, 5).map((result) => (
+                   <ComboboxOption
+                     key={result.label}
+                     value={result.label}
+                   />
+                 ))}
+               </ComboboxList>
+            ) : (
+              <span style={{display: 'block', margin: 8}}>
+                No Results Found
+              </span>
+            )}
+          </ComboboxPopover>)}
+      </Combobox>
+      {/* <input 
           className={styles['searchbar-term-input']}
           type="text" 
           placeholder= {"Search for " + searchCategory}
@@ -110,7 +193,7 @@ function SearchBar() {
               history.push({ pathname:"/MapSearch", state:{searchCategoryParam: searchCategory, searchTermParam: searchTerm}})
             }
           }}
-        />
+        /> */}
       <span className={styles["searchbar-input"]}>
         <Combobox className={styles['searchbar-location-input']}
             onSelect={async (address)=>{

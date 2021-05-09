@@ -14,17 +14,20 @@ function SendAMessage({display,onClose, profile}) {
 
     function sendMessage(event){
         event.preventDefault();
+        console.log('sendMessage')
 
-        axios.post('/api/message',{
+        axios.post("/api/message",{
             messageSubject: subject,
             messageBody: body,
             recipientAccountID: profile.account_id
         })
         .then(response => {
             console.log(response);
+            onClose();
         })
         .catch(err =>{
             console.log(err);
+            //display Error message e.g: try again
         })
     }
 
@@ -38,7 +41,7 @@ function SendAMessage({display,onClose, profile}) {
                 <form className={styles['send-a-message-container']} onSubmit={sendMessage}>
                     <input className={styles["sendAMessage-subject"]} maxLength={78} required placeholder="Subject" value={subject} onChange={(event) =>setSubject(event.target.value)}/>
                     <textarea className={styles["sendAMessage-body"]} maxLength={65535} value={body} required placeholder="Write your message here" onChange={(event) =>setBody(event.target.value)}/>
-                    <button type="submit" class={styles["sendAMessage-sendButton"]} ><h4>Send</h4></button>
+                    <button type="submit" class={styles["sendAMessage-sendButton"]} >Send</button>
                 </form>
             </>
         </Modal>

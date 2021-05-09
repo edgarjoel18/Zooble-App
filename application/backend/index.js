@@ -27,6 +27,8 @@ const businessProfileRouter = require('./routes/business-profile.js')
 const resetRouter = require('./routes/reset.js')
 const resetPasswordRouter = require('./routes/resetpassword.js')
 
+const messagesRouter = require('./routes/messages.js')
+
 const app = express();
 
 // const cors = require('cors');
@@ -87,6 +89,9 @@ app.use(feedRouter);
 
 //Insert, Get Comments
 app.use(commentsRouter);
+
+//send messages
+app.use(messagesRouter);
 
 
 // Follow a user

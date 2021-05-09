@@ -61,11 +61,11 @@ function ViewMessage({ display, onClose, selectedMessage }) {
         <Modal display={display} onClose={onClose}>
             <div className={styles['view-message-header']}>{selectedMessage.subject}</div>
             <div className={styles['view-message-container']}>
-                <div className={styles['view-message-sender']}>From: {selectedMessage.sender}</div>
-                <div className={styles['view-message-timestamp']}>{selectedMessage.timestamp}</div>
+                <div className={styles['view-message-sender']}>From: {selectedMessage.display_name}</div>
+                <div className={styles['view-message-timestamp']}>{new Date(selectedMessage.timestamp).toLocaleString()}</div>
                 <div className={styles['view-message-body']} >{selectedMessage.body}</div>
                 <form onSubmit={onClose}>
-                    <textarea required  className={styles['view-message-reply-body']} onChange={(event) => setReplyBody(event.target.value)} placeholder={"Reply to " + selectedMessage.sender}/>
+                    <textarea required  className={styles['view-message-reply-body']} onChange={(event) => setReplyBody(event.target.value)} placeholder={"Reply to " + selectedMessage.display_name}/>
                     <button type="submit" className={styles['view-message-reply-button']}>Reply</button>
                 </form>
             </div>

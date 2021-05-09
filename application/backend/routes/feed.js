@@ -44,13 +44,28 @@ router.get("/api/get-feed-posts",(req,res)=>{
             FROM RegisteredUser
             WHERE RegisteredUser.reg_user_id = '${req.session.reg_user_id}'
           )
-          AND Profile.pet_id IS NULL 
+          AND Profile.pet_id IS NULL
           ORDER BY Post.timestamp DESC
         `,
         function(err, posts){
             if(err)
                 console.log(err);
             else{
+                //get amount of likes for each post and append to post object
+                // for(let i = 0; i < posts.length; i++){
+                //     connection.query(
+                //         `SELECT COUNT(Like.reg_user_id)
+                //          FROM Like
+                //          WHERE Like.post_id = '${posts[i].post_id}'`,
+                //          function(err, likeCount){
+                //              if(err){
+                //                  console.log(err);
+                //              }
+                //              else{
+                //                  console.log(likeCount);
+                //              }
+                //          })
+                // }
                 console.log("Posts: ", posts);
                 res.status(200).json(posts);
             }

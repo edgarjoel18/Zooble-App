@@ -19,17 +19,6 @@ import ShelterSignUpPage2 from './pages/Sign Up/ShelterSignUpPage2.js'
 import BusinessSignUpPage from './pages/Sign Up/BusinessSignUp.js'
 import BusinessSignUpPage2 from './pages/Sign Up/BusinessSignUpPage2.js'
 import ProfilePage from './pages/Profile/Profile';
-import MyProfilePage from './pages/Profile/MyProfile';
-import PetOwner1Page from './pages/Profile/AlexProfilePage';
-import PetOwner2Page from './pages/Profile/MaryProfilePage';
-import MimiProfilePage from './pages/Profile/MimiProfilePage';
-import MaxProfilePage from './pages/Profile/MaxProfilePage';
-import JujuProfilePage from './pages/Profile/JujuProfilePage';
-import Shelter1ProfilePage from './pages/Profile/BadBoysDogPound';
-import Shelter2ProfilePage from './pages/Profile/BurgsdalePetShelter';
-import PetProfileCreatePage from './pages/Profile/PetProfileCreatePage';
-import Business1ProfilePage from './pages/Profile/BoomingPoodleGroomingProfilePage';
-import Business2ProfilePage from './pages/Profile/PawSpaProfilePage';
 import Messages from './pages/Messages/Messages'
 import MyPets from './pages/Pets/MyPets'
 import Pets from './pages/Pets/Pets'
@@ -51,6 +40,7 @@ import MapSearch from './pages/MapSearch/MapSearch.js'
 
 import axios from 'axios';
 import UploadImage from './pages/UploadImage';
+import SearchBarTest from './pages/SearchBarTest';
 
 const App = () => {
 
@@ -135,6 +125,7 @@ const App = () => {
         <Route path="/business/:business" component={ProfilePage}/>
         <Route path="/business/Register" component={ResetPage}/>
         <Route path="/uploadImage" component={UploadImage}/>
+        <Route path="/searchbar-test" component={SearchBarTest}/>
         {/* <Redirect to="/" /> */}
       </Switch>
     </Router>

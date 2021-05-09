@@ -47,10 +47,10 @@ function Messages() {
         {messages && messages.map((message) =>(
                 <>
                 <div className={styles['messages-container-message']} onClick={()=>viewMessageModal(message)}>
-                    <img className={styles['messages-container-message-pic']} src={message.pic}/>
+                    <img className={styles['messages-container-message-pic']} src={message.profile_pic_link}/>
                     <div className={styles['messages-container-message-subject']}>{message.subject}</div>
-                    <div className={styles['messages-container-message-timestamp']}>{message.timestamp}</div>
-                    <div className={styles['messages-container-message-sender']}>{message.sender}</div>
+                    <div className={styles['messages-container-message-timestamp']}>{new Date(message.timestamp).toLocaleString()}</div>
+                    <div className={styles['messages-container-message-sender']}>{message.display_name}</div>
                 </div>
                 </>
             ))}
