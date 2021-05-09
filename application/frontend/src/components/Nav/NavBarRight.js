@@ -34,7 +34,7 @@ function NavBarRight({appUser, updateLoginState}) {
   const [accountMenuDisplay, setAccountMenuDisplay] = useState({display: 'none'});
 
   function logoutHandler(){
-    axios.get("/api/logout").then((response) =>{
+    axios.post("/api/logout", {withCredentials: true}).then((response) =>{
       console.log(response.data.loggedIn);
       console.log(response.data.user);
       updateLoginState(response.data.loggedIn,response.data.user);

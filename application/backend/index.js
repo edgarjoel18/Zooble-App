@@ -24,6 +24,8 @@ const profileEditRouter = require('./routes/edit-profile.js');
 const petProfileRouter = require('./routes/pet-profile.js');
 const businessProfileRouter = require('./routes/business-profile.js')
 
+const messageRouter = require('./routes/messages.js')
+
 const app = express();
 
 // const cors = require('cors');
@@ -45,7 +47,7 @@ app.use(session({
      saveUninitialized: false,
      store: sessionStore,
      cookie: {
-         expires: 60 * 60 * 24 * 1000, //1 day expiration
+         maxAge: 60 * 60 * 24 * 1000, //1 day expiration
      }
  }))
 
@@ -105,6 +107,9 @@ app.use(petProfileRouter)
 
 //Business Profile Data and Edit Options
 app.use(businessProfileRouter)
+
+//Message Router
+app.use(messageRouter)
 
 
 

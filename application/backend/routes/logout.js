@@ -3,9 +3,9 @@ const router = express.Router();
 
 const connection = require('../db');
 
-router.get("/api/logout",(req,res) =>{
-    req.session.loggedin = false;
-    req.session.username = null;
+router.post("/api/logout",(req,res) =>{
+    console.log("/api/logout")
+    req.session.destroy();
     res.send({loggedIn:false})
 })
 

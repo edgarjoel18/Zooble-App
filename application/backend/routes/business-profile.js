@@ -20,7 +20,7 @@ router.get('/api/business-hours', (req,res)=>{
             }
             else{
                 console.log("hours: ",hours)
-                res.status(200).json(hours);
+                res.status(200).json(hours[0]);
             }
         })
 })
