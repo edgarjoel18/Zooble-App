@@ -117,8 +117,6 @@ function MapSearch(props) {
     const center = {lat: state.lat, lng: state.lng};
 
     useEffect(() => {  //run once when page loads/refresh
-
-        //Convert this to array assignments not iterate/push
         Axios.get('/api/pet-types')   //get business types from database
         .then(response =>{
             typeOptions =  response.data;

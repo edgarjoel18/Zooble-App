@@ -40,7 +40,6 @@ import MapSearch from './pages/MapSearch/MapSearch.js'
 
 import axios from 'axios';
 import UploadImage from './pages/UploadImage';
-import SearchBarTest from './pages/SearchBarTest';
 
 const App = () => {
 
@@ -125,7 +124,6 @@ const App = () => {
         <Route path="/business/:business" component={ProfilePage}/>
         <Route path="/business/Register" component={ResetPage}/>
         <Route path="/uploadImage" component={UploadImage}/>
-        <Route path="/searchbar-test" component={SearchBarTest}/>
         {/* <Redirect to="/" /> */}
       </Switch>
     </Router>
