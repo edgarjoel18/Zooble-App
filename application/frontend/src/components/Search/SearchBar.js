@@ -72,7 +72,7 @@ function SearchBar() {
       navigator.geolocation.getCurrentPosition((position)=>{
         const location = {
           pathname:'/MapSearch',
-          state: {lat:position.coords.latitude, lng:position.coords.longitude, searchTermParam: searchTerm, searchCategoryParam: searchCategory}
+          state: {lat:position.coords.latitude, lng:position.coords.longitude, searchTermParam: searchTerm, searchCategoryParam: searchCategory, prefilter: selectedPrefilter}
         }
         history.push(location)
       })
@@ -80,7 +80,7 @@ function SearchBar() {
     else{
       const location = {
         pathname:'/MapSearch',
-        state: {lat:searchLocationLat, lng:searchLocationLng, searchTermParam: searchTerm, searchCategoryParam: searchCategory}
+        state: {lat:searchLocationLat, lng:searchLocationLng, searchTermParam: searchTerm, searchCategoryParam: searchCategory,  prefilter: selectedPrefilter}
       }
       history.push(location)
     }
@@ -118,19 +118,16 @@ function SearchBar() {
     console.log(searchLocationLat, searchLocationLng);
   }, [searchLocationLat, searchLocationLng])
 
+  const results = useCategoryMatch(searchTerm);
+  // console.log(results);
 
-  const [term,setTerm] = useState("");
-  const results = useCategoryMatch(term);
-  console.log(results);
-
-  const handleChange = (event) => setTerm(event.target.value);
-
-  function useCategoryMatch(term){
-    const throttledTerm = useThrottle(term, 100);
+  function useCategoryMatch(searchTerm){
+    const throttledTerm = useThrottle(searchTerm, 100);  //need to throttle function because it runs whenever searchTerm is set
     let filters = [];
     if(searchCategory == 'Pets'){
       //set autocompletable prefilters to pet type and breed
       filters = typeOptions.concat(dogBreedOptions,catBreedOptions);
+      // console.log("Filters: ",filters);
     }
     if(searchCategory == 'Shelters'){
       //set autocompletable prefilters to pet type
@@ -141,9 +138,9 @@ function SearchBar() {
       filters = businessCategoryOptions;
     }
     return useMemo( () => 
-      term.trim() === ""
+      searchTerm.trim() === ""
       ? null
-      : matchSorter(filters, term,{
+      : matchSorter(filters, searchTerm,{
           keys: [(filter) => `${filter.label}`] 
       }),
       [throttledTerm]
@@ -161,8 +158,20 @@ function SearchBar() {
           <option value="Pet Owners">Pet Owners</option>
         </select>
       </span>
-      <Combobox>
-        <ComboboxInput className={styles['searchbar-term-input']} onChange={handleChange}/>
+      <Combobox
+        onSelect={(prefilter) => {
+            console.log(prefilter);
+            setSelectedPrefilter(prefilter)  //set prefilter to selected one to pass to mapsearch page
+            setSearchTerm("");
+        }}>
+        <ComboboxInput 
+          className={styles['searchbar-term-input']} 
+          onChange={(event) => setSearchTerm(event.target.value)}  //set search term
+          onKeyPress={event => {  //handle enter button press
+            if(event.key === 'Enter'){
+              search();
+            }
+          }}/>
         {results && (
           <ComboboxPopover className={styles['combobox-popover']}>
             {results.length > 0 ? (
@@ -181,19 +190,6 @@ function SearchBar() {
             )}
           </ComboboxPopover>)}
       </Combobox>
-      {/* <input 
-          className={styles['searchbar-term-input']}
-          type="text" 
-          placeholder= {"Search for " + searchCategory}
-          onChange={(e)=> {
-            setSearchTerm(e.target.value);
-          }}
-          onKeyPress={event => {
-            if(event.key === 'Enter'){
-              history.push({ pathname:"/MapSearch", state:{searchCategoryParam: searchCategory, searchTermParam: searchTerm}})
-            }
-          }}
-        /> */}
       <span className={styles["searchbar-input"]}>
         <Combobox className={styles['searchbar-location-input']}
             onSelect={async (address)=>{
@@ -224,7 +220,7 @@ function SearchBar() {
             disabled={!ready }
             onKeyPress={event => {
               if(event.key === 'Enter'){
-                history.push({ pathname:"/MapSearch", state:{searchCategoryParam: searchCategory, searchTermParam: searchTerm}})
+                search();
               }
             }}
           />}

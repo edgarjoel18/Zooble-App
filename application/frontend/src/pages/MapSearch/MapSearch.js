@@ -53,7 +53,6 @@ const distanceOptions = [
 
 function MapSearch(props) {
     
-
     const location = useLocation();
     let history = useHistory();
 
@@ -70,7 +69,9 @@ function MapSearch(props) {
 
     //Recieve search params from searchbar.js
     let state = props.location.state;
-    console.log(state);
+    console.log("State: ",state);
+
+
 
 
     if(typeof(state) =='undefined'){
@@ -88,11 +89,9 @@ function MapSearch(props) {
     
     //For Storing Search Results
     const[recievedSearchResults, setRecievedSearchResults] = useState([]);
-    console.log('Initial Recieved Search Results: ', recievedSearchResults); //1
 
     //For Storing Current Page
     const [currentPage, setCurrentPage] = useState(1);
-    console.log('Current Page Set: ', currentPage);
 
 
     //for storing whether filter tab is displaying
@@ -101,7 +100,7 @@ function MapSearch(props) {
 
 
     //For storing filter states
-    const [businessCategoryFilters,setBusinessCategoryFilters] = useState([{}]);
+    const [businessCategoryFilters,setBusinessCategoryFilters] = useState([]);
     const [petTypeFilters,setPetTypeFilters] = useState([]);
     const [dogBreedFilters, setDogBreedFilters] = useState([]);
     const [catBreedFilters, setCatBreedFilters] = useState([]);
@@ -110,10 +109,12 @@ function MapSearch(props) {
     const [petAgeFilters, setPetAgeFilters] = useState([]);
     const [shelterPetTypeFilters, setShelterPetTypeFilters] = useState([]);
 
+    //Check if state matches any dropdown options within the searchCategory to populate filter automatically
+    
+
+    
+
     //for storing map location
-    const[latitude,setLatitude] = useState();
-    const[longitude,setLongitude] = useState();
-    const[mapUrl,setMapUrl] = useState();
     const center = {lat: state.lat, lng: state.lng};
 
     useEffect(() => {  //run once when page loads/refresh
@@ -158,10 +159,18 @@ function MapSearch(props) {
             colorOptions = response.data;
             // console.log('colorOptions: ',colorOptions);
         })
+
+       
     }, [])
+
+
 
     function search(){
         if(state.searchTermParam || state.searchCategoryParam){
+            if(state.prefilter){
+                applyPreFilters();
+            }
+            console.log("search start")
             console.log('Fetching Search Results');
             console.log('Search Category: '+ state.searchCategoryParam);
             console.log('Search Term: ' + state.searchTermParam);
@@ -191,6 +200,7 @@ function MapSearch(props) {
                         searchBizCategories : businessCategoryFilterValues,
                         searchPage: currentPage
                     }
+                    console.log("Business Search Params: ", searchParams)
                     break
                 case 'Shelters':
                     let shelterTypeFilterValues = [];
@@ -260,8 +270,8 @@ function MapSearch(props) {
                 if(response.data.length === 0){
                     previousPage();
                 }
-                displaySearchResults();
                 setRecievedSearchResults(response.data);
+                displaySearchResults();
                 console.log("Recieved Search Results: ", recievedSearchResults)
                 console.log("Recieved Search Results Length: ", recievedSearchResults.length)
                 // console.log("Results Count: ", response.data.resultsCount);
@@ -271,13 +281,83 @@ function MapSearch(props) {
                 console.log(err);
             })
         }
-        else if(state.lat && state.lng){
+        console.log("search end")
+    }
+
+    function applyPreFilters(){
+        console.log("applyPreFilters start");
+        console.log("Applying preFilter if present")
+        console.log("Prefilter: ", state.prefilter);
+        if(state.searchCategoryParam === "Pets"){
+            console.log("searchcategory: pets")
+            Object.keys(typeOptions).forEach(function(key) {
+                var option = typeOptions[key];
+                console.log("Option: ",option);
+                console.log("Prefilter: ", state.prefilter);
+                if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
+                    console.log("Found Match!");
+                    setPetTypeFilters(option);
+                    return true;
+                }
+            })
+
+            Object.keys(dogBreedOptions).forEach(function(key) {
+                var option = dogBreedOptions[key];
+                console.log("Option: ",option);
+                console.log("Prefilter: ", state.prefilter);
+                if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
+                    console.log("Found Match!");
+                    // setPetTypeFilters("Dog");
+                    setDogBreedFilters(option);
+                    return true;
+                }
+            })
+
+            Object.keys(catBreedOptions).forEach(function(key) {
+                var option = catBreedOptions[key];
+                console.log("Option: ",option);
+                console.log("Prefilter: ", state.prefilter);
+                if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
+                    console.log("Found Match!");
+                    // setPetTypeFilters("Cat");
+                    setCatBreedFilters(option);
+                    return true;
+                }
+            })      
         }
+        
+        if(state.searchCategoryParam === "Shelters"){
+            console.log("searchcategory: shelters")
+            Object.keys(typeOptions).forEach(function(key) {
+                var option = typeOptions[key];
+                console.log("Option: ",option);
+                console.log("Prefilter: ", state.prefilter);
+                if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
+                    console.log("Found Match!");
+                    setPetTypeFilters(option);
+                    return true;
+                }
+            })
+        }
+        if(state.searchCategoryParam === "Businesses"){
+            console.log("searchcategory: businesses")
+            Object.keys(businessCategoryOptions).forEach(function(key) {
+                var option = businessCategoryOptions[key];
+                console.log("Option: ",option);
+                console.log("Prefilter: ", state.prefilter);
+                if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
+                    console.log("Found Match!");
+                    setBusinessCategoryFilters(option);
+                    return true;
+                }
+            })
+        }
+        console.log("applyPreFilters end")
     }
 
     useEffect(()=>{
         search();
-    },[state, currentPage], );  //only fetch results when search params or filters change
+    },[state, currentPage]);  //only fetch results when search params or filters or page changes
 
 
     //toggle display of filter overlay

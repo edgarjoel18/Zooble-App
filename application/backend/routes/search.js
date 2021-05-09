@@ -116,7 +116,9 @@ router.get("/api/search", (req,res) =>{
                 query += ")"
             }
 
-            query += ");"
+            query += ` AND 
+            LIMIT 10                       
+            OFFSET ${(givenPage-1)*10}`;
             console.log(query);
         }
         else{
@@ -158,10 +160,9 @@ router.get("/api/search", (req,res) =>{
             `SELECT *,
             (3959 * acos(cos(radians('${givenLatitude}'))* cos(radians(Address.latitude))* cos(radians(Address.longitude) - radians('${givenLongitude}')) + sin(radians(${givenLatitude})) * sin(radians(Address.latitude)))) as distance
             FROM Business
-            LEFT JOIN Shelter
-            ON Business.business_id = Shelter.business_id
-            LEFT JOIN Address
-            ON Business.reg_user_id = Address.reg_user_id
+            LEFT JOIN Commerce ON Business.business_id = Commerce.business_id
+            LEFT JOIN Shelter ON Business.business_id = Shelter.business_id
+            LEFT JOIN Address ON Business.reg_user_id = Address.reg_user_id
             JOIN RegisteredUser ON Business.reg_user_id = RegisteredUser.reg_user_id
             JOIN Account ON RegisteredUser.user_id = Account.user_id
             LEFT JOIN Profile ON Account.account_id = Profile.account_id
@@ -181,7 +182,7 @@ router.get("/api/search", (req,res) =>{
              //make sure to start from selected page and limit results
             query += `) 
             LIMIT 10                       
-            OFFSET '${(givenPage-1)*10}';`
+            OFFSET ${(givenPage-1)*10};`
             console.log(query);
         }
         else{
@@ -209,7 +210,7 @@ router.get("/api/search", (req,res) =>{
             } 
             else {
                 requestedSearchResults = results;
-                console.log(requestedSearchResults);
+                // console.log(requestedSearchResults);
                 res.json(requestedSearchResults);
             }       
         });
@@ -244,7 +245,7 @@ router.get("/api/search", (req,res) =>{
             }
             query += `) 
             LIMIT 10                       
-            OFFSET '${(givenPage-1)*10}';`
+            OFFSET ${(givenPage-1)*10};`
             console.log(query);
         }
         else{
