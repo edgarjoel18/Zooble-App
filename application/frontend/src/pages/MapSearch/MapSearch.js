@@ -397,7 +397,7 @@ function MapSearch(props) {
                                     <ShelterSearchResult searchResult={searchResult} panTo={panTo}/>
                                 ))}
                                 {recievedSearchResults.length != 0 && searchCategory == 'Pet Owners' && recievedSearchResults.map((searchResult) => (
-                                    <Link className={styles['profile-link']} to={"/Profile/" + "PetOwnerId=" +searchResult.reg_pet_owner_id}><li className={styles['search-result']} key={searchResult.reg_pet_owner_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                    <PetOwnerSearchResult searchResult={searchResult} panTo={panTo}/>
                                 ))}
 
                             </ul>
@@ -568,6 +568,12 @@ function ShelterSearchResult({searchResult,panTo}){
 function PetSearchResult({searchResult, panTo}){
     return (
         <li className={styles['search-result']} key={searchResult.pet_id} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/><Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}><span className={styles['search-result-name']}>{searchResult.name}</span></Link></li>
+    )
+}
+
+function PetOwnerSearchResult({searchResult}){
+    return (
+        <li className={styles['search-result']} key={searchResult.reg_user_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/><Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}><span className={styles['search-result-name']}>{searchResult.display_name}</span></Link></li>
     )
 }
 

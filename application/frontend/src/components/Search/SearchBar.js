@@ -131,20 +131,20 @@ function SearchBar() {
             }}
         >
           {/* Input Box */}
-          <ComboboxInput  
+          {searchCategory !== "Pet Owners" && <ComboboxInput  
             value={value}
             placeholder= {searchCategory !== 'Pet Owners' && "Near Current Location"}
             onChange={(e)=> {
               setValue(e.target.value);
               // setSearchTerm(e.target.value);
             }}
-            disabled={!ready || searchCategory == "Pet Owners"}
+            disabled={!ready }
             onKeyPress={event => {
               if(event.key === 'Enter'){
                 history.push({ pathname:"/MapSearch", state:{searchCategoryParam: searchCategory, searchTermParam: searchTerm}})
               }
             }}
-          /> 
+          />}
            {/* Dropdown List */}
           <ComboboxPopover className={styles['combobox-popover']}> 
             <ComboboxList className={styles['combobox-list']}>

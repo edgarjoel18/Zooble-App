@@ -276,33 +276,22 @@ router.get("/api/search", (req,res) =>{
     else if(category == 'Pet Owners'){
         console.log('searching through RegisteredPetOwner')
         connection.query(
-            `SELECT User.first_name, RegisteredUser.reg_user_id
-            FROM User
-            LEFT JOIN RegisteredUser ON User.user_id = RegisteredUser.user_id
+            `SELECT *
+            FROM Profile
+            JOIN Account ON Profile.account_id = Account.account_id
+            JOIN RegisteredUser ON Account.user_id = RegisteredUser.user_id
             LEFT JOIN Business ON RegisteredUser.reg_user_id = Business.reg_user_id
-            WHERE LOWER(User.first_name) LIKE '%${name}%'
-            AND Business.business_id IS NULL
+            JOIN Credentials ON Account.account_id = Credentials.acct_id
+            WHERE Business.business_id IS NULL 
+            AND Profile.pet_id IS NULL
+            AND ((LOWER(Profile.display_name) LIKE '%${name}%') OR (LOWER(Credentials.username) LIKE '%${name}'))
             `, 
-            function(err, result) {
+            function(err, results) {
             if(err){
                 throw err;
             } else {
-              
-                // [ TextRow { pet_id: 1, name: 'Max', size_id: 1, age_id: 1 } ]
-                Object.keys(result).forEach(function(key) {
-                    var row = result[key];
-                    // console.log(row);
-                    // console.log(row.name);
-                    // console.log(row.size_id);
-                    // console.log(row.age_id);
-                    requestedSearchResults.searchResults.push({
-                        // "reg_pet_owner_id":row._id,
-                        "reg_user_id":row.reg_user_id,
-                        "name": row.first_name,
-                        // "profile_pic": row.profile_pic
-                    });
-                  });
-                console.log(requestedSearchResults);
+                requestedSearchResults = results
+                console.log("Pet Owner Results: ", requestedSearchResults);
                 res.json(requestedSearchResults);
             }
         });
