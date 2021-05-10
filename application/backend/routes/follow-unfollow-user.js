@@ -9,7 +9,7 @@ router.post("/api/follow-user", (req, res) => { // follow user
     const followerId = req.body.followerId;
     const userId = req.body.userId;
 
-    connection.query(`INSERT INTO Follow (follower_id, reg_user_id) VALUES ('${followerId}','${userId}')`, (error, follow, fields) => {
+    connection.query(`INSERT INTO Follow (follower_id, reg_user_id) VALUES ('${req.session.reg_user_id}','${userId}')`, (error, follow, fields) => {  //anytime we use the currently logged in user's information we use the id stored in session
         if (error) {
             console.error('An error occurred while executing the query');
             res.status(500).json(error);
