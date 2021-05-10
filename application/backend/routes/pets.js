@@ -21,7 +21,7 @@ router.get("/api/get-current-user-pets",(req,res)=>{
 })
 
 router.get("/api/current-user-pets",(req,res)=>{
-    // console.log("/api/current-user-pets");
+    console.log("/api/current-user-pets");
     
     //get all profiles that are owned by the current user, but only the profiles associated with pets
     connection.query(

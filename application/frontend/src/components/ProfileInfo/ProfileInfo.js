@@ -20,11 +20,6 @@ const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/de
 function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
 
     //image upload array
-    
-
-
-
-
     console.log(profile.display_name);
     console.log(profile.profile_pic_link);
     
@@ -161,10 +156,11 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
     function onFollowHandler() {
         console.log('Follow button clicked')
         if(appUser){
-            setFollow(!follow);
-            axios.post('/api/follow-user',{
-                accountId: profile.accountId
+            console.log('POST /api/follow-unfollow-user')
+            axios.post('/api/follow-unfollow-user',{
+                accountId: profile.account_id
             })
+            setFollow(!follow);
         }
         else{
             setLoginRequiredDisplay(true);
