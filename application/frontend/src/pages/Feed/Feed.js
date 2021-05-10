@@ -224,7 +224,8 @@ function Feed() {
             })
 
             //refresh feed after posting
-            getPosts();
+            // getPosts();
+            // setFeedPosts([...feedPosts, ])
 
         }
         else{

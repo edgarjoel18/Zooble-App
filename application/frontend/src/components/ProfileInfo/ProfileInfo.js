@@ -353,7 +353,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
         <div className={styles.ProfileInfo} >
             <div style={{display: 'flex', flexDirection: 'column', maxWidth: '223px', position: 'relative'}} >
                 <img className={styles.Image} src={profilePic} alt="No Image Found" />
-                <div className={styles.ImageStackText}>
+                { isSelfView && <div className={styles.ImageStackText}>
                     <section className={styles["follower-feed-new-post-attach-image"]}>
                         <div className={styles["follower-feed-new-post-attach-image-container"]}  {...getRootProps()}>
                             <input  {...getInputProps()} />
@@ -361,7 +361,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
                         </div>
                     </section>
                     
-                </div>
+                </div>}
             </div>
             <div className={styles.SideContainer} >
                 <div style={{display: 'flex', justifyItems: 'center'}}>
