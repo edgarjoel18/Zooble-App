@@ -5,10 +5,12 @@ const router = express.Router();
 router.post("/api/about-me", (req,res) =>{
     const {newAboutMe, profileID} = req.body;
     //may need to change this to support pet profile
+    console.log('newAboutMe: ',newAboutMe);
+    console.log('profileID: ', profileID);
     console.log("POST /api/edit-about-me")
     connection.query(
         `UPDATE Profile
-         SET about_me = '${req.body.aboutMeText}'
+         SET about_me = '${newAboutMe}'
          WHERE profile_id = '${profileID}' `,
          function (err, result){
              if(err){
