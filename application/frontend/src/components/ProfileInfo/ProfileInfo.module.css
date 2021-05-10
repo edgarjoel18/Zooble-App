@@ -198,4 +198,5 @@
     align-content: center;
     border-radius: 0 0 7.5px 7.5px;
     box-shadow: var(--elevation-1);
+    cursor: pointer;
 }

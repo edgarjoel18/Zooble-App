@@ -19,20 +19,42 @@ router.get("/api/get-profile-pic", (req,res) =>{
 })
 
 router.get("/api/profile", (req,res) =>{
+    let selfViewFlag=false
     console.log("GET /api/profile")
     connection.query(
-        `SELECT Profile.profile_pic_link, Profile.display_name, Profile.about_me, Profile.type, Profile.account_id, Profile.profile_id
+        `SELECT Profile.profile_pic_link, Profile.display_name, Profile.about_me, Profile.type, Profile.account_id, Profile.profile_id, Pet.reg_user_id
          FROM Profile
+         LEFT JOIN Pet ON Profile.pet_id = Pet.pet_id
          WHERE Profile.profile_id = '${req.query.profileID}'`,
          function(err, profile){
              if(err){
                 console.log(err);
              }
-             else{
-                 console.log(profile[0]);
-                 res.status(200).json(profile[0]);
+             console.log(profile);
+             if(profile[0].reg_user_id === null){ //if its not a pet profile, no need to check if the pet is owned by the profile viewer
+                console.log("not a pet profile")
+                 if(profile[0].profile_id === req.session.profile_id){ //if the profile id is the same as the user who is currently logged in
+                     //then set selfView flag to true
+                     console.log("profile owned by logged in user")
+                     selfViewFlag = true;
+                 }
              }
+             else{ //its a pet_profile
+                console.log("pet profile")
+                 if(profile[0].reg_user_id === req.session.reg_user_id){ //if pets reguserid (owner) matches currently logged in user
+                    console.log("pet owned by profile viewer")
+                     //then set selfView flag to true
+                     selfViewFlag = true
+                 }
+             }
+             let response = {
+                 profile : profile[0],
+                 selfView: selfViewFlag
+             }
+             res.status(200).json(response);
          }
+         
+
     )
 })
 

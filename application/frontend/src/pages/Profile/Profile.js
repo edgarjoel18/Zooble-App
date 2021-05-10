@@ -31,9 +31,10 @@ function Profile({appUser}) {
         redirectContext.updateLoading(true);
         axios.get('/api/profile',{params: {profileID: profileID}})
         .then(response =>{
-            console.log(response);
-            console.log('Fetched Profile: ', response.data);
-            setFetchedProfile(response.data);
+            console.log('/api/profile response.data: ',response.data);
+            console.log('Fetched Profile: ', response.data.profile);
+            setFetchedProfile(response.data.profile);
+            setSelfView(response.data.selfView);
         })
         .catch(err =>{
             redirectContext.updateLoading(false);
@@ -105,16 +106,6 @@ function Profile({appUser}) {
             console.log(err);
         })
     },[profileID])
-
-    useEffect(()=>{
-        console.log("Type of profileID: ", typeof profileID)
-        console.log("Type of appUser.profileID: ", typeof appUser.profileID)
-
-        if(parseInt(appUser.profileID) == profileID){
-            console.log("Owner of the Profile!")
-            setSelfView(true);
-        }
-    },[appUser])
 
 
 
