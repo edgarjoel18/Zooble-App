@@ -59,7 +59,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
     // }, [address, phone, changing])
 
     function submitAboutMeEdit(){
-        console.log(aboutMeContent)
+        console.log('about me content is ' + aboutMeContent)
         axios.post("/api/edit-about-me",{
             aboutMeText: aboutMeContent
         })
@@ -140,7 +140,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                     <textarea 
                         className={styles.TextArea} 
                         value={aboutMeContent} 
-                        onChange={event => updateProfile('about', event.target.value)}
+                        onChange={event => setAboutMeContent(event.target.value)}
                         readOnly={!changing || !(labelSelected === 'about')}
                         rows='14' 
                         cols='50' 
