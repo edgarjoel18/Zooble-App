@@ -162,6 +162,9 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
         console.log('Follow button clicked')
         if(appUser){
             setFollow(!follow);
+            axios.post('/api/follow-user',{
+                accountId: profile.accountId
+            })
         }
         else{
             setLoginRequiredDisplay(true);
