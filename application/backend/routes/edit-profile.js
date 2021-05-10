@@ -22,4 +22,66 @@ router.post("/api/edit-about-me", (req,res) =>{
 })
 
 
+router.post('/api/edit-address',(req,res)=>{
+    const {newAddress, newLatitude, newLongitude} = req.body;
+    connection.query(
+        `UPDATE Address
+         SET address = '${newAddress}', latitude = '${newLatitude}', longitude = '${newLongitude}'
+         WHERE Address.reg_user_id= '${req.session.reg_user_id}'`,
+         function(err, result){
+             if(err){
+                 console.log(err);
+                 res.status(500).json(err);
+             }
+             else{
+                 console.log(result);
+                 res.status(200).json(result);
+             }
+         })
+})
+
+router.post('/api/edit-hours', (req,res) =>{
+    const {newSunOpen, newSunClose, newMonOpen, newMonClose,newTueOpen, newTueClose, newWedOpen, newWedClose, newThuOpen, newThuClose, newFriOpen, newFriClose, newSatOpen, newSatClose} = req.body;
+    connection.query(
+        `UPDATE HoursOfOperation
+         SET sun_open='${newSunOpen}', sun_close='${newSunClose}',
+             mon_open='${newMonOpen}', mon_close='${newMonClose}'
+             tue_open='${newTueOpen}', tue_close='${newTueClose}',
+             wed_open='${newWedOpen}', wed_close='${newWedClose}'
+             thu_open='${newThuOpen}', thu_close='${newThuClose}',
+             fri_open='${newFriOpen}', fri_close='${newFriClose}'
+             sat_open='${newSatOpen}', sat_close='${newSatClose}'
+         JOIN Business ON Business.reg_user_id = '${req.session.reg_user_id}'`,
+         function(err, result){
+            if(err){
+                console.log(err);
+                res.status(500).json(err);
+            }
+            else{
+                console.log(result);
+                res.status(200).json(result);
+            }
+         }
+    )
+})
+
+router.post('/api/edit-phone-number', (req,res) =>{
+    const {newPhoneNumber} = req.body;
+    connection.query(
+        `UPDATE Business
+         SET phone_num= '${newPhoneNumber}'
+         JOIN Business ON Business.reg_user_id = '${req.session.reg.user_id}'`,
+         function(err, result){
+            if(err){
+                console.log(err);
+                res.status(500).json(err);
+            }
+            else{
+                console.log(result);
+                res.status(200).json(result);
+            }
+         }
+    )
+})
+
 module.exports = router
