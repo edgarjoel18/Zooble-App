@@ -21,7 +21,7 @@ router.get("/api/get-profile-pic", (req,res) =>{
 router.get("/api/profile", (req,res) =>{
     console.log("GET /api/profile")
     connection.query(
-        `SELECT Profile.profile_pic_link, Profile.display_name, Profile.about_me, Profile.type, Profile.account_id
+        `SELECT Profile.profile_pic_link, Profile.display_name, Profile.about_me, Profile.type, Profile.account_id, Profile.profile_id
          FROM Profile
          WHERE Profile.profile_id = '${req.query.profileID}'`,
          function(err, profile){
@@ -36,9 +36,9 @@ router.get("/api/profile", (req,res) =>{
     )
 })
 
-router.get("/api/get-photo-posts", (req,res) =>{
+router.get("/api/photo-posts", (req,res) =>{
     console.log(req.query);
-    console.log("GET /api/get-photo-posts")
+    console.log("GET /api/photo-posts")
     connection.query(
         `SELECT *
          FROM Photo
@@ -71,6 +71,25 @@ router.post("/api/profile-pic", (req,res) =>{
             else{
                 console.log(result);
                 res.status(200).json(result);
+            }
+        }
+    )
+})
+
+router.get("/api/profile-display-name", (req,res) =>{
+    console.log(req.body);
+    console.log("GET /api/profile-display-name")
+    connection.query(`SELECT Profile.display_name
+     FROM Profile
+     WHERE Profile.profile_id = '${req.query.profileID}'`,
+        function(err, results){
+            if(err){
+                console.log(err)
+                res.status(500).json(err);
+            }
+            else{
+                console.log(results);
+                res.status(200).json(results[0]);
             }
         }
     )

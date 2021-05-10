@@ -39,7 +39,7 @@ function Profile({appUser}) {
             console.log(err)
         })
 
-        axios.get('/api/get-photo-posts',{params: {profileID: profileID}})
+        axios.get('/api/photo-posts',{params: {profileID: profileID}})
         .then(response =>{
             console.log(response)
             console.log(response.data);
