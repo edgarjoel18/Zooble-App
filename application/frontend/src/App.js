@@ -28,8 +28,8 @@ import ProfileTest from './pages/Profile/ProfileTest'
 
 import AdminFeed from './pages/Feed/AdminFeed.js';
 import Feed from './pages/Feed/Feed.js'
-import Photo from './pages/Photo/Photo';
-import MyPhoto from './pages/Photo/MyPhoto';
+import Photos from './pages/Photos/Photos';
+// import MyPhotos from './pages/Photos/MyPhotos';
 import Followers from './pages/Followers/Followers';
 import ExploreUsers from './pages/ExploreUsers/ExploreUsers';
 
@@ -99,18 +99,15 @@ const App = () => {
         <Route path="/Cameron" component={Cameron}/>
         <Route path="/Wameedh" component={Wameedh}/>
 
-
-
-
-
         <Route path="/Feed" component={Feed} appUser={appUser}/>
         <Route path="/AdminFeed" component={AdminFeed}/>
         <Route path="/MapSearch" component={MapSearch}/>
         <Route exact path="/Profile/:profileID">
           <ProfilePage appUser={appUser}/>
         </Route>
-        <Route path="/Photo" component={Photo}/>
-        <Route path="/MyPhoto" component={MyPhoto}/>
+          <Route path="/Photos/:profileID" component={Photos}>
+        </Route>
+        {/* <Route path="/MyPhotos" component={MyPhotos}/> */}
         <Route path="/Messages" component={Messages}/>
         <Route path="/MyPets" component={MyPets}/>
         <Route path="/Pets" component={Pets}/>

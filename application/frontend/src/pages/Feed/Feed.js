@@ -323,12 +323,6 @@ function Feed() {
 
     return (
         <>
-            {/* <NavLink to="/Profile/Alex" style={{ textDecoration: 'none' }}>
-                <div className={styles["follower-feed-header-profile"]}>
-                    <img className={styles["follower-feed-header-profile-pic"]} src={own_prof_pic} />
-                    <div className={styles["follower-feed-header-profile-name"]}>Alex</div>
-                </div>
-            </NavLink> */}
             {displayFeed}
             <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost} />
         </>

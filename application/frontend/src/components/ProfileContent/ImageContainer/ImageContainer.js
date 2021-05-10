@@ -111,30 +111,30 @@ function ImageContainer({previews, profile, title, selfView}) {
         );
     }
 
-    function seeAllImageHandler(path) {
-        const queryParams = (
-            encodeURIComponent('id') + '=' + encodeURIComponent(profile.id) + '&' 
-            + encodeURIComponent('name') + '=' + encodeURIComponent(profile.userName)
-            );
-        history.push({
-            pathname: path,
-            search: '?' + queryParams
-        });
+    // function seeAllImageHandler(path) {
+    //     const queryParams = (
+    //         encodeURIComponent('id') + '=' + encodeURIComponent(profile.id) + '&' 
+    //         + encodeURIComponent('name') + '=' + encodeURIComponent(profile.userName)
+    //         );
+    //     history.push({
+    //         pathname: path,
+    //         search: '?' + queryParams
+    //     });
 
-    }
+    // }
     
     let seeAll = null;
     if (title === 'Photos' || title === 'My Photos') {
-        selfView ? 
-        seeAll = <p style={{cursor: 'pointer'}} onClick={() => seeAllImageHandler('/MyPhoto')} >See All</p>
+        selfView ?  //this won't work because the user will still able to go to photos/:profileId by directUrl, it will be better to check ownership on the page itself
+        seeAll = <Link style={{cursor: 'pointer', float: 'right'}} to={"/Photos/" + profile.profile_id}>See All</Link>
         :
-        seeAll = <p style={{cursor: 'pointer'}} onClick={() => seeAllImageHandler('/Photo')} >See All</p>;
+        seeAll = <Link style={{cursor: 'pointer', float: 'right'}} to={"/Photos/" + profile.profile_id}>See All</Link>
     }
     else if (title === 'My Pets') {
-        seeAll = <p style={{cursor: 'pointer'}} onClick={() => history.push("/MyPets")} >See All</p>
+        seeAll = <Link style={{cursor: 'pointer', float: 'right'}} to={"/Pets" + profile.profile_id}>See All</Link>
     }
     else {
-        seeAll = <p style={{cursor: 'pointer'}} onClick={() => history.push("/Pets")} >See All</p>
+        seeAll = <Link style={{cursor: 'pointer', float: 'right'}} to={"/Pets" + profile.profile_id}>See All</Link>
     }
 
     return (
