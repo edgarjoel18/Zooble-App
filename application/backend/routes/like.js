@@ -37,9 +37,9 @@ router.post("/api/like-unlike", (req,res) =>{
 
 router.get("/api/likes", (req,res)=>{
     connection.query(
-                 `SELECT COUNT(Like.reg_user_id)
-                  FROM Like
-                  WHERE Like.post_id = '${posts[i].post_id}'`,
+                 `SELECT COUNT(PostLike.reg_user_id)
+                  FROM PostLike
+                  WHERE PostLike.post_id = '${posts[i].post_id}'`,
                   function(err, likeCount){
                       if(err){
                           console.log(err);

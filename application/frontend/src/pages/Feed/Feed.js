@@ -83,7 +83,7 @@ function Feed() {
         console.log('/api/get-feed-posts');
         axios.get('/api/get-feed-posts')
         .then(response =>{
-            console.log(response.data);
+            console.log("Feed Posts: ", response.data);
             setFeedPosts(response.data);
         })
         .catch(err =>{

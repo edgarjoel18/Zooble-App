@@ -25,8 +25,9 @@ router.get("/api/feed-user",(req,res)=>{
 router.get("/api/get-feed-posts",(req,res)=>{
     console.log("/api/get-feed-posts");
     let username = req.session.username;
+    let postsWithLikes = []; //array for holding objects with posts and likes
     connection.query(
-        `SELECT Post.post_id, Post.timestamp, Post.body, Profile.display_name, Profile.profile_pic_link, Profile.pet_id, Photo.link
+        `SELECT Post.post_id, Post.timestamp, Post.body, Post.like_count, Profile.display_name, Profile.profile_pic_link, Profile.pet_id, Photo.link
          FROM Post
          LEFT JOIN Photo ON Post.post_id = Photo.post_id
          LEFT JOIN RegisteredUser ON RegisteredUser.reg_user_id = Post.reg_user_id
@@ -51,36 +52,11 @@ router.get("/api/get-feed-posts",(req,res)=>{
             if(err)
                 console.log(err);
             else{
-                let postsWithLikes = []; //array for holding objects with posts and likes
-                //get amount of likes for each post and append to post object
-                for(let i = 0; i < posts.length; i++){
-                      connection.query(
-                          `SELECT COUNT(Like.reg_user_id)
-                           FROM Like
-                           WHERE Like.post_id = '${posts[i].post_id}'`,
-                           function(err, likeCount){
-                               if(err){
-                                   console.log(err);
-                               }
-                               else{
-                                   postsWithLikes.push({
-                                       post_id : posts[i].post_id,
-                                       timestamp: posts[i].timestamp,
-                                       like_count: likeCount,
-                                       display_name: posts[i].display_name,
-                                       profile_pic_link: posts[i].profile_pic_link,
-                                       pet_id: posts[i].pet_id,
-                                       link: posts[i].link
-                                    })
-                                   console.log(likeCount);
-                               }
-                           })
-                }
-                console.log("PostsWithLikes: ", postsWithLikes);
-                res.status(200).json(postsWithLikes);
+                res.status(200).json(posts);
             }
         }
     )
+
 })
 
 module.exports = router

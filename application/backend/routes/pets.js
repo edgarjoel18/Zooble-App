@@ -3,7 +3,7 @@ const connection = require('../db');
 const router = express.Router();
 
 router.get("/api/get-current-user-pets",(req,res)=>{
-    console.log("/api/get-current-user-pets");
+    // console.log("/api/get-current-user-pets");
 
     //get all profiles that are owned by the current user, but only the profiles associated with pets and not the profile that is the profile the user is on already
     connection.query(
@@ -21,7 +21,7 @@ router.get("/api/get-current-user-pets",(req,res)=>{
 })
 
 router.get("/api/current-user-pets",(req,res)=>{
-    console.log("/api/current-user-pets");
+    // console.log("/api/current-user-pets");
     
     //get all profiles that are owned by the current user, but only the profiles associated with pets
     connection.query(
@@ -33,7 +33,7 @@ router.get("/api/current-user-pets",(req,res)=>{
              if(err){
                  console.log(err);
              }
-             console.log("userPets: ",userPets);
+            //  console.log("userPets: ",userPets);
              res.status(200).json(userPets);
          })
 })

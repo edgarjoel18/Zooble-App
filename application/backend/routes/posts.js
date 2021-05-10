@@ -7,15 +7,15 @@ router.post('/api/flag', (req,res) =>{
     const regUserId = req.session.reg_user_id;
     const postToFlag = req.body.postToFlag;
 
-    connection.query(`INSERT INTO Flag VALUES ('${regUserId}', '${postToFlag}')`,
+    connection.query(`INSERT INTO PostFlag VALUES ('${regUserId}', '${postToFlag}')`,
         function(err, result){
             if(err){
                 if(err.errno = 1062){
                     console.log(1062);
                     connection.query(
-                        `DELETE FROM Flag
-                        WHERE (Flag.reg_user_id = '${regUserId}'
-                        AND Flag.post_id = '${postToLike}')`,
+                        `DELETE FROM PostFlag
+                        WHERE (PostFlag.reg_user_id = '${regUserId}'
+                        AND PostFlag.post_id = '${postToLike}')`,
                         function(err,result){
                             if(err){
                                 console.log(err);
