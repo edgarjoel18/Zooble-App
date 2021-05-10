@@ -1,5 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useCallback, useEffect, useState } from 'react';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
+
+import {useDropzone} from 'react-dropzone' 
 
 import arrow from '../../images/Arrow.png';
 import styles from './ProfileInfo.module.css';
@@ -10,9 +12,19 @@ import EditButton from '../Buttons/EditButton';
 import LoginRequired from '../Modals/LoginRequired';
 import { RedirectPathContext } from '../../context/redirect-path';
 
+import axios from 'axios';
 
+//make this into environment variable before deploying!
+const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL'
 
 function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
+
+    //image upload array
+    
+
+
+
+
     console.log(profile.display_name);
     console.log(profile.profile_pic_link);
     
@@ -47,6 +59,57 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
     const [displayName, setDisplayName] = useState(profile.display_name);
     const [profilePic, setProfilePic] = useState(profile.profile_pic_link);
     const [profileType, setProfileType] = useState(profile.type);
+
+    // const [myFiles, setMyFiles] = useState([])
+
+    const onDrop = useCallback(acceptedFile => {
+        console.log("onDrop");
+        console.log("acceptedFile: ",acceptedFile[0]);
+        let config = {
+            headers: {
+                'Content-type': 'image/jpeg'  //configure headers for put request to s3 bucket
+            }
+        }
+
+        axios.get(apiGatewayURL)  //first get the presigned s3 url
+            .then((response) =>{
+                console.log(response)
+                console.log(response.data)
+                let presignedFileURL =  'https://csc648groupproject.s3-us-west-2.amazonaws.com/' + response.data.photoFilename;  //save this url to add to database later
+                console.log(acceptedFile[0]);
+                axios.put(response.data.uploadURL, acceptedFile[0],config).then((response) =>{  //upload the file to s3
+                    console.log(response);
+                    console.log(response.data);
+                    console.log("Presigned File URL: ", presignedFileURL);
+                    axios.post('/api/profile-pic',{
+                        photoLink: presignedFileURL,
+                    }).then((response) =>{
+                        console.log(response.data);
+                        setProfilePic(presignedFileURL);
+                    })
+                    .catch((err) =>{
+                        console.log(err);
+                    })
+                })
+                .catch((err) =>{
+                    console.log(err);
+                    if(err.response.status == 403){
+                        //display error message to user
+                    }
+                    //break out of this function //presigned s3 url will automatically expire so no harm done
+                })
+            })
+            .catch((err) =>{
+                console.log(err);
+            })
+    })
+
+    const { getRootProps, getInputProps } = useDropzone({ //props for dropzone for 
+        onDrop,
+        maxSize: 5242880, 
+        accept: "image/jpeg", 
+        multiple: false
+    })
 
     console.log("Profile Type: ", profileType);
 
@@ -93,6 +156,8 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
     //     dropDownContent.className = styles.DropdownHidden;
     // }
 
+
+
     function onFollowHandler() {
         console.log('Follow button clicked')
         if(appUser){
@@ -102,6 +167,8 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
             setLoginRequiredDisplay(true);
         }
     }
+
+
 
     let nameDisplay = null;
     let displayAccountInfo = null;
@@ -281,9 +348,17 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
 
     return (
         <div className={styles.ProfileInfo} >
-            <div style={{display: 'flex', flexDirection: 'column', maxWidth: '223px'}} >
+            <div style={{display: 'flex', flexDirection: 'column', maxWidth: '223px', position: 'relative'}} >
                 <img className={styles.Image} src={profilePic} alt="No Image Found" />
-                {/* <input type='file' onChange={event => uploadPhotoHandler(event.target.files)} /> */}
+                <div className={styles.ImageStackText}>
+                    <section className={styles["follower-feed-new-post-attach-image"]}>
+                        <div className={styles["follower-feed-new-post-attach-image-container"]}  {...getRootProps()}>
+                            <input  {...getInputProps()} />
+                            <div className={styles["follower-feed-new-post-attach-image-info"]}>Edit</div>
+                        </div>
+                    </section>
+                    
+                </div>
             </div>
             <div className={styles.SideContainer} >
                 <div style={{display: 'flex', justifyItems: 'center'}}>

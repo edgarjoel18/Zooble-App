@@ -11,15 +11,6 @@ function SiteDemo2() {
 
   const history = useHistory();
 
-
-  function onMouseover(e){
-    setText('Coming Soon');
-  }
-
-  function onMouseout(e){
-    setText('Try the Tool');
-  }
-
   function searchLocalBusinesses(){
     navigator.geolocation.getCurrentPosition((position)=>{
       const location = {

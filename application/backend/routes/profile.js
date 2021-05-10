@@ -59,4 +59,21 @@ router.get("/api/get-photo-posts", (req,res) =>{
     )
 })
 
+router.post("/api/profile-pic", (req,res) =>{
+    console.log(req.body);
+    console.log("POST /api/profile-pic")
+    connection.query(`UPDATE Profile SET profile_pic_link = '${req.body.photoLink}' WHERE Profile.profile_id =${req.session.profile_id}`,
+        function(err, result){
+            if(err){
+                console.log(err)
+                res.status(500).json(err);
+            }
+            else{
+                console.log(result);
+                res.status(200).json(result);
+            }
+        }
+    )
+})
+
 module.exports = router

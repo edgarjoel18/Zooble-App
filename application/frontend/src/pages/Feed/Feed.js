@@ -148,7 +148,7 @@ function Feed() {
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
         maxSize: 5242880, 
-        accept: "image/jpeg", 
+        accept: "image/jpeg",
         multiple: false
     })
 
