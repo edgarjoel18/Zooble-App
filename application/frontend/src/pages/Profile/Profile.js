@@ -20,7 +20,7 @@ function Profile({appUser}) {
     const [taggedPosts, setTaggedPosts] = useState([]);
     const [fetchedHours, setFetchedHours] = useState([]);
     const [fetchedAddress, setFetchedAddress] = useState([]);
-    const [fetchedPhoneNumber, setFetchedPhoneNumber] = useState([]);
+    const [fetchedPhoneNumber, setFetchedPhoneNumber] = useState('');
 
     const redirectContext = useContext(RedirectPathContext);
 
@@ -36,6 +36,7 @@ function Profile({appUser}) {
             setFetchedProfile(response.data);
         })
         .catch(err =>{
+            redirectContext.updateLoading(false);
             console.log(err)
         })
 
@@ -44,7 +45,6 @@ function Profile({appUser}) {
             console.log(response)
             console.log(response.data);
             setFetchedPhotoPosts(response.data);
-            redirectContext.updateLoading(false);
         })
         .catch(err =>{
             redirectContext.updateLoading(false);
@@ -56,7 +56,6 @@ function Profile({appUser}) {
             console.log(response)
             console.log(response.data);
             setFetchedPets(response.data);
-            redirectContext.updateLoading(false);
         })
         .catch(err =>{
             redirectContext.updateLoading(false);
@@ -90,6 +89,7 @@ function Profile({appUser}) {
 
         axios.get('/api/business-address',{params: {profileID: profileID}})
         .then(response =>{
+            console.log('/api/business-address: ',response.data.address);
             setFetchedAddress(response.data.address);
         })
         .catch(err =>{
