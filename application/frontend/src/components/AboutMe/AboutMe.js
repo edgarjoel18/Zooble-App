@@ -16,25 +16,17 @@ const petOwnerProfileTabs = ["About"]//, "Recent Posts"]
 function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, address, phoneNumber}) {
     console.log("profile: ", profile)
     const [selected, setSelected] = useState('About');
-    //const [address, setAddress] = useState('');
-    //const [phone, setPhone] = useState('');
-    //const [hours, setHours] = useState({});
-    //const [about, setAbout] = useState('');
     const [changing, setChanging] = useState(false);
     const [labelSelected, setLabelSelected] = useState();
 
     const [editHoursDisplay, setEditHoursDisplay] = useState(false);
 
     const [aboutMeContent, setAboutMeContent] = useState(aboutMeBody);
+    const [phone, setPhone] = useState(phoneNumber);
+    const [location, setLocation] = useState(address);
+    //const [hours, setHours] = useState({});
 
     let hoursLabels = [];
-
-    // useEffect(() => {
-    //      setPhone(shelterInfo.phone);
-    //      setHours(shelterInfo.hours);
-    //      setAbout(shelterAbout);
-    // }, [])
-    
 
     // limited time editing
     // useEffect(() => {
@@ -71,6 +63,32 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
         })
     }
 
+    function submitLocationEdit(){
+        console.log('updatedLocation is ' + location)
+        axios.post("/api/business-address",{
+            address: location
+        })
+        .then(response =>{
+            console.log(response);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+    }
+
+    function submitPhoneEdit(){
+        console.log('updatedPhone is ' + phone)
+        axios.post("/api/business-phone-number",{
+            aboutMeText: aboutMeContent
+        })
+        .then(response =>{
+            console.log(response);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+    }
+
     function onTabClickHandler(id) {
         setSelected(id);
     }
@@ -85,7 +103,6 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
         console.log("cancel editing handler");
         setChanging(false);
         setLabelSelected('');
-        submitAboutMeEdit();
         console.log('cancel')
     }
 
@@ -94,7 +111,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
         address.style.height = '45px';
         console.log(address.scrollHeight);
         if (address.scrollHeight < 105) {
-            updateProfile('address', event.target.value);
+            setLocation(event.target.value);
             address.style.height = address.scrollHeight + 'px' 
         }
         else 
@@ -149,8 +166,10 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                         // <button onClick={() => changingInfoHandler('about')} >edit</button>
                         <EditButton edit clicked={() => changingInfoHandler('about')}>Edit</EditButton> 
                         :
-                        <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton>
-                        )
+                        <EditButton style={{float: 'right'}} save clicked={() => {
+                            cancelEditingHandler();
+                            submitAboutMeEdit();
+                        }}>Save</EditButton>)
                     }
                 </div>
             );
@@ -167,7 +186,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                     <label for="tab-address" >Address: </label>
                     <textarea 
                         id="tab-address"
-                        value={address} 
+                        value={location} 
                         readOnly={!changing || !(labelSelected === 'address')}
                         onChange={event => autoGrowHandler(event)} 
                         className={styles.AddressTextArea}
@@ -179,7 +198,11 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                         (labelSelected === 'address') && 
                         //<button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
                         <>
-                            <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton>
+                            {/* <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton> */}
+                            <EditButton style={{float: 'right'}} save clicked={() => {
+                                cancelEditingHandler();
+                                submitLocationEdit();
+                            }}>Save</EditButton>
                             <br />
                         </>
                     }
@@ -192,7 +215,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                     <input 
                         id="phone"
                         type="tel" 
-                        value={`(${phoneNumber.substring(0,3)}) ${phoneNumber.substring(3,6)}-${phoneNumber.substring(6,10)}`} 
+                        value={`(${phone.substring(0,3)}) ${phone.substring(3,6)}-${phone.substring(6,10)}`} 
                         readOnly={!changing || !(labelSelected === 'phone number')}
                         maxLength = "20"
                         onKeyPress={event => {
@@ -200,7 +223,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                                 cancelEditingHandler();
                             }
                           }}
-                        onChange={event => updateProfile('phone', event.target.value)} 
+                        onChange={event => setPhone(event.target.value)} 
                     />
                     {
                         (labelSelected === 'phone number') && 
