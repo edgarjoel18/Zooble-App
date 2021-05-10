@@ -15,6 +15,12 @@ const petOwnerProfileTabs = ["About"]//, "Recent Posts"]
 
 function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, address, phoneNumber}) {
     console.log("profile: ", profile)
+
+    //not sure if these need to have state yet
+    let latitude; 
+    let longitude;
+    //not sure if these need to have state yet
+    
     const [selected, setSelected] = useState('About');
     const [changing, setChanging] = useState(false);
     const [labelSelected, setLabelSelected] = useState();
@@ -52,8 +58,9 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
 
     function submitAboutMeEdit(){
         console.log('about me content is ' + aboutMeContent)
-        axios.post("/api/edit-about-me",{
-            aboutMeText: aboutMeContent
+        axios.post("/api/about-me",{
+            newAboutMe: aboutMeContent,
+            profileID: profile.profile_id
         })
         .then(response =>{
             console.log(response);
@@ -63,10 +70,13 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
         })
     }
 
+    //I'll handle the location edit later - Daniel
     function submitLocationEdit(){
         console.log('updatedLocation is ' + location)
-        axios.post("/api/business-address",{
-            address: location
+        axios.post("/api/address",{
+            newAddress: location,
+            newLatitude: latitude,
+            newLongitude: longitude
         })
         .then(response =>{
             console.log(response);
@@ -78,8 +88,8 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
 
     function submitPhoneEdit(){
         console.log('updatedPhone is ' + phone)
-        axios.post("/api/business-phone-number",{
-            aboutMeText: aboutMeContent
+        axios.post("/api/phone-number",{
+            newPhoneNumber: phone
         })
         .then(response =>{
             console.log(response);

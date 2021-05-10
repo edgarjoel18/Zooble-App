@@ -2,14 +2,14 @@ const express = require('express');
 const connection = require('../db');
 const router = express.Router();
 
-router.post("/api/edit-about-me", (req,res) =>{
-    console.log(req.body.aboutMeText);
+router.post("/api/about-me", (req,res) =>{
+    const {newAboutMe, profileID} = req.body;
     //may need to change this to support pet profile
     console.log("POST /api/edit-about-me")
     connection.query(
         `UPDATE Profile
          SET about_me = '${req.body.aboutMeText}'
-         WHERE profile_id = '${req.session.profile_id}' `,
+         WHERE profile_id = '${profileID}' `,
          function (err, result){
              if(err){
                  console.log(err);
@@ -22,7 +22,7 @@ router.post("/api/edit-about-me", (req,res) =>{
 })
 
 
-router.post('/api/edit-address',(req,res)=>{
+router.post('/api/address',(req,res)=>{
     const {newAddress, newLatitude, newLongitude} = req.body;
     connection.query(
         `UPDATE Address
@@ -40,7 +40,7 @@ router.post('/api/edit-address',(req,res)=>{
          })
 })
 
-router.post('/api/edit-hours', (req,res) =>{
+router.post('/api/hours', (req,res) =>{
     const {newSunOpen, newSunClose, newMonOpen, newMonClose,newTueOpen, newTueClose, newWedOpen, newWedClose, newThuOpen, newThuClose, newFriOpen, newFriClose, newSatOpen, newSatClose} = req.body;
     connection.query(
         `UPDATE HoursOfOperation
@@ -65,7 +65,7 @@ router.post('/api/edit-hours', (req,res) =>{
     )
 })
 
-router.post('/api/edit-phone-number', (req,res) =>{
+router.post('/api/phone-number', (req,res) =>{
     const {newPhoneNumber} = req.body;
     connection.query(
         `UPDATE Business
