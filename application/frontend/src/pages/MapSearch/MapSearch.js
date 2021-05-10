@@ -465,17 +465,17 @@ function MapSearch(props) {
                         <div className={styles['map-search-results-text-list']}>
                             <ul>
                                 {recievedSearchResults.length == 0 && <li className={styles['no-results']}>No {searchCategory} that Match your Search. But here are some {searchCategory} you might like: </li>}
-                                {recievedSearchResults.length != 0 && searchCategory == 'Pets' && recievedSearchResults.map((searchResult) => (
-                                    <PetSearchResult searchResult={searchResult} panTo={panTo}/>
+                                {recievedSearchResults.length != 0 && searchCategory == 'Pets' && recievedSearchResults.map((searchResult,index) => (
+                                    <PetSearchResult searchResult={searchResult} index={index} panTo={panTo}/>
                                 ))}
-                                {recievedSearchResults.length != 0 && searchCategory == 'Businesses' && recievedSearchResults.map((searchResult) => (
-                                    <BusinessSearchResult searchResult={searchResult} panTo={panTo}/>
+                                {recievedSearchResults.length != 0 && searchCategory == 'Businesses' && recievedSearchResults.map((searchResult, index) => (
+                                   <BusinessSearchResult searchResult={searchResult} index={index} panTo={panTo}/>
                                 ))}
-                                {recievedSearchResults.length != 0 && searchCategory == 'Shelters' && recievedSearchResults.map((searchResult) => (
-                                    <ShelterSearchResult searchResult={searchResult} panTo={panTo}/>
+                                {recievedSearchResults.length != 0 && searchCategory == 'Shelters' && recievedSearchResults.map((searchResult, index) => (
+                                    <ShelterSearchResult searchResult={searchResult} index={index} panTo={panTo}/>
                                 ))}
-                                {recievedSearchResults.length != 0 && searchCategory == 'Pet Owners' && recievedSearchResults.map((searchResult) => (
-                                    <PetOwnerSearchResult searchResult={searchResult} panTo={panTo}/>
+                                {recievedSearchResults.length != 0 && searchCategory == 'Pet Owners' && recievedSearchResults.map((searchResult, index) => (
+                                    <PetOwnerSearchResult searchResult={searchResult} index={index}/>
                                 ))}
 
                             </ul>
@@ -630,22 +630,34 @@ function MapSearch(props) {
     );
 }
 
-function BusinessSearchResult({searchResult,panTo}){
+function BusinessSearchResult({searchResult,panTo, index}){
     return (
-        <li className={styles['search-result']} key={searchResult.reg_business_id} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/><Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}><span className={styles['search-result-name']}>{searchResult.name}</span></Link></li>
+        <li className={styles['search-result']} key={searchResult.reg_business_id}>
+            <img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/>
+            <Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}>
+                <span className={styles['search-result-name']}>{searchResult.name}</span>
+            </Link>
+            <img className={styles['search-result-marker']} src={`https://csc648groupproject.s3-us-west-2.amazonaws.com/marker${index+1}.png`} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}/>
+        </li>
     )
 }
 
-function ShelterSearchResult({searchResult,panTo}){
+function ShelterSearchResult({searchResult,panTo, index}){
     return (
-        <li className={styles['search-result']} key={searchResult.reg_shelter_id} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/><Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}><span className={styles['search-result-name']}>{searchResult.name}</span></Link></li>
+        <li className={styles['search-result']} key={searchResult.reg_shelter_id} >
+            <img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/>
+            <Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}>
+                <span className={styles['search-result-name']}>{searchResult.name}</span>
+            </Link>
+            <img className={styles['search-result-marker']} src={`https://csc648groupproject.s3-us-west-2.amazonaws.com/marker${index+1}.png`} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}/>
+        </li>
     )
 
 }
 
-function PetSearchResult({searchResult, panTo}){
+function PetSearchResult({searchResult, panTo, index}){
     return (
-        <li className={styles['search-result']} key={searchResult.pet_id} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/><Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}><span className={styles['search-result-name']}>{searchResult.name}</span></Link></li>
+        <li className={styles['search-result']} key={searchResult.pet_id} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/><Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}><span className={styles['search-result-name']}>{searchResult.name}</span><img className={styles['search-result-marker']} src={`https://csc648groupproject.s3-us-west-2.amazonaws.com/marker${index+1}.png`} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}/></Link></li>
     )
 }
 

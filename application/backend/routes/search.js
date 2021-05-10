@@ -85,15 +85,18 @@ router.get("/api/search", (req,res) =>{
                 }
                 query += ")"
             }
-            // if(requestedPetColors[0] !== undefined){
-            //     for(let i = 0; i < requestedPetColors.length; i++){ //build sql query for pet types
-            //         if(i == (requestedPetColors.length - 1))
-            //             query += 'Pet.pet_type_id = ' + requestedPetColors[i] ;
-            //         else
-            //             query += 'Pet.pet_type_id = ' + requestedPetColors[i]  + ' OR ';
-            //     }
-            //     query += ")"
-            // }
+            if(requestedPetColors !== undefined){
+                query += ' AND '
+                for(let i = 0; i < requestedPetColors.length; i++){ //build sql query for pet types
+                     if(i == (requestedPetColors.length - 1))
+                        query +=  `(SELECT PetColor.color_id FROM PetColor 
+                            JOIN Pet ON Pet.pet_id = PetColor.pet_id
+                            JOIN Color ON Color.color_id =  PetColor.color_id) = ` + requestedPetColors[i];
+                     else
+                         query += 'PetColor.color_id = ' + requestedPetColors[i]  + ' OR ';
+                 }
+                 query += ")"
+            }
             if(requestedPetAges !== undefined){
                 query += 'AND ('
                 for(let i = 0; i < requestedPetAges.length; i++){ //build sql query for pet types
