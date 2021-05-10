@@ -13,7 +13,25 @@ const shelterProfileTabs = ["About", "Contact Info"]//, "Recent Posts"]
 const businessProfileTabs = ["About", "Business Info"]//, "Recent Posts"]
 const petOwnerProfileTabs = ["About"]//, "Recent Posts"]
 
-function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, address, phoneNumber}) {
+const dummyHours = 
+    {
+        sun_open: '12: 00AM',
+        sun_close: '12: 00AM',
+        mon_open: '12: 00AM',
+        mon_close: '12: 00AM',
+        tue_open: '12: 00AM',
+        tue_close: '12: 00AM',
+        wed_open: '12: 00AM',
+        wed_close: '12: 00AM',
+        thu_open: '12: 00AM',
+        thu_close: '12: 00AM',
+        fri_open: '12: 00AM',
+        fri_close: '12: 00AM',
+        sat_open: '12: 00AM',
+        sat_close: '12: 00AM'
+       }
+
+function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phoneNumber, profileID}) {
     console.log("profile: ", profile)
     const [selected, setSelected] = useState('About');
     const [changing, setChanging] = useState(false);
@@ -24,9 +42,45 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
     const [aboutMeContent, setAboutMeContent] = useState(aboutMeBody);
     const [phone, setPhone] = useState(phoneNumber);
     const [location, setLocation] = useState(address);
-    //const [hours, setHours] = useState({});
+    const [hours, setHours] = useState();
+
+    console.log('location is ' + address);
+    console.log('phone is ' + phone);
 
     let hoursLabels = [];
+
+    useEffect(() =>{
+        axios.get('/api/business-hours',{params: {profileID: profileID}})
+        .then(response =>{
+            console.log('/api/business-hours: ',response);
+            let hoursArray = [];
+            // Object.keys(response.data).map(key => {
+            //     hoursArray.push
+            // })
+            setHours(response.data);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+
+        axios.get('/api/business-address',{params: {profileID: profileID}})
+        .then(response =>{
+            console.log('/api/business-address: ',response.data.address);
+            setLocation(response.data.address);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+
+        axios.get('/api/business-phone-number',{params: {profileID: profileID}})
+        .then(response =>{
+            console.log('/api/business-phone-number: ', response.data);
+            setPhone(response.data.phone_num);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+    },[profileID])
 
     // limited time editing
     // useEffect(() => {
@@ -148,6 +202,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
         <Tab key={tab} id={tab} section={tab} selected={selected} clicked={onTabClickHandler} accountType={profile.type} />
     ))
 
+    console.log('hours is ' + JSON.stringify(hours));
     let content = null; 
     switch (selected) {
         case 'About':
@@ -215,7 +270,8 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                     <input 
                         id="phone"
                         type="tel" 
-                        value={`(${phone.substring(0,3)}) ${phone.substring(3,6)}-${phone.substring(6,10)}`} 
+                        // value={`(${phone.substring(0,3)}) ${phone.substring(3,6)}-${phone.substring(6,10)}`} 
+                        value={phone}
                         readOnly={!changing || !(labelSelected === 'phone number')}
                         maxLength = "20"
                         onKeyPress={event => {
@@ -247,13 +303,19 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                             }
                             <label>Hours: </label>
                         </div>
-                        {Object.keys(hours).map(key => (
-                            <div className={styles.Days} key={key}>
-                                <label>{key}: </label>
-                                {<span >{hours[key]}</span>}
-                                {hours[key] == null && <span>Closed</span>}
+                        {Object.keys(dummyHours).map((key, index) => {
+
+                            if (index % 2 === 1)
+                                return null;
+                            
+                            let day = key.substr(0, 3);
+                            console.log(day)
+                      
+                            return <div className={styles.Days} key={key}>
+                                <label>{day[0].toUpperCase() + day.substring(1)}: </label>                              
+                                {dummyHours[key] ? <span >{dummyHours[key] + " - " + dummyHours[day +'_close']}</span> : <span>Closed</span>}
                             </div>
-                        ))}
+                        })}
                     </div>
                     {/* {
                         props.isSelfView && (labelSelected === 'hours') && 

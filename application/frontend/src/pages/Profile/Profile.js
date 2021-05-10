@@ -74,36 +74,36 @@ function Profile({appUser}) {
             console.log(err)
         })
 
-        axios.get('/api/business-hours',{params: {profileID: profileID}})
-        .then(response =>{
-            console.log('/api/business-hours: ',response);
-            let hoursArray = [];
-            // Object.keys(response.data).map(key => {
-            //     hoursArray.push
-            // })
-            setFetchedHours(response.data);
-        })
-        .catch(err =>{
-            console.log(err);
-        })
+        // axios.get('/api/business-hours',{params: {profileID: profileID}})
+        // .then(response =>{
+        //     console.log('/api/business-hours: ',response);
+        //     let hoursArray = [];
+        //     // Object.keys(response.data).map(key => {
+        //     //     hoursArray.push
+        //     // })
+        //     setFetchedHours(response.data);
+        // })
+        // .catch(err =>{
+        //     console.log(err);
+        // })
 
-        axios.get('/api/business-address',{params: {profileID: profileID}})
-        .then(response =>{
-            console.log('/api/business-address: ',response.data.address);
-            setFetchedAddress(response.data.address);
-        })
-        .catch(err =>{
-            console.log(err);
-        })
+        // axios.get('/api/business-address',{params: {profileID: profileID}})
+        // .then(response =>{
+        //     console.log('/api/business-address: ',response.data.address);
+        //     setFetchedAddress(response.data.address);
+        // })
+        // .catch(err =>{
+        //     console.log(err);
+        // })
 
-        axios.get('/api/business-phone-number',{params: {profileID: profileID}})
-        .then(response =>{
-            console.log('/api/business-phone-number: ', response.data);
-            setFetchedPhoneNumber(response.data.phone_num);
-        })
-        .catch(err =>{
-            console.log(err);
-        })
+        // axios.get('/api/business-phone-number',{params: {profileID: profileID}})
+        // .then(response =>{
+        //     console.log('/api/business-phone-number: ', response.data);
+        //     setFetchedPhoneNumber(response.data.phone_num);
+        // })
+        // .catch(err =>{
+        //     console.log(err);
+        // })
     },[profileID])
 
     useEffect(()=>{
@@ -179,6 +179,7 @@ function Profile({appUser}) {
                         address={fetchedAddress}
                         isSelfView={selfView} 
                         profile={fetchedProfile} 
+                        profileID={profileID}
                         updateProfile={updateProfileHandler}
                     />
                     <ProfileContent
