@@ -77,7 +77,7 @@ router.post('/api/phone-number', (req,res) =>{
     connection.query(
         `UPDATE Business
          SET phone_num= '${newPhoneNumber}'
-         JOIN Business ON Business.reg_user_id = '${req.session.reg.user_id}'`,
+         WHERE Business.reg_user_id = '${req.session.reg_user_id}'`,
          function(err, result){
             if(err){
                 console.log(err);
