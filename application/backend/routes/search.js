@@ -318,7 +318,7 @@ router.get("/api/search", (req,res) =>{
             JOIN Credentials ON Account.account_id = Credentials.acct_id
             WHERE Business.business_id IS NULL 
             AND Profile.pet_id IS NULL
-            AND ((LOWER(Profile.display_name) LIKE '%${name}%') OR (LOWER(Credentials.username) LIKE '%${name}'))
+            AND ((LOWER(Profile.display_name) LIKE '%${name}%') OR (LOWER(Credentials.username) LIKE '%${name}%'))
             `, 
             function(err, results) {
             if(err){
