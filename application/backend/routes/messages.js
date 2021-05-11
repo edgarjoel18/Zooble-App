@@ -27,6 +27,7 @@ router.get("/api/recieved-messages", (req,res) =>{
          JOIN Account ON RegisteredUser.user_id = Account.user_id
          LEFT JOIN Profile ON Account.account_id = Profile.account_id
          WHERE recipient_id= '${req.session.reg_user_id}'
+         AND Profile.pet_id IS NULL
          ORDER BY Message.timestamp DESC
         `,
     function(err,messages){
@@ -50,6 +51,7 @@ router.get("/api/sent-messages", (req,res) =>{
          JOIN Account ON RegisteredUser.user_id = Account.user_id
          LEFT JOIN Profile ON Account.account_id = Profile.account_id
          WHERE sender_id= '${req.session.reg_user_id}'
+         AND Profile.pet_id IS NULL
          ORDER BY Message.timestamp DESC
         `,
     function(err,messages){
