@@ -115,49 +115,28 @@ function MapSearch(props) {
     const center = {lat: state.lat, lng: state.lng};
 
     useEffect(() => {  //run once when page loads/refresh
-        Axios.get('/api/pet-types')   //get business types from database
-        .then(response =>{
-            typeOptions =  response.data;
-            // console.log('typeOptions: ',typeOptions);
-        })
+        const getPetTypes = Axios.get('/api/pet-types')   //get business types from database
+        const getBusinessTypes = Axios.get('/api/business-types')   //get business types from database
+        const getDogBreeds = Axios.get('/api/dog-breeds')   //get business types from database
+        const getCatBreeds = Axios.get('/api/cat-breeds')   //get business types from database
+        const getAges = Axios.get('/api/ages')   //get business types from database
+        const getSizes = Axios.get('/api/sizes')   //get business types from database
+        const getColors = Axios.get('/api/colors')   //get business types from database
+        
 
-        Axios.get('/api/business-types')   //get business types from database
-        .then(response =>{
-            businessCategoryOptions = response.data;
-            // console.log('businessCategoryOptions: ',businessCategoryOptions);
+        Promise.all([getPetTypes,getBusinessTypes,getDogBreeds,getCatBreeds,getAges,getSizes,getColors])
+        .then((responses) =>{
+            typeOptions =  responses[0].data;
+            businessCategoryOptions = responses[1].data;
+            dogBreedOptions = responses[2].data;
+            catBreedOptions = responses[3].data;
+            ageOptions = responses[4].data;
+            sizeOptions = responses[5].data;
+            colorOptions = responses[6].data;
         })
-
-        Axios.get('/api/dog-breeds')   //get business types from database
-        .then(response =>{
-            dogBreedOptions = response.data;
-            // console.log('dogBreedOptions: ',dogBreedOptions);
+        .catch((err) =>{
+            console.log(err);
         })
-
-        Axios.get('/api/cat-breeds')   //get business types from database
-        .then(response =>{
-            catBreedOptions = response.data;
-            // console.log('catBreedOptions: ',catBreedOptions);
-        })
-
-        Axios.get('/api/ages')   //get business types from database
-        .then(response =>{
-            ageOptions = response.data;
-            // console.log('ageOptions: ',ageOptions);
-        })
-
-        Axios.get('/api/sizes')   //get business types from database
-        .then(response =>{
-            sizeOptions = response.data;
-            // console.log('sizeOptions: ',sizeOptions);
-        })
-
-        Axios.get('/api/colors')   //get business types from database
-        .then(response =>{
-            colorOptions = response.data;
-            // console.log('colorOptions: ',colorOptions);
-        })
-
-       
     }, [])
 
 
@@ -194,8 +173,8 @@ function MapSearch(props) {
                         searchLatitude: state.lat,
                         searchLongitude: state.lng,
                         searchDistance: searchDistance.value,
-                        searchBizCategories : businessCategoryFilterValues,
-                        searchPage: currentPage
+                        searchPage: currentPage,
+                        searchBizCategories : businessCategoryFilterValues
                     }
                     console.log("Business Search Params: ", searchParams)
                     break
@@ -210,8 +189,8 @@ function MapSearch(props) {
                         searchLatitude: state.lat,
                         searchLongitude: state.lng,
                         searchDistance: searchDistance.value,
-                        searchPetTypes : shelterTypeFilterValues,
-                        searchPage: currentPage
+                        searchPage: currentPage,
+                        searchPetTypes : shelterTypeFilterValues
                     }
                     break;
                 case 'Pets':
@@ -237,11 +216,11 @@ function MapSearch(props) {
                         searchLatitude: state.lat,
                         searchLongitude: state.lng,
                         searchDistance: searchDistance.value,
+                        searchPage: currentPage,
                         searchPetTypes: petTypeFilterValues,
                         searchPetColors: petColorFilterValues,
                         searchPetSizes: petSizeFilterValues,
-                        searchPetAges: petAgeFilterValues,
-                        searchPage: currentPage
+                        searchPetAges: petAgeFilterValues
                     }
                     break;
                 case 'Pet Owners':
