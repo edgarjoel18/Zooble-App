@@ -39,7 +39,7 @@ router.get("/api/search", (req,res) =>{
         name= '';
     }
 
-    const {searchCategory,searchLatitude,searchLongitude,searchDistance,searchPage, searchBizCategories,searchPetTypes,searchPetColors, searchPetSizes,searchPetAges} = req.query
+    const {searchCategory,searchLatitude,searchLongitude,searchDistance,searchPage, searchBizCategories, searchPetTypes, searchPetColors, searchPetSizes,searchPetAges, searchCatBreeds, searchDogBreeds} = req.query
     
     console.log("Name: ",name);
     // var searchCategory = req.query.searchCategory
@@ -62,7 +62,7 @@ router.get("/api/search", (req,res) =>{
 
     if(searchCategory == 'Pets'){
         let query = '';
-        if((searchPetTypes  && searchPetTypes !== undefined) || (searchPetColors  && searchPetColors !== undefined) || (searchPetSizes  && searchPetSizes !== undefined) || (searchPetAges  && searchPetAges !== undefined)){
+        if((searchPetTypes  && searchPetTypes !== undefined) || (searchPetColors  && searchPetColors !== undefined) || (searchPetSizes  && searchPetSizes !== undefined) || (searchPetAges  && searchPetAges !== undefined) || (searchDogBreeds  && searchDogBreeds !== undefined) || (searchCatBreeds && searchCatBreeds !== undefined)){ 
             query = 
             `SELECT *,
              (3959 * acos(cos(radians('${searchLatitude}'))* cos(radians(Address.latitude))* cos(radians(Address.longitude) - radians('${searchLongitude}')) + sin(radians(${searchLatitude})) * sin(radians(Address.latitude)))) as distance 
@@ -88,7 +88,7 @@ router.get("/api/search", (req,res) =>{
             }
 
             if(searchPetAges !== undefined){
-                query += 'AND ('
+                query += ' AND ('
                 for(let i = 0; i < searchPetAges.length; i++){ //build sql query for pet types
                     if(i == (searchPetAges.length - 1))
                         query += 'Pet.age_id = ' + searchPetAges[i];
@@ -98,7 +98,7 @@ router.get("/api/search", (req,res) =>{
                 query += ")"
             }
             if(searchPetSizes !== undefined){
-                query += 'AND ('
+                query += ' AND ('
                 for(let i = 0; i < searchPetSizes.length; i++){ //build sql query for pet types
                     if(i == (searchPetSizes.length - 1))
                         query += 'Pet.size_id = ' + searchPetSizes[i];
@@ -123,6 +123,36 @@ router.get("/api/search", (req,res) =>{
                  query += "))"
             }
 
+            if(searchDogBreeds !== undefined){
+                query += ' AND Dog.dog_id IN'
+                query += `
+                    (SELECT DogBreeds.dog_id 
+                    FROM DogBreeds 
+                    WHERE DogBreeds.breed_id IN (`
+                for(let i = 0; i < searchDogBreeds.length; i++){ //build sql query for pet types
+                     if(i == (searchDogBreeds.length - 1))
+                        query += searchDogBreeds[i];
+                     else
+                         query += searchDogBreeds[i] + ",";
+                 }
+                 query += "))"
+            }
+
+            if(searchCatBreeds !== undefined){
+                query += ' AND Cat.cat_id IN'
+                query += `
+                    (SELECT CatBreeds.cat_id
+                    FROM CatBreeds 
+                    WHERE CatBreeds.breed_id IN (`
+                for(let i = 0; i < searchCatBreeds.length; i++){ //build sql query for pet types
+                     if(i == (searchCatBreeds.length - 1))
+                        query += searchCatBreeds[i];
+                     else
+                         query += searchCatBreeds[i] + ",";
+                 }
+                 query += "))"
+            }
+
             query += ` 
             LIMIT 10                       
             OFFSET ${(searchPage-1)*10}`;
@@ -139,6 +169,7 @@ router.get("/api/search", (req,res) =>{
             AND distance <  ${searchDistance}
             LIMIT 10 
             OFFSET ${(searchPage-1)*10}`;
+            console.log(query)
         }
         
 

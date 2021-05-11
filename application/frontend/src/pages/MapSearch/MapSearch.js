@@ -146,6 +146,7 @@ function MapSearch(props) {
             if(state.prefilter && Object.keys(state.prefilter).length !== 0){  //make sure object is not empty
                 applyPreFilters();
             }
+            console.log("pet type filters", petTypeFilters);
             console.log("search start")
             console.log('Fetching Search Results');
             console.log('Search Category: '+ state.searchCategoryParam);
@@ -198,6 +199,8 @@ function MapSearch(props) {
                     let petColorFilterValues = [];
                     let petSizeFilterValues = [];
                     let petAgeFilterValues = [];
+                    let dogBreedFilterValues = [];
+                    let catBreedFilterValues = [];
                     for(let i = 0; i < petTypeFilters.length; i++){
                         petTypeFilterValues.push(petTypeFilters[i].value);
                     }
@@ -210,6 +213,12 @@ function MapSearch(props) {
                     for(let i = 0; i < petAgeFilters.length; i++){
                         petAgeFilterValues.push(petAgeFilters[i].value);
                     }
+                    for(let i = 0; i < dogBreedFilters.length; i++){
+                        dogBreedFilterValues.push(dogBreedFilters[i].value);
+                    }
+                    for(let i = 0; i < catBreedFilters.length; i++){
+                        catBreedFilterValues.push(catBreedFilters[i].value);
+                    }
                     searchParams = {
                         searchTerm: state.searchTermParam,
                         searchCategory:state.searchCategoryParam,
@@ -220,7 +229,9 @@ function MapSearch(props) {
                         searchPetTypes: petTypeFilterValues,
                         searchPetColors: petColorFilterValues,
                         searchPetSizes: petSizeFilterValues,
-                        searchPetAges: petAgeFilterValues
+                        searchPetAges: petAgeFilterValues,
+                        searchDogBreeds: dogBreedFilterValues,
+                        searchCatBreeds: catBreedFilterValues
                     }
                     break;
                 case 'Pet Owners':
