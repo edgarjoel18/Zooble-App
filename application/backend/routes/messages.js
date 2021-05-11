@@ -18,7 +18,7 @@ router.post("/api/reply",(req,res)=>{
     })    
 })
 
-router.get("/api/messages", (req,res) =>{
+router.get("/api/recieved-messages", (req,res) =>{
     //get message and profile pic, display_name or username?
     connection.query(
         `SELECT * 
@@ -27,6 +27,28 @@ router.get("/api/messages", (req,res) =>{
          JOIN Account ON RegisteredUser.user_id = Account.user_id
          LEFT JOIN Profile ON Account.account_id = Profile.account_id
          WHERE recipient_id= '${req.session.reg_user_id}'
+        `,
+    function(err,messages){
+        if(err){
+            console.log(err);
+            res.status(500).json(err);
+        }
+        else{
+            console.log(messages)
+            res.status(200).json(messages);
+        }
+    })
+})
+
+router.get("/api/sent-messages", (req,res) =>{
+    //get message and profile pic, display_name or username?
+    connection.query(
+        `SELECT * 
+         FROM Message
+         JOIN RegisteredUser ON Message.sender_id = RegisteredUser.reg_user_id
+         JOIN Account ON RegisteredUser.user_id = Account.user_id
+         LEFT JOIN Profile ON Account.account_id = Profile.account_id
+         WHERE sender_id= '${req.session.reg_user_id}'
         `,
     function(err,messages){
         if(err){

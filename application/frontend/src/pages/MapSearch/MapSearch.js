@@ -111,9 +111,6 @@ function MapSearch(props) {
 
     //Check if state matches any dropdown options within the searchCategory to populate filter automatically
     
-
-    
-
     //for storing map location
     const center = {lat: state.lat, lng: state.lng};
 

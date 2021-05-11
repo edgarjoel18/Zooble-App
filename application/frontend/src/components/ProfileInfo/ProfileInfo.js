@@ -200,12 +200,12 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
                                 </div>
                             </button>
                             <ul className={styles.DropdownContent}>
-                                <li><NavLink className={styles.DropdownItem} to="/Followers">Followers</NavLink></li>
+                                <li><NavLink className={styles.DropdownItem} to={`/Followers/${profile.profile_id}`}>Followers</NavLink></li>
                             </ul>
                         </div>
                         ):
                         (
-                            <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
+                            <button className={styles.FristButton} onClick={() => history.push(`/Followers/${profile.profile_id}`)} >Followers</button>
                         )
                     }
                     {!isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
@@ -238,12 +238,12 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
                                 </div>
                             </button>
                             <ul className={styles.DropdownContent}>
-                                <li><NavLink className={styles.DropdownItem} to="/Followers">Followers</NavLink></li>
+                                <li><NavLink className={styles.DropdownItem} to={`/Followers/${profile.profile_id}`}>Followers</NavLink></li>
                             </ul>
                         </div>                       
                         ):
                         (
-                            <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
+                            <button className={styles.FristButton} onClick={() => history.push(`/Followers/${profile.profile_id}`)} >Followers</button>
                         )
                     }
                     {!isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
