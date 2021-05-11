@@ -67,7 +67,7 @@ function EditBusinessHours({display,onClose}){
 
     function submitHoursEdit(){
         const reqBody = {
-            newSunOpen: sundayStart['label'], 
+            newSunOpen: sundayStart['value'], 
             newSunClose: null, 
             newMonOpen: null, 
             newMonClose: null,
@@ -85,20 +85,20 @@ function EditBusinessHours({display,onClose}){
         console.log('body is ' + JSON.stringify(reqBody))
         console.log('updatedHour is ' + JSON.stringify(sundayStart))
         axios.post("/api/hours", {
-            newSunOpen: sundayStart['label'], 
-            newSunClose: sundayStart['label'], 
-            newMonOpen: sundayStart['label'], 
-            newMonClose: sundayStart['label'],
-            newTueOpen: sundayStart['label'], 
-            newTueClose: sundayStart['label'], 
-            newWedOpen: sundayStart['label'], 
-            newWedClose: sundayStart['label'], 
-            newThuOpen: sundayStart['label'], 
-            newThuClose: sundayStart['label'], 
-            newFriOpen: sundayStart['label'], 
-            newFriClose: sundayStart['label'], 
-            newSatOpen: sundayStart['label'], 
-            newSatClose: sundayStart['label']
+            newSunOpen: sundayStart['value'], 
+            newSunClose: sundayEnd['value'], 
+            newMonOpen: mondayStart['value'], 
+            newMonClose: mondayEnd['value'],
+            newTueOpen: tuesdayStart['value'], 
+            newTueClose: tuesdayStart['value'], 
+            newWedOpen: wednesdayStart['value'], 
+            newWedClose: wednesdayEnd['value'], 
+            newThuOpen: thursdayStart['value'], 
+            newThuClose: thursdayEnd['value'], 
+            newFriOpen: fridayStart['value'], 
+            newFriClose: fridayEnd['value'], 
+            newSatOpen: saturdayStart['value'], 
+            newSatClose: saturdayEnd['value']
         })
         .then(response =>{
             console.log(response);

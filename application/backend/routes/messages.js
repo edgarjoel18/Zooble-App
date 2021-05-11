@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.post("/api/reply",(req,res)=>{
     connection.query(
-        `INSERT INTO Message (subject, body, sender_id, recipient_id, timestamp, reply_id, read)
+        `INSERT INTO Message (subject, body, sender_id, recipient_id, timestamp, reply_id, read_flag)
          VALUES ('${"RE: " + req.body.selectedMessage.subject}', '${req.body.replyBody}', '${req.session.reg_user_id}', '${req.body.selectedMessage.sender_id}', NOW(), '${req.body.selectedMessage.message_id}', false)`,
     function(err, result){
         if(err){
@@ -27,6 +27,7 @@ router.get("/api/recieved-messages", (req,res) =>{
          JOIN Account ON RegisteredUser.user_id = Account.user_id
          LEFT JOIN Profile ON Account.account_id = Profile.account_id
          WHERE recipient_id= '${req.session.reg_user_id}'
+         ORDER BY Message.timestamp DESC
         `,
     function(err,messages){
         if(err){
@@ -49,6 +50,7 @@ router.get("/api/sent-messages", (req,res) =>{
          JOIN Account ON RegisteredUser.user_id = Account.user_id
          LEFT JOIN Profile ON Account.account_id = Profile.account_id
          WHERE sender_id= '${req.session.reg_user_id}'
+         ORDER BY Message.timestamp DESC
         `,
     function(err,messages){
         if(err){
@@ -83,6 +85,12 @@ router.post("/api/message", (req,res) =>{
             res.status(200).json(result);
         }
     })
+})
+
+router.get("/api/replies", (req,res) =>{
+    connection.query
+        (`SELECT *
+         FROM Message`)
 })
 
 module.exports = router

@@ -51,6 +51,10 @@ function Messages() {
         })
     }
 
+    function updateSentMessages(newSentMessage){
+        setSentMessages([...sentMessages, newSentMessage]);
+    }
+
     useEffect(()=>{ //retrieve messages on refresh
         getMessages();
     }, [])
@@ -107,7 +111,7 @@ function Messages() {
                     ))}
                 </div>
             </div>
-        <RecievedMessage display={recievedMessageModalDisplay} onClose={ () => setRecievedMessageModalDisplay(false)} selectedMessage={selectedMessage}></RecievedMessage>
+        <RecievedMessage display={recievedMessageModalDisplay} updateSentMessages={updateSentMessages} onClose={ () => setRecievedMessageModalDisplay(false)} selectedMessage={selectedMessage}></RecievedMessage>
         <SentMessage display={sentMessageModalDisplay} onClose={() => setSentMessageModalDisplay(false)} selectedMessage={selectedMessage}></SentMessage>
         </>
     )

@@ -45,16 +45,20 @@ router.post('/api/address',(req,res)=>{
 router.post('/api/hours', (req,res) =>{
     const {newSunOpen, newSunClose, newMonOpen, newMonClose,newTueOpen, newTueClose, newWedOpen, newWedClose, newThuOpen, newThuClose, newFriOpen, newFriClose, newSatOpen, newSatClose} = req.body;
     console.log('newSunOpen' +newSunOpen);
-    connection.query(
-        `UPDATE HoursOfOperation
-         SET sun_open='${newSunOpen}', sun_close='${newSunClose}',
-             mon_open='${newMonOpen}', mon_close='${newMonClose}'
-             tue_open='${newTueOpen}', tue_close='${newTueClose}',
-             wed_open='${newWedOpen}', wed_close='${newWedClose}'
-             thu_open='${newThuOpen}', thu_close='${newThuClose}',
-             fri_open='${newFriOpen}', fri_close='${newFriClose}'
-             sat_open='${newSatOpen}', sat_close='${newSatClose}'
-         JOIN Business ON Business.reg_user_id = '${req.session.reg_user_id}'`,
+    const query = 
+    `UPDATE HoursOfOperation
+     JOIN Business ON HoursOfOperation.business_id = Business.business_id
+     SET sun_open='${newSunOpen}', sun_close='${newSunClose}',
+        mon_open='${newMonOpen}', mon_close='${newMonClose}',
+        tue_open='${newTueOpen}', tue_close='${newTueClose}',
+        wed_open='${newWedOpen}', wed_close='${newWedClose}',
+        thu_open='${newThuOpen}', thu_close='${newThuClose}',
+        fri_open='${newFriOpen}', fri_close='${newFriClose}',
+        sat_open='${newSatOpen}', sat_close='${newSatClose}'
+    WHERE Business.reg_user_id = '${req.session.reg_user_id}'`
+        
+    console.log(query);
+    connection.query(query,
          function(err, result){
             if(err){
                 console.log(err);
