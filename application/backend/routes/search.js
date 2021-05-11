@@ -31,6 +31,7 @@ function distance(lat1, lat2, lon1, lon2) //for calculating distance between two
 }
 
 router.get("/api/search", (req,res) =>{
+    var requestedSearchResults = {searchResults:[]}
     console.log("/search");
     if(req.query.searchTerm){
         var name = req.query.searchTerm.toLowerCase();
@@ -42,23 +43,11 @@ router.get("/api/search", (req,res) =>{
     const {searchCategory,searchLatitude,searchLongitude,searchDistance,searchPage, searchBizCategories, searchPetTypes, searchPetColors, searchPetSizes,searchPetAges, searchCatBreeds, searchDogBreeds} = req.query
     
     console.log("Name: ",name);
-    // var searchCategory = req.query.searchCategory
     console.log("Category: ",searchCategory);
-    var requestedSearchResults = {searchResults:[]}
-
-    // let searchLatitude = req.query.searchLatitude;
-    // let searchLongitude = req.query.searchLongitude;
     console.log("Given Latitude: ",searchLatitude);
     console.log("Given Longitude: ", searchLongitude);
-
-    // let searchDistance = req.query.searchDistance;
     console.log("Preferred Search Distance: ", searchDistance);
-
-    // let searchPage = req.query.searchPage;
-
     console.log("Given Page: ", searchPage);
-
-    console.log("Search Biz Categories: ", searchBizCategories);
 
     if(searchCategory == 'Pets'){
         let query = '';
@@ -74,7 +63,8 @@ router.get("/api/search", (req,res) =>{
              LEFT JOIN Dog ON Pet.pet_id = Dog.pet_id
              LEFT JOIN Cat On Pet.pet_id = Cat.pet_id
              HAVING LOWER(name) LIKE '%${name}%'
-             AND distance <  ${searchDistance}`;
+             AND distance <  ${searchDistance}
+             `;
 
             if(searchPetTypes !== undefined){
                 query += ' AND ('
@@ -206,6 +196,7 @@ router.get("/api/search", (req,res) =>{
             HAVING Shelter.business_id IS NULL 
             AND LOWER(name) LIKE '%${name}%'
             AND distance <  ${searchDistance}
+            AND Profile.pet_id IS NULL 
             AND (
             `
             for(let i = 0; i < searchBizCategories.length; i++){  //build sql query with filters
@@ -235,6 +226,7 @@ router.get("/api/search", (req,res) =>{
             HAVING Shelter.business_id IS NULL 
             AND LOWER(name) LIKE '%${name}%'
             AND distance <  ${searchDistance}
+            AND Profile.pet_id IS NULL 
             LIMIT 10 
             OFFSET ${(searchPage-1)*10}`;
         }
@@ -253,34 +245,38 @@ router.get("/api/search", (req,res) =>{
         });
     }
     else if(searchCategory == 'Shelters'){
+        console.log('search pet types: ', searchPetTypes)
         let query = '';
 
         if(searchPetTypes && searchPetTypes[0] !== 'undefined'){
             query =
-            `SELECT *
+            `SELECT *,
+            (3959 * acos(cos(radians('${searchLatitude}'))* cos(radians(Address.latitude))* cos(radians(Address.longitude) - radians('${searchLongitude}')) + sin(radians(${searchLatitude})) * sin(radians(Address.latitude)))) as distance
             FROM Business
             JOIN Shelter ON Business.business_id = Shelter.business_id
             LEFT JOIN Address ON Business.reg_user_id = Address.reg_user_id
             JOIN RegisteredUser ON Business.reg_user_id = RegisteredUser.reg_user_id
             JOIN Account ON RegisteredUser.user_id = Account.user_id
             LEFT JOIN Profile ON Account.account_id = Profile.account_id
-            AND LOWER(name) LIKE '%${name}%'
+            HAVING LOWER(name) LIKE '%${name}%'
             AND distance <  ${searchDistance}
-            AND (
             `
 
-            for(let i = 0; i < searchPetTypes.length; i++){  //build sql query with filters
-                console.log("Given Pet Types [", i,"]: " , searchPetTypes[i]);
-                console.log(typeof searchPetTypes[i]);
-                if(i == (searchPetTypes.length - 1))
-                    query += 'Commerce.business_type_id = ' + searchPetTypes[i];
-                else
-                    query += 'Commerce.business_type_id = ' + searchPetTypes[i] + ' OR ';
-                    
+            query += ' AND Shelter.shelter_id IN'
+            query += `
+                (SELECT ShelterTypes.shelter_id 
+                FROM ShelterTypes 
+                WHERE ShelterTypes.type_id IN (`
+            for(let i = 0; i < searchPetTypes.length; i++){ //build sql query for pet types
+                    if(i == (searchPetTypes.length - 1))
+                    query += searchPetTypes[i];
+                    else
+                        query += searchPetTypes[i] + ",";
             }
-            query += `) 
+            query += `))
+            AND Profile.pet_id IS NULL 
             LIMIT 10                       
-            OFFSET ${(searchPage-1)*10};`
+            OFFSET ${(searchPage-1)*10}`
             console.log(query);
         }
         else{
@@ -295,8 +291,10 @@ router.get("/api/search", (req,res) =>{
             LEFT JOIN Profile ON Account.account_id = Profile.account_id
             HAVING LOWER(name) LIKE '%${name}%'
             AND distance <  ${searchDistance}
+            AND Profile.pet_id IS NULL
             LIMIT 10 
             OFFSET ${(searchPage-1)*10}`
+            console.log(query);
         }
         connection.query(query, 
             function(err, results) {

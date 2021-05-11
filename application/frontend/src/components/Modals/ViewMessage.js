@@ -35,27 +35,6 @@ function ViewMessage({ display, onClose, selectedMessage }) {
         // getMessage(); 
     }
 
-    // function getMessage() {
-    //     axios.get('/api/message', { params: { message_id: selectedMessage.message_id } })
-    //         .then(response => {
-    //             console.log("Response: ", response);
-    //             console.log("Response.data: ", response.data);
-    //             setMessages(response.data);
-    //         })
-    //         .catch(err => {
-    //             console.log("Error: ");
-    //             console.log(err);
-    //         })
-    // }
-
-
-
-    // const [textAreaText, setTextAreaText] = useState('');
-
-    // function displayReplyUI(){
-    //     setReplyDisplay(true);
-    // }
-
 
     return (
         <Modal display={display} onClose={onClose}>

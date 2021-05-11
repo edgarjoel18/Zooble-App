@@ -181,8 +181,8 @@ function MapSearch(props) {
                     break
                 case 'Shelters':
                     let shelterTypeFilterValues = [];
-                    for(let i = 0; i < petTypeFilters.length; i++){
-                        shelterTypeFilterValues.push(petTypeFilters[i].value);
+                    for(let i = 0; i < shelterPetTypeFilters.length; i++){
+                        shelterTypeFilterValues.push(shelterPetTypeFilters[i].value);
                     }
                     searchParams = {
                         searchTerm: state.searchTermParam,
