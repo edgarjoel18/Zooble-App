@@ -64,6 +64,19 @@ function EditBusinessHours({display,onClose}){
         }
     }
 
+    function submitHoursEdit(){
+        console.log('updatedHour is ' + JSON.stringify(sundayStart))
+        // axios.post("/api/hours",{
+        //     newHours: hours
+        // })
+        // .then(response =>{
+        //     console.log(response);
+        // })
+        // .catch(err =>{
+        //     console.log(err);
+        // })
+    }
+
     return (
         <Modal display={display} onClose={onClose}>
             <div className={styles['edit-business-hours-header']}>
@@ -212,7 +225,10 @@ function EditBusinessHours({display,onClose}){
                             maxMenuHeight= {45}
                         />
                 </div>
-                <button className={styles['edit-business-hours-submit']} onClick={onClose}>Submit</button>
+                <button className={styles['edit-business-hours-submit']} onClick={() => {
+                    onClose();
+                    submitHoursEdit();
+                }}>Submit</button>
             </div>
         </Modal>
     )

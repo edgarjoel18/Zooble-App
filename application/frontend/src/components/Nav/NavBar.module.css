@@ -142,6 +142,7 @@
 } */
 
 .account-menu-dropdown-arrow{
+    align-self: center;
     transform: rotate(180deg);
     margin-left: 10px;
 }

@@ -212,6 +212,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
                     {/* {displayPetOwnerLink} */}
                     <textarea 
                         className={styles.TextArea} 
+                        placeholder='Write down something to share with others😃'
                         value={aboutMeContent} 
                         onChange={event => setAboutMeContent(event.target.value)}
                         readOnly={!changing || !(labelSelected === 'about')}
