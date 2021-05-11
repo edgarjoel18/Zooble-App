@@ -111,56 +111,32 @@ function MapSearch(props) {
 
     //Check if state matches any dropdown options within the searchCategory to populate filter automatically
     
-
-    
-
     //for storing map location
     const center = {lat: state.lat, lng: state.lng};
 
     useEffect(() => {  //run once when page loads/refresh
-        Axios.get('/api/pet-types')   //get business types from database
-        .then(response =>{
-            typeOptions =  response.data;
-            // console.log('typeOptions: ',typeOptions);
-        })
+        const getPetTypes = Axios.get('/api/pet-types')   //get business types from database
+        const getBusinessTypes = Axios.get('/api/business-types')   //get business types from database
+        const getDogBreeds = Axios.get('/api/dog-breeds')   //get business types from database
+        const getCatBreeds = Axios.get('/api/cat-breeds')   //get business types from database
+        const getAges = Axios.get('/api/ages')   //get business types from database
+        const getSizes = Axios.get('/api/sizes')   //get business types from database
+        const getColors = Axios.get('/api/colors')   //get business types from database
+        
 
-        Axios.get('/api/business-types')   //get business types from database
-        .then(response =>{
-            businessCategoryOptions = response.data;
-            // console.log('businessCategoryOptions: ',businessCategoryOptions);
+        Promise.all([getPetTypes,getBusinessTypes,getDogBreeds,getCatBreeds,getAges,getSizes,getColors])
+        .then((responses) =>{
+            typeOptions =  responses[0].data;
+            businessCategoryOptions = responses[1].data;
+            dogBreedOptions = responses[2].data;
+            catBreedOptions = responses[3].data;
+            ageOptions = responses[4].data;
+            sizeOptions = responses[5].data;
+            colorOptions = responses[6].data;
         })
-
-        Axios.get('/api/dog-breeds')   //get business types from database
-        .then(response =>{
-            dogBreedOptions = response.data;
-            // console.log('dogBreedOptions: ',dogBreedOptions);
+        .catch((err) =>{
+            console.log(err);
         })
-
-        Axios.get('/api/cat-breeds')   //get business types from database
-        .then(response =>{
-            catBreedOptions = response.data;
-            // console.log('catBreedOptions: ',catBreedOptions);
-        })
-
-        Axios.get('/api/ages')   //get business types from database
-        .then(response =>{
-            ageOptions = response.data;
-            // console.log('ageOptions: ',ageOptions);
-        })
-
-        Axios.get('/api/sizes')   //get business types from database
-        .then(response =>{
-            sizeOptions = response.data;
-            // console.log('sizeOptions: ',sizeOptions);
-        })
-
-        Axios.get('/api/colors')   //get business types from database
-        .then(response =>{
-            colorOptions = response.data;
-            // console.log('colorOptions: ',colorOptions);
-        })
-
-       
     }, [])
 
 
@@ -170,6 +146,10 @@ function MapSearch(props) {
             if(state.prefilter && Object.keys(state.prefilter).length !== 0){  //make sure object is not empty
                 applyPreFilters();
             }
+            console.log("pet type filters", petTypeFilters);
+
+
+
             console.log("search start")
             console.log('Fetching Search Results');
             console.log('Search Category: '+ state.searchCategoryParam);
@@ -197,15 +177,15 @@ function MapSearch(props) {
                         searchLatitude: state.lat,
                         searchLongitude: state.lng,
                         searchDistance: searchDistance.value,
-                        searchBizCategories : businessCategoryFilterValues,
-                        searchPage: currentPage
+                        searchPage: currentPage,
+                        searchBizCategories : businessCategoryFilterValues
                     }
                     console.log("Business Search Params: ", searchParams)
                     break
                 case 'Shelters':
                     let shelterTypeFilterValues = [];
-                    for(let i = 0; i < petTypeFilters.length; i++){
-                        shelterTypeFilterValues.push(petTypeFilters[i].value);
+                    for(let i = 0; i < shelterPetTypeFilters.length; i++){
+                        shelterTypeFilterValues.push(shelterPetTypeFilters[i].value);
                     }
                     searchParams = {
                         searchTerm: state.searchTermParam,
@@ -213,8 +193,8 @@ function MapSearch(props) {
                         searchLatitude: state.lat,
                         searchLongitude: state.lng,
                         searchDistance: searchDistance.value,
-                        searchPetTypes : shelterTypeFilterValues,
-                        searchPage: currentPage
+                        searchPage: currentPage,
+                        searchPetTypes : shelterTypeFilterValues
                     }
                     break;
                 case 'Pets':
@@ -222,6 +202,8 @@ function MapSearch(props) {
                     let petColorFilterValues = [];
                     let petSizeFilterValues = [];
                     let petAgeFilterValues = [];
+                    let dogBreedFilterValues = [];
+                    let catBreedFilterValues = [];
                     for(let i = 0; i < petTypeFilters.length; i++){
                         petTypeFilterValues.push(petTypeFilters[i].value);
                     }
@@ -234,17 +216,34 @@ function MapSearch(props) {
                     for(let i = 0; i < petAgeFilters.length; i++){
                         petAgeFilterValues.push(petAgeFilters[i].value);
                     }
+                    for(let i = 0; i < dogBreedFilters.length; i++){
+                        dogBreedFilterValues.push(dogBreedFilters[i].value);
+                    }
+                    for(let i = 0; i < catBreedFilters.length; i++){
+                        catBreedFilterValues.push(catBreedFilters[i].value);
+                    }
+
+                    if(!petTypeFilters.some(petType => petType.label == "Cat")){
+                        catBreedFilterValues = [];
+                    }
+        
+                    if(!petTypeFilters.some(petType => petType.label == "Dog")){
+                        dogBreedFilterValues = [];
+                    }
+
                     searchParams = {
                         searchTerm: state.searchTermParam,
                         searchCategory:state.searchCategoryParam,
                         searchLatitude: state.lat,
                         searchLongitude: state.lng,
                         searchDistance: searchDistance.value,
+                        searchPage: currentPage,
                         searchPetTypes: petTypeFilterValues,
                         searchPetColors: petColorFilterValues,
                         searchPetSizes: petSizeFilterValues,
                         searchPetAges: petAgeFilterValues,
-                        searchPage: currentPage
+                        searchDogBreeds: dogBreedFilterValues,
+                        searchCatBreeds: catBreedFilterValues
                     }
                     break;
                 case 'Pet Owners':
@@ -568,7 +567,7 @@ function MapSearch(props) {
                                         components={animatedComponents}
                                     />
                             </div>
-                            <div className={styles['filter-pet-breed']}>
+                            {petTypeFilters.some(petType => petType.label == "Dog") && <div className={styles['filter-pet-breed']}>
                                 <label for="dog-breed">Dog Breeds</label>
                                     <Select id="dog-breed" name="dog_breed"
                                         onChange={setDogBreedFilters}
@@ -579,9 +578,9 @@ function MapSearch(props) {
                                         isMulti
                                         components={animatedComponents}
                                     />
-                            </div>
+                            </div>}
 
-                            <div className={styles['filter-pet-breed']}>
+                            {petTypeFilters.some(petType => petType.label == "Cat") &&<div className={styles['filter-pet-breed']}>
                                 <label for="cat-breed">Cat Breeds</label>
                                     <Select id="cat-breed" name="cat_breed"
                                         onChange={setCatBreedFilters}
@@ -592,7 +591,7 @@ function MapSearch(props) {
                                         isMulti
                                         components={animatedComponents}
                                     />
-                            </div>
+                            </div>}
                         </>
                         }
                         {searchCategory=="Shelters" &&

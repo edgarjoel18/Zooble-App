@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import EditAddress from '../../components/Modals/EditAddress'
+
 import Tab from './Tab/Tab';
 import EditButton from '../Buttons/EditButton'
 
@@ -12,6 +14,7 @@ import axios from 'axios';
 const shelterProfileTabs = ["About", "Contact Info"]//, "Recent Posts"]
 const businessProfileTabs = ["About", "Business Info"]//, "Recent Posts"]
 const petOwnerProfileTabs = ["About"]//, "Recent Posts"]
+
 
 const dummyHours = 
     {
@@ -44,6 +47,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
     const [labelSelected, setLabelSelected] = useState();
 
     const [editHoursDisplay, setEditHoursDisplay] = useState(false);
+    const [editAddressDisplay, setEditAddressDisplay] = useState(false);
 
     const [aboutMeContent, setAboutMeContent] = useState(aboutMeBody);
     const [phone, setPhone] = useState(phoneNumber);
@@ -125,20 +129,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
     }
 
     //I'll handle the location edit later - Daniel
-    function submitLocationEdit(){
-        console.log('updatedLocation is ' + location)
-        axios.post("/api/address",{
-            newAddress: location,
-            newLatitude: latitude,
-            newLongitude: longitude
-        })
-        .then(response =>{
-            console.log(response);
-        })
-        .catch(err =>{
-            console.log(err);
-        })
-    }
+
 
     function submitPhoneEdit(){
         console.log('updatedPhone is ' + phone)
@@ -247,7 +238,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
                     {
                         isSelfView && (labelSelected !== 'address') && 
                         // <button onClick={() => changingInfoHandler('address')} >edit</button>
-                        <EditButton edit clicked={() => changingInfoHandler('address')}>Edit</EditButton>
+                        <EditButton edit clicked={() => setEditAddressDisplay(true)}>Edit</EditButton>
                     }
                     <label for="tab-address" >Address: </label>
                     <textarea 
@@ -265,10 +256,10 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
                         //<button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
                         <>
                             {/* <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton> */}
-                            <EditButton style={{float: 'right'}} save clicked={() => {
+                            {/* <EditButton style={{float: 'right'}} save clicked={() => {
                                 cancelEditingHandler();
                                 submitLocationEdit();
-                            }}>Save</EditButton>
+                            }}>Save</EditButton> */}
                             <br />
                         </>
                     }
@@ -359,6 +350,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
             cancelEditingHandler(); 
             setEditHoursDisplay(false);
             }}/>
+        <EditAddress display={editAddressDisplay} onClose={() => setEditAddressDisplay(false)}/>
         </>
     );
 }

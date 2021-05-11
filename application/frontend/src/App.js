@@ -105,13 +105,12 @@ const App = () => {
         <Route exact path="/Profile/:profileID">
           <ProfilePage appUser={appUser}/>
         </Route>
-          <Route path="/Photos/:profileID" component={Photos}>
-        </Route>
+        <Route path="/Photos/:profileID" component={Photos}/>
+        <Route path="/Followers/:profileID" component={Followers}/>
         {/* <Route path="/MyPhotos" component={MyPhotos}/> */}
         <Route path="/Messages" component={Messages}/>
         <Route path="/MyPets" component={MyPets}/>
         <Route path="/Pets" component={Pets}/>
-        <Route path="/Followers" component={Followers}/>
         <Route path="/ExploreUsers" component={ExploreUsers}/>
 
         <Route path="/SignUpSuccess" component={SignUpSuccess}/>

@@ -6,10 +6,7 @@ import Tab from './Tab/Tab';
 
 import styles from "./UserProfileCard.module.css";
 
-function UserProfileCard(props) {
-  const [followersList, setFollowersList] = useState([]);
-
-  const [followingList, setFollowingList] = useState([]);
+function UserProfileCard({followersList, followingList}) {
 
   let history = useHistory();
 
@@ -80,7 +77,7 @@ function UserProfileCard(props) {
               <Link
                 style={{ textDecoration: "none" }}
                 key={item.follower_id}
-                to={"/Profile/" + item.url}
+                to={"/Profile/" + item.profile_id}
               >
                 <div
                   style={{
@@ -88,8 +85,8 @@ function UserProfileCard(props) {
                   }}
                 >
                   <EuCard
-                    title={item.name}
-                    src={item.profile_pic}
+                    title={item.display_name}
+                    src={item.profile_pic_link}
                     thethingyintheplace={index}
                   />
                 </div>
@@ -122,7 +119,7 @@ function UserProfileCard(props) {
               <Link
                 style={{ textDecoration: "none" }}
                 key={item.follower_id}
-                to={"/Profile/" + item.url}
+                to={"/Profile/" + item.profile_id}
               >
                 <div
                   style={{
@@ -130,8 +127,8 @@ function UserProfileCard(props) {
                   }}
                 >
                   <EuCard
-                    title={item.name}
-                    src={item.profile_pic}
+                    title={item.display_name}
+                    src={item.profile_pic_link}
                     thethingyintheplace={index}
                   />
                 </div>
