@@ -48,6 +48,7 @@ router.get("/api/search", (req,res) =>{
     console.log("Given Longitude: ", searchLongitude);
     console.log("Preferred Search Distance: ", searchDistance);
     console.log("Given Page: ", searchPage);
+    console.log("Search Dog breeds: ", searchDogBreeds)
 
     if(searchCategory == 'Pets'){
         let query = '';
@@ -99,11 +100,7 @@ router.get("/api/search", (req,res) =>{
             }
 
             if(searchPetColors !== undefined){
-                query += ' AND Pet.pet_id IN'
-                query += `
-                    (SELECT PetColor.pet_id 
-                    FROM PetColor 
-                    WHERE PetColor.color_id IN (`
+                query += ` AND Pet.pet_id IN (SELECT PetColor.pet_id FROM PetColor WHERE PetColor.color_id IN (`
                 for(let i = 0; i < searchPetColors.length; i++){ //build sql query for pet types
                      if(i == (searchPetColors.length - 1))
                         query += searchPetColors[i];
@@ -114,33 +111,25 @@ router.get("/api/search", (req,res) =>{
             }
 
             if(searchDogBreeds !== undefined){
-                query += ' AND Dog.dog_id IN'
-                query += `
-                    (SELECT DogBreeds.dog_id 
-                    FROM DogBreeds 
-                    WHERE DogBreeds.breed_id IN (`
+                query += ` AND Dog.dog_id IN (SELECT DogBreeds.dog_id FROM DogBreeds WHERE DogBreeds.breed_id IN (`
                 for(let i = 0; i < searchDogBreeds.length; i++){ //build sql query for pet types
                      if(i == (searchDogBreeds.length - 1))
                         query += searchDogBreeds[i];
                      else
                          query += searchDogBreeds[i] + ",";
                  }
-                 query += "))"
+                 query += `))`; //allows other pet filters to still apply
             }
 
             if(searchCatBreeds !== undefined){
-                query += ' AND Cat.cat_id IN'
-                query += `
-                    (SELECT CatBreeds.cat_id
-                    FROM CatBreeds 
-                    WHERE CatBreeds.breed_id IN (`
+                query += ` AND Cat.cat_id IN (SELECT CatBreeds.cat_id FROM CatBreeds WHERE CatBreeds.breed_id IN (`
                 for(let i = 0; i < searchCatBreeds.length; i++){ //build sql query for pet types
                      if(i == (searchCatBreeds.length - 1))
                         query += searchCatBreeds[i];
                      else
                          query += searchCatBreeds[i] + ",";
                  }
-                 query += "))"
+                 query += `))`;
             }
 
             query += ` 

@@ -147,6 +147,9 @@ function MapSearch(props) {
                 applyPreFilters();
             }
             console.log("pet type filters", petTypeFilters);
+
+
+
             console.log("search start")
             console.log('Fetching Search Results');
             console.log('Search Category: '+ state.searchCategoryParam);
@@ -219,6 +222,15 @@ function MapSearch(props) {
                     for(let i = 0; i < catBreedFilters.length; i++){
                         catBreedFilterValues.push(catBreedFilters[i].value);
                     }
+
+                    if(!petTypeFilters.some(petType => petType.label == "Cat")){
+                        catBreedFilterValues = [];
+                    }
+        
+                    if(!petTypeFilters.some(petType => petType.label == "Dog")){
+                        dogBreedFilterValues = [];
+                    }
+
                     searchParams = {
                         searchTerm: state.searchTermParam,
                         searchCategory:state.searchCategoryParam,
@@ -555,7 +567,7 @@ function MapSearch(props) {
                                         components={animatedComponents}
                                     />
                             </div>
-                            <div className={styles['filter-pet-breed']}>
+                            {petTypeFilters.some(petType => petType.label == "Dog") && <div className={styles['filter-pet-breed']}>
                                 <label for="dog-breed">Dog Breeds</label>
                                     <Select id="dog-breed" name="dog_breed"
                                         onChange={setDogBreedFilters}
@@ -566,9 +578,9 @@ function MapSearch(props) {
                                         isMulti
                                         components={animatedComponents}
                                     />
-                            </div>
+                            </div>}
 
-                            <div className={styles['filter-pet-breed']}>
+                            {petTypeFilters.some(petType => petType.label == "Cat") &&<div className={styles['filter-pet-breed']}>
                                 <label for="cat-breed">Cat Breeds</label>
                                     <Select id="cat-breed" name="cat_breed"
                                         onChange={setCatBreedFilters}
@@ -579,7 +591,7 @@ function MapSearch(props) {
                                         isMulti
                                         components={animatedComponents}
                                     />
-                            </div>
+                            </div>}
                         </>
                         }
                         {searchCategory=="Shelters" &&
