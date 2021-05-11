@@ -286,7 +286,11 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
                     {
                         (labelSelected === 'phone number') && 
                         // <button style={{marginLeft: '5px'}} onClick={cancelEditingHandler} >Save</button>
-                        <EditButton save clicked={cancelEditingHandler}>Save</EditButton>
+                        // <EditButton save clicked={cancelEditingHandler}>Save</EditButton>
+                        <EditButton save clicked={() => {
+                            cancelEditingHandler();
+                            submitPhoneEdit();
+                        }}>Save</EditButton> 
                     }
                     <br />
                     {/* // need to make a modal here to set hours  */}

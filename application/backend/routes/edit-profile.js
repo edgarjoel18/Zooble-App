@@ -44,6 +44,7 @@ router.post('/api/address',(req,res)=>{
 
 router.post('/api/hours', (req,res) =>{
     const {newSunOpen, newSunClose, newMonOpen, newMonClose,newTueOpen, newTueClose, newWedOpen, newWedClose, newThuOpen, newThuClose, newFriOpen, newFriClose, newSatOpen, newSatClose} = req.body;
+    console.log('newSunOpen' +newSunOpen);
     connection.query(
         `UPDATE HoursOfOperation
          SET sun_open='${newSunOpen}', sun_close='${newSunClose}',

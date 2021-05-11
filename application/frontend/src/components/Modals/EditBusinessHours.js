@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import axios from 'axios'
 
 import Select from 'react-select'
 
@@ -65,16 +66,46 @@ function EditBusinessHours({display,onClose}){
     }
 
     function submitHoursEdit(){
+        const reqBody = {
+            newSunOpen: sundayStart['label'], 
+            newSunClose: null, 
+            newMonOpen: null, 
+            newMonClose: null,
+            newTueOpen: null, 
+            newTueClose: null, 
+            newWedOpen: null, 
+            newWedClose: null, 
+            newThuOpen: null, 
+            newThuClose: null, 
+            newFriOpen: null, 
+            newFriClose: null, 
+            newSatOpen: null, 
+            newSatClose: null
+        }
+        console.log('body is ' + JSON.stringify(reqBody))
         console.log('updatedHour is ' + JSON.stringify(sundayStart))
-        // axios.post("/api/hours",{
-        //     newHours: hours
-        // })
-        // .then(response =>{
-        //     console.log(response);
-        // })
-        // .catch(err =>{
-        //     console.log(err);
-        // })
+        axios.post("/api/hours", {
+            newSunOpen: sundayStart['label'], 
+            newSunClose: sundayStart['label'], 
+            newMonOpen: sundayStart['label'], 
+            newMonClose: sundayStart['label'],
+            newTueOpen: sundayStart['label'], 
+            newTueClose: sundayStart['label'], 
+            newWedOpen: sundayStart['label'], 
+            newWedClose: sundayStart['label'], 
+            newThuOpen: sundayStart['label'], 
+            newThuClose: sundayStart['label'], 
+            newFriOpen: sundayStart['label'], 
+            newFriClose: sundayStart['label'], 
+            newSatOpen: sundayStart['label'], 
+            newSatClose: sundayStart['label']
+        })
+        .then(response =>{
+            console.log(response);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
     }
 
     return (
