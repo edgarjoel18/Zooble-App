@@ -89,28 +89,21 @@ function SearchBar() {
   }
 
   useEffect(() =>{
-    Axios.get('/api/pet-types')   //get business types from database
-    .then(response =>{
-        typeOptions =  response.data;
-        // console.log('typeOptions: ',typeOptions);
-    })
+    const getPetTypes = Axios.get('/api/pet-types')   //get business types from database
+    const getBusinessTypes = Axios.get('/api/business-types')   //get business types from database
+    const getDogBreeds = Axios.get('/api/dog-breeds')   //get business types from database
+    const getCatBreeds = Axios.get('/api/cat-breeds')   //get business types from database
+    
 
-    Axios.get('/api/business-types')   //get business types from database
-    .then(response =>{
-        businessCategoryOptions = response.data;
-        // console.log('businessCategoryOptions: ',businessCategoryOptions);
+    Promise.all([getPetTypes,getBusinessTypes,getDogBreeds,getCatBreeds])
+    .then((responses) =>{
+        typeOptions =  responses[0].data;
+        businessCategoryOptions = responses[1].data;
+        dogBreedOptions = responses[2].data;
+        catBreedOptions = responses[3].data;
     })
-
-    Axios.get('/api/dog-breeds')   //get business types from database
-    .then(response =>{
-        dogBreedOptions = response.data;
-        // console.log('dogBreedOptions: ',dogBreedOptions);
-    })
-
-    Axios.get('/api/cat-breeds')   //get business types from database
-    .then(response =>{
-        catBreedOptions = response.data;
-        // console.log('catBreedOptions: ',catBreedOptions);
+    .catch((err) =>{
+        console.log(err);
     })
   },[])
 

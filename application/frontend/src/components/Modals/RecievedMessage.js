@@ -1,12 +1,11 @@
-import { React, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import styles from './ViewMessage.module.css'
 
 import Modal from './Modal'
 import axios from 'axios';
 
-function ViewMessage({ display, onClose, selectedMessage }) {
-
+function RecievedMessageModal({display, onClose, selectedMessage}) {
     const [replyDisplay, setReplyDisplay] = useState(false);
 
     const [replyBody, setReplyBody] = useState();
@@ -52,4 +51,4 @@ function ViewMessage({ display, onClose, selectedMessage }) {
     )
 }
 
-export default ViewMessage
+export default RecievedMessageModal

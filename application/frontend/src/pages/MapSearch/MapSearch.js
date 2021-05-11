@@ -52,6 +52,19 @@ const distanceOptions = [
 ];
 
 function MapSearch(props) {
+    let state = props.location.state;
+    console.log("State: ",state);
+
+    //For storing filter states
+    const [businessCategoryFilters,setBusinessCategoryFilters] = useState([]);
+    const [petTypeFilters,setPetTypeFilters] = useState([]);
+    const [dogBreedFilters, setDogBreedFilters] = useState([]);
+    const [catBreedFilters, setCatBreedFilters] = useState([]);
+    const [petColorFilters, setPetColorFilters] = useState([]);
+    const [petSizeFilters, setPetSizeFilters] = useState([]);
+    const [petAgeFilters, setPetAgeFilters] = useState([]);
+    const [shelterPetTypeFilters, setShelterPetTypeFilters] = useState([]);
+    
     
     const location = useLocation();
     let history = useHistory();
@@ -68,8 +81,6 @@ function MapSearch(props) {
     }, []);
 
     //Recieve search params from searchbar.js
-    let state = props.location.state;
-    console.log("State: ",state);
 
 
 
@@ -99,15 +110,7 @@ function MapSearch(props) {
     const [searchResultsDisplay, setSearchResultsDisplay] = useState('block')
 
 
-    //For storing filter states
-    const [businessCategoryFilters,setBusinessCategoryFilters] = useState([]);
-    const [petTypeFilters,setPetTypeFilters] = useState([]);
-    const [dogBreedFilters, setDogBreedFilters] = useState([]);
-    const [catBreedFilters, setCatBreedFilters] = useState([]);
-    const [petColorFilters, setPetColorFilters] = useState([]);
-    const [petSizeFilters, setPetSizeFilters] = useState([]);
-    const [petAgeFilters, setPetAgeFilters] = useState([]);
-    const [shelterPetTypeFilters, setShelterPetTypeFilters] = useState([]);
+
 
     //Check if state matches any dropdown options within the searchCategory to populate filter automatically
     
@@ -141,15 +144,16 @@ function MapSearch(props) {
 
 
 
-    function search(){
+function search(){
         if(state.searchTermParam || state.searchCategoryParam){
+
+
             if(state.prefilter && Object.keys(state.prefilter).length !== 0){  //make sure object is not empty
-                applyPreFilters();
+                 applyPreFilters();
             }
+
             console.log("pet type filters", petTypeFilters);
-
-
-
+            console.log("dog breed filters", dogBreedFilters);
             console.log("search start")
             console.log('Fetching Search Results');
             console.log('Search Category: '+ state.searchCategoryParam);
@@ -223,11 +227,11 @@ function MapSearch(props) {
                         catBreedFilterValues.push(catBreedFilters[i].value);
                     }
 
-                    if(!petTypeFilters.some(petType => petType.label == "Cat")){
+                    if(petTypeFilters.length > 0 && !petTypeFilters.some(petType => petType.label == "Cat")){
                         catBreedFilterValues = [];
                     }
         
-                    if(!petTypeFilters.some(petType => petType.label == "Dog")){
+                    if(petTypeFilters.length > 0 && !petTypeFilters.some(petType => petType.label == "Dog")){
                         dogBreedFilterValues = [];
                     }
 
@@ -291,36 +295,31 @@ function MapSearch(props) {
             console.log("searchcategory: pets")
             Object.keys(typeOptions).forEach(function(key) {
                 var option = typeOptions[key];
-                console.log("Option: ",option);
                 console.log("Prefilter: ", state.prefilter);
                 if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
                     console.log("Found Match!");
-                    setPetTypeFilters(option);
-                    return true;
+                    console.log("Option: ", option);
+                    setPetTypeFilters([option]);
                 }
             })
 
             Object.keys(dogBreedOptions).forEach(function(key) {
                 var option = dogBreedOptions[key];
-                console.log("Option: ",option);
                 console.log("Prefilter: ", state.prefilter);
                 if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
                     console.log("Found Match!");
-                    // setPetTypeFilters("Dog");
-                    setDogBreedFilters(option);
-                    return true;
+                    console.log("Option: ",option);
+                    setDogBreedFilters([option]);
                 }
             })
 
             Object.keys(catBreedOptions).forEach(function(key) {
                 var option = catBreedOptions[key];
-                console.log("Option: ",option);
                 console.log("Prefilter: ", state.prefilter);
                 if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
                     console.log("Found Match!");
-                    // setPetTypeFilters("Cat");
-                    setCatBreedFilters(option);
-                    return true;
+                    console.log("Option: ",option);
+                    setCatBreedFilters([option]);
                 }
             })      
         }
@@ -329,12 +328,11 @@ function MapSearch(props) {
             console.log("searchcategory: shelters")
             Object.keys(typeOptions).forEach(function(key) {
                 var option = typeOptions[key];
-                console.log("Option: ",option);
                 console.log("Prefilter: ", state.prefilter);
                 if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
                     console.log("Found Match!");
-                    setPetTypeFilters(option);
-                    return true;
+                    console.log("Option: ",option);
+                    setPetTypeFilters([option]);
                 }
             })
         }
@@ -342,12 +340,12 @@ function MapSearch(props) {
             console.log("searchcategory: businesses")
             Object.keys(businessCategoryOptions).forEach(function(key) {
                 var option = businessCategoryOptions[key];
-                console.log("Option: ",option);
+
                 console.log("Prefilter: ", state.prefilter);
                 if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
                     console.log("Found Match!");
-                    setBusinessCategoryFilters(option);
-                    return true;
+                    console.log("Option: ",option);
+                    setBusinessCategoryFilters([option]);
                 }
             })
         }
@@ -567,7 +565,7 @@ function MapSearch(props) {
                                         components={animatedComponents}
                                     />
                             </div>
-                            {petTypeFilters.some(petType => petType.label == "Dog") && <div className={styles['filter-pet-breed']}>
+                            {petTypeFilters.length > 0 && petTypeFilters.some(petType => petType.label == "Dog") && <div className={styles['filter-pet-breed']}>
                                 <label for="dog-breed">Dog Breeds</label>
                                     <Select id="dog-breed" name="dog_breed"
                                         onChange={setDogBreedFilters}
@@ -580,7 +578,7 @@ function MapSearch(props) {
                                     />
                             </div>}
 
-                            {petTypeFilters.some(petType => petType.label == "Cat") &&<div className={styles['filter-pet-breed']}>
+                            {petTypeFilters.length > 0 && petTypeFilters.some(petType => petType.label == "Cat") &&<div className={styles['filter-pet-breed']}>
                                 <label for="cat-breed">Cat Breeds</label>
                                     <Select id="cat-breed" name="cat_breed"
                                         onChange={setCatBreedFilters}
