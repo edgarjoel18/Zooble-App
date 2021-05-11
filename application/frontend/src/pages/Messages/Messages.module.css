@@ -6,7 +6,6 @@
 }
 
 .messages-header{
-    margin: 10px;
     font-size: var(--h0);
     font-family: var(--ff-tertiary);
     font-weight: 600;
@@ -71,4 +70,25 @@
     .messages-container-message{
         width: 90%;
     }
+}
+
+.tabs{
+    display:flex;
+    justify-content: space-between;
+}
+
+.recieved-messages-container,
+.sent-messages-container{
+    box-shadow: var(--elevation-1);
+    width: 100%;
+    height: calc(100vh - 200px);
+    padding: 15px; 
+    border-radius: 7.5px 0 7.5px 7.5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.messages-header{
+    font-size: var(--h1);
 }
