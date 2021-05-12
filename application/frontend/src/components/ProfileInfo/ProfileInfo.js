@@ -6,7 +6,7 @@ import {useDropzone} from 'react-dropzone'
 import arrow from '../../images/Arrow.png';
 import styles from './ProfileInfo.module.css';
 
-import SendAMessage from '../../components/Modals/SendAMessage';
+import SendProfileMessage from '../../components/Modals/SendProfileMessage';
 import EditPetDetails from '../Modals/EditPetDetails';
 import EditButton from '../Buttons/EditButton';
 import LoginRequired from '../Modals/LoginRequired';
@@ -397,7 +397,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
                 </div>
                 {displayAccountInfo}
             </div>
-            <SendAMessage display={sendAMessageDisplay} profile={profile} onClose={()=> setSendAMessageDisplay(false)}/>
+            <SendProfileMessage display={sendAMessageDisplay} profile={profile} onClose={()=> setSendAMessageDisplay(false)}/>
             <LoginRequired display={loginRequiredDisplay} onClose={() =>setLoginRequiredDisplay(false)} redirect={location.pathname} />    
         </div>
     );

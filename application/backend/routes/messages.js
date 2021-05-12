@@ -66,7 +66,8 @@ router.get("/api/sent-messages", (req,res) =>{
     })
 })
 
-router.post("/api/message", (req,res) =>{
+//for sending a message through a profile
+router.post("/api/message-profile", (req,res) =>{
     console.log(req.body);
     console.log("POST /api/message")
     connection.query(`INSERT INTO Message (subject, body, sender_id, recipient_id, timestamp) 
@@ -89,10 +90,16 @@ router.post("/api/message", (req,res) =>{
     })
 })
 
-router.get("/api/replies", (req,res) =>{
-    connection.query
-        (`SELECT *
-         FROM Message`)
+//for sending a message to a follower or with a username on the messages page
+router.post("/api/message",(req,res) =>{
 })
+
+// router.get("/api/replies", (req,res) =>{
+//      connection.query
+//          (`SELECT *
+//           FROM Message
+//           WHERE Message.message_id =
+//           () Message.reply_Id`)
+// })
 
 module.exports = router

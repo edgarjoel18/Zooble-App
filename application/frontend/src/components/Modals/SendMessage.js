@@ -1,10 +1,10 @@
-import axios from 'axios';
-import {useState,useEffect} from 'react'
-import Modal from './Modal.js'
+import {useState} from 'react'
+import Modal from './Modal'
+import axios from 'axios'
 
-import styles from './SendAMessage.module.css';
+import styles from './SendMessage.module.css';
 
-function SendAMessage({display,onClose, profile}) {
+function SendMessage({display,onClose, profile}) {
     console.log("SendAMessage: ",profile)
 
     const [sendSuccess,setSendSuccess] = useState(false);
@@ -47,5 +47,4 @@ function SendAMessage({display,onClose, profile}) {
         </Modal>
     )
 }
-
-export default SendAMessage
+export default SendMessage

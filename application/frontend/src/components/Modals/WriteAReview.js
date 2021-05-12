@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Modal from './Modal.js'
 
-import styles from './SendAMessage.module.css';
+import styles from './SendMessage.module.css';
 
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';

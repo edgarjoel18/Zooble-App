@@ -6,15 +6,20 @@ import Tab from './Tab'
 import styles from './Messages.module.css';
 import RecievedMessage from '../../components/Modals/RecievedMessage'
 import SentMessage from '../../components/Modals/SentMessage'
+import AddIcon from '../../images/Created Icons/Add.svg'
+import SendMessage from '../../components/Modals/SendMessage';
 
 function Messages() {
     const [recievedMessageModalDisplay,setRecievedMessageModalDisplay] = useState(false);
     const [sentMessageModalDisplay,setSentMessageModalDisplay] = useState(false);
+    const [sendMessageModalDisplay,setSendMessageModalDisplay] = useState(false);
 
     const [selectedMessage, setSelectedMessage] = useState({});
 
     const [recievedMessages, setRecievedMessages] = useState([]);
     const [sentMessages, setSentMessages] = useState([]);
+
+    // const possibleMessageRecipients = useRef([]);
 
     function viewSentMessageModal(message){
         setSelectedMessage(message);
@@ -28,28 +33,30 @@ function Messages() {
 
 
     function getMessages() {  //retrieve currently logged in user's messages
-        axios.get('/api/sent-messages')
-        .then(response => {
-            console.log("Response: ", response);
-            console.log("Response.data: ", response.data);
-            setSentMessages(response.data);
-        })
-        .catch(err => {
-            console.log("Error: ");
-            console.log(err);
-        })
+        const getSentMessages = axios.get('/api/sent-messages')
+        const getRecievedMessages = axios.get('/api/recieved-messages')
 
-        axios.get('/api/recieved-messages')
-        .then(response => {
-            console.log("Response: ", response);
-            console.log("Response.data: ", response.data);
-            setRecievedMessages(response.data);
+        Promise.all([getRecievedMessages,getSentMessages])
+        .then(responses =>{
+            console.log("responses: ", responses);
+            setSentMessages(responses[0].data)
+            setRecievedMessages(responses[1].data);
         })
-        .catch(err => {
-            console.log("Error: ");
+        .catch(err =>{
             console.log(err);
         })
     }
+
+    // function getMessageRecipients(){
+    //    const getFollowers = axios.get('/api/followers')
+    //    const getFollows = axios.get('/api/following')
+
+    //    Promise.all([getFollowers, getFollows])
+    //    .then(responses =>{
+    //        const followerAndFollows = []
+
+    //    })
+    // }
 
     function updateSentMessages(newSentMessage){
         setSentMessages([...sentMessages, newSentMessage]);
@@ -57,6 +64,7 @@ function Messages() {
 
     useEffect(()=>{ //retrieve messages on refresh
         getMessages();
+        // getFollowers(); //get followers/followed to populate dropdown in send message modal
     }, [])
 
 
@@ -109,10 +117,15 @@ function Messages() {
                             </div>
                         </>
                     ))}
+                    <button className={styles['new-message-button']} onClick={() =>setSendMessageModalDisplay(true)}>
+                        <img src={AddIcon} className={styles['new-message-icon']}/>
+                        <span className={styles['new-message-text']}>New Message</span>
+                    </button>
                 </div>
             </div>
         <RecievedMessage display={recievedMessageModalDisplay} updateSentMessages={updateSentMessages} onClose={ () => setRecievedMessageModalDisplay(false)} selectedMessage={selectedMessage}></RecievedMessage>
         <SentMessage display={sentMessageModalDisplay} onClose={() => setSentMessageModalDisplay(false)} selectedMessage={selectedMessage}></SentMessage>
+        <SendMessage display={sendMessageModalDisplay} onClose={() => setSendMessageModalDisplay(false)}/>
         </>
     )
 }

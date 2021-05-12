@@ -93,3 +93,25 @@
 .messages-header{
     font-size: var(--h1);
 }
+
+.new-message-button{
+    position: fixed;
+    top: calc(100vh - 150px);
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 15px;
+    box-shadow: var(--elevation-2);
+    background-color: var(--reversed-txt-clr);
+    border: none;
+    border-radius: 15px;
+    font-family: var(--ff-primary);
+    font-size: var(--h3);
+    display:flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.new-message-text{
+    margin-left: 10px;
+}
+
