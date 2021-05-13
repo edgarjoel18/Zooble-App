@@ -54,7 +54,7 @@ function SignUpPage() {
         {error}
     </div> : 
     <div className={styles['signup-requirements-container']}>
-        Your Password Must Have: 8-50 Characters and Contain: 1 Capital Letter, 1 Number, 1 Special Character
+        Your Password Must Have at Least 8 Characters and Contain: 1 Capital Letter, 1 Number, 1 Special Character
     </div>;
 
     const history = useHistory();
@@ -130,6 +130,8 @@ function SignUpPage() {
                             name='fname'
                             onChange={e => setFirstName(e.target.value)}
                             required
+                            pattern="[a-zA-Z]"
+                            maxlength="40"
                         />
                     </div>
 
@@ -141,6 +143,8 @@ function SignUpPage() {
                             name='lname'
                             onChange={e => setLastName(e.target.value)}
                             required
+                            pattern="[a-zA-Z]"
+                            maxlength="40"
                         />
                     </div>
 
@@ -152,6 +156,7 @@ function SignUpPage() {
                             name='email'
                             onChange={e => setEmail(e.target.value)}
                             required
+                            maxlength="320"
                         />
                     </div>
 
