@@ -31,7 +31,7 @@ router.get("/api/profile", (req,res) =>{
                 console.log(err);
                 res.status(500).json(err);
              }
-             else if(profile && profile[0].pet_id === null){ //if its not a pet profile, no need to check if the pet is owned by the profile viewer
+             else if(profile[0] && profile[0].pet_id === null){ //if its not a pet profile, no need to check if the pet is owned by the profile viewer
                 console.log(profile);
                 console.log("not a pet profile")
                  if(profile[0].profile_id === req.session.profile_id){ //if the profile id is the same as the user who is currently logged in
@@ -42,7 +42,7 @@ router.get("/api/profile", (req,res) =>{
              }
              else{ //its a pet_profile
                 console.log("pet profile")
-                 if(profile && profile[0].reg_user_id === req.session.reg_user_id){ //if pets reguserid (owner) matches currently logged in user
+                 if(profile[0] && profile[0].reg_user_id === req.session.reg_user_id){ //if pets reguserid (owner) matches currently logged in user
                     console.log("pet owned by profile viewer")
                      //then set selfView flag to true
                      selfViewFlag = true
