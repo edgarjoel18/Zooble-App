@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
-    "@material-ui/lab": "^4.0.0-alpha.57",
     "@reach/combobox": "^0.15.1",
     "@react-google-maps/api": "^2.1.1",
     "@react-hook/throttle": "^2.2.0",

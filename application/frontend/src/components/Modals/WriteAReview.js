@@ -3,8 +3,8 @@ import Modal from './Modal.js'
 
 import styles from './SendMessage.module.css';
 
-import Rating from '@material-ui/lab/Rating';
-import Box from '@material-ui/core/Box';
+// import Rating from '@material-ui/lab/Rating';
+// import Box from '@material-ui/core/Box';
 
 const labels = {
   0.5: 'Useless',
@@ -38,7 +38,7 @@ function WriteAReview({display, onClose, clicked}) {
             <form onSubmit={submitReviewHandler} >
                 <h1 className={styles["sendAMessage-header"]}>Write a Review</h1>
                 <div className={styles['send-a-message-container']}>
-                    <Rating
+                    {/* <Rating
                         name="hover-feedback"
                         value={rating}
                         precision={0.5}
@@ -48,8 +48,8 @@ function WriteAReview({display, onClose, clicked}) {
                         onChangeActive={(event, newHover) => {
                             setHover(newHover);
                         }}
-                    />
-                    {rating !== null && <Box ml={2}>{labels[hover !== -1 ? hover : rating]}</Box>}
+                    /> */}
+                    {/* {rating !== null && <Box ml={2}>{labels[hover !== -1 ? hover : rating]}</Box>} */}
                     <textarea className={styles["sendAMessage-body"]} onChange={event => setReview(event.target.value)}/>
                     <button class={styles["sendAMessage-sendButton"]} ><h4>Send</h4></button>
                 </div>
