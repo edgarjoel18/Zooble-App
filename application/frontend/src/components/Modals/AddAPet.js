@@ -118,6 +118,7 @@ function AddAPet({display,onClose}) {
         })
         .then(response =>{
             console.log(response);
+            onClose();
         })
         .catch(err =>{
             console.log(err);

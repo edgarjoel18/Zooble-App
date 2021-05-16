@@ -1,12 +1,11 @@
-import { React, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import styles from './ViewMessage.module.css'
 
 import Modal from './Modal'
 import axios from 'axios';
 
-function ViewMessage({ display, onClose, selectedMessage }) {
-
+function RecievedMessageModal({display, onClose, selectedMessage, updateSentMessages}) {
     const [replyDisplay, setReplyDisplay] = useState(false);
 
     const [replyBody, setReplyBody] = useState();
@@ -32,40 +31,22 @@ function ViewMessage({ display, onClose, selectedMessage }) {
             console.log(err);
         })
         // //refresh so the user knows their message reply has gone through?
-        // getMessage(); 
+        updateSentMessages(selectedMessage);
+        onClose();
     }
 
-    // function getMessage() {
-    //     axios.get('/api/message', { params: { message_id: selectedMessage.message_id } })
-    //         .then(response => {
-    //             console.log("Response: ", response);
-    //             console.log("Response.data: ", response.data);
-    //             setMessages(response.data);
-    //         })
-    //         .catch(err => {
-    //             console.log("Error: ");
-    //             console.log(err);
-    //         })
-    // }
-
-
-
-    // const [textAreaText, setTextAreaText] = useState('');
-
-    // function displayReplyUI(){
-    //     setReplyDisplay(true);
-    // }
+    
 
 
     return (
         <Modal display={display} onClose={onClose}>
             <div className={styles['view-message-header']}>{selectedMessage.subject}</div>
             <div className={styles['view-message-container']}>
-                <div className={styles['view-message-sender']}>From: {selectedMessage.sender}</div>
-                <div className={styles['view-message-timestamp']}>{selectedMessage.timestamp}</div>
+                <div className={styles['view-message-sender']}>From: {selectedMessage.display_name}</div>
+                <div className={styles['view-message-timestamp']}>{new Date(selectedMessage.timestamp).toLocaleString()}</div>
                 <div className={styles['view-message-body']} >{selectedMessage.body}</div>
-                <form onSubmit={onClose}>
-                    <textarea required  className={styles['view-message-reply-body']} onChange={(event) => setReplyBody(event.target.value)} placeholder={"Reply to " + selectedMessage.sender}/>
+                <form onSubmit={submitReply}>
+                    <textarea required  className={styles['view-message-reply-body']} onChange={(event) => setReplyBody(event.target.value)} placeholder={"Reply to " + selectedMessage.display_name}/>
                     <button type="submit" className={styles['view-message-reply-button']}>Reply</button>
                 </form>
             </div>
@@ -73,4 +54,4 @@ function ViewMessage({ display, onClose, selectedMessage }) {
     )
 }
 
-export default ViewMessage
+export default RecievedMessageModal

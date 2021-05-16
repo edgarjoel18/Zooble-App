@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import EditAddress from '../../components/Modals/EditAddress'
+
 import Tab from './Tab/Tab';
 import EditButton from '../Buttons/EditButton'
 
@@ -13,28 +15,82 @@ const shelterProfileTabs = ["About", "Contact Info"]//, "Recent Posts"]
 const businessProfileTabs = ["About", "Business Info"]//, "Recent Posts"]
 const petOwnerProfileTabs = ["About"]//, "Recent Posts"]
 
-function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, address, phoneNumber}) {
+
+const dummyHours = 
+    {
+        sun_open: '12: 00AM',
+        sun_close: '12: 00AM',
+        mon_open: '12: 00AM',
+        mon_close: '12: 00AM',
+        tue_open: '12: 00AM',
+        tue_close: '12: 00AM',
+        wed_open: '12: 00AM',
+        wed_close: '12: 00AM',
+        thu_open: '12: 00AM',
+        thu_close: '12: 00AM',
+        fri_open: '12: 00AM',
+        fri_close: '12: 00AM',
+        sat_open: '12: 00AM',
+        sat_close: '12: 00AM'
+       }
+
+function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phoneNumber, profileID}) {
     console.log("profile: ", profile)
+
+    //not sure if these need to have state yet
+    let latitude; 
+    let longitude;
+    //not sure if these need to have state yet
+    
     const [selected, setSelected] = useState('About');
-    //const [address, setAddress] = useState('');
-    //const [phone, setPhone] = useState('');
-    //const [hours, setHours] = useState({});
-    //const [about, setAbout] = useState('');
     const [changing, setChanging] = useState(false);
     const [labelSelected, setLabelSelected] = useState();
 
     const [editHoursDisplay, setEditHoursDisplay] = useState(false);
+    const [editAddressDisplay, setEditAddressDisplay] = useState(false);
 
     const [aboutMeContent, setAboutMeContent] = useState(aboutMeBody);
+    const [phone, setPhone] = useState(phoneNumber);
+    const [location, setLocation] = useState(address);
+    const [hours, setHours] = useState();
+
+    console.log('location is ' + address);
+    console.log('phone is ' + phone);
 
     let hoursLabels = [];
 
-    // useEffect(() => {
-    //      setPhone(shelterInfo.phone);
-    //      setHours(shelterInfo.hours);
-    //      setAbout(shelterAbout);
-    // }, [])
-    
+    useEffect(() =>{
+        axios.get('/api/business-hours',{params: {profileID: profileID}})
+        .then(response =>{
+            console.log('/api/business-hours: ',response);
+            let hoursArray = [];
+            // Object.keys(response.data).map(key => {
+            //     hoursArray.push
+            // })
+            setHours(response.data);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+
+        axios.get('/api/business-address',{params: {profileID: profileID}})
+        .then(response =>{
+            console.log('/api/business-address: ',response.data.address);
+            setLocation(response.data.address);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+
+        axios.get('/api/business-phone-number',{params: {profileID: profileID}})
+        .then(response =>{
+            console.log('/api/business-phone-number: ', response.data);
+            setPhone(response.data.phone_num);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+    },[profileID])
 
     // limited time editing
     // useEffect(() => {
@@ -59,9 +115,26 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
     // }, [address, phone, changing])
 
     function submitAboutMeEdit(){
-        console.log(aboutMeContent)
-        axios.post("/api/edit-about-me",{
-            aboutMeText: aboutMeContent
+        console.log('about me content is ' + aboutMeContent)
+        axios.post("/api/about-me",{
+            newAboutMe: aboutMeContent,
+            profileID: profile.profile_id
+        })
+        .then(response =>{
+            console.log(response);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+    }
+
+    //I'll handle the location edit later - Daniel
+
+
+    function submitPhoneEdit(){
+        console.log('updatedPhone is ' + phone)
+        axios.post("/api/phone-number",{
+            newPhoneNumber: phone
         })
         .then(response =>{
             console.log(response);
@@ -85,7 +158,6 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
         console.log("cancel editing handler");
         setChanging(false);
         setLabelSelected('');
-        submitAboutMeEdit();
         console.log('cancel')
     }
 
@@ -94,7 +166,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
         address.style.height = '45px';
         console.log(address.scrollHeight);
         if (address.scrollHeight < 105) {
-            updateProfile('address', event.target.value);
+            setLocation(event.target.value);
             address.style.height = address.scrollHeight + 'px' 
         }
         else 
@@ -131,6 +203,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
         <Tab key={tab} id={tab} section={tab} selected={selected} clicked={onTabClickHandler} accountType={profile.type} />
     ))
 
+    console.log('hours is ' + JSON.stringify(hours));
     let content = null; 
     switch (selected) {
         case 'About':
@@ -139,8 +212,9 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                     {/* {displayPetOwnerLink} */}
                     <textarea 
                         className={styles.TextArea} 
+                        placeholder='Write down something to share with others😃'
                         value={aboutMeContent} 
-                        onChange={event => updateProfile('about', event.target.value)}
+                        onChange={event => setAboutMeContent(event.target.value)}
                         readOnly={!changing || !(labelSelected === 'about')}
                         rows='14' 
                         cols='50' 
@@ -149,8 +223,10 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                         // <button onClick={() => changingInfoHandler('about')} >edit</button>
                         <EditButton edit clicked={() => changingInfoHandler('about')}>Edit</EditButton> 
                         :
-                        <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton>
-                        )
+                        <EditButton style={{float: 'right'}} save clicked={() => {
+                            cancelEditingHandler();
+                            submitAboutMeEdit();
+                        }}>Save</EditButton>)
                     }
                 </div>
             );
@@ -162,12 +238,12 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                     {
                         isSelfView && (labelSelected !== 'address') && 
                         // <button onClick={() => changingInfoHandler('address')} >edit</button>
-                        <EditButton edit clicked={() => changingInfoHandler('address')}>Edit</EditButton>
+                        <EditButton edit clicked={() => setEditAddressDisplay(true)}>Edit</EditButton>
                     }
                     <label for="tab-address" >Address: </label>
                     <textarea 
                         id="tab-address"
-                        value={address} 
+                        value={location} 
                         readOnly={!changing || !(labelSelected === 'address')}
                         onChange={event => autoGrowHandler(event)} 
                         className={styles.AddressTextArea}
@@ -179,7 +255,11 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                         (labelSelected === 'address') && 
                         //<button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
                         <>
-                            <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton>
+                            {/* <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton> */}
+                            {/* <EditButton style={{float: 'right'}} save clicked={() => {
+                                cancelEditingHandler();
+                                submitLocationEdit();
+                            }}>Save</EditButton> */}
                             <br />
                         </>
                     }
@@ -192,7 +272,8 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                     <input 
                         id="phone"
                         type="tel" 
-                        value={`(${phoneNumber.substring(0,3)}) ${phoneNumber.substring(3,6)}-${phoneNumber.substring(6,10)}`} 
+                        // value={`(${phone.substring(0,3)}) ${phone.substring(3,6)}-${phone.substring(6,10)}`} 
+                        value={phone}
                         readOnly={!changing || !(labelSelected === 'phone number')}
                         maxLength = "20"
                         onKeyPress={event => {
@@ -200,12 +281,16 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                                 cancelEditingHandler();
                             }
                           }}
-                        onChange={event => updateProfile('phone', event.target.value)} 
+                        onChange={event => setPhone(event.target.value)} 
                     />
                     {
                         (labelSelected === 'phone number') && 
                         // <button style={{marginLeft: '5px'}} onClick={cancelEditingHandler} >Save</button>
-                        <EditButton save clicked={cancelEditingHandler}>Save</EditButton>
+                        // <EditButton save clicked={cancelEditingHandler}>Save</EditButton>
+                        <EditButton save clicked={() => {
+                            cancelEditingHandler();
+                            submitPhoneEdit();
+                        }}>Save</EditButton> 
                     }
                     <br />
                     {/* // need to make a modal here to set hours  */}
@@ -224,13 +309,19 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
                             }
                             <label>Hours: </label>
                         </div>
-                        {Object.keys(hours).map(key => (
-                            <div className={styles.Days} key={key}>
-                                <label>{key}: </label>
-                                {<span >{hours[key]}</span>}
-                                {hours[key] == null && <span>Closed</span>}
+                        {Object.keys(dummyHours).map((key, index) => {
+
+                            if (index % 2 === 1)
+                                return null;
+                            
+                            let day = key.substr(0, 3);
+                            console.log(day)
+                      
+                            return <div className={styles.Days} key={key}>
+                                <label>{day[0].toUpperCase() + day.substring(1)}: </label>                              
+                                {dummyHours[key] ? <span >{dummyHours[key] + " - " + dummyHours[day +'_close']}</span> : <span>Closed</span>}
                             </div>
-                        ))}
+                        })}
                     </div>
                     {/* {
                         props.isSelfView && (labelSelected === 'hours') && 
@@ -263,6 +354,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, hours, addres
             cancelEditingHandler(); 
             setEditHoursDisplay(false);
             }}/>
+        <EditAddress display={editAddressDisplay} onClose={() => setEditAddressDisplay(false)}/>
         </>
     );
 }

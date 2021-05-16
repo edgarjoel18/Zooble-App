@@ -23,8 +23,13 @@ const profileRouter = require('./routes/profile.js');
 const profileEditRouter = require('./routes/edit-profile.js');
 const petProfileRouter = require('./routes/pet-profile.js');
 const businessProfileRouter = require('./routes/business-profile.js')
-const resetPasswordRouter = require('./routes/reset-password.js')
+//const resetPasswordRouter = require('./routes/reset-password.js')
+const adminRouter = require('./routes/admin.js')
+
 const resetRouter = require('./routes/reset.js')
+
+const messagesRouter = require('./routes/messages.js')
+const postsRouter = require('./routes/posts.js')
 
 const app = express();
 
@@ -50,6 +55,7 @@ app.use(session({
          expires: 60 * 60 * 24 * 1000, //1 day expiration
      }
  }))
+
 
 //start express server on port 5000
 app.listen(5000, () =>{
@@ -86,6 +92,9 @@ app.use(feedRouter);
 //Insert, Get Comments
 app.use(commentsRouter);
 
+//send messages
+app.use(messagesRouter);
+
 
 // Follow a user
 app.use(followUserRouter);
@@ -112,7 +121,11 @@ app.use(businessProfileRouter)
 app.use(resetPasswordRouter)
 
 //Reset password
-app.use(resetRouter)
+// app.use(resetRouter)
+app.use(adminRouter)
+
+app.use(postsRouter)
+
 
 
 

@@ -20,7 +20,7 @@ function Profile({appUser}) {
     const [taggedPosts, setTaggedPosts] = useState([]);
     const [fetchedHours, setFetchedHours] = useState([]);
     const [fetchedAddress, setFetchedAddress] = useState([]);
-    const [fetchedPhoneNumber, setFetchedPhoneNumber] = useState([]);
+    const [fetchedPhoneNumber, setFetchedPhoneNumber] = useState('');
 
     const redirectContext = useContext(RedirectPathContext);
 
@@ -31,20 +31,21 @@ function Profile({appUser}) {
         redirectContext.updateLoading(true);
         axios.get('/api/profile',{params: {profileID: profileID}})
         .then(response =>{
-            console.log(response);
-            console.log('Fetched Profile: ', response.data);
-            setFetchedProfile(response.data);
+            console.log('/api/profile response.data: ',response.data);
+            console.log('Fetched Profile: ', response.data.profile);
+            setFetchedProfile(response.data.profile);
+            setSelfView(response.data.selfView);
         })
         .catch(err =>{
+            redirectContext.updateLoading(false);
             console.log(err)
         })
 
-        axios.get('/api/get-photo-posts',{params: {profileID: profileID}})
+        axios.get('/api/photo-posts',{params: {profileID: profileID}})
         .then(response =>{
             console.log(response)
             console.log(response.data);
             setFetchedPhotoPosts(response.data);
-            redirectContext.updateLoading(false);
         })
         .catch(err =>{
             redirectContext.updateLoading(false);
@@ -56,7 +57,6 @@ function Profile({appUser}) {
             console.log(response)
             console.log(response.data);
             setFetchedPets(response.data);
-            redirectContext.updateLoading(false);
         })
         .catch(err =>{
             redirectContext.updateLoading(false);
@@ -75,46 +75,37 @@ function Profile({appUser}) {
             console.log(err)
         })
 
-        axios.get('/api/business-hours',{params: {profileID: profileID}})
-        .then(response =>{
-            console.log('/api/business-hours: ',response);
-            let hoursArray = [];
-            // Object.keys(response.data).map(key => {
-            //     hoursArray.push
-            // })
-            setFetchedHours(response.data);
-        })
-        .catch(err =>{
-            console.log(err);
-        })
+        // axios.get('/api/business-hours',{params: {profileID: profileID}})
+        // .then(response =>{
+        //     console.log('/api/business-hours: ',response);
+        //     let hoursArray = [];
+        //     // Object.keys(response.data).map(key => {
+        //     //     hoursArray.push
+        //     // })
+        //     setFetchedHours(response.data);
+        // })
+        // .catch(err =>{
+        //     console.log(err);
+        // })
 
-        axios.get('/api/business-address',{params: {profileID: profileID}})
-        .then(response =>{
-            setFetchedAddress(response.data.address);
-        })
-        .catch(err =>{
-            console.log(err);
-        })
+        // axios.get('/api/business-address',{params: {profileID: profileID}})
+        // .then(response =>{
+        //     console.log('/api/business-address: ',response.data.address);
+        //     setFetchedAddress(response.data.address);
+        // })
+        // .catch(err =>{
+        //     console.log(err);
+        // })
 
-        axios.get('/api/business-phone-number',{params: {profileID: profileID}})
-        .then(response =>{
-            console.log('/api/business-phone-number: ', response.data);
-            setFetchedPhoneNumber(response.data.phone_num);
-        })
-        .catch(err =>{
-            console.log(err);
-        })
+        // axios.get('/api/business-phone-number',{params: {profileID: profileID}})
+        // .then(response =>{
+        //     console.log('/api/business-phone-number: ', response.data);
+        //     setFetchedPhoneNumber(response.data.phone_num);
+        // })
+        // .catch(err =>{
+        //     console.log(err);
+        // })
     },[profileID])
-
-    useEffect(()=>{
-        console.log("Type of profileID: ", typeof profileID)
-        console.log("Type of appUser.profileID: ", typeof appUser.profileID)
-
-        if(parseInt(appUser.profileID) == profileID){
-            console.log("Owner of the Profile!")
-            setSelfView(true);
-        }
-    },[appUser])
 
 
 
@@ -179,6 +170,7 @@ function Profile({appUser}) {
                         address={fetchedAddress}
                         isSelfView={selfView} 
                         profile={fetchedProfile} 
+                        profileID={profileID}
                         updateProfile={updateProfileHandler}
                     />
                     <ProfileContent

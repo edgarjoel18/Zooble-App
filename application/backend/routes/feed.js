@@ -25,8 +25,9 @@ router.get("/api/feed-user",(req,res)=>{
 router.get("/api/get-feed-posts",(req,res)=>{
     console.log("/api/get-feed-posts");
     let username = req.session.username;
+    let postsWithLikes = []; //array for holding objects with posts and likes
     connection.query(
-        `SELECT Post.post_id, Post.timestamp, Post.like_count, Post.body, Profile.display_name, Profile.profile_pic_link, Profile.pet_id, Photo.link
+        `SELECT Post.post_id, Post.timestamp, Post.body, Post.like_count, Profile.display_name, Profile.profile_pic_link, Profile.pet_id, Photo.link
          FROM Post
          LEFT JOIN Photo ON Post.post_id = Photo.post_id
          LEFT JOIN RegisteredUser ON RegisteredUser.reg_user_id = Post.reg_user_id
@@ -44,18 +45,18 @@ router.get("/api/get-feed-posts",(req,res)=>{
             FROM RegisteredUser
             WHERE RegisteredUser.reg_user_id = '${req.session.reg_user_id}'
           )
-          AND Profile.pet_id IS NULL 
+          AND Profile.pet_id IS NULL
           ORDER BY Post.timestamp DESC
         `,
         function(err, posts){
             if(err)
                 console.log(err);
             else{
-                console.log("Posts: ", posts);
                 res.status(200).json(posts);
             }
         }
     )
+
 })
 
 module.exports = router

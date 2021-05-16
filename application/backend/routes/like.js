@@ -16,16 +16,38 @@ router.post("/api/like-unlike", (req,res) =>{
                          WHERE (PostLike.reg_user_id = '${regUserId}' 
                          AND PostLike.post_id = '${postToLike}')`,
                          function(err, result){
-                             console.log(result);
-                         })
+                             if(err){
+                                 console.log(err);
+                             }
+                             else{
+                                console.log(result);
+                             }
+                         }
+                    )
                 }
              }
 
              else{
+                 res.status(200).json(result)
                  console.log(result);
              }
          }
     )
+})
+
+router.get("/api/likes", (req,res)=>{
+    connection.query(
+                 `SELECT COUNT(PostLike.reg_user_id)
+                  FROM PostLike
+                  WHERE PostLike.post_id = '${posts[i].post_id}'`,
+                  function(err, likeCount){
+                      if(err){
+                          console.log(err);
+                      }
+                      else{
+                          console.log(likeCount);
+                      }
+                  })
 })
 
 module.exports = router

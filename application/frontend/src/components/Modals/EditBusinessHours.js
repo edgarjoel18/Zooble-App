@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import axios from 'axios'
 
 import Select from 'react-select'
 
@@ -62,6 +63,49 @@ function EditBusinessHours({display,onClose}){
                 primary:'#1CB48F',
             }
         }
+    }
+
+    function submitHoursEdit(){
+        const reqBody = {
+            newSunOpen: sundayStart['value'], 
+            newSunClose: null, 
+            newMonOpen: null, 
+            newMonClose: null,
+            newTueOpen: null, 
+            newTueClose: null, 
+            newWedOpen: null, 
+            newWedClose: null, 
+            newThuOpen: null, 
+            newThuClose: null, 
+            newFriOpen: null, 
+            newFriClose: null, 
+            newSatOpen: null, 
+            newSatClose: null
+        }
+        console.log('body is ' + JSON.stringify(reqBody))
+        console.log('updatedHour is ' + JSON.stringify(sundayStart))
+        axios.post("/api/hours", {
+            newSunOpen: sundayStart['value'], 
+            newSunClose: sundayEnd['value'], 
+            newMonOpen: mondayStart['value'], 
+            newMonClose: mondayEnd['value'],
+            newTueOpen: tuesdayStart['value'], 
+            newTueClose: tuesdayStart['value'], 
+            newWedOpen: wednesdayStart['value'], 
+            newWedClose: wednesdayEnd['value'], 
+            newThuOpen: thursdayStart['value'], 
+            newThuClose: thursdayEnd['value'], 
+            newFriOpen: fridayStart['value'], 
+            newFriClose: fridayEnd['value'], 
+            newSatOpen: saturdayStart['value'], 
+            newSatClose: saturdayEnd['value']
+        })
+        .then(response =>{
+            console.log(response);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
     }
 
     return (
@@ -212,7 +256,10 @@ function EditBusinessHours({display,onClose}){
                             maxMenuHeight= {45}
                         />
                 </div>
-                <button className={styles['edit-business-hours-submit']} onClick={onClose}>Submit</button>
+                <button className={styles['edit-business-hours-submit']} onClick={() => {
+                    onClose();
+                    submitHoursEdit();
+                }}>Submit</button>
             </div>
         </Modal>
     )

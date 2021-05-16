@@ -6,7 +6,6 @@
 }
 
 .messages-header{
-    margin: 10px;
     font-size: var(--h0);
     font-family: var(--ff-tertiary);
     font-weight: 600;
@@ -72,3 +71,47 @@
         width: 90%;
     }
 }
+
+.tabs{
+    display:flex;
+    justify-content: space-between;
+}
+
+.recieved-messages-container,
+.sent-messages-container{
+    box-shadow: var(--elevation-1);
+    width: 100%;
+    height: calc(100vh - 200px);
+    padding: 15px; 
+    border-radius: 7.5px 0 7.5px 7.5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.messages-header{
+    font-size: var(--h1);
+}
+
+.new-message-button{
+    position: fixed;
+    top: calc(100vh - 150px);
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 15px;
+    box-shadow: var(--elevation-2);
+    background-color: var(--reversed-txt-clr);
+    border: none;
+    border-radius: 15px;
+    font-family: var(--ff-primary);
+    font-size: var(--h3);
+    display:flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.new-message-text{
+    margin-left: 10px;
+}
+

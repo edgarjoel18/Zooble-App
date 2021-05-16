@@ -35,23 +35,24 @@ router.post("/api/sign-up", (req,res) =>{
     console.log(givenResubmitted)
     console.log(givenUsername)
 
-    connection.query("SELECT user_id FROM User WHERE email=?", givenEmail,  //check if email is taken
+    connection.query("SELECT user_id FROM User WHERE email=?", [givenEmail],  //check if email is taken
                             function(err, users, field){
                                 if(users.length === 0){
-                                    connection.query("SELECT username FROM Credentials WHERE username=?", givenUsername, function(err,usernames, field){  //check if username is taken
+                                    connection.query("SELECT username FROM Credentials WHERE username=?", [givenUsername], function(err,usernames, field){  //check if username is taken
                                         if(usernames.length===0){
                                             if(passwordValidate(givenPassword)){  //if password is valid
                                                 if(givenPassword === givenResubmitted){  //if password and confirmed password match
                                                     const hash = bcrypt.hashSync(givenPassword, 10);
 
-                                                    connection.query(`INSERT INTO User (email,first_name, last_name) VALUES ('${givenEmail}','${givenFirstName}', '${givenLastName}')`, function(err, insertedUser){
+                                                    connection.query(`INSERT INTO User (email,first_name, last_name) VALUES (?,?,?)`, [givenEmail,givenFirstName, givenLastName],
+                                                    function(err, insertedUser){
                                                         if(err){
                                                             res.status(500).json(err);
                                                         }
                                                         else{
                                                             console.log('User Created');
                                                             console.log(insertedUser.insertId); //user id of newly created user
-                                                            connection.query(`INSERT INTO Account (user_id, role_id)  VALUES  ('${insertedUser.insertId}', 1)`, //create new account in database with returned user_id  and assign role of pet owner//registered user entry and profile automatically created 
+                                                            connection.query(`INSERT INTO Account (user_id, role_id)  VALUES  (?,?)`,[insertedUser.insertId, 1], //create new account in database with returned user_id  and assign role of pet owner//registered user entry and profile automatically created 
                                                             function(err,account){
                                                                 if(err){
                                                                     console.log(err);
@@ -60,7 +61,7 @@ router.post("/api/sign-up", (req,res) =>{
                                                                 console.log('Account Created');
                                                                 console.log(account.insertId); //account id of newly created account
                                                                 let accountId = account.insertId;
-                                                                connection.query(`INSERT INTO Credentials (acct_id, username, password) VALUES ('${account.insertId}', '${givenUsername}', '${hash}')`, 
+                                                                connection.query(`INSERT INTO Credentials (acct_id, username, password) VALUES (?,?,?)`,[account.insertId, givenUsername, hash],
                                                                 function(err,insertedCredentials){
                                                                     if(err){
                                                                         console.log(err);
@@ -68,7 +69,7 @@ router.post("/api/sign-up", (req,res) =>{
                                                                     }
                                                                     console.log('Credentials Created');
                                                                     console.log(insertedCredentials.insertId);
-                                                                    connection.query(`UPDATE Profile SET Profile.display_name = '${givenFirstName}', Profile.type = 'PetOwner' WHERE  Profile.account_id = '${accountId}'`,
+                                                                    connection.query(`UPDATE Profile SET Profile.display_name = ? , Profile.type = ? WHERE  Profile.account_id = ?`,[givenFirstName, 'PetOwner', accountId],
                                                                     function(err, updatedDisplayName){
                                                                         if(err){
                                                                             console.log(err);

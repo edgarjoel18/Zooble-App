@@ -2,13 +2,6 @@
     display: flex;
 }
 
-.Image {
-    width: 223px;
-    height: 223px;
-    border-radius: 10px;
-    box-shadow: var(--elevation-2);
-    object-fit: cover;
-}
 
 .UserName {
     font-weight: 600;
@@ -183,5 +176,27 @@
     border-radius:7px;
     box-sizing: border-box;
     outline: none;
+    cursor: pointer;
+}
+
+
+.Image {
+    width: 223px;
+    height: 223px;
+    border-radius: 10px;
+    box-shadow: var(--elevation-2);
+    object-fit: cover;
+}
+
+.ImageStackText {
+    position: absolute;
+    width: 100%;
+    padding: 5px;
+    color: white;
+    bottom: 0px;
+    background-color: var(--primary-clr);
+    align-content: center;
+    border-radius: 0 0 7.5px 7.5px;
+    box-shadow: var(--elevation-1);
     cursor: pointer;
 }

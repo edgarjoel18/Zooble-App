@@ -1,18 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useCallback, useEffect, useState } from 'react';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
+
+import {useDropzone} from 'react-dropzone' 
 
 import arrow from '../../images/Arrow.png';
 import styles from './ProfileInfo.module.css';
 
-import SendAMessage from '../../components/Modals/SendAMessage';
+import SendProfileMessage from '../../components/Modals/SendProfileMessage';
 import EditPetDetails from '../Modals/EditPetDetails';
 import EditButton from '../Buttons/EditButton';
 import LoginRequired from '../Modals/LoginRequired';
 import { RedirectPathContext } from '../../context/redirect-path';
 
+import axios from 'axios';
 
+//make this into environment variable before deploying!
+const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL'
 
 function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
+
+    //image upload array
     console.log(profile.display_name);
     console.log(profile.profile_pic_link);
     
@@ -47,6 +54,57 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
     const [displayName, setDisplayName] = useState(profile.display_name);
     const [profilePic, setProfilePic] = useState(profile.profile_pic_link);
     const [profileType, setProfileType] = useState(profile.type);
+
+    // const [myFiles, setMyFiles] = useState([])
+
+    const onDrop = useCallback(acceptedFile => {
+        console.log("onDrop");
+        console.log("acceptedFile: ",acceptedFile[0]);
+        let config = {
+            headers: {
+                'Content-type': 'image/jpeg'  //configure headers for put request to s3 bucket
+            }
+        }
+
+        axios.get(apiGatewayURL)  //first get the presigned s3 url
+            .then((response) =>{
+                console.log(response)
+                console.log(response.data)
+                let presignedFileURL =  'https://csc648groupproject.s3-us-west-2.amazonaws.com/' + response.data.photoFilename;  //save this url to add to database later
+                console.log(acceptedFile[0]);
+                axios.put(response.data.uploadURL, acceptedFile[0],config).then((response) =>{  //upload the file to s3
+                    console.log(response);
+                    console.log(response.data);
+                    console.log("Presigned File URL: ", presignedFileURL);
+                    axios.post('/api/profile-pic',{
+                        photoLink: presignedFileURL,
+                    }).then((response) =>{
+                        console.log(response.data);
+                        setProfilePic(presignedFileURL);
+                    })
+                    .catch((err) =>{
+                        console.log(err);
+                    })
+                })
+                .catch((err) =>{
+                    console.log(err);
+                    if(err.response.status == 403){
+                        //display error message to user
+                    }
+                    //break out of this function //presigned s3 url will automatically expire so no harm done
+                })
+            })
+            .catch((err) =>{
+                console.log(err);
+            })
+    })
+
+    const { getRootProps, getInputProps } = useDropzone({ //props for dropzone for 
+        onDrop,
+        maxSize: 5242880, 
+        accept: "image/jpeg", 
+        multiple: false
+    })
 
     console.log("Profile Type: ", profileType);
 
@@ -93,15 +151,23 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
     //     dropDownContent.className = styles.DropdownHidden;
     // }
 
+
+
     function onFollowHandler() {
         console.log('Follow button clicked')
         if(appUser){
+            console.log('POST /api/follow-unfollow-user')
+            axios.post('/api/follow-unfollow-user',{
+                accountId: profile.account_id
+            })
             setFollow(!follow);
         }
         else{
             setLoginRequiredDisplay(true);
         }
     }
+
+
 
     let nameDisplay = null;
     let displayAccountInfo = null;
@@ -134,12 +200,12 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
                                 </div>
                             </button>
                             <ul className={styles.DropdownContent}>
-                                <li><NavLink className={styles.DropdownItem} to="/Followers">Followers</NavLink></li>
+                                <li><NavLink className={styles.DropdownItem} to={`/Followers/${profile.profile_id}`}>Followers</NavLink></li>
                             </ul>
                         </div>
                         ):
                         (
-                            <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
+                            <button className={styles.FristButton} onClick={() => history.push(`/Followers/${profile.profile_id}`)} >Followers</button>
                         )
                     }
                     {!isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
@@ -172,12 +238,12 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
                                 </div>
                             </button>
                             <ul className={styles.DropdownContent}>
-                                <li><NavLink className={styles.DropdownItem} to="/Followers">Followers</NavLink></li>
+                                <li><NavLink className={styles.DropdownItem} to={`/Followers/${profile.profile_id}`}>Followers</NavLink></li>
                             </ul>
                         </div>                       
                         ):
                         (
-                            <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
+                            <button className={styles.FristButton} onClick={() => history.push(`/Followers/${profile.profile_id}`)} >Followers</button>
                         )
                     }
                     {!isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
@@ -211,12 +277,12 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
                                 </div>
                             </button>
                             <ul className={styles.DropdownContent}>
-                                <li><NavLink className={styles.DropdownItem} to="/Followers">Followers</NavLink></li>
+                                <li><NavLink className={styles.DropdownItem} to={`/Followers/${profile.profile_id}`}>Followers</NavLink></li>
                             </ul>
                         </div>
                         ):
                         (
-                            <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
+                            <button className={styles.FristButton} onClick={() => history.push(`/Followers/${profile.profile_id}`)}>Followers</button>
                         )
                     }
                     {!isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
@@ -259,19 +325,19 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
                                 </div>
                             </button>
                             <ul className={styles.DropdownContent}>
-                                <li><NavLink className={styles.DropdownItem} to="/Followers">Followers</NavLink></li>
+                                <li><NavLink className={styles.DropdownItem} to={`/Followers/${profile.profile_id}`}>Followers</NavLink></li>
                                 <li><NavLink className={styles.DropdownItem} to="/Profile/PetOwnerId=2">My Owner</NavLink></li>
                             </ul>
                         </div>
                         ):
                         (   
                             <React.Fragment>
-                                <button className={styles.FristButton} onClick={() => history.push('/Followers')} >Followers</button>
+                                <button className={styles.FristButton} onClick={() => history.push(`/Followers/${profile.profile_id}`)}>Followers</button>
                                 <button className={styles.Button} onClick={() => history.push('/Profile/PetOwnerId=2')} >My Owner</button>
                             </React.Fragment>
                         )
                     }
-                    {!isSelfView && <button className={styles.Button} onClick={sendAMessage} >Message</button>}
+                    {!isSelfView && <button className={styles.Button} onClick={sendAMessage}>Message</button>}
                 </div>
             )
             break;
@@ -281,9 +347,17 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
 
     return (
         <div className={styles.ProfileInfo} >
-            <div style={{display: 'flex', flexDirection: 'column', maxWidth: '223px'}} >
+            <div style={{display: 'flex', flexDirection: 'column', maxWidth: '223px', position: 'relative'}} >
                 <img className={styles.Image} src={profilePic} alt="No Image Found" />
-                {/* <input type='file' onChange={event => uploadPhotoHandler(event.target.files)} /> */}
+                { isSelfView && <div className={styles.ImageStackText}>
+                    <section className={styles["follower-feed-new-post-attach-image"]}>
+                        <div className={styles["follower-feed-new-post-attach-image-container"]}  {...getRootProps()}>
+                            <input  {...getInputProps()} />
+                            <div className={styles["follower-feed-new-post-attach-image-info"]}>Edit</div>
+                        </div>
+                    </section>
+                    
+                </div>}
             </div>
             <div className={styles.SideContainer} >
                 <div style={{display: 'flex', justifyItems: 'center'}}>
@@ -323,7 +397,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
                 </div>
                 {displayAccountInfo}
             </div>
-            <SendAMessage display={sendAMessageDisplay} profile={profile} onClose={()=> setSendAMessageDisplay(false)}/>
+            <SendProfileMessage display={sendAMessageDisplay} profile={profile} onClose={()=> setSendAMessageDisplay(false)}/>
             <LoginRequired display={loginRequiredDisplay} onClose={() =>setLoginRequiredDisplay(false)} redirect={location.pathname} />    
         </div>
     );

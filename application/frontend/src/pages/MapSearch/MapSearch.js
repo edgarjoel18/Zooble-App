@@ -52,8 +52,20 @@ const distanceOptions = [
 ];
 
 function MapSearch(props) {
-    
+    let state = props.location.state;
+    console.log("State: ",state);
 
+    //For storing filter states
+    const [businessCategoryFilters,setBusinessCategoryFilters] = useState([]);
+    const [petTypeFilters,setPetTypeFilters] = useState([]);
+    const [dogBreedFilters, setDogBreedFilters] = useState([]);
+    const [catBreedFilters, setCatBreedFilters] = useState([]);
+    const [petColorFilters, setPetColorFilters] = useState([]);
+    const [petSizeFilters, setPetSizeFilters] = useState([]);
+    const [petAgeFilters, setPetAgeFilters] = useState([]);
+    const [shelterPetTypeFilters, setShelterPetTypeFilters] = useState([]);
+    
+    
     const location = useLocation();
     let history = useHistory();
 
@@ -69,8 +81,8 @@ function MapSearch(props) {
     }, []);
 
     //Recieve search params from searchbar.js
-    let state = props.location.state;
-    console.log(state);
+
+
 
 
     if(typeof(state) =='undefined'){
@@ -88,11 +100,9 @@ function MapSearch(props) {
     
     //For Storing Search Results
     const[recievedSearchResults, setRecievedSearchResults] = useState([]);
-    console.log('Initial Recieved Search Results: ', recievedSearchResults); //1
 
     //For Storing Current Page
     const [currentPage, setCurrentPage] = useState(1);
-    console.log('Current Page Set: ', currentPage);
 
 
     //for storing whether filter tab is displaying
@@ -100,70 +110,51 @@ function MapSearch(props) {
     const [searchResultsDisplay, setSearchResultsDisplay] = useState('block')
 
 
-    //For storing filter states
-    const [businessCategoryFilters,setBusinessCategoryFilters] = useState([{}]);
-    const [petTypeFilters,setPetTypeFilters] = useState([]);
-    const [dogBreedFilters, setDogBreedFilters] = useState([]);
-    const [catBreedFilters, setCatBreedFilters] = useState([]);
-    const [petColorFilters, setPetColorFilters] = useState([]);
-    const [petSizeFilters, setPetSizeFilters] = useState([]);
-    const [petAgeFilters, setPetAgeFilters] = useState([]);
-    const [shelterPetTypeFilters, setShelterPetTypeFilters] = useState([]);
 
+
+    //Check if state matches any dropdown options within the searchCategory to populate filter automatically
+    
     //for storing map location
-    const[latitude,setLatitude] = useState();
-    const[longitude,setLongitude] = useState();
-    const[mapUrl,setMapUrl] = useState();
     const center = {lat: state.lat, lng: state.lng};
 
     useEffect(() => {  //run once when page loads/refresh
+        const getPetTypes = Axios.get('/api/pet-types')   //get business types from database
+        const getBusinessTypes = Axios.get('/api/business-types')   //get business types from database
+        const getDogBreeds = Axios.get('/api/dog-breeds')   //get business types from database
+        const getCatBreeds = Axios.get('/api/cat-breeds')   //get business types from database
+        const getAges = Axios.get('/api/ages')   //get business types from database
+        const getSizes = Axios.get('/api/sizes')   //get business types from database
+        const getColors = Axios.get('/api/colors')   //get business types from database
+        
 
-        //Convert this to array assignments not iterate/push
-        Axios.get('/api/pet-types')   //get business types from database
-        .then(response =>{
-            typeOptions =  response.data;
-            // console.log('typeOptions: ',typeOptions);
+        Promise.all([getPetTypes,getBusinessTypes,getDogBreeds,getCatBreeds,getAges,getSizes,getColors])
+        .then((responses) =>{
+            typeOptions =  responses[0].data;
+            businessCategoryOptions = responses[1].data;
+            dogBreedOptions = responses[2].data;
+            catBreedOptions = responses[3].data;
+            ageOptions = responses[4].data;
+            sizeOptions = responses[5].data;
+            colorOptions = responses[6].data;
         })
-
-        Axios.get('/api/business-types')   //get business types from database
-        .then(response =>{
-            businessCategoryOptions = response.data;
-            // console.log('businessCategoryOptions: ',businessCategoryOptions);
-        })
-
-        Axios.get('/api/dog-breeds')   //get business types from database
-        .then(response =>{
-            dogBreedOptions = response.data;
-            // console.log('dogBreedOptions: ',dogBreedOptions);
-        })
-
-        Axios.get('/api/cat-breeds')   //get business types from database
-        .then(response =>{
-            catBreedOptions = response.data;
-            // console.log('catBreedOptions: ',catBreedOptions);
-        })
-
-        Axios.get('/api/ages')   //get business types from database
-        .then(response =>{
-            ageOptions = response.data;
-            // console.log('ageOptions: ',ageOptions);
-        })
-
-        Axios.get('/api/sizes')   //get business types from database
-        .then(response =>{
-            sizeOptions = response.data;
-            // console.log('sizeOptions: ',sizeOptions);
-        })
-
-        Axios.get('/api/colors')   //get business types from database
-        .then(response =>{
-            colorOptions = response.data;
-            // console.log('colorOptions: ',colorOptions);
+        .catch((err) =>{
+            console.log(err);
         })
     }, [])
 
-    function search(){
+
+
+function search(){
         if(state.searchTermParam || state.searchCategoryParam){
+
+
+            if(state.prefilter && Object.keys(state.prefilter).length !== 0){  //make sure object is not empty
+                 applyPreFilters();
+            }
+
+            console.log("pet type filters", petTypeFilters);
+            console.log("dog breed filters", dogBreedFilters);
+            console.log("search start")
             console.log('Fetching Search Results');
             console.log('Search Category: '+ state.searchCategoryParam);
             console.log('Search Term: ' + state.searchTermParam);
@@ -190,14 +181,15 @@ function MapSearch(props) {
                         searchLatitude: state.lat,
                         searchLongitude: state.lng,
                         searchDistance: searchDistance.value,
-                        searchBizCategories : businessCategoryFilterValues,
-                        searchPage: currentPage
+                        searchPage: currentPage,
+                        searchBizCategories : businessCategoryFilterValues
                     }
+                    console.log("Business Search Params: ", searchParams)
                     break
                 case 'Shelters':
                     let shelterTypeFilterValues = [];
-                    for(let i = 0; i < petTypeFilters.length; i++){
-                        shelterTypeFilterValues.push(petTypeFilters[i].value);
+                    for(let i = 0; i < shelterPetTypeFilters.length; i++){
+                        shelterTypeFilterValues.push(shelterPetTypeFilters[i].value);
                     }
                     searchParams = {
                         searchTerm: state.searchTermParam,
@@ -205,8 +197,8 @@ function MapSearch(props) {
                         searchLatitude: state.lat,
                         searchLongitude: state.lng,
                         searchDistance: searchDistance.value,
-                        searchPetTypes : shelterTypeFilterValues,
-                        searchPage: currentPage
+                        searchPage: currentPage,
+                        searchPetTypes : shelterTypeFilterValues
                     }
                     break;
                 case 'Pets':
@@ -214,29 +206,48 @@ function MapSearch(props) {
                     let petColorFilterValues = [];
                     let petSizeFilterValues = [];
                     let petAgeFilterValues = [];
+                    let dogBreedFilterValues = [];
+                    let catBreedFilterValues = [];
                     for(let i = 0; i < petTypeFilters.length; i++){
                         petTypeFilterValues.push(petTypeFilters[i].value);
                     }
                     for(let i = 0; i < petColorFilters.length; i++){
-                        petTypeFilterValues.push(petColorFilters[i].value);
+                        petColorFilterValues.push(petColorFilters[i].value);
                     }
                     for(let i = 0; i < petSizeFilters.length; i++){
-                        petTypeFilterValues.push(petSizeFilters[i].value);
+                        petSizeFilterValues.push(petSizeFilters[i].value);
                     }
                     for(let i = 0; i < petAgeFilters.length; i++){
-                        petTypeFilterValues.push(petAgeFilters[i].value);
+                        petAgeFilterValues.push(petAgeFilters[i].value);
                     }
+                    for(let i = 0; i < dogBreedFilters.length; i++){
+                        dogBreedFilterValues.push(dogBreedFilters[i].value);
+                    }
+                    for(let i = 0; i < catBreedFilters.length; i++){
+                        catBreedFilterValues.push(catBreedFilters[i].value);
+                    }
+
+                    if(petTypeFilters.length > 0 && !petTypeFilters.some(petType => petType.label == "Cat")){
+                        catBreedFilterValues = [];
+                    }
+        
+                    if(petTypeFilters.length > 0 && !petTypeFilters.some(petType => petType.label == "Dog")){
+                        dogBreedFilterValues = [];
+                    }
+
                     searchParams = {
                         searchTerm: state.searchTermParam,
                         searchCategory:state.searchCategoryParam,
                         searchLatitude: state.lat,
                         searchLongitude: state.lng,
                         searchDistance: searchDistance.value,
-                        searchPetTypes: petTypeFilters,
-                        searchPetColors: petColorFilters,
-                        searchPetSizes: petSizeFilters,
-                        searchPetAges: petAgeFilters,
-                        searchPage: currentPage
+                        searchPage: currentPage,
+                        searchPetTypes: petTypeFilterValues,
+                        searchPetColors: petColorFilterValues,
+                        searchPetSizes: petSizeFilterValues,
+                        searchPetAges: petAgeFilterValues,
+                        searchDogBreeds: dogBreedFilterValues,
+                        searchCatBreeds: catBreedFilterValues
                     }
                     break;
                 case 'Pet Owners':
@@ -262,8 +273,8 @@ function MapSearch(props) {
                 if(response.data.length === 0){
                     previousPage();
                 }
-                displaySearchResults();
                 setRecievedSearchResults(response.data);
+                displaySearchResults();
                 console.log("Recieved Search Results: ", recievedSearchResults)
                 console.log("Recieved Search Results Length: ", recievedSearchResults.length)
                 // console.log("Results Count: ", response.data.resultsCount);
@@ -273,13 +284,77 @@ function MapSearch(props) {
                 console.log(err);
             })
         }
-        else if(state.lat && state.lng){
+        console.log("search end")
+    }
+
+    function applyPreFilters(){
+        console.log("applyPreFilters start");
+        console.log("Applying preFilter if present")
+        console.log("Prefilter: ", state.prefilter);
+        if(state.searchCategoryParam === "Pets"){
+            console.log("searchcategory: pets")
+            Object.keys(typeOptions).forEach(function(key) {
+                var option = typeOptions[key];
+                console.log("Prefilter: ", state.prefilter);
+                if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
+                    console.log("Found Match!");
+                    console.log("Option: ", option);
+                    setPetTypeFilters([option]);
+                }
+            })
+
+            Object.keys(dogBreedOptions).forEach(function(key) {
+                var option = dogBreedOptions[key];
+                console.log("Prefilter: ", state.prefilter);
+                if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
+                    console.log("Found Match!");
+                    console.log("Option: ",option);
+                    setDogBreedFilters([option]);
+                }
+            })
+
+            Object.keys(catBreedOptions).forEach(function(key) {
+                var option = catBreedOptions[key];
+                console.log("Prefilter: ", state.prefilter);
+                if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
+                    console.log("Found Match!");
+                    console.log("Option: ",option);
+                    setCatBreedFilters([option]);
+                }
+            })      
         }
+        
+        if(state.searchCategoryParam === "Shelters"){
+            console.log("searchcategory: shelters")
+            Object.keys(typeOptions).forEach(function(key) {
+                var option = typeOptions[key];
+                console.log("Prefilter: ", state.prefilter);
+                if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
+                    console.log("Found Match!");
+                    console.log("Option: ",option);
+                    setPetTypeFilters([option]);
+                }
+            })
+        }
+        if(state.searchCategoryParam === "Businesses"){
+            console.log("searchcategory: businesses")
+            Object.keys(businessCategoryOptions).forEach(function(key) {
+                var option = businessCategoryOptions[key];
+
+                console.log("Prefilter: ", state.prefilter);
+                if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
+                    console.log("Found Match!");
+                    console.log("Option: ",option);
+                    setBusinessCategoryFilters([option]);
+                }
+            })
+        }
+        console.log("applyPreFilters end")
     }
 
     useEffect(()=>{
         search();
-    },[state, currentPage], );  //only fetch results when search params or filters change
+    },[state, currentPage]);  //only fetch results when search params or filters or page changes
 
 
     //toggle display of filter overlay
@@ -387,17 +462,17 @@ function MapSearch(props) {
                         <div className={styles['map-search-results-text-list']}>
                             <ul>
                                 {recievedSearchResults.length == 0 && <li className={styles['no-results']}>No {searchCategory} that Match your Search. But here are some {searchCategory} you might like: </li>}
-                                {recievedSearchResults.length != 0 && searchCategory == 'Pets' && recievedSearchResults.map((searchResult) => (
-                                    <PetSearchResult searchResult={searchResult} panTo={panTo}/>
+                                {recievedSearchResults.length != 0 && searchCategory == 'Pets' && recievedSearchResults.map((searchResult,index) => (
+                                    <PetSearchResult searchResult={searchResult} index={index} panTo={panTo}/>
                                 ))}
-                                {recievedSearchResults.length != 0 && searchCategory == 'Businesses' && recievedSearchResults.map((searchResult) => (
-                                    <BusinessSearchResult searchResult={searchResult} panTo={panTo}/>
+                                {recievedSearchResults.length != 0 && searchCategory == 'Businesses' && recievedSearchResults.map((searchResult, index) => (
+                                   <BusinessSearchResult searchResult={searchResult} index={index} panTo={panTo}/>
                                 ))}
-                                {recievedSearchResults.length != 0 && searchCategory == 'Shelters' && recievedSearchResults.map((searchResult) => (
-                                    <ShelterSearchResult searchResult={searchResult} panTo={panTo}/>
+                                {recievedSearchResults.length != 0 && searchCategory == 'Shelters' && recievedSearchResults.map((searchResult, index) => (
+                                    <ShelterSearchResult searchResult={searchResult} index={index} panTo={panTo}/>
                                 ))}
-                                {recievedSearchResults.length != 0 && searchCategory == 'Pet Owners' && recievedSearchResults.map((searchResult) => (
-                                    <Link className={styles['profile-link']} to={"/Profile/" + "PetOwnerId=" +searchResult.reg_pet_owner_id}><li className={styles['search-result']} key={searchResult.reg_pet_owner_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic}/><span className={styles['search-result-name']}>{searchResult.name}</span></li></Link>
+                                {recievedSearchResults.length != 0 && searchCategory == 'Pet Owners' && recievedSearchResults.map((searchResult, index) => (
+                                    <PetOwnerSearchResult searchResult={searchResult} index={index}/>
                                 ))}
 
                             </ul>
@@ -490,7 +565,7 @@ function MapSearch(props) {
                                         components={animatedComponents}
                                     />
                             </div>
-                            <div className={styles['filter-pet-breed']}>
+                            {petTypeFilters.length > 0 && petTypeFilters.some(petType => petType.label == "Dog") && <div className={styles['filter-pet-breed']}>
                                 <label for="dog-breed">Dog Breeds</label>
                                     <Select id="dog-breed" name="dog_breed"
                                         onChange={setDogBreedFilters}
@@ -501,9 +576,9 @@ function MapSearch(props) {
                                         isMulti
                                         components={animatedComponents}
                                     />
-                            </div>
+                            </div>}
 
-                            <div className={styles['filter-pet-breed']}>
+                            {petTypeFilters.length > 0 && petTypeFilters.some(petType => petType.label == "Cat") &&<div className={styles['filter-pet-breed']}>
                                 <label for="cat-breed">Cat Breeds</label>
                                     <Select id="cat-breed" name="cat_breed"
                                         onChange={setCatBreedFilters}
@@ -514,7 +589,7 @@ function MapSearch(props) {
                                         isMulti
                                         components={animatedComponents}
                                     />
-                            </div>
+                            </div>}
                         </>
                         }
                         {searchCategory=="Shelters" &&
@@ -552,22 +627,40 @@ function MapSearch(props) {
     );
 }
 
-function BusinessSearchResult({searchResult,panTo}){
+function BusinessSearchResult({searchResult,panTo, index}){
     return (
-        <li className={styles['search-result']} key={searchResult.reg_business_id} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/><Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}><span className={styles['search-result-name']}>{searchResult.name}</span></Link></li>
+        <li className={styles['search-result']} key={searchResult.reg_business_id}>
+            <img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/>
+            <Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}>
+                <span className={styles['search-result-name']}>{searchResult.name}</span>
+            </Link>
+            <img className={styles['search-result-marker']} src={`https://csc648groupproject.s3-us-west-2.amazonaws.com/marker${index+1}.png`} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}/>
+        </li>
     )
 }
 
-function ShelterSearchResult({searchResult,panTo}){
+function ShelterSearchResult({searchResult,panTo, index}){
     return (
-        <li className={styles['search-result']} key={searchResult.reg_shelter_id} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/><Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}><span className={styles['search-result-name']}>{searchResult.name}</span></Link></li>
+        <li className={styles['search-result']} key={searchResult.reg_shelter_id} >
+            <img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/>
+            <Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}>
+                <span className={styles['search-result-name']}>{searchResult.name}</span>
+            </Link>
+            <img className={styles['search-result-marker']} src={`https://csc648groupproject.s3-us-west-2.amazonaws.com/marker${index+1}.png`} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}/>
+        </li>
     )
 
 }
 
-function PetSearchResult({searchResult, panTo}){
+function PetSearchResult({searchResult, panTo, index}){
     return (
-        <li className={styles['search-result']} key={searchResult.pet_id} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/><Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}><span className={styles['search-result-name']}>{searchResult.name}</span></Link></li>
+        <li className={styles['search-result']} key={searchResult.pet_id} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}><img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/><Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}><span className={styles['search-result-name']}>{searchResult.name}</span><img className={styles['search-result-marker']} src={`https://csc648groupproject.s3-us-west-2.amazonaws.com/marker${index+1}.png`} onClick={() => {panTo({lat: parseFloat(searchResult.latitude), lng:parseFloat(searchResult.longitude)})}}/></Link></li>
+    )
+}
+
+function PetOwnerSearchResult({searchResult}){
+    return (
+        <li className={styles['search-result']} key={searchResult.reg_user_id}><img className={styles['search-result-pic']} src={searchResult.profile_pic_link}/><Link className={styles['profile-link']} to={"/Profile/" + searchResult.profile_id}><span className={styles['search-result-name']}>{searchResult.display_name}</span></Link></li>
     )
 }
 

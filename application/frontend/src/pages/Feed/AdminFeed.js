@@ -3,9 +3,6 @@ import { NavLink, useHistory } from "react-router-dom";
 import axios from 'axios';
 
 import styles from './Feed.module.css'
-import bus_prof_pic from '../../images/businessProfile.jpg'
-import shel_prof_pic from '../../images/shelterProfile.jpg'
-import own_prof_pic from '../../images/petOwnerProfile.jpg'
 import PostModal from '../../components/Modals/PostModal'
 
 import ArrowIcon from '../../images/Created Icons/Arrow.svg'

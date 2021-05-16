@@ -1,6 +1,8 @@
-import React, {useEffect, useLayoutEffect, useState} from "react";
+import React, {useEffect, useLayoutEffect, useMemo, useState} from "react";
 import {Link, Switch, Route, Redirect, useHistory} from "react-router-dom";
 import Axios from "axios";
+import {useThrottle} from '@react-hook/throttle'
+import {matchSorter} from 'match-sorter'
 
 import { useLoadScript} from '@react-google-maps/api';
 
@@ -25,9 +27,10 @@ import "@reach/combobox";
 //Google Maps
 const libraries = ["places"]
 
-
-
-
+let typeOptions = [];
+let businessCategoryOptions = [];
+let dogBreedOptions = [];
+let catBreedOptions = [];
 
 
 // componentWillMount() and componentWillUnmount() functions work toghther
@@ -49,6 +52,8 @@ function SearchBar() {
   const [searchLocationLat, setSearchLocationLat] = useState(null);
   const [searchLocationLng, setSearchLocationLng] = useState(null);
 
+  const [selectedPrefilter, setSelectedPrefilter] = useState({});
+
   const {
     ready, 
     value, 
@@ -67,7 +72,7 @@ function SearchBar() {
       navigator.geolocation.getCurrentPosition((position)=>{
         const location = {
           pathname:'/MapSearch',
-          state: {lat:position.coords.latitude, lng:position.coords.longitude, searchTermParam: searchTerm, searchCategoryParam: searchCategory}
+          state: {lat:position.coords.latitude, lng:position.coords.longitude, searchTermParam: searchTerm, searchCategoryParam: searchCategory, prefilter: selectedPrefilter}
         }
         history.push(location)
       })
@@ -75,7 +80,7 @@ function SearchBar() {
     else{
       const location = {
         pathname:'/MapSearch',
-        state: {lat:searchLocationLat, lng:searchLocationLng, searchTermParam: searchTerm, searchCategoryParam: searchCategory}
+        state: {lat:searchLocationLat, lng:searchLocationLng, searchTermParam: searchTerm, searchCategoryParam: searchCategory,  prefilter: selectedPrefilter}
       }
       history.push(location)
     }
@@ -83,9 +88,57 @@ function SearchBar() {
     
   }
 
+  useEffect(() =>{
+    const getPetTypes = Axios.get('/api/pet-types')   //get business types from database
+    const getBusinessTypes = Axios.get('/api/business-types')   //get business types from database
+    const getDogBreeds = Axios.get('/api/dog-breeds')   //get business types from database
+    const getCatBreeds = Axios.get('/api/cat-breeds')   //get business types from database
+    
+
+    Promise.all([getPetTypes,getBusinessTypes,getDogBreeds,getCatBreeds])
+    .then((responses) =>{
+        typeOptions =  responses[0].data;
+        businessCategoryOptions = responses[1].data;
+        dogBreedOptions = responses[2].data;
+        catBreedOptions = responses[3].data;
+    })
+    .catch((err) =>{
+        console.log(err);
+    })
+  },[])
+
   useEffect(() => {
     console.log(searchLocationLat, searchLocationLng);
   }, [searchLocationLat, searchLocationLng])
+
+  const results = useCategoryMatch(searchTerm);
+  // console.log(results);
+
+  function useCategoryMatch(searchTerm){
+    const throttledTerm = useThrottle(searchTerm, 100);  //need to throttle function because it runs whenever searchTerm is set
+    let filters = [];
+    if(searchCategory == 'Pets'){
+      //set autocompletable prefilters to pet type and breed
+      filters = typeOptions.concat(dogBreedOptions,catBreedOptions);
+      // console.log("Filters: ",filters);
+    }
+    if(searchCategory == 'Shelters'){
+      //set autocompletable prefilters to pet type
+      filters = typeOptions;
+    }
+    if(searchCategory == 'Businesses'){
+      //set autocompletable prefilters to business type
+      filters = businessCategoryOptions;
+    }
+    return useMemo( () => 
+      searchTerm.trim() === ""
+      ? null
+      : matchSorter(filters, searchTerm,{
+          keys: [(filter) => `${filter.label}`] 
+      }),
+      [throttledTerm]
+    );
+  }
 
   return (
     <>
@@ -98,19 +151,38 @@ function SearchBar() {
           <option value="Pet Owners">Pet Owners</option>
         </select>
       </span>
-      <input 
-          className={styles['searchbar-term-input']}
-          type="text" 
-          placeholder= {"Search for " + searchCategory}
-          onChange={(e)=> {
-            setSearchTerm(e.target.value);
-          }}
-          onKeyPress={event => {
+      <Combobox
+        onSelect={(prefilter) => {
+            console.log(prefilter);
+            setSelectedPrefilter(prefilter)  //set prefilter to selected one to pass to mapsearch page
+            setSearchTerm("");
+        }}>
+        <ComboboxInput 
+          className={styles['searchbar-term-input']} 
+          onChange={(event) => setSearchTerm(event.target.value)}  //set search term
+          onKeyPress={event => {  //handle enter button press
             if(event.key === 'Enter'){
-              history.push({ pathname:"/MapSearch", state:{searchCategoryParam: searchCategory, searchTermParam: searchTerm}})
+              search();
             }
-          }}
-        />
+          }}/>
+        {results && (
+          <ComboboxPopover className={styles['combobox-popover']}>
+            {results.length > 0 ? (
+              <ComboboxList className={styles['combobox-list']}>
+                 {results.slice(0, 5).map((result) => (
+                   <ComboboxOption
+                     key={result.label}
+                     value={result.label}
+                   />
+                 ))}
+               </ComboboxList>
+            ) : (
+              <span style={{display: 'block', margin: 8}}>
+                No Results Found
+              </span>
+            )}
+          </ComboboxPopover>)}
+      </Combobox>
       <span className={styles["searchbar-input"]}>
         <Combobox className={styles['searchbar-location-input']}
             onSelect={async (address)=>{
@@ -131,20 +203,20 @@ function SearchBar() {
             }}
         >
           {/* Input Box */}
-          <ComboboxInput  
+          {searchCategory !== "Pet Owners" && <ComboboxInput  
             value={value}
             placeholder= {searchCategory !== 'Pet Owners' && "Near Current Location"}
             onChange={(e)=> {
               setValue(e.target.value);
               // setSearchTerm(e.target.value);
             }}
-            disabled={!ready || searchCategory == "Pet Owners"}
+            disabled={!ready }
             onKeyPress={event => {
               if(event.key === 'Enter'){
-                history.push({ pathname:"/MapSearch", state:{searchCategoryParam: searchCategory, searchTermParam: searchTerm}})
+                search();
               }
             }}
-          /> 
+          />}
            {/* Dropdown List */}
           <ComboboxPopover className={styles['combobox-popover']}> 
             <ComboboxList className={styles['combobox-list']}>

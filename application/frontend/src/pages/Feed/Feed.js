@@ -83,7 +83,7 @@ function Feed() {
         console.log('/api/get-feed-posts');
         axios.get('/api/get-feed-posts')
         .then(response =>{
-            console.log(response.data);
+            console.log("Feed Posts: ", response.data);
             setFeedPosts(response.data);
         })
         .catch(err =>{
@@ -148,11 +148,14 @@ function Feed() {
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
         maxSize: 5242880, 
-        accept: "image/jpeg", 
+        accept: "image/jpeg",
         multiple: false
     })
 
-    function likePost(feedPostID){
+    function likePost(event,feedPostID){
+        if (!event) var event = window.event;
+        event.cancelBubble = true;
+        if (event.stopPropagation) event.stopPropagation();
         axios.post("/api/like-unlike",{
             postToLike: feedPostID
         })
@@ -224,7 +227,8 @@ function Feed() {
             })
 
             //refresh feed after posting
-            getPosts();
+            // getPosts();
+            // setFeedPosts([...feedPosts, ])
 
         }
         else{
@@ -246,7 +250,10 @@ function Feed() {
 
     }
 
-    function openPostModal(feedPost) {
+    function openPostModal(event,feedPost) {
+        if (!event) var event = window.event;
+        event.cancelBubble = true;
+        if (event.stopPropagation) event.stopPropagation();
         console.log(feedPost);
         setSelectedPost(feedPost);
         setPostModalDisplay(true);
@@ -296,7 +303,7 @@ function Feed() {
                     </div>
                     </>}
                 {feedPosts && feedPosts.map((feedPost) => (
-                    <div key={feedPost.post_id} className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
+                    <div key={feedPost.post_id} className={styles["follower-feed-post"]} onClick={(event) => openPostModal(event,feedPost)} >
                         <NavLink to={"/Profile/ShelterId=2"}>  {/* Need to replace these with real links */}
                             <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic_link} />
                         </NavLink>
@@ -306,7 +313,7 @@ function Feed() {
  
                         <div className={styles["follower-feed-post-timestamp"]}>{new Date(feedPost.timestamp).toLocaleString()}</div>
                         <div className={styles["follower-feed-post-likes"]}>{feedPost.like_count}</div>
-                        <button className={styles['follower-feed-post-like']} onClick={() => likePost(feedPost.post_id)}/>
+                        <button className={styles['follower-feed-post-like']} onClick={(event) => likePost(event,feedPost.post_id)}/>
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
                         <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
                         {feedPost.link && <img className={styles["follower-feed-post-pic"]} src={feedPost.link} />}
@@ -323,12 +330,6 @@ function Feed() {
 
     return (
         <>
-            {/* <NavLink to="/Profile/Alex" style={{ textDecoration: 'none' }}>
-                <div className={styles["follower-feed-header-profile"]}>
-                    <img className={styles["follower-feed-header-profile-pic"]} src={own_prof_pic} />
-                    <div className={styles["follower-feed-header-profile-name"]}>Alex</div>
-                </div>
-            </NavLink> */}
             {displayFeed}
             <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost} />
         </>

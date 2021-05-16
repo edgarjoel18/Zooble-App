@@ -19,17 +19,6 @@ import ShelterSignUpPage2 from './pages/Sign Up/ShelterSignUpPage2.js'
 import BusinessSignUpPage from './pages/Sign Up/BusinessSignUp.js'
 import BusinessSignUpPage2 from './pages/Sign Up/BusinessSignUpPage2.js'
 import ProfilePage from './pages/Profile/Profile';
-import MyProfilePage from './pages/Profile/MyProfile';
-import PetOwner1Page from './pages/Profile/AlexProfilePage';
-import PetOwner2Page from './pages/Profile/MaryProfilePage';
-import MimiProfilePage from './pages/Profile/MimiProfilePage';
-import MaxProfilePage from './pages/Profile/MaxProfilePage';
-import JujuProfilePage from './pages/Profile/JujuProfilePage';
-import Shelter1ProfilePage from './pages/Profile/BadBoysDogPound';
-import Shelter2ProfilePage from './pages/Profile/BurgsdalePetShelter';
-import PetProfileCreatePage from './pages/Profile/PetProfileCreatePage';
-import Business1ProfilePage from './pages/Profile/BoomingPoodleGroomingProfilePage';
-import Business2ProfilePage from './pages/Profile/PawSpaProfilePage';
 import Messages from './pages/Messages/Messages'
 import MyPets from './pages/Pets/MyPets'
 import Pets from './pages/Pets/Pets'
@@ -39,10 +28,10 @@ import ProfileTest from './pages/Profile/ProfileTest'
 
 import AdminFeed from './pages/Feed/AdminFeed.js';
 import Feed from './pages/Feed/Feed.js'
-import Photo from './pages/Photo/Photo';
-import MyPhoto from './pages/Photo/MyPhoto';
+import Photos from './pages/Photos/Photos';
+// import MyPhotos from './pages/Photos/MyPhotos';
 import Followers from './pages/Followers/Followers';
-import ExploreUsers from './pages/ExploreUsers/ExploreUsers';
+// import ExploreUsers from './pages/ExploreUsers/ExploreUsers';
 
 import SignUpSuccess from './pages/Sign Up/SignUpSuccess'
 
@@ -110,29 +99,25 @@ const App = () => {
         <Route path="/Cameron" component={Cameron}/>
         <Route path="/Wameedh" component={Wameedh}/>
 
-
-
-
-
         <Route path="/Feed" component={Feed} appUser={appUser}/>
         <Route path="/AdminFeed" component={AdminFeed}/>
         <Route path="/MapSearch" component={MapSearch}/>
         <Route exact path="/Profile/:profileID">
           <ProfilePage appUser={appUser}/>
         </Route>
-        <Route path="/Photo" component={Photo}/>
-        <Route path="/MyPhoto" component={MyPhoto}/>
+        <Route path="/Photos/:profileID" component={Photos}/>
+        <Route path="/Followers/:profileID" component={Followers}/>
+        {/* <Route path="/MyPhotos" component={MyPhotos}/> */}
         <Route path="/Messages" component={Messages}/>
         <Route path="/MyPets" component={MyPets}/>
         <Route path="/Pets" component={Pets}/>
-        <Route path="/Followers" component={Followers}/>
-        <Route path="/ExploreUsers" component={ExploreUsers}/>
+        {/* <Route path="/ExploreUsers" component={ExploreUsers}/> */}
 
         <Route path="/SignUpSuccess" component={SignUpSuccess}/>
-        <Route path="/user/:user" component={ProfilePage}/>
+        {/* <Route path="/user/:user" component={ProfilePage}/>
         <Route path="/pet/:pet" component={ProfilePage}/>
         <Route path="/shelter/:shelter" component={ProfilePage}/>
-        <Route path="/business/:business" component={ProfilePage}/>
+        <Route path="/business/:business" component={ProfilePage}/> */}
         <Route path="/business/Register" component={ResetPage}/>
         <Route path="/uploadImage" component={UploadImage}/>
 
