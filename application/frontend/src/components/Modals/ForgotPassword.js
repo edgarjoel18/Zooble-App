@@ -1,13 +1,23 @@
-import React, { useState } from 'react'
+import axios from 'axios';
+import {useState,useEffect} from 'react'
+import Modal from './Modal.js'
 
-import Modal from './Modal'
-
-import styles from './ForgotPassword.module.css'
+import styles from './ForgotPassword.module.css';
 
 function ForgotPassword({display,onClose}) {
+    console.log("Forgot password ")
     
     const [email, setEmail] = useState('');
 
+    axios.post('/api/resetpassword',{
+        email: email,
+    })
+    .then(response => {
+        console.log(response);
+    })
+    .catch(err =>{
+        console.log(err);
+    })
 
     return (
         <Modal display={display} onClose={onClose}>
