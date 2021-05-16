@@ -23,7 +23,7 @@ const profileRouter = require('./routes/profile.js');
 const profileEditRouter = require('./routes/edit-profile.js');
 const petProfileRouter = require('./routes/pet-profile.js');
 const businessProfileRouter = require('./routes/business-profile.js')
-//const resetPasswordRouter = require('./routes/reset-password.js')
+const resetPasswordRouter = require('./routes/reset-password.js')
 const adminRouter = require('./routes/admin.js')
 
 const resetRouter = require('./routes/reset.js')
@@ -121,7 +121,7 @@ app.use(businessProfileRouter)
 app.use(resetPasswordRouter)
 
 //Reset password
-// app.use(resetRouter)
+app.use(resetRouter)
 app.use(adminRouter)
 
 app.use(postsRouter)
