@@ -39,8 +39,8 @@ function Messages() {
         Promise.all([getRecievedMessages,getSentMessages])
         .then(responses =>{
             console.log("responses: ", responses);
-            setSentMessages(responses[0].data)
-            setRecievedMessages(responses[1].data);
+            setRecievedMessages(responses[0].data);
+            setSentMessages(responses[1].data)
         })
         .catch(err =>{
             console.log(err);
@@ -129,7 +129,7 @@ function Messages() {
                 }
                 {selectedTab === 0 && recievedMessages.map((recievedMessage) =>(
                         <>
-                            <div className={styles['messages-container-message']} onClick={()=>viewRecievedMessageModal(recievedMessage)}>
+                            <div key={recievedMessage.message_id} className={styles['messages-container-message']} onClick={()=>viewRecievedMessageModal(recievedMessage)}>
                                 <img className={styles['messages-container-message-pic']} src={recievedMessage.profile_pic_link}/>
                                 <div className={styles['messages-container-message-subject']}>{recievedMessage.subject}</div>
                                 <div className={styles['messages-container-message-timestamp']}>{new Date(recievedMessage.timestamp).toLocaleString()}</div>
@@ -142,7 +142,7 @@ function Messages() {
                 }
                 {selectedTab === 1 && sentMessages.map((sentMessage) =>(
                         <>
-                            <div className={styles['messages-container-message']} onClick={()=>viewSentMessageModal(sentMessage)}>
+                            <div  key={sentMessage.message_id}  className={styles['messages-container-message']} onClick={()=>viewSentMessageModal(sentMessage)}>
                                 <img className={styles['messages-container-message-pic']} src={sentMessage.profile_pic_link}/>
                                 <div className={styles['messages-container-message-subject']}>{sentMessage.subject}</div>
                                 <div className={styles['messages-container-message-timestamp']}>{new Date(sentMessage.timestamp).toLocaleString()}</div>
