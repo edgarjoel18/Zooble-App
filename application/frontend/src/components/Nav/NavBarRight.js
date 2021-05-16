@@ -5,6 +5,8 @@ import DropdownArrow from '../../images/Created Icons/Arrow.svg';
 
 import styles from './NavBar.module.css'
 
+
+//used to detect if there was a click outside the account menu to close it
 let useClickOutside = (handler) =>{
   let domNode = useRef();
 

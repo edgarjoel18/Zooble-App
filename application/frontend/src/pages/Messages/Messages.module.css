@@ -101,9 +101,9 @@
     margin-top: auto;
     padding: 15px;
     box-shadow: var(--elevation-2);
-    background-color: var(--reversed-txt-clr);
+    background-color: var(--accent-color-2);
     border: none;
-    border-radius: 15px;
+    border-radius: 50%;
     font-family: var(--ff-primary);
     font-size: var(--h3);
     display:flex;

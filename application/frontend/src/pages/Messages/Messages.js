@@ -6,7 +6,7 @@ import Tab from './Tab'
 import styles from './Messages.module.css';
 import RecievedMessage from '../../components/Modals/RecievedMessage'
 import SentMessage from '../../components/Modals/SentMessage'
-import AddIcon from '../../images/Created Icons/Add.svg'
+import AddIcon from '../../images/Created Icons/AddWhite.svg'
 import SendMessage from '../../components/Modals/SendMessage';
 
 function Messages() {
@@ -19,7 +19,7 @@ function Messages() {
     const [recievedMessages, setRecievedMessages] = useState([]);
     const [sentMessages, setSentMessages] = useState([]);
 
-    // const possibleMessageRecipients = useRef([]);
+    const [possibleMessageRecipients, setPossibleMessageRecipients] = useState([]);
 
     function viewSentMessageModal(message){
         setSelectedMessage(message);
@@ -47,23 +47,55 @@ function Messages() {
         })
     }
 
-    // function getMessageRecipients(){
-    //    const getFollowers = axios.get('/api/followers')
-    //    const getFollows = axios.get('/api/following')
+    function getMessageRecipients(){
+       const getFollowers = axios.get('/api/followers')
+        const getFollows = axios.get('/api/following')
 
-    //    Promise.all([getFollowers, getFollows])
-    //    .then(responses =>{
-    //        const followerAndFollows = []
+       Promise.all([getFollowers, getFollows])
+       .then(responses =>{
+           console.log("responses: ", responses);
 
-    //    })
-    // }
+           const followers = responses[0].data;
+           const follows = responses[1].data;
+
+           let followersAndFollows = followers.concat(follows)
+           console.log("Followers And Follows: ", followersAndFollows); 
+
+           let recipients = [];
+           let recipientSet = new Set()
+
+           //followers and follows 
+           for (const person of followersAndFollows){ 
+               const personJSON = JSON.stringify(person)  //stringify to check uniqueness
+               if(!recipientSet.has(personJSON)){
+                   recipients.push(person)
+               }
+               recipientSet.add(personJSON)
+           }
+           console.log("recipients: ", recipients);
+           //create array compatible with react-select
+           let recipientOptions = []
+           for(const recipient of recipients){
+               console.log('recipient: ',recipient)
+               recipientOptions.push({value: recipient.profile_id, label: recipient.display_name, pic: recipient.profile_pic_link})
+           }
+
+           console.log("recipientOptions: ", recipientOptions);
+
+
+           setPossibleMessageRecipients(recipientOptions)
+       })
+    }
 
     function updateSentMessages(newSentMessage){
-        setSentMessages([...sentMessages, newSentMessage]);
+        // setSentMessages([...sentMessages, newSentMessage]);
     }
 
     useEffect(()=>{ //retrieve messages on refresh
         getMessages();
+        getMessageRecipients();
+        console.log('sentMessages: ', sentMessages)
+        console.log('recievedMessages: ', recievedMessages)
         // getFollowers(); //get followers/followed to populate dropdown in send message modal
     }, [])
 
@@ -71,13 +103,14 @@ function Messages() {
     const [selectedTab, setSelectedTab] = useState(0);
 
     const onTabClicked = (value) => {
-        console.log('[Tag] ' + value + ' is clicked')
+        console.log('Tab ' + value + ' was clicked')
         setSelectedTab(value);
     };
 
     let tabs = ['Recieved', 'Sent'].map((tab, index) => (
         <Tab key={tab} id={index} section={tab} selected={selectedTab} length={index === 0 ? recievedMessages.length : sentMessages.length} clicked={onTabClicked}/>
     ));
+
 
     return (
         <>
@@ -119,13 +152,13 @@ function Messages() {
                     ))}
                     <button className={styles['new-message-button']} onClick={() =>setSendMessageModalDisplay(true)}>
                         <img src={AddIcon} className={styles['new-message-icon']}/>
-                        <span className={styles['new-message-text']}>New Message</span>
+                        {/* <span className={styles['new-message-text']}>New Message</span> */}
                     </button>
                 </div>
             </div>
         <RecievedMessage display={recievedMessageModalDisplay} updateSentMessages={updateSentMessages} onClose={ () => setRecievedMessageModalDisplay(false)} selectedMessage={selectedMessage}></RecievedMessage>
         <SentMessage display={sentMessageModalDisplay} onClose={() => setSentMessageModalDisplay(false)} selectedMessage={selectedMessage}></SentMessage>
-        <SendMessage display={sendMessageModalDisplay} onClose={() => setSendMessageModalDisplay(false)}/>
+        <SendMessage display={sendMessageModalDisplay} onClose={() => setSendMessageModalDisplay(false)} recipientOptions={possibleMessageRecipients}/>
         </>
     )
 }
