@@ -9,8 +9,10 @@ function ForgotPassword({display,onClose}) {
     
     const [email, setEmail] = useState('');
 
+    console.log(email)
+
     axios.post('/api/resetpassword',{
-        email: email,
+        email: "mpowers8@mail.ccsf.edu",
     })
     .then(response => {
         console.log(response);

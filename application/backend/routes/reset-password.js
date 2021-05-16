@@ -7,23 +7,23 @@ const randomToken = require('random-token');
 
 router.post("/api/resetpassword", (req, res) => {
     console.log("/resetpassword")
-    console.log(req)
 
     const email = req.body.email;
+    const token = randomToken(16);
 
+    console.log(email)
     if(req.body.email == ''){
         res.status(400).send('Email required');
     }
 
-    connection.query('SELECT * FROM Credentials WHERE email = ?', [email], function(error, results, fields){
+    connection.query('SELECT * FROM User WHERE email = ?', [email], function(error, results, fields){
         console.log(results)
         if(results.length > 0 && email == results[0].email){
-            const token = randomToken(16);
             // Needs to be inserted into a "token" column in the user in the
             // database
             const resetPasswordToken = token;
             const passwordExpires = Date.now() + 140000000;
-            connection.query(`INSERT INTO Credentials (token, expires) VALUES ('${resetPasswordToken}', NOW() + INTERVAL 48 HOUR)')`, function(error, results, fields){
+            connection.query(`INSERT INTO User (token, expires) VALUES ('${resetPasswordToken}', NOW() + INTERVAL 48 HOUR)')`, function(error, results, fields){
                 console.log("Inserted")
             });        
             
