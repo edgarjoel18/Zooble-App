@@ -135,6 +135,10 @@ const App = () => {
         <Route path="/business/:business" component={ProfilePage}/>
         <Route path="/business/Register" component={ResetPage}/>
         <Route path="/uploadImage" component={UploadImage}/>
+
+
+        <Route path="/reset/:token" component={ResetPage}/>
+
         {/* <Redirect to="/" /> */}
       </Switch>
     </Router>

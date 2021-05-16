@@ -1,11 +1,11 @@
 //Will contain all sign-up related routes
 const express = require('express')
-const router = express.Router()
+const router = express.Router();
 const bcrypt = require('bcrypt');
 
 const connection = require('../db');
 
-router.post("/api/reset", (req,res) =>{
+router.post("/api/reset/:token", (req,res) =>{
     console.log("/reset");
     const givenEmail = req.body.email;
     const givenPassword = req.body.password;
@@ -31,10 +31,20 @@ router.post("/api/reset", (req,res) =>{
 
     connection.query(`UPDATE Credentials SET password = '${givenPassword}' WHERE email= '${givenEmail}'`, 
                         (error, post, fields) => {
-                                if(users.length === 0){
+                                if(givenEmail.length > 0){
                                             if(passwordValidate(givenPassword)){  //if password is valid
                                                 if(givenPassword === givenResubmitted){  //if password and confirmed password match
                                                     const hash = bcrypt.hashSync(givenPassword, 10);
+
+                                                    connection.query(`DELETE FROM forgot WHERE expires < NOW()`, 
+                                                        function(err,insertedCredentials){
+                                                            if(err){
+                                                                res.status(500).json(err);
+                                                            }
+                                                        console.log('URL expired');
+                                                        res.status(200).json("URL expired");
+                                                    })
+                                                                    
 
                                                     connection.query(`INSERT INTO Credentials (password) VALUES ('${hash}')`, 
                                                         function(err,insertedCredentials){
