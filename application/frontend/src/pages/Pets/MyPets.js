@@ -20,6 +20,18 @@ function MyPets() {
 
     const [myPets,setMyPets] = useState([]);
 
+    const [typeOptions, setTypeOptions] = useState([]);
+
+    const [dogBreedOptions, setDogBreedOptions] = useState([]);
+
+    const [catBreedOptions, setCatBreedOptions] = useState([]);
+
+    const [colorOptions, setColorOptions] = useState([]);
+
+    const [sizeOptions, setSizeOptions] = useState([]);
+
+    const [ageOptions, setAgeOptions] = useState([]);
+
     let history = useHistory();
 
     function viewDeletionModal(pet){
@@ -35,16 +47,26 @@ function MyPets() {
         history.push(profile);
     }
 
-    useEffect(() => {axios.get('/api/current-user-pets') 
-        .then(response =>{
-            console.log('/api/get-current-user-pets response.data',response.data);
-            setMyPets(response.data);
-            console.log("myPets: ", myPets);
-        })
-        .catch(err =>{
-            console.log("Error: ");
-            console.log(err);
-        })
+    useEffect(() => {
+        
+        const getCurrentUserPets = axios.get('/api/current-user-pets') 
+        const getPetTypes = axios.get('/api/pet-types')
+        const getDogBreeds = axios.get('/api/dog-breeds')
+        const getCatBreeds = axios.get('/api/cat-breeds')
+        const getAges = axios.get('/api/ages')
+        const getSizes = axios.get('/api/sizes')
+        const getColors = axios.get('/api/colors')
+
+        Promise.all([getCurrentUserPets,getPetTypes,getDogBreeds,getCatBreeds,getAges,getSizes,getColors])
+        .then(responses =>{
+            setMyPets(responses[0].data);
+            setTypeOptions(responses[1].data);
+            setDogBreedOptions(responses[2].data);
+            setCatBreedOptions(responses[3].data);
+            setAgeOptions(responses[4].data);
+            setSizeOptions(responses[5].data);
+            setColorOptions(responses[6].data);
+        }) 
     }, [])
 
     return (
@@ -72,7 +94,7 @@ function MyPets() {
             </div>
         </div>
         <ConfirmPetDeletion display={deletionModalDisplay} onClose={() => setDeletionModalDisplay(false)} selectedPet={selectedPet}/>
-        <AddAPet display={additionModalDisplay} onClose={() => setAdditionModalDisplay()}/>
+        <AddAPet display={additionModalDisplay} typeOptions={typeOptions} dogBreedOptions={dogBreedOptions} catBreedOptions={catBreedOptions} colorOptions={colorOptions} sizeOptions={sizeOptions} ageOptions={ageOptions} onClose={() => setAdditionModalDisplay()}/>
         </>
     )
 }

@@ -51,4 +51,21 @@
     align-items: flex-start;
     margin-left: 30px;
     margin-right: 30px;
+    
+}
+
+.sendAMessage-recipient{
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.option-recipient-image{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 7.5px;
+}
+
+.option-recipient-name{
+    margin-left: 10px;
 }

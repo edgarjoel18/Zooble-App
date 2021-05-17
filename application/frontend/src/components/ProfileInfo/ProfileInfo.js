@@ -6,7 +6,7 @@ import {useDropzone} from 'react-dropzone'
 import arrow from '../../images/Arrow.png';
 import styles from './ProfileInfo.module.css';
 
-import SendAMessage from '../../components/Modals/SendAMessage';
+import SendProfileMessage from '../../components/Modals/SendProfileMessage';
 import EditPetDetails from '../Modals/EditPetDetails';
 import EditButton from '../Buttons/EditButton';
 import LoginRequired from '../Modals/LoginRequired';
@@ -17,17 +17,20 @@ import axios from 'axios';
 //make this into environment variable before deploying!
 const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL'
 
-function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
+function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStatus}) {
 
     //image upload array
     console.log(profile.display_name);
     console.log(profile.profile_pic_link);
+    console.log(followingStatus);
     
     console.log(appUser);
     //const [profile.profile_pic_link, setprofile.profile_pic_link] = useState('');
     //const [profileTitle, setProfileTitle] = useState('');
     const [editing, setEditing] = useState(false);
-    const [follow, setFollow] = useState(false); // update this from backend
+    
+    const [follow, setFollow] = useState(followingStatus); // update this from backend
+    console.log('follow: ',follow);
     // const [showBackdrop, setShowBackdrop] = useState(false);
 
     const [petType, setPetType] = useState({});
@@ -157,6 +160,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
         console.log('Follow button clicked')
         if(appUser){
             console.log('POST /api/follow-unfollow-user')
+            console.log('profile.account_id: ',profile.account_id)
             axios.post('/api/follow-unfollow-user',{
                 accountId: profile.account_id
             })
@@ -172,7 +176,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
     let nameDisplay = null;
     let displayAccountInfo = null;
     let dropdownButtonStyle = null;
-    follow ? dropdownButtonStyle = styles.UnfollowButton : dropdownButtonStyle = styles.DropdownButton;
+    follow === true ? dropdownButtonStyle = styles.UnfollowButton : dropdownButtonStyle = styles.DropdownButton;
     switch(profileType) {
         case 'Shelter' :
             nameDisplay = (
@@ -192,7 +196,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
                             <button className={dropdownButtonStyle} onClick={() => onFollowHandler()} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <span className={styles.DropdownText} >
-                                        {follow ? 'Unfollow' : 'Follow'}
+                                        {follow === true ? 'Unfollow' : 'Follow'}
                                     </span>
                                     <div  >
                                         <img src={arrow} />
@@ -230,7 +234,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
                             <button className={dropdownButtonStyle} onClick={() => onFollowHandler()} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <span className={styles.DropdownText} >
-                                        {follow ? 'Unfollow' : 'Follow'}
+                                        {follow === true ? 'Unfollow' : 'Follow'}
                                     </span>
                                     <div  >
                                         <img src={arrow} />
@@ -269,7 +273,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
                             <button className={dropdownButtonStyle} onClick={() => onFollowHandler()} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <span className={styles.DropdownText} >
-                                        {follow ? 'Unfollow' : 'Follow'}
+                                        {follow === true ? 'Unfollow' : 'Follow'}
                                     </span>
                                     <div  >
                                         <img src={arrow} />
@@ -317,7 +321,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
                             <button className={dropdownButtonStyle} id="dropdownButton" onClick={() => onFollowHandler()} >
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <span className={styles.DropdownText}>
-                                        {follow ? 'Unfollow' : 'Follow'}
+                                        {follow === true ? 'Unfollow' : 'Follow'}
                                     </span>
                                     <div  >
                                         <img src={arrow} />
@@ -397,7 +401,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile}) {
                 </div>
                 {displayAccountInfo}
             </div>
-            <SendAMessage display={sendAMessageDisplay} profile={profile} onClose={()=> setSendAMessageDisplay(false)}/>
+            <SendProfileMessage display={sendAMessageDisplay} profile={profile} onClose={()=> setSendAMessageDisplay(false)}/>
             <LoginRequired display={loginRequiredDisplay} onClose={() =>setLoginRequiredDisplay(false)} redirect={location.pathname} />    
         </div>
     );

@@ -40,7 +40,7 @@ function ResetPage() {
         console.log(email)
 
         // if(email && uname && firstName && lastName && password && redonePassword && acceptTerms){
-            Axios.post('/api/reset', {
+            Axios.post('/api/reset/:token', {
                     email: email,
                     password: password,
                     redonePassword: redonePassword
@@ -70,9 +70,20 @@ function ResetPage() {
         <>
             <form className={styles['signup-container']} onSubmit={reset}>
                 <div className={styles['signup-container-header']}>
-                    Sign Up
+                    Reset Password
                 </div>
                 <div className={styles['signup-fields-container']}>
+
+                <div className={styles['email-input-container']}>
+                        <label className={styles['email-input-label']} for='psw'>Email</label>
+                        <input
+                            type='text'
+                            placeholder='Enter e-mail'
+                            name='eml'
+                            onChange={e => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
                 
                     <div className={styles['password-input-container']}>
                         <label className={styles['password-input-label']} for='psw'>Password</label>

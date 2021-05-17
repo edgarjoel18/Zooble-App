@@ -5,7 +5,7 @@ import styles from './ViewMessage.module.css'
 import Modal from './Modal'
 import axios from 'axios';
 
-function RecievedMessageModal({display, onClose, selectedMessage}) {
+function RecievedMessageModal({display, onClose, selectedMessage, updateSentMessages}) {
     const [replyDisplay, setReplyDisplay] = useState(false);
 
     const [replyBody, setReplyBody] = useState();
@@ -31,8 +31,11 @@ function RecievedMessageModal({display, onClose, selectedMessage}) {
             console.log(err);
         })
         // //refresh so the user knows their message reply has gone through?
-        // getMessage(); 
+        updateSentMessages(selectedMessage);
+        onClose();
     }
+
+    
 
 
     return (
@@ -42,7 +45,7 @@ function RecievedMessageModal({display, onClose, selectedMessage}) {
                 <div className={styles['view-message-sender']}>From: {selectedMessage.display_name}</div>
                 <div className={styles['view-message-timestamp']}>{new Date(selectedMessage.timestamp).toLocaleString()}</div>
                 <div className={styles['view-message-body']} >{selectedMessage.body}</div>
-                <form onSubmit={onClose}>
+                <form onSubmit={submitReply}>
                     <textarea required  className={styles['view-message-reply-body']} onChange={(event) => setReplyBody(event.target.value)} placeholder={"Reply to " + selectedMessage.display_name}/>
                     <button type="submit" className={styles['view-message-reply-button']}>Reply</button>
                 </form>

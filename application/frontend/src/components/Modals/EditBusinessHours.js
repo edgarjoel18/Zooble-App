@@ -1,58 +1,74 @@
 import {useState} from 'react'
 import axios from 'axios'
 
-import Select from 'react-select'
+import BaseSelect from "react-select";
+import FixRequiredSelect from "../../mods/FixRequiredSelect";
 
 import Modal from './Modal'
 
 import styles from './EditBusinessHours.module.css'
 
-function EditBusinessHours({display,onClose}){
+const hourOptions = [
+    {value: '00:00:00', label: 'Closed'},
+    {value: '01:00:00', label:'1:00 AM'},
+    {value: '02:00:00', label:'2:00 AM'},
+    {value: '03:00:00', label:'3:00 AM'},
+    {value: '04:00:00', label:'4:00 AM'},
+    {value: '05:00:00', label:'5:00 AM'},
+    {value: '06:00:00', label:'6:00 AM'},
+    {value: '07:00:00', label:'7:00 AM'},
+    {value: '08:00:00', label:'8:00 AM'},
+    {value: '09:00:00', label:'9:00 AM'},
+    {value: '10:00:00', label:'10:00 AM'},
+    {value: '11:00:00', label:'11:00 AM'},
+    {value: '12:00:00', label:'12:00 PM'},
+    {value: '13:00:00', label:'1:00 PM'},
+    {value: '14:00:00', label:'2:00 PM'},
+    {value: '15:00:00', label:'3:00 PM'},
+    {value: '16:00:00', label:'4:00 PM'},
+    {value: '17:00:00', label:'5:00 PM'},
+    {value: '18:00:00', label:'6:00 PM'},
+    {value: '19:00:00', label:'7:00 PM'},
+    {value: '20:00:00', label:'8:00 PM'},
+    {value: '21:00:00', label:'9:00 PM'},
+    {value: '22:00:00', label:'10:00 PM'},
+    {value: '23:00:00', label:'11:00 PM'},
+    {value: '24:00:00', label:'12:00 AM'}
+];
 
-    const [sundayStart, setSundayStart] = useState();
-    const [mondayStart, setMondayStart] = useState();
-    const [tuesdayStart, setTuesdayStart] = useState();
-    const [wednesdayStart, setWednesdayStart] = useState();
-    const [thursdayStart, setThursdayStart] = useState();
-    const [fridayStart, setFridayStart] = useState();
-    const [saturdayStart, setSaturdayStart] = useState();
+const Select = props => (  
+    <FixRequiredSelect
+      {...props}
+      SelectComponent={BaseSelect}
+      options={props.options}
+    />
+);
 
-    const [sundayEnd, setSundayEnd] = useState();
-    const [mondayEnd, setMondayEnd] = useState();
-    const [tuesdayEnd, setTuesdayEnd] = useState();
-    const [wednesdayEnd, setWednesdayEnd] = useState();
-    const [thursdayEnd, setThursdayEnd] = useState();
-    const [fridayEnd, setFridayEnd] = useState();
-    const [saturdayEnd, setSaturdayEnd] = useState();
+function EditBusinessHours({display,onClose, hours, setHours}){
+    //convert hours into hour options usable as values for react-select
+    console.log('hours: ', hours)
+    console.log('hours.sun_open', hours.sun_open)
 
-    const hourOptions = [
-        {value: '01:00:00', label:'1:00 AM'},
-        {value: '02:00:00', label:'2:00 AM'},
-        {value: '03:00:00', label:'3:00 AM'},
-        {value: '04:00:00', label:'4:00 AM'},
-        {value: '05:00:00', label:'5:00 AM'},
-        {value: '06:00:00', label:'6:00 AM'},
-        {value: '07:00:00', label:'7:00 AM'},
-        {value: '08:00:00', label:'8:00 AM'},
-        {value: '09:00:00', label:'9:00 AM'},
-        {value: '10:00:00', label:'10:00 AM'},
-        {value: '11:00:00', label:'11:00 AM'},
-        {value: '12:00:00', label:'12:00 PM'},
-        {value: '13:00:00', label:'1:00 PM'},
-        {value: '14:00:00', label:'2:00 PM'},
-        {value: '15:00:00', label:'3:00 PM'},
-        {value: '16:00:00', label:'4:00 PM'},
-        {value: '17:00:00', label:'5:00 PM'},
-        {value: '18:00:00', label:'6:00 PM'},
-        {value: '19:00:00', label:'7:00 PM'},
-        {value: '20:00:00', label:'8:00 PM'},
-        {value: '21:00:00', label:'9:00 PM'},
-        {value: '22:00:00', label:'10:00 PM'},
-        {value: '23:00:00', label:'11:00 PM'},
-        {value: '24:00:00', label:'12:00 AM'}
-    ];
 
-    console.log(hourOptions)
+    const [sundayStart, setSundayStart] = useState(hours.sun_open);
+    const [mondayStart, setMondayStart] = useState(hours.mon_open);
+    const [tuesdayStart, setTuesdayStart] = useState(hours.tue_open);
+    const [wednesdayStart, setWednesdayStart] = useState(hours.wed_open);
+    const [thursdayStart, setThursdayStart] = useState(hours.thu_open);
+    const [fridayStart, setFridayStart] = useState(hours.fri_open);
+    const [saturdayStart, setSaturdayStart] = useState(hours.sat_open);
+
+    const [sundayEnd, setSundayEnd] = useState(hours.sun_close);
+    const [mondayEnd, setMondayEnd] = useState(hours.mon_close);
+    const [tuesdayEnd, setTuesdayEnd] = useState(hours.tue_close);
+    const [wednesdayEnd, setWednesdayEnd] = useState(hours.wed_close);
+    const [thursdayEnd, setThursdayEnd] = useState(hours.thu_close);
+    const [fridayEnd, setFridayEnd] = useState(hours.fri_close);
+    const [saturdayEnd, setSaturdayEnd] = useState(hours.sat_close);
+
+
+
+    // console.log(hourOptions)
 
     function customTheme(theme){
         return {
@@ -66,42 +82,42 @@ function EditBusinessHours({display,onClose}){
     }
 
     function submitHoursEdit(){
-        const reqBody = {
-            newSunOpen: sundayStart['label'], 
-            newSunClose: null, 
-            newMonOpen: null, 
-            newMonClose: null,
-            newTueOpen: null, 
-            newTueClose: null, 
-            newWedOpen: null, 
-            newWedClose: null, 
-            newThuOpen: null, 
-            newThuClose: null, 
-            newFriOpen: null, 
-            newFriClose: null, 
-            newSatOpen: null, 
-            newSatClose: null
-        }
-        console.log('body is ' + JSON.stringify(reqBody))
-        console.log('updatedHour is ' + JSON.stringify(sundayStart))
         axios.post("/api/hours", {
-            newSunOpen: sundayStart['label'], 
-            newSunClose: sundayStart['label'], 
-            newMonOpen: sundayStart['label'], 
-            newMonClose: sundayStart['label'],
-            newTueOpen: sundayStart['label'], 
-            newTueClose: sundayStart['label'], 
-            newWedOpen: sundayStart['label'], 
-            newWedClose: sundayStart['label'], 
-            newThuOpen: sundayStart['label'], 
-            newThuClose: sundayStart['label'], 
-            newFriOpen: sundayStart['label'], 
-            newFriClose: sundayStart['label'], 
-            newSatOpen: sundayStart['label'], 
-            newSatClose: sundayStart['label']
+            newSunOpen: sundayStart['value'], 
+            newSunClose: sundayEnd['value'], 
+            newMonOpen: mondayStart['value'], 
+            newMonClose: mondayEnd['value'],
+            newTueOpen: tuesdayStart['value'], 
+            newTueClose: tuesdayEnd['value'], 
+            newWedOpen: wednesdayStart['value'], 
+            newWedClose: wednesdayEnd['value'], 
+            newThuOpen: thursdayStart['value'], 
+            newThuClose: thursdayEnd['value'], 
+            newFriOpen: fridayStart['value'], 
+            newFriClose: fridayEnd['value'], 
+            newSatOpen: saturdayStart['value'], 
+            newSatClose: saturdayEnd['value']
         })
         .then(response =>{
             console.log(response);
+            console.log('sundayStart: ',sundayStart);
+            setHours({
+                sun_open: sundayStart,
+                sun_close: sundayEnd,
+                mon_open: mondayStart,
+                mon_close: mondayEnd,
+                tue_open: tuesdayStart,
+                tue_close: tuesdayEnd,
+                wed_open: wednesdayStart,
+                wed_close: wednesdayEnd,
+                thu_open: thursdayStart,
+                thu_close: thursdayEnd,
+                fri_open: fridayStart,
+                fri_close: fridayEnd,
+                sat_open: saturdayStart,
+                sat_close: saturdayEnd
+            })
+            onClose()
         })
         .catch(err =>{
             console.log(err);
@@ -113,15 +129,17 @@ function EditBusinessHours({display,onClose}){
             <div className={styles['edit-business-hours-header']}>
                 Edit Business Hours
             </div>
-            <div className={styles['edit-business-hours-container']}>
+            <form className={styles['edit-business-hours-container']} onSubmit={submitHoursEdit}>
                 <div className={styles['edit-sunday-hours-start']}>
                     <label for="sunday-start">Sunday Opening</label>
                     <Select id="sunday-start" name="sunday_start"
-                            onChange={setSundayStart}
+                            onChange={event => setSundayStart([event])}
                             options={hourOptions}
                             theme={customTheme}
                             placeholder="Type in Opening Hours"
                             isSearchable
+                            value={sundayStart}
+                            required
                     />
                 </div>
                 <div className={styles['edit-sunday-hours-end']}>
@@ -132,6 +150,8 @@ function EditBusinessHours({display,onClose}){
                             theme={customTheme}
                             placeholder="Type in Closing Hours"
                             isSearchable
+                            value={sundayEnd}
+                            required
                         />
                 </div>
                 <div className={styles['edit-monday-hours-start']}>
@@ -142,6 +162,8 @@ function EditBusinessHours({display,onClose}){
                             theme={customTheme}
                             placeholder="Type in Opening Hours"
                             isSearchable
+                            value={mondayStart}
+                            required
                         />
                 </div>
                 <div className={styles['edit-monday-hours-end']}>
@@ -152,6 +174,8 @@ function EditBusinessHours({display,onClose}){
                             theme={customTheme}
                             placeholder="Type in Closing Hours"
                             isSearchable
+                            value={mondayEnd}
+                            required
                         />
                 </div>
                 <div className={styles['edit-tuesday-hours-start']}>
@@ -162,6 +186,8 @@ function EditBusinessHours({display,onClose}){
                             theme={customTheme}
                             placeholder="Type in Closing Hours"
                             isSearchable
+                            value={tuesdayStart}
+                            required
                         />
                 </div>
                 <div className={styles['edit-tuesday-hours-end']}>
@@ -172,6 +198,8 @@ function EditBusinessHours({display,onClose}){
                             theme={customTheme}
                             placeholder="Type in Closing Hours"
                             isSearchable
+                            value={tuesdayEnd}
+                            required
                         />
                 </div>
                 <div className={styles['edit-wednesday-hours-start']}>
@@ -182,6 +210,8 @@ function EditBusinessHours({display,onClose}){
                             theme={customTheme}
                             placeholder="Type in Opening Hours"
                             isSearchable
+                            value={wednesdayStart}
+                            required
                         />
                 </div>
                 <div className={styles['edit-wednesday-hours-end']}>
@@ -192,6 +222,8 @@ function EditBusinessHours({display,onClose}){
                             theme={customTheme}
                             placeholder="Type in Closing Hours"
                             isSearchable
+                            value={wednesdayEnd}
+                            required
                         />
                 </div>
                 <div className={styles['edit-thursday-hours-start']}>
@@ -202,6 +234,8 @@ function EditBusinessHours({display,onClose}){
                             theme={customTheme}
                             placeholder="Type in Opening Hours"
                             isSearchable
+                            value={thursdayStart}
+                            required
                         />
                 </div>
                 <div className={styles['edit-thursday-hours-end']}>
@@ -212,6 +246,8 @@ function EditBusinessHours({display,onClose}){
                             theme={customTheme}
                             placeholder="Type in Closing Hours"
                             isSearchable
+                            value={thursdayEnd}
+                            required
                         />
                 </div>
                 <div className={styles['edit-friday-hours-start']}>
@@ -222,6 +258,8 @@ function EditBusinessHours({display,onClose}){
                             theme={customTheme}
                             placeholder="Type in Opening Hours"
                             isSearchable
+                            value={fridayStart}
+                            required
                         />
                 </div>
                 <div className={styles['edit-friday-hours-end']}>
@@ -232,6 +270,8 @@ function EditBusinessHours({display,onClose}){
                             theme={customTheme}
                             placeholder="Type in Closing Hours"
                             isSearchable
+                            value={fridayEnd}
+                            required
                         />
                 </div>
                 <div className={styles['edit-saturday-hours-start']}>
@@ -243,6 +283,8 @@ function EditBusinessHours({display,onClose}){
                             placeholder="Type in Opening Hours"
                             isSearchable
                             maxMenuHeight= {45}
+                            value={saturdayStart}
+                            required
                         />
                 </div>
                 <div className={styles['edit-saturday-hours-end']}>
@@ -254,13 +296,12 @@ function EditBusinessHours({display,onClose}){
                             placeholder="Type in Closing Hours"
                             isSearchable
                             maxMenuHeight= {45}
+                            value={saturdayEnd}
+                            required
                         />
                 </div>
-                <button className={styles['edit-business-hours-submit']} onClick={() => {
-                    onClose();
-                    submitHoursEdit();
-                }}>Submit</button>
-            </div>
+                <button className={styles['edit-business-hours-submit']}>Submit</button>
+            </form>
         </Modal>
     )
 }

@@ -2,9 +2,9 @@ import axios from 'axios';
 import {useState,useEffect} from 'react'
 import Modal from './Modal.js'
 
-import styles from './SendAMessage.module.css';
+import styles from './SendMessage.module.css';
 
-function SendAMessage({display,onClose, profile}) {
+function SendProfileMessage({display,onClose, profile}) {
     console.log("SendAMessage: ",profile)
 
     const [sendSuccess,setSendSuccess] = useState(false);
@@ -16,7 +16,7 @@ function SendAMessage({display,onClose, profile}) {
         event.preventDefault();
         console.log('sendMessage')
 
-        axios.post("/api/message",{
+        axios.post("/api/message-profile",{
             messageSubject: subject,
             messageBody: body,
             recipientAccountID: profile.account_id
@@ -48,4 +48,4 @@ function SendAMessage({display,onClose, profile}) {
     )
 }
 
-export default SendAMessage
+export default SendProfileMessage

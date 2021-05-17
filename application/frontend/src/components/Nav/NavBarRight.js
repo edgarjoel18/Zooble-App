@@ -1,11 +1,12 @@
 import axios from "axios";
 import {useRef, useEffect, useState} from "react";
 import {NavLink, useHistory} from "react-router-dom";
-import parrotPng from '../../images/parrot.png';
 import DropdownArrow from '../../images/Created Icons/Arrow.svg';
 
 import styles from './NavBar.module.css'
 
+
+//used to detect if there was a click outside the account menu to close it
 let useClickOutside = (handler) =>{
   let domNode = useRef();
 

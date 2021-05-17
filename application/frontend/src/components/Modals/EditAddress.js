@@ -21,13 +21,13 @@ import usePlacesAutocomplete,{
 } from "use-places-autocomplete";
 //For Address Editing
 
-function EditAddress({display, onClose}) {
+function EditAddress({display, onClose, setAddressState}) {
 
     const [address, setAddress] = useState('');
     const [latitude, setLatitude] = useState();
     const [longitude, setLongitude] = useState();
 
-    function submitLocationEdit(){
+    function submitAddressEdit(){
         axios.post("/api/address",{
             newAddress: address,
             newLatitude: latitude,
@@ -35,9 +35,12 @@ function EditAddress({display, onClose}) {
         })
         .then(response =>{
             console.log(response);
+            setAddressState(address)
+            onClose()
         })
         .catch(err =>{
             console.log(err);
+            //show error message in modal
         })
     }
 
@@ -87,7 +90,7 @@ function EditAddress({display, onClose}) {
                             required
                             disabled={!ready}
                         />
-                        <ComboboxPopover>
+                        <ComboboxPopover className={styles['combobox-popover']}>
                             <ComboboxList className={styles['combobox-list']}>
                                 {status === "OK" && data.map(({id,description}) => 
                                 <ComboboxOption key={id} value={description}/>
@@ -95,7 +98,7 @@ function EditAddress({display, onClose}) {
                             </ComboboxList>
                         </ComboboxPopover>
                     </Combobox>
-                    <button className={styles['edit-address-submit']} onClick={onClose}>Submit</button>
+                    <button className={styles['edit-address-submit']} onClick={submitAddressEdit}>Submit</button>
                 </div>
         </Modal>
     )

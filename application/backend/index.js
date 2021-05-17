@@ -23,10 +23,10 @@ const profileRouter = require('./routes/profile.js');
 const profileEditRouter = require('./routes/edit-profile.js');
 const petProfileRouter = require('./routes/pet-profile.js');
 const businessProfileRouter = require('./routes/business-profile.js')
+const resetPasswordRouter = require('./routes/reset-password.js')
 const adminRouter = require('./routes/admin.js')
 
 const resetRouter = require('./routes/reset.js')
-const resetPasswordRouter = require('./routes/resetpassword.js')
 
 const messagesRouter = require('./routes/messages.js')
 const postsRouter = require('./routes/posts.js')
@@ -117,12 +117,11 @@ app.use(petProfileRouter)
 //Business Profile Data and Edit Options
 app.use(businessProfileRouter)
 
-//Pet Profile Data and Edit options
-app.use(resetRouter)
-
-//Business Profile Data and Edit Options
+//Reset password
 app.use(resetPasswordRouter)
 
+//Reset password
+app.use(resetRouter)
 app.use(adminRouter)
 
 app.use(postsRouter)

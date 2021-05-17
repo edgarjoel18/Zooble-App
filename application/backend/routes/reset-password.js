@@ -1,11 +1,13 @@
 const express = require('express');
-const router = express.Router();
 const connection = require('../db');
+const router = express.Router();
+
 const nodemailer = require('nodemailer');
+const randomToken = require('random-token');
 
-var randomToken = require('random-token');
-
-router.get("/api/reset", (req, res) => {
+router.post("/api/resetpassword", (req, res) => {
+    console.log("/resetpassword")
+    console.log(req)
 
     const email = req.body.email;
 
@@ -14,12 +16,17 @@ router.get("/api/reset", (req, res) => {
     }
 
     connection.query('SELECT * FROM Credentials WHERE email = ?', [email], function(error, results, fields){
+        console.log(results)
         if(results.length > 0 && email == results[0].email){
             const token = randomToken(16);
             // Needs to be inserted into a "token" column in the user in the
             // database
             const resetPasswordToken = token;
             const passwordExpires = Date.now() + 140000000;
+            connection.query(`UPDATE Credentials SET reset_token =?, reset_expiry = NOW() + INTERVAL 48 HOUR WHERE email= ?`,[resetPasswordToken, email], 
+            function(error, results, fields){
+                console.log("Inserted Token and Expiry")
+            });        
             
         }else{
             console.log("No Email");
@@ -28,11 +35,12 @@ router.get("/api/reset", (req, res) => {
     });
 
     const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.ethereal.email',
+        port: 587,
         auth: {
-            user: `${process.env.EMAIL_ADDRESS}`,
-            pass: `${process.env.EMAIL_PASSWORD}`,
-        },
+            user: 'gideon.mcclure@ethereal.email',
+            pass: 'THX48h5WWyfJNycS7w'
+        }
     });
 
     const mailOptions = {

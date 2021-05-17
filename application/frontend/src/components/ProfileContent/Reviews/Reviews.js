@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
-import Rating from '@material-ui/lab/Rating';
-import Box from '@material-ui/core/Box';
+// import Rating from '@material-ui/lab/Rating';
+// import Box from '@material-ui/core/Box';
 
 import styles from './Reviews.module.css';
 
@@ -34,12 +34,12 @@ function Reviews(props) {
     if (props.reviews.length !== 0) {
         displayReviews = (
             props.reviews.slice(props.reviews.length - 3 >= 0 ? props.reviews.length - 3 : 0, props.reviews.length).map(ele => (
-                <Box 
-                    key={ele.user_id}
-                    className={styles.Reviews} 
-                    component="fieldset" mb={3} 
-                    borderColor="transparent"
-                >
+                // <Box 
+                //     key={ele.user_id}
+                //     className={styles.Reviews} 
+                //     component="fieldset" mb={3} 
+                //     borderColor="transparent"
+                // >
                     <textarea
                         rows='4'
                         cols='8'
@@ -47,14 +47,14 @@ function Reviews(props) {
                         value={ele.review} 
                         style={{textAlign: 'center'}}
                     />
-                    <Rating 
+                    /* <Rating 
                         name="read-only" 
                         value={ele.rating} 
                         precision={0.5} 
                         readOnly 
                         style={{float: 'right', paddingLeft: '15px', color: '#1CB48F' }} 
-                    />
-                </Box>
+                    /> */
+                // </Box>
             ))
         );
     }

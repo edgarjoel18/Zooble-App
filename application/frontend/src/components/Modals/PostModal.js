@@ -3,7 +3,6 @@ import {React, useState, useEffect, useContext} from 'react'
 import styles from './PostModal.module.css'
 
 import Modal from './Modal.js'
-import prof_pic from '../../images/businessProfile.jpg'
 import axios from 'axios';
 import Spinner from '../UI/Spinner/Spinner';
 

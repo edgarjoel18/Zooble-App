@@ -1,5 +1,4 @@
-import {AppBar, Card, Typography, Grid } from "@material-ui/core";
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import Tab from './Tab/Tab';
@@ -10,26 +9,14 @@ function UserProfileCard({followersList, followingList}) {
 
   let history = useHistory();
 
-  const EuCard = ({ title, src, thethingyintheplace }) => {
+  const FollowerCard = ({ title, src, key}) => {
     return (
-      <Card className="eu-card" key={`${thethingyintheplace}_Card_Item`}>
-        <div style={{ display: "flex", width: "100%", padding: "14px" }}>
-          <div style={{ marginRight: "10px" }}>
-            <img src={src} className="eu-card-img" />
-          </div>
-          <div>
-            <div>{title}</div>
-          </div>
+        <div className={styles['follower-card']}>
+            <img src={src} className={styles['follower-card-pic']} />
+            <div className={styles['follower-card-name']}>{title}</div>
         </div>
-      </Card>
     );
   };
-
-  const Panel = (props) => (
-    <div>
-      <Typography>{props.children}</Typography>
-    </div>
-  );
 
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -73,10 +60,10 @@ function UserProfileCard({followersList, followingList}) {
             }}
           >
             {" "}
-            {followersList.map((item, index) => (
+            {followersList.map((item) => (
               <Link
                 style={{ textDecoration: "none" }}
-                key={item.follower_id}
+                key={item.profile_id}
                 to={"/Profile/" + item.profile_id}
               >
                 <div
@@ -84,10 +71,9 @@ function UserProfileCard({followersList, followingList}) {
                     padding: " 10px 0px",
                   }}
                 >
-                  <EuCard
+                  <FollowerCard
                     title={item.display_name}
                     src={item.profile_pic_link}
-                    thethingyintheplace={index}
                   />
                 </div>
               </Link>
@@ -115,10 +101,10 @@ function UserProfileCard({followersList, followingList}) {
             }}
           >
             {" "}
-            {followingList.map((item, index) => (
+            {followingList.map((item) => (
               <Link
                 style={{ textDecoration: "none" }}
-                key={item.follower_id}
+                key={item.profile_id}
                 to={"/Profile/" + item.profile_id}
               >
                 <div
@@ -126,10 +112,9 @@ function UserProfileCard({followersList, followingList}) {
                     padding: " 10px 0px",
                   }}
                 >
-                  <EuCard
+                  <FollowerCard
                     title={item.display_name}
                     src={item.profile_pic_link}
-                    thethingyintheplace={index}
                   />
                 </div>
               </Link>

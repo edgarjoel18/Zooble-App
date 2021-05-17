@@ -31,7 +31,7 @@ import Feed from './pages/Feed/Feed.js'
 import Photos from './pages/Photos/Photos';
 // import MyPhotos from './pages/Photos/MyPhotos';
 import Followers from './pages/Followers/Followers';
-import ExploreUsers from './pages/ExploreUsers/ExploreUsers';
+// import ExploreUsers from './pages/ExploreUsers/ExploreUsers';
 
 import SignUpSuccess from './pages/Sign Up/SignUpSuccess'
 
@@ -111,15 +111,19 @@ const App = () => {
         <Route path="/Messages" component={Messages}/>
         <Route path="/MyPets" component={MyPets}/>
         <Route path="/Pets" component={Pets}/>
-        <Route path="/ExploreUsers" component={ExploreUsers}/>
+        {/* <Route path="/ExploreUsers" component={ExploreUsers}/> */}
 
         <Route path="/SignUpSuccess" component={SignUpSuccess}/>
-        <Route path="/user/:user" component={ProfilePage}/>
+        {/* <Route path="/user/:user" component={ProfilePage}/>
         <Route path="/pet/:pet" component={ProfilePage}/>
         <Route path="/shelter/:shelter" component={ProfilePage}/>
-        <Route path="/business/:business" component={ProfilePage}/>
+        <Route path="/business/:business" component={ProfilePage}/> */}
         <Route path="/business/Register" component={ResetPage}/>
         <Route path="/uploadImage" component={UploadImage}/>
+
+
+        <Route path="/reset/:token" component={ResetPage}/>
+
         {/* <Redirect to="/" /> */}
       </Switch>
     </Router>

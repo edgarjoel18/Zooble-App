@@ -8,7 +8,7 @@ import styles from './SignUpPage2.module.css';
 
 //Third Party Component Imports
 import BaseSelect from "react-select";
-import FixRequiredSelect from "./FixRequiredSelect";
+import FixRequiredSelect from "../../mods/FixRequiredSelect";
 import makeAnimated from 'react-select/animated';
 
 //Component Imports

@@ -5,7 +5,7 @@ import Axios from 'axios';
 import styles from './SignUpPage2.module.css';
 
 import BaseSelect from "react-select";
-import FixRequiredSelect from "./FixRequiredSelect";
+import FixRequiredSelect from "../../mods/FixRequiredSelect";
 import makeAnimated from 'react-select/animated';
 
 //Import Modals

@@ -22,16 +22,17 @@ router.get("/api/profile", (req,res) =>{
     let selfViewFlag=false
     console.log("GET /api/profile")
     connection.query(
-        `SELECT Profile.profile_pic_link, Profile.display_name, Profile.about_me, Profile.type, Profile.account_id, Profile.profile_id, Pet.reg_user_id
+        `SELECT Profile.profile_pic_link, Profile.display_name, Profile.about_me, Profile.type, Profile.account_id, Profile.profile_id, Pet.reg_user_id,Profile.pet_id
          FROM Profile
          LEFT JOIN Pet ON Profile.pet_id = Pet.pet_id
          WHERE Profile.profile_id = '${req.query.profileID}'`,
          function(err, profile){
              if(err){
                 console.log(err);
+                res.status(500).json(err);
              }
-             console.log(profile);
-             if(profile[0].reg_user_id === null){ //if its not a pet profile, no need to check if the pet is owned by the profile viewer
+             else if(profile[0] && profile[0].pet_id === null){ //if its not a pet profile, no need to check if the pet is owned by the profile viewer
+                console.log(profile);
                 console.log("not a pet profile")
                  if(profile[0].profile_id === req.session.profile_id){ //if the profile id is the same as the user who is currently logged in
                      //then set selfView flag to true
@@ -41,7 +42,7 @@ router.get("/api/profile", (req,res) =>{
              }
              else{ //its a pet_profile
                 console.log("pet profile")
-                 if(profile[0].reg_user_id === req.session.reg_user_id){ //if pets reguserid (owner) matches currently logged in user
+                 if(profile[0] && profile[0].reg_user_id === req.session.reg_user_id){ //if pets reguserid (owner) matches currently logged in user
                     console.log("pet owned by profile viewer")
                      //then set selfView flag to true
                      selfViewFlag = true
@@ -112,6 +113,40 @@ router.get("/api/profile-display-name", (req,res) =>{
             else{
                 console.log(results);
                 res.status(200).json(results[0]);
+            }
+        }
+    )
+})
+
+router.get("/api/is-following", (req,res) =>{
+    const {profileID} = req.query
+    console.log('GET /api/is-following')
+    connection.query(`
+        SELECT *
+        FROM Follow
+        WHERE reg_user_id=
+        (SELECT RegisteredUser.reg_user_id
+         FROM RegisteredUser
+         JOIN Account ON Account.user_id = RegisteredUser.user_id
+         JOIN Profile ON Profile.account_id = Account.account_id
+         WHERE Profile.profile_id = ?)
+        AND follower_id=
+        (SELECT RegisteredUser.reg_user_id
+         FROM RegisteredUser
+         JOIN Account ON Account.user_id = RegisteredUser.user_id
+         JOIN Profile ON Profile.account_id = Account.account_id
+         WHERE Profile.profile_id = ?)`,[profileID, req.session.profile_id],
+        function(err,results){
+            if(err){
+                console.log(err)
+                res.status(500).json(err)
+            }
+            else{
+                console.log(results);
+                if(results.length !== 0)
+                    res.status(200).json(true)
+                else
+                    res.status(200).json(false)               
             }
         }
     )
