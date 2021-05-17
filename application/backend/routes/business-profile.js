@@ -69,4 +69,25 @@ router.get('/api/business-phone-number', (req,res)=>{
         })
 })
 
+router.post('/api/address', (req,res) =>{
+    const {newAddress, newLatitude, newLongitude} = req.body
+    console.log('POST /api/address')
+    connection.query(
+        `UPDATE Address
+         SET address = ?, latitude= ?,longitude = ?
+         WHERE address.reg_user_id = ?
+        `, [newAddress, newLatitude, newLongitude, req.session.reg_user_id],
+        function(err,result){
+            if(err){
+                console.log(err)
+                res.status(500).json(err);
+            }
+            else{
+                console.log("result: ", result)
+                res.status(200).json(result)
+            }
+        }
+    )
+})
+
 module.exports = router

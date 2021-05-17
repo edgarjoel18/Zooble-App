@@ -23,8 +23,9 @@ router.post("/api/resetpassword", (req, res) => {
             // database
             const resetPasswordToken = token;
             const passwordExpires = Date.now() + 140000000;
-            connection.query(`INSERT INTO User (token, expires) VALUES ('${resetPasswordToken}', NOW() + INTERVAL 48 HOUR)')`, function(error, results, fields){
-                console.log("Inserted")
+            connection.query(`UPDATE Credentials SET reset_token =?, reset_expiry = NOW() + INTERVAL 48 HOUR WHERE email= ?`,[resetPasswordToken, email], 
+            function(error, results, fields){
+                console.log("Inserted Token and Expiry")
             });        
             
         }else{

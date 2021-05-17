@@ -1,25 +1,39 @@
 import {useState} from 'react'
 import Modal from './Modal'
 import axios from 'axios'
+import Select from 'react-select';
+import {components} from 'react-select'
+import makeAnimated from 'react-select/animated';
+
+import AddIcon from '../../images/Created Icons/Add.svg'
+
+import Daniel from '../../images/Daniel.jpg'
 
 import styles from './SendMessage.module.css';
 
-function SendMessage({display,onClose, profile}) {
+const {Option} = components
+
+function SendMessage({display,onClose, profile, recipientOptions}) {
     console.log("SendAMessage: ",profile)
+    console.log("Recipient Options: ", recipientOptions)
 
     const [sendSuccess,setSendSuccess] = useState(false);
 
     const [subject, setSubject] = useState('');
     const [body, setBody] = useState('');
 
+    const [recipient,setRecipient] = useState([]);
+
     function sendMessage(event){
         event.preventDefault();
         console.log('sendMessage')
 
+        console.log("recipient: ", recipient);
+
         axios.post("/api/message",{
             messageSubject: subject,
             messageBody: body,
-            recipientAccountID: profile.account_id
+            recipientProfileID: recipient[0].value     //contains profile id
         })
         .then(response => {
             console.log(response);
@@ -31,7 +45,23 @@ function SendMessage({display,onClose, profile}) {
         })
     }
 
+    function customTheme(theme){
+        return {
+            ... theme,
+            colors:{
+                ... theme.colors,
+                primary25: '#B3B3B3',
+                primary:'#1CB48F',
+            }
+        }
+    }
 
+    const RecipientOption = (props) => (
+        <Option {...props}>
+            <img className={styles['option-recipient-image']} src={props.data.pic}/>
+            <span className={styles['option-recipient-name']}>{props.data.label}</span>
+        </Option>
+    );
 
     if(!display) return null
     return (
@@ -39,6 +69,15 @@ function SendMessage({display,onClose, profile}) {
             <>
                 <h1 className={styles["sendAMessage-header"]}>Send a Message</h1>
                 <form className={styles['send-a-message-container']} onSubmit={sendMessage}>
+                    <Select id="recipient" name="message-recipient" className={styles["sendAMessage-recipient"]}
+                        onChange={event => setRecipient([event])}
+                        value={recipient}
+                        options={recipientOptions}
+                        theme={customTheme}
+                        components={{Option: RecipientOption}}
+                        placeholder="To"
+                        isSearchable
+                    />
                     <input className={styles["sendAMessage-subject"]} maxLength={78} required placeholder="Subject" value={subject} onChange={(event) =>setSubject(event.target.value)}/>
                     <textarea className={styles["sendAMessage-body"]} maxLength={65535} value={body} required placeholder="Write your message here" onChange={(event) =>setBody(event.target.value)}/>
                     <button type="submit" class={styles["sendAMessage-sendButton"]} >Send</button>

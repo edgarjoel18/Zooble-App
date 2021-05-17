@@ -4,6 +4,7 @@ const router = express.Router();
 const connection = require('../db');
 
 router.get('/api/business-types', (req,res) =>{
+    console.log('GET /api/business-types')
     connection.query("SELECT * FROM BusinessType ORDER BY business_type_name", function(err, businessTypes){
         if(err){
             console.log(err);

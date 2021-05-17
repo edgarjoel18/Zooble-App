@@ -72,10 +72,12 @@ router.post("/api/follow-unfollow-user", (req, res) => { // follow user
 // });
 
 router.get("/api/followers", (req,res) =>{
-    const {profileID} = req.query;
-    console.log("GET /api/followers");
+    let {profileID} = req.query;
+    if(!profileID){
+        profileID = req.session.profile_id;
+    }
     connection.query(
-        `SELECT RegisteredUser.reg_user_id, Follow.reg_user_id, Profile.profile_pic_link, Profile.profile_id, Profile.display_name
+        `SELECT Profile.profile_pic_link, Profile.profile_id, Profile.display_name
          FROM Follow
          JOIN RegisteredUser ON RegisteredUser.reg_user_id = Follow.follower_id
          JOIN Account ON Account.user_id = RegisteredUser.user_id
@@ -100,10 +102,13 @@ router.get("/api/followers", (req,res) =>{
 })
 
 router.get("/api/following", (req,res) =>{
-    const {profileID} = req.query;
+    let {profileID} = req.query;
+    if(!profileID){
+        profileID = req.session.profile_id;
+    }
     console.log("GET /api/following");
     connection.query(
-        `SELECT RegisteredUser.reg_user_id, Follow.follower_id, Profile.profile_pic_link, Profile.profile_id, Profile.display_name
+        `SELECT Profile.profile_pic_link, Profile.profile_id, Profile.display_name
          FROM Follow
          JOIN RegisteredUser ON RegisteredUser.reg_user_id = Follow.reg_user_id
          JOIN Account ON Account.user_id = RegisteredUser.user_id
@@ -125,6 +130,10 @@ router.get("/api/following", (req,res) =>{
             }
          })
 })
+
+// router.get("/api/followers-following", (req,res) =>{
+//     let 
+// })
 
 
 module.exports = router

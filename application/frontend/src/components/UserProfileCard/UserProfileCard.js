@@ -60,10 +60,10 @@ function UserProfileCard({followersList, followingList}) {
             }}
           >
             {" "}
-            {followersList.map((item, index) => (
+            {followersList.map((item) => (
               <Link
                 style={{ textDecoration: "none" }}
-                key={item.follower_id}
+                key={item.profile_id}
                 to={"/Profile/" + item.profile_id}
               >
                 <div
@@ -74,7 +74,6 @@ function UserProfileCard({followersList, followingList}) {
                   <FollowerCard
                     title={item.display_name}
                     src={item.profile_pic_link}
-                    thethingyintheplace={index}
                   />
                 </div>
               </Link>
@@ -102,10 +101,10 @@ function UserProfileCard({followersList, followingList}) {
             }}
           >
             {" "}
-            {followingList.map((item, index) => (
+            {followingList.map((item) => (
               <Link
                 style={{ textDecoration: "none" }}
-                key={item.follower_id}
+                key={item.profile_id}
                 to={"/Profile/" + item.profile_id}
               >
                 <div
@@ -116,7 +115,6 @@ function UserProfileCard({followersList, followingList}) {
                   <FollowerCard
                     title={item.display_name}
                     src={item.profile_pic_link}
-                    thethingyintheplace={index}
                   />
                 </div>
               </Link>
