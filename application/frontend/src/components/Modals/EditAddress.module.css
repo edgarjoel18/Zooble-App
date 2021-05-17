@@ -24,3 +24,27 @@
     cursor: pointer;
     width: 50%;
 }
+
+.combobox-popover{
+    background-color: white;
+    padding: 5px;
+    
+    box-shadow: var(--elevation-1);
+    font-family: var(--ff-primary);
+    border-radius: 7.5px;
+    z-index: 999;
+}
+
+.combobox-list{
+    list-style: none;
+}
+
+.combobox-list li{
+    cursor:pointer;
+    padding: 5px 5px 5px 0px;
+    border-bottom: 1px solid rgba(0,0,0,0.10);
+}
+
+.combobox-popover li:hover{
+    color: var(--primary-clr)
+}
