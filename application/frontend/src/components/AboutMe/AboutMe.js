@@ -15,25 +15,6 @@ const shelterProfileTabs = ["About", "Contact Info"]//, "Recent Posts"]
 const businessProfileTabs = ["About", "Business Info"]//, "Recent Posts"]
 const petOwnerProfileTabs = ["About"]//, "Recent Posts"]
 
-
-const dummyHours = 
-    {
-        sun_open: '12: 00AM',
-        sun_close: '12: 00AM',
-        mon_open: '12: 00AM',
-        mon_close: '12: 00AM',
-        tue_open: '12: 00AM',
-        tue_close: '12: 00AM',
-        wed_open: '12: 00AM',
-        wed_close: '12: 00AM',
-        thu_open: '12: 00AM',
-        thu_close: '12: 00AM',
-        fri_open: '12: 00AM',
-        fri_close: '12: 00AM',
-        sat_open: '12: 00AM',
-        sat_close: '12: 00AM'
-       }
-
 function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phoneNumber, hours, profileID}) {
     console.log("profile: ", profile)
 
@@ -50,9 +31,9 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
     const [editAddressDisplay, setEditAddressDisplay] = useState(false);
 
     const [aboutMeContent, setAboutMeContent] = useState(aboutMeBody);
-    const [phone, setPhone] = useState(phoneNumber);
-    const [location, setLocation] = useState(address);
-    const [hoursState, setHoursState] = useState(hours);
+    const [phone, setPhone] = useState();
+    const [location, setLocation] = useState();
+    const [hoursState, setHoursState] = useState({});
 
     console.log('location is ' + address);
     console.log('phone is ' + phone);
@@ -63,14 +44,8 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
         axios.get('/api/hours',{params: {profileID: profileID}})
         .then(response =>{
             console.log('/api/hours: ',response.data);
-            let hoursObject = response.data
-            Object.values(hoursObject).map((value)=> {
-                if(value == null)
-                {
-                    value = "Closed"
-                }
-            })
             setHoursState(response.data);
+            console.log('hoursState: ', hoursState)
         })
         .catch(err =>{
             console.log(err);
@@ -278,7 +253,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
                         // value={`(${phone.substring(0,3)}) ${phone.substring(3,6)}-${phone.substring(6,10)}`} 
                         value={phone}
                         readOnly={!changing || !(labelSelected === 'phone number')}
-                        maxLength = "20"
+                        maxLength = "10"
                         onKeyPress={event => {
                             if(event.key === 'Enter'){
                                 cancelEditingHandler();
@@ -312,7 +287,9 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
                             }
                             <label>Hours: </label>
                         </div>
-                        {Object.keys(dummyHours).map((key, index) => {
+                        {Object.keys(hoursState).map((key, index) => {
+                            console.log('mapping hoursState')
+                            console.log('hoursState[key]: ',hoursState[key])
 
                             if (index % 2 === 1)
                                 return null;
@@ -322,7 +299,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
                       
                             return <div className={styles.Days} key={key}>
                                 <label>{day[0].toUpperCase() + day.substring(1)}: </label>                              
-                                {dummyHours[key] ? <span >{dummyHours[key] + " - " + dummyHours[day +'_close']}</span> : <span>Closed</span>}
+                                {hoursState[key].value !== "00:00:00" ? <span >{hoursState[key].label + " - " + hoursState[day +'_close'].label}</span> : <span>Closed</span>}
                             </div>
                         })}
                     </div>
@@ -353,11 +330,11 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
                 </div>
             </div>
         </div>
-        <EditBusinessHours display={editHoursDisplay} onClose={()=> {
+        <EditBusinessHours display={editHoursDisplay} hours={hoursState} setHours={setHoursState} onClose={()=> {
             cancelEditingHandler(); 
             setEditHoursDisplay(false);
             }}/>
-        <EditAddress display={editAddressDisplay} onClose={() => setEditAddressDisplay(false)}/>
+        <EditAddress display={editAddressDisplay} setAddressState={setLocation} onClose={() => setEditAddressDisplay(false)}/>
         </>
     );
 }

@@ -20,8 +20,96 @@ router.get('/api/hours', (req,res)=>{
                 res.status(500).json(err);
             }
             else{
-                console.log("hours: ",hours)
-                res.status(200).json(hours[0]);
+                console.log("hours[0]: ",hours[0])
+                let hourOptions = []
+                let hourObject = {}
+                hours = hours[0]
+                Object.keys(hours).forEach( (key) =>{
+                    console.log('hours[key]: ', hours[key])
+                    console.log('key: ',key);
+                    switch(hours[key]){
+                        case '00:00:00':
+                            hourObject[key] = {value: hours[key], label:'Closed'}
+                            break
+                        case '01:00:00':
+                            hourObject[key] = {value: hours[key], label:'1:00 AM'}
+                            break
+                        case '02:00:00':
+                            hourObject[key] = {value: hours[key], label:'2:00 AM'}
+                            break
+                        case '03:00:00':
+                            hourObject[key] = {value: hours[key], label:'3:00 AM'}
+                            break
+                        case '04:00:00':
+                            hourObject[key] = {value: hours[key], label:'4:00 AM'}
+                            break
+                        case '05:00:00':
+                            hourObject[key] = {value: hours[key], label:'5:00 AM'}
+                            break
+                        case '06:00:00':
+                            hourObject[key] = {value: hours[key], label:'6:00 AM'}
+                            break
+                        case '07:00:00':
+                            hourObject[key] = {value: hours[key], label:'7:00 AM'}
+                            break
+                        case '08:00:00':
+                            hourObject[key] = {value: hours[key], label:'8:00 AM'}
+                            break
+                        case '09:00:00':
+                            hourObject[key] = {value: hours[key], label:'9:00 AM'}
+                            break
+                        case '10:00:00':
+                            hourObject[key] = {value: hours[key], label:'10:00 AM'}
+                            break
+                        case '11:00:00':
+                            hourObject[key] = {value: hours[key], label:'11:00 AM'}
+                            break
+                        case '12:00:00':
+                            hourObject[key] = {value: hours[key], label:'12:00 PM'}
+                            break
+                        case '13:00:00':
+                            hourObject[key] = {value: hours[key], label:'1:00 PM'}
+                            break
+                        case '14:00:00':
+                            hourObject[key] = {value: hours[key], label:'2:00 PM'}
+                            break
+                        case '15:00:00':
+                            hourObject[key] = {value: hours[key], label:'3:00 PM'}
+                            break
+                        case '16:00:00':
+                            hourObject[key] = {value: hours[key], label:'4:00 PM'}
+                            break
+                        case '17:00:00':
+                            hourObject[key] = {value: hours[key], label:'5:00 PM'}
+                            break
+                        case '18:00:00':
+                            hourObject[key] = {value: hours[key], label:'6:00 PM'}
+                            break
+                        case '19:00:00':
+                            hourObject[key] = {value: hours[key], label:'7:00 PM'}
+                            break
+                        case '20:00:00':
+                            hourObject[key] = {value: hours[key], label:'8:00 PM'}
+                            break
+                        case '21:00:00':
+                            hourObject[key] = {value: hours[key], label:'9:00 PM'}
+                            break
+                        case '22:00:00':
+                            hourObject[key] = {value: hours[key], label:'10:00 PM'}
+                            break
+                        case '23:00:00':
+                            hourObject[key] = {value: hours[key], label:'11:00 PM'}
+                            break
+                        case '24:00:00':
+                            hourObject[key] = {value: hours[key], label:'12:00 AM'}
+                            break
+                        default:
+                            hourObject[key] = {value: '00:00:00', label:'Closed'}
+                            break
+                    }
+                })
+                console.log('hourObject: ', hourObject)
+                res.status(200).json(hourObject);
             }
         })
 })

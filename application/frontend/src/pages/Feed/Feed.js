@@ -281,6 +281,7 @@ function Feed() {
                             isSearchable
                             isMulti
                             value={taggedPets}
+                            noOptionsMessage={() => 'Add a Pet to Your Account on the My Pets Page'}
                         />
                     </div>
                     <section className={styles["follower-feed-new-post-attach-image"]}>

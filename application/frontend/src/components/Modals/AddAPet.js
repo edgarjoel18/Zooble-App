@@ -9,7 +9,7 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import axios from 'axios';
 
-function AddAPet({display,onClose}) {
+function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,colorOptions,sizeOptions,ageOptions}) {
 
     //States to be set and sent to db
     const [petName,setPetName] = useState('');
@@ -19,22 +19,6 @@ function AddAPet({display,onClose}) {
     const [petType, setPetType] = useState();
     const [dogBreed, setDogBreed] = useState([]);
     const [catBreed, setCatBreed] = useState([]);
-
-
-    //States for dropdown menu options
-    const [typeOptions, setTypeOptions] = useState([]);
-
-    const [dogBreedOptions, setDogBreedOptions] = useState([]);
-
-    const [catBreedOptions, setCatBreedOptions] = useState([]);
-
-    const [colorOptions, setColorOptions] = useState([]);
-
-    const [sizeOptions, setSizeOptions] = useState([]);
-
-    const [ageOptions, setAgeOptions] = useState([]);
-
-
 
     function customTheme(theme){
         return {
@@ -46,56 +30,6 @@ function AddAPet({display,onClose}) {
             }
         }
     }
-
-    useEffect(() => {
-        axios.get('/api/pet-types')
-        .then(response =>{
-            setTypeOptions(response.data);
-        })
-        .catch(err =>{
-
-        })
-
-        axios.get('/api/dog-breeds')
-        .then(response =>{
-            setDogBreedOptions(response.data);
-        })
-        .catch(err =>{
-
-        })
-
-        axios.get('/api/cat-breeds')
-        .then(response =>{
-            setCatBreedOptions(response.data);
-        })
-        .catch(err =>{
-            
-        })
-
-        axios.get('/api/ages')
-        .then(response =>{
-            setAgeOptions(response.data);
-        })
-        .catch(err =>{
-
-        })
-
-        axios.get('/api/sizes')
-        .then(response =>{
-            setSizeOptions(response.data);
-        })
-        .catch(err =>{
-            
-        })
-
-        axios.get('/api/colors')
-        .then(response =>{
-            setColorOptions(response.data);
-        })
-        .catch(err =>{
-            
-        })
-    }, [])
 
     function createPetProfile(event){
         event.preventDefault();
