@@ -12,7 +12,6 @@ function ImageContainer({previews, profile, title, selfView}) {
 
     const [postModalDisplay, setPostModalDisplay] = useState(false);
     const [imageStack, setImageStack] = useState();
-    const [text, setText] = useState('');
 
     const [selectedPost,setSelectedPost] = useState({});
 
@@ -40,7 +39,7 @@ function ImageContainer({previews, profile, title, selfView}) {
         console.log("val: ",val)
         if (val === 0)
             return (
-                <Link onMouseEnter={() => setText('Photo upload coming soon')} onMouseLeave={() => setText('')}>
+                <Link>
                     <div className={styles.EmptyDiv} >
                     </div>
                 </Link>
@@ -144,7 +143,6 @@ function ImageContainer({previews, profile, title, selfView}) {
         <div className={styles.ImageContainer} >
             {/* {typeof previews[0] !== 'undefined' && <img src={previews[0].link}/>} */}
             <h2>{title}</h2>
-            {text}
             {imageStack}
             {seeAll}
         </div>
