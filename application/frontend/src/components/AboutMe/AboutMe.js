@@ -34,7 +34,7 @@ const dummyHours =
         sat_close: '12: 00AM'
        }
 
-function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phoneNumber, profileID}) {
+function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phoneNumber, hours, profileID}) {
     console.log("profile: ", profile)
 
     //not sure if these need to have state yet
@@ -52,7 +52,7 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
     const [aboutMeContent, setAboutMeContent] = useState(aboutMeBody);
     const [phone, setPhone] = useState(phoneNumber);
     const [location, setLocation] = useState(address);
-    const [hours, setHours] = useState();
+    const [hoursState, setHoursState] = useState(hours);
 
     console.log('location is ' + address);
     console.log('phone is ' + phone);
@@ -60,14 +60,17 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
     let hoursLabels = [];
 
     useEffect(() =>{
-        axios.get('/api/business-hours',{params: {profileID: profileID}})
+        axios.get('/api/hours',{params: {profileID: profileID}})
         .then(response =>{
-            console.log('/api/business-hours: ',response);
-            let hoursArray = [];
-            // Object.keys(response.data).map(key => {
-            //     hoursArray.push
-            // })
-            setHours(response.data);
+            console.log('/api/hours: ',response.data);
+            let hoursObject = response.data
+            Object.values(hoursObject).map((value)=> {
+                if(value == null)
+                {
+                    value = "Closed"
+                }
+            })
+            setHoursState(response.data);
         })
         .catch(err =>{
             console.log(err);

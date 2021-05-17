@@ -3,14 +3,15 @@ const router = express.Router();
 
 const connection = require('../db');
 
-router.get('/api/business-hours', (req,res)=>{
+router.get('/api/hours', (req,res)=>{
+    const {profileID} = req.query
     connection.query(
         `SELECT sun_open, sun_close,mon_open, mon_close,tue_open, tue_close,wed_open, wed_close,thu_open, thu_close,fri_open, fri_close, sat_open, sat_close
          FROM HoursOfOperation
          JOIN Business ON HoursOfOperation.business_id = Business.business_id
          JOIN RegisteredUser ON Business.reg_user_id =  RegisteredUser.reg_user_id
          JOIN Account ON RegisteredUser.user_id = Account.user_id
-         JOIN Profile ON Profile.profile_id = '${req.query.profileID}'
+         JOIN Profile ON Profile.profile_id = '${profileID}'
          WHERE Account.account_id = Profile.account_id
         `, 
         function(err,hours){
