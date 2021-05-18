@@ -130,7 +130,7 @@ function SignUpPage() {
                             name='fname'
                             onChange={e => setFirstName(e.target.value)}
                             required
-                            pattern="[a-zA-Z]"
+                        //    pattern="[a-zA-Z]"
                             maxlength="40"
                         />
                     </div>
@@ -143,7 +143,7 @@ function SignUpPage() {
                             name='lname'
                             onChange={e => setLastName(e.target.value)}
                             required
-                            pattern="[a-zA-Z]"
+                        //    pattern="[a-zA-Z]"
                             maxlength="40"
                         />
                     </div>
