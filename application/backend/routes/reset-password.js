@@ -35,11 +35,12 @@ router.post("/api/resetpassword", (req, res) => {
     });
 
     const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true, // use SSL
         auth: {
-            user: 'gideon.mcclure@ethereal.email',
-            pass: 'THX48h5WWyfJNycS7w'
+            user: 'zoobleinc@gmail.com',
+            pass: 'Testtest9!'
         }
     });
 
