@@ -315,6 +315,8 @@ function Feed() {
                         <div className={styles["follower-feed-post-timestamp"]}>{new Date(feedPost.timestamp).toLocaleString()}</div>
                         <div className={styles["follower-feed-post-likes"]}>{feedPost.like_count}</div>
                         <button className={styles['follower-feed-post-like']} onClick={(event) => likePost(event,feedPost.post_id)}/>
+                        <div className={styles["follower-feed-post-flags"]}>{feedPost.like_count}</div>
+                        <button className={styles['follower-feed-post-flag']} onClick={(event) => likePost(event,feedPost.post_id)}/>
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
                         <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
                         {feedPost.link && <img className={styles["follower-feed-post-pic"]} src={feedPost.link} />}
