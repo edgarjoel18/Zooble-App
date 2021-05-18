@@ -29,34 +29,32 @@ router.post("/api/reset/:token", (req,res) =>{
                
     }
 
-    connection.query(`UPDATE Credentials SET password = '${givenPassword}' WHERE email= '${givenEmail}'`, 
+    if(givenEmail.length > 0){
+        connection.query(`SELECT user_id FROM User WHERE email= '${givenEmail}'`, 
                         (error, post, fields) => {
-                                if(givenEmail.length > 0){
                                             if(passwordValidate(givenPassword)){  //if password is valid
                                                 if(givenPassword === givenResubmitted){  //if password and confirmed password match
                                                     const hash = bcrypt.hashSync(givenPassword, 10);
+                                                    console.log(hash)
 
-                                                    connection.query(`DELETE FROM forgot WHERE expires < NOW()`, 
+                                                    connection.query(`DELETE FROM token WHERE expires < NOW()`, 
+                                                        function(err,insertedCredentials){
+                                                            if(err){
+                                                                console.log(err)
+                                                            }
+                                                        console.log('Not deleted properly');
+                                                        } 
+                                                    )
+
+                                                    connection.query(`UPDATE Credentials SET password = '${hash}' WHERE email= '${givenEmail}'`,
                                                         function(err,insertedCredentials){
                                                             if(err){
                                                                 res.status(500).json(err);
                                                             }
                                                         console.log('URL expired');
-                                                        res.status(200).json("URL expired");
-                                                    })
-                                                                    
-
-                                                    connection.query(`INSERT INTO Credentials (password) VALUES ('${hash}')`, 
-                                                        function(err,insertedCredentials){
-                                                            if(err){
-                                                                res.status(500).json(err);
-                                                            }
-                                                        console.log('Credentials Created');
-                                                        console.log(insertedCredentials.insertId);
-                                                        res.status(200).json(insertedUser);
-                                                    })
-                                                                    
-                                                    
+                                                        } 
+                                                    )
+                                                                        
                                                 }else{
                                                     console.log("Passwords do not match.");
                                                     res.status(400).json("passwords not matching");
@@ -65,8 +63,9 @@ router.post("/api/reset/:token", (req,res) =>{
                                                 console.log("Password must have SUCH AND SUCH values")
                                                 res.status(400).json("password requirements");
                                             }
-                                        }
                                     })
+                                }
                             })
+                            
 
 module.exports = router
