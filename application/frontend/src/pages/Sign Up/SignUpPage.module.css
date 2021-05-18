@@ -116,20 +116,6 @@
     margin: 30px;
 }
 
-
-
-@media all and (max-width: 1024px){
-    .sign-up-container {
-        width: 50%;
-    }
-}
-
-@media all and (max-width: 414px){
-    .sign-up-container{
-        width: 90%;
-    }
-}
-
 .submit-btn-2{
     width: 200px;
     padding:10px 0;
@@ -171,4 +157,17 @@
     color: var(--reversed-txt-clr);
     font-family: var(--ff-primary);
     font-size: var(--h4);
+}
+
+@media only screen and (min-width: 414px) and (max-width: 1024px) {
+    .signup-fields-container {
+        grid-template-columns: 1fr; /* One column */
+    }    
+}
+
+@media only screen and (max-width: 414px){
+    .signup-fields-container {
+        grid-template-columns: 1fr; /* One column */
+        gap: 5px;
+    }    
 }

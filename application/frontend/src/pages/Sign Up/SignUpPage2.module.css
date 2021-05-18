@@ -122,14 +122,15 @@
 }
 
 
-@media all and (max-width: 1024px){
-    .sign-up-container {
-        width: 50%;
-    }
+@media only screen and (min-width: 414px) and (max-width: 1024px) {
+    .signup-fields-container {
+        grid-template-columns: 1fr; /* One column */
+    }    
 }
 
-@media all and (max-width: 414px){
-    .sign-up-container{
-        width: 90%;
-    }
+@media only screen and (max-width: 414px){
+    .signup-fields-container {
+        grid-template-columns: 1fr; /* One column */
+        gap: 5px;
+    }    
 }
