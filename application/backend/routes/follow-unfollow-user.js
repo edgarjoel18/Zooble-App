@@ -22,12 +22,12 @@ router.post("/api/follow-unfollow-user", (req, res) => { // follow user
                         console.log(1062);
                         connection.query(
                             `DELETE FROM Follow 
-                            WHERE (Follow.reg_user_id = '${req.session.regUserId}'
+                            WHERE Follow.reg_user_id = '${accountId}' 
                             AND Follow.follower_id = (SELECT RegisteredUser.reg_user_id 
                                 FROM RegisteredUser
                                 JOIN Account ON Account.user_id = RegisteredUser.user_id
-                                WHERE Account.account_id = '${accountId}'
-                                ))`,
+                                WHERE Account.account_id = '${req.session.reg_user_id}'
+                                )`,
                             function(err, result){
                                 if(err){
                                     console.log(err);

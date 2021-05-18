@@ -21,7 +21,7 @@ import usePlacesAutocomplete,{
 } from "use-places-autocomplete";
 //For Address Editing
 
-function EditAddress({display, onClose}) {
+function EditAddress({display, onClose, setAddressState}) {
 
     const [address, setAddress] = useState('');
     const [latitude, setLatitude] = useState();
@@ -35,6 +35,7 @@ function EditAddress({display, onClose}) {
         })
         .then(response =>{
             console.log(response);
+            setAddressState(address)
             onClose()
         })
         .catch(err =>{

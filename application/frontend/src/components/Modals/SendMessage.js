@@ -3,11 +3,7 @@ import Modal from './Modal'
 import axios from 'axios'
 import Select from 'react-select';
 import {components} from 'react-select'
-import makeAnimated from 'react-select/animated';
 
-import AddIcon from '../../images/Created Icons/Add.svg'
-
-import Daniel from '../../images/Daniel.jpg'
 
 import styles from './SendMessage.module.css';
 

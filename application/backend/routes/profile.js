@@ -118,4 +118,38 @@ router.get("/api/profile-display-name", (req,res) =>{
     )
 })
 
+router.get("/api/is-following", (req,res) =>{
+    const {profileID} = req.query
+    console.log('GET /api/is-following')
+    connection.query(`
+        SELECT *
+        FROM Follow
+        WHERE reg_user_id=
+        (SELECT RegisteredUser.reg_user_id
+         FROM RegisteredUser
+         JOIN Account ON Account.user_id = RegisteredUser.user_id
+         JOIN Profile ON Profile.account_id = Account.account_id
+         WHERE Profile.profile_id = ?)
+        AND follower_id=
+        (SELECT RegisteredUser.reg_user_id
+         FROM RegisteredUser
+         JOIN Account ON Account.user_id = RegisteredUser.user_id
+         JOIN Profile ON Profile.account_id = Account.account_id
+         WHERE Profile.profile_id = ?)`,[profileID, req.session.profile_id],
+        function(err,results){
+            if(err){
+                console.log(err)
+                res.status(500).json(err)
+            }
+            else{
+                console.log(results);
+                if(results.length !== 0)
+                    res.status(200).json(true)
+                else
+                    res.status(200).json(false)               
+            }
+        }
+    )
+})
+
 module.exports = router

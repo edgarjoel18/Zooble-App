@@ -1,9 +1,10 @@
-import {React, useState, useEffect} from 'react'
+import {React, useState, useEffect, useContext} from 'react'
 
 import styles from './PostModal.module.css'
 
 import Modal from './Modal.js'
 import axios from 'axios';
+import Spinner from '../UI/Spinner/Spinner';
 
 
 function PostModal({display,onClose,selectedPost}) {
@@ -11,6 +12,8 @@ function PostModal({display,onClose,selectedPost}) {
     // console.log(selectedPost);
 
     const [createdCommentBody, setCreatedCommentBody] = useState();
+
+    const [loading, setLoading] = useState(false);
 
     const [comments, setComments] = useState([ //Real version will fetch comments associated with post id of post passed in
         // {
@@ -39,6 +42,7 @@ function PostModal({display,onClose,selectedPost}) {
         // },
     ]);
 
+
     useEffect(() =>{
         getComments();
     },[display]) //this will refresh if they close the modal and come back!
@@ -62,16 +66,44 @@ function PostModal({display,onClose,selectedPost}) {
     }
 
     function getComments(){
+        setLoading(true);
         axios.get('/api/comments',{params: { post_id: selectedPost.post_id}})
         .then(response =>{
             console.log("Response: ",response);
             console.log("Response.data: ", response.data);
             setComments(response.data);
+            setLoading(false);
         })
         .catch(err =>{
+            setLoading(false);
             console.log(err);
         })
     }
+
+    let displayComment = <Spinner />
+
+    if (!loading) {
+        if (comments.length == 0 )
+            displayComment = <li>No Comments</li>
+        else {
+        displayComment = (
+            comments && comments.map((comment)=>(
+                <li key={comment.comment_id}>
+                    <div className={styles['post-comment']}>
+                        <img className={styles['post-comment-pic']} src={comment.profile_pic_link}/>
+                        <div className={styles['post-comment-name']}><h4>{comment.display_name}</h4></div>
+                        <div className={styles['post-comment-timestamp']}>{new Date(comment.timestamp).toLocaleString()}</div>
+                        <div className={styles['post-comment-body']}>{comment.body}</div>
+                        {/* <div className={styles['post-comment-likes']}>
+                            {comment.like_count}  
+                        </div>
+                        <button className={styles['post-comment-like']}/> */}
+                    </div>
+                </li>
+            ))
+        )}
+     }
+    
 
     
     return (
@@ -94,21 +126,7 @@ function PostModal({display,onClose,selectedPost}) {
                         <div className={styles["post-detail-body"]}>{selectedPost.body}</div>
                     </div>
                     <ul className={styles["post-comments"]}>
-                        {comments.length == 0 && <li>No Comments</li>}
-                        {comments && comments.map((comment)=>(
-                            <li key={comment.comment_id}>
-                                <div className={styles['post-comment']}>
-                                    <img className={styles['post-comment-pic']} src={comment.profile_pic_link}/>
-                                    <div className={styles['post-comment-name']}><h4>{comment.display_name}</h4></div>
-                                    <div className={styles['post-comment-timestamp']}>{new Date(comment.timestamp).toLocaleString()}</div>
-                                    <div className={styles['post-comment-body']}>{comment.body}</div>
-                                    {/* <div className={styles['post-comment-likes']}>
-                                        {comment.like_count}  
-                                    </div>
-                                    <button className={styles['post-comment-like']}/> */}
-                                </div>
-                            </li>
-                        ))}
+                        {displayComment}
                     </ul>
                     <form className={styles["post-leave-comment"]} onSubmit={submitComment}>
                         <input value={createdCommentBody} maxLength="255" required placeholder="Write a Comment..." onChange={e => setCreatedCommentBody(e.target.value)}/>

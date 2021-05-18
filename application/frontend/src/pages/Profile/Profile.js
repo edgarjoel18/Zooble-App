@@ -22,6 +22,8 @@ function Profile({appUser}) {
     const [fetchedAddress, setFetchedAddress] = useState([]);
     const [fetchedPhoneNumber, setFetchedPhoneNumber] = useState('');
 
+    const [followingStatus, setFollowingStatus] = useState('');
+
     const redirectContext = useContext(RedirectPathContext);
 
     const {profileID} = useParams();
@@ -29,82 +31,29 @@ function Profile({appUser}) {
 
     useEffect(() =>{
         redirectContext.updateLoading(true);
-        axios.get('/api/profile',{params: {profileID: profileID}})
-        .then(response =>{
-            console.log('/api/profile response.data: ',response.data);
-            console.log('Fetched Profile: ', response.data.profile);
-            setFetchedProfile(response.data.profile);
-            setSelfView(response.data.selfView);
+
+        const getProfile = axios.get('/api/profile',{params: {profileID: profileID}})
+        const getPhotoPosts = axios.get('/api/photo-posts',{params: {profileID: profileID}})
+        const getCurrentUserPets = axios.get('/api/get-current-user-pets',{params: {profileID: profileID}})
+        const getTaggedPosts = axios.get('/api/tagged-posts',{params: {profileID: profileID}})
+        const getIsFollowing = axios.get('/api/is-following',{params: {profileID: profileID}})
+
+        Promise.all([getProfile,getPhotoPosts, getCurrentUserPets,getTaggedPosts, getIsFollowing])
+        .then((responses) =>{
+            console.log("responses: ", responses)
+            setFetchedProfile(responses[0].data.profile)
+            setSelfView(responses[0].data.selfView)
+            setFetchedPhotoPosts(responses[1].data)
+            setFetchedPets(responses[2].data)
+            setTaggedPosts(responses[3].data)
+            setFollowingStatus(responses[4].data)
+            redirectContext.updateLoading(false);
         })
-        .catch(err =>{
+        .catch((err) =>{
             redirectContext.updateLoading(false);
             console.log(err)
+            //display error message to user
         })
-
-        axios.get('/api/photo-posts',{params: {profileID: profileID}})
-        .then(response =>{
-            console.log(response)
-            console.log(response.data);
-            setFetchedPhotoPosts(response.data);
-        })
-        .catch(err =>{
-            redirectContext.updateLoading(false);
-            console.log(err)
-        })
-
-        axios.get('/api/get-current-user-pets',{params: {profileID: profileID}})
-        .then(response =>{
-            console.log(response)
-            console.log(response.data);
-            setFetchedPets(response.data);
-        })
-        .catch(err =>{
-            redirectContext.updateLoading(false);
-            console.log(err)
-        })
-
-        axios.get('/api/tagged-posts',{params: {profileID: profileID}})
-        .then(response =>{
-            console.log(response)
-            console.log("taggedPosts: ",response.data);
-            setTaggedPosts(response.data);
-            redirectContext.updateLoading(false);
-        })
-        .catch(err =>{
-            redirectContext.updateLoading(false);
-            console.log(err)
-        })
-
-        // axios.get('/api/business-hours',{params: {profileID: profileID}})
-        // .then(response =>{
-        //     console.log('/api/business-hours: ',response);
-        //     let hoursArray = [];
-        //     // Object.keys(response.data).map(key => {
-        //     //     hoursArray.push
-        //     // })
-        //     setFetchedHours(response.data);
-        // })
-        // .catch(err =>{
-        //     console.log(err);
-        // })
-
-        // axios.get('/api/business-address',{params: {profileID: profileID}})
-        // .then(response =>{
-        //     console.log('/api/business-address: ',response.data.address);
-        //     setFetchedAddress(response.data.address);
-        // })
-        // .catch(err =>{
-        //     console.log(err);
-        // })
-
-        // axios.get('/api/business-phone-number',{params: {profileID: profileID}})
-        // .then(response =>{
-        //     console.log('/api/business-phone-number: ', response.data);
-        //     setFetchedPhoneNumber(response.data.phone_num);
-        // })
-        // .catch(err =>{
-        //     console.log(err);
-        // })
     },[profileID])
 
 
@@ -160,7 +109,8 @@ function Profile({appUser}) {
                     appUser={appUser} 
                     isSelfView={selfView} 
                     profile={fetchedProfile}
-                    updateProfile={updateProfileHandler} 
+                    updateProfile={updateProfileHandler}
+                    followingStatus={followingStatus}
                 />
                 <div className={styles.Bottom}>
                     <AboutMe
