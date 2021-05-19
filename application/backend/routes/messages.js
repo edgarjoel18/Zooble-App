@@ -49,8 +49,8 @@ router.get("/api/sent-messages", (req,res) =>{
     connection.query(
         `SELECT * 
          FROM Message
-         JOIN RegisteredUser ON Message.sender_id = RegisteredUser.reg_user_id
-         JOIN Account ON RegisteredUser.user_id = Account.user_id
+         JOIN RegisteredUser ON Message.recipient_id = RegisteredUser.reg_user_id
+         JOIN Account  ON RegisteredUser.user_id = Account.user_id
          LEFT JOIN Profile ON Account.account_id = Profile.account_id
          WHERE sender_id= '${req.session.reg_user_id}'
          AND Profile.pet_id IS NULL
