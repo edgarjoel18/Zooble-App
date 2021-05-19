@@ -136,7 +136,7 @@ function EditBusinessHours({display,onClose, hours, setHours}){
                             onChange={event => setSundayStart([event])}
                             options={hourOptions}
                             theme={customTheme}
-                            placeholder="Type in Opening Hours"
+                            placeholder="Opening Hours"
                             isSearchable
                             value={sundayStart}
                             required
@@ -148,7 +148,7 @@ function EditBusinessHours({display,onClose, hours, setHours}){
                             onChange={setSundayEnd}
                             options={hourOptions}
                             theme={customTheme}
-                            placeholder="Type in Closing Hours"
+                            placeholder="Closing Hours"
                             isSearchable
                             value={sundayEnd}
                             required
@@ -160,7 +160,7 @@ function EditBusinessHours({display,onClose, hours, setHours}){
                             onChange={setMondayStart}
                             options={hourOptions}
                             theme={customTheme}
-                            placeholder="Type in Opening Hours"
+                            placeholder="Opening Hours"
                             isSearchable
                             value={mondayStart}
                             required
@@ -172,7 +172,7 @@ function EditBusinessHours({display,onClose, hours, setHours}){
                             onChange={setMondayEnd}
                             options={hourOptions}
                             theme={customTheme}
-                            placeholder="Type in Closing Hours"
+                            placeholder="Closing Hours"
                             isSearchable
                             value={mondayEnd}
                             required
@@ -184,7 +184,7 @@ function EditBusinessHours({display,onClose, hours, setHours}){
                             onChange={setTuesdayStart}
                             options={hourOptions}
                             theme={customTheme}
-                            placeholder="Type in Closing Hours"
+                            placeholder="Opening Hours"
                             isSearchable
                             value={tuesdayStart}
                             required
@@ -196,7 +196,7 @@ function EditBusinessHours({display,onClose, hours, setHours}){
                             onChange={setTuesdayEnd}
                             options={hourOptions}
                             theme={customTheme}
-                            placeholder="Type in Closing Hours"
+                            placeholder="Closing Hours"
                             isSearchable
                             value={tuesdayEnd}
                             required
@@ -208,7 +208,7 @@ function EditBusinessHours({display,onClose, hours, setHours}){
                             onChange={setWednesdayStart}
                             options={hourOptions}
                             theme={customTheme}
-                            placeholder="Type in Opening Hours"
+                            placeholder="Opening Hours"
                             isSearchable
                             value={wednesdayStart}
                             required
@@ -220,7 +220,7 @@ function EditBusinessHours({display,onClose, hours, setHours}){
                             onChange={setWednesdayEnd}
                             options={hourOptions}
                             theme={customTheme}
-                            placeholder="Type in Closing Hours"
+                            placeholder="Closing Hours"
                             isSearchable
                             value={wednesdayEnd}
                             required
@@ -232,7 +232,7 @@ function EditBusinessHours({display,onClose, hours, setHours}){
                             onChange={setThursdayStart}
                             options={hourOptions}
                             theme={customTheme}
-                            placeholder="Type in Opening Hours"
+                            placeholder="Opening Hours"
                             isSearchable
                             value={thursdayStart}
                             required
@@ -244,7 +244,7 @@ function EditBusinessHours({display,onClose, hours, setHours}){
                             onChange={setThursdayEnd}
                             options={hourOptions}
                             theme={customTheme}
-                            placeholder="Type in Closing Hours"
+                            placeholder="Closing Hours"
                             isSearchable
                             value={thursdayEnd}
                             required
@@ -256,7 +256,7 @@ function EditBusinessHours({display,onClose, hours, setHours}){
                             onChange={setFridayStart}
                             options={hourOptions}
                             theme={customTheme}
-                            placeholder="Type in Opening Hours"
+                            placeholder="Opening Hours"
                             isSearchable
                             value={fridayStart}
                             required
@@ -268,7 +268,7 @@ function EditBusinessHours({display,onClose, hours, setHours}){
                             onChange={setFridayEnd}
                             options={hourOptions}
                             theme={customTheme}
-                            placeholder="Type in Closing Hours"
+                            placeholder="Closing Hours"
                             isSearchable
                             value={fridayEnd}
                             required
@@ -280,7 +280,7 @@ function EditBusinessHours({display,onClose, hours, setHours}){
                             onChange={setSaturdayStart}
                             options={hourOptions}
                             theme={customTheme}
-                            placeholder="Type in Opening Hours"
+                            placeholder="Opening Hours"
                             isSearchable
                             maxMenuHeight= {45}
                             value={saturdayStart}
@@ -293,7 +293,7 @@ function EditBusinessHours({display,onClose, hours, setHours}){
                             onChange={setSaturdayEnd}
                             options={hourOptions}
                             theme={customTheme}
-                            placeholder="Type in Closing Hours"
+                            placeholder="Closing Hours"
                             isSearchable
                             maxMenuHeight= {45}
                             value={saturdayEnd}
