@@ -29,7 +29,7 @@ function ImageContainer({previews, profile, title, selfView}) {
 
     useEffect (() => {
         console.log("ImageContainer useEffect");
-        setImageStack(displayImageStack(previews.length, profile.accountType));
+        setImageStack(displayImageStack(previews.length, profile.type));
         console.log(profile)
     }, [previews])
 
@@ -46,7 +46,7 @@ function ImageContainer({previews, profile, title, selfView}) {
             );
         // set limited amount of photos displayed 
         let marginToRight = null;
-        if (accountType === 'shelter') {
+        if (accountType === 'Shelter') {
             marginToRight = 40;
             val = Math.min(val, 3);
         }
@@ -54,7 +54,7 @@ function ImageContainer({previews, profile, title, selfView}) {
             marginToRight = 67.6;
             val = Math.min(val, 6);
         }
-        // accountType === 'shelter' ? marginToRight = 40 : marginToRight = 67.6;
+        //accountType === 'Shelter' ? marginToRight = 40 : marginToRight = 67.6;
         let imageStack = [];
         for (let i = 0; i < val; i++) {
             imageStack.push(i);
@@ -130,10 +130,10 @@ function ImageContainer({previews, profile, title, selfView}) {
         seeAll = <Link style={{cursor: 'pointer', float: 'right'}} to={"/Photos/" + profile.profile_id}>See All</Link>
     }
     else if (title === 'My Pets') {
-        seeAll = <Link style={{cursor: 'pointer', float: 'right'}} to={"/Pets" + profile.profile_id}>See All</Link>
+        seeAll = <Link style={{cursor: 'pointer', float: 'right'}} to={"/Pets/" + profile.profile_id}>See All</Link>
     }
     else {
-        seeAll = <Link style={{cursor: 'pointer', float: 'right'}} to={"/Pets" + profile.profile_id}>See All</Link>
+        seeAll = <Link style={{cursor: 'pointer', float: 'right'}} to={"/Pets/" + profile.profile_id}>See All</Link>
     }
 
     return (

@@ -8,6 +8,7 @@ import styles from './Feed.module.css'
 
 import PostModal from '../../components/Modals/PostModal'
 import Spinner from '../../components/UI/Spinner/Spinner';
+import ButtonLoader from '../../components/UI/Spinner/ButtonLoader';
 
 import { RedirectPathContext } from '../../context/redirect-path';
 
@@ -41,6 +42,12 @@ function Feed() {
 
     //image upload array
     const [myFiles, setMyFiles] = useState([])
+
+    //loading UI
+    const [loading, setLoading] = useState(false);
+
+    //update UI after submitting post
+    const [update, setUpdate] = useState(false);
 
     const redirectContext = useContext(RedirectPathContext);
 
@@ -110,7 +117,7 @@ function Feed() {
             console.log("Error: ");
             console.log(err);
         })
-    }, [])
+    }, [update])
 
     // //runs whenever the user creates a post
     // useEffect(()=>{
@@ -152,7 +159,8 @@ function Feed() {
         multiple: false
     })
 
-    function likePost(event,feedPostID){
+    function likePost(event,feedPostID,index){
+        console.log('The liked post id is ' + index)
         if (!event) var event = window.event;
         event.cancelBubble = true;
         if (event.stopPropagation) event.stopPropagation();
@@ -160,6 +168,11 @@ function Feed() {
             postToLike: feedPostID
         })
         .then((response) => {
+            console.log(response.data)
+            let updatedPosts = [...feedPosts];
+            console.log("Like count is " + updatedPosts[index].like_count)
+            updatedPosts[index].like_count++;
+            setFeedPosts(updatedPosts);
             console.log(response);
         })
         .catch((err)=>{
@@ -170,7 +183,6 @@ function Feed() {
     function getPosts(){
         axios.get('/api/get-feed-posts')
         .then(response =>{
-            console.log(response.data);
             setFeedPosts(response.data);
         })
         .catch(err =>{
@@ -187,6 +199,7 @@ function Feed() {
             }
         }
 
+        setLoading(true)
         if(myFiles.length !== 0){
             //try to upload photo first
             axios.get(apiGatewayURL)  //first get the presigned s3 url
@@ -209,12 +222,16 @@ function Feed() {
                         removeAll();
                         setCreatedPostBody('');
                         setTaggedPets([]);
+                        setLoading(false);
+                        setUpdate(!update);
                     })
                     .catch((err) =>{
+                        setLoading(false);
                         console.log(err);
                     })
                 })
                 .catch((err) =>{
+                    setLoading(false);
                     console.log(err);
                     if(err.response.status == 403){
                         //display error message to user
@@ -223,6 +240,7 @@ function Feed() {
                 })
             })
             .catch((err) =>{
+                setLoading(false);
                 console.log(err);
             })
 
@@ -239,13 +257,16 @@ function Feed() {
                 console.log(response.data);
                 setCreatedPostBody('');
                 setTaggedPets([]);
+                setLoading(false);
             })
             .catch((err) =>{
+                setLoading(false);
                 console.log(err);
             })
 
             //refresh feed after posting
-            getPosts();
+            //getPosts();
+            setUpdate(!update);
         }
 
     }
@@ -291,7 +312,7 @@ function Feed() {
                             {myFiles.length > 0 && <img className={styles["follower-feed-new-post-attach-image-preview"]} src={myFiles[0].preview} onClick={removeAll}/>}
                         </div>
                     </section>
-                    <button className={styles["follower-feed-new-post-submit"]} type='submit'>Submit</button>
+                    <button className={styles["follower-feed-new-post-submit"]} type='submit'>{loading ? <ButtonLoader /> : 'Submit'}</button>
                     {/* <button className={styles["follower-feed-new-post-expand-collapse"]} /> onClick={createPostOverlayToggle} */}
                 </form>
                 {feedPosts.length == 0 &&
@@ -303,7 +324,7 @@ function Feed() {
                         Search for a User and Follow them to see their posts here
                     </div>
                     </>}
-                {feedPosts && feedPosts.map((feedPost) => (
+                {feedPosts && feedPosts.map((feedPost, index) => (
                     <div key={feedPost.post_id} className={styles["follower-feed-post"]} onClick={(event) => openPostModal(event,feedPost)} >
                         <NavLink to={"/Profile/ShelterId=2"}>  {/* Need to replace these with real links */}
                             <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic_link} />
@@ -314,7 +335,7 @@ function Feed() {
  
                         <div className={styles["follower-feed-post-timestamp"]}>{new Date(feedPost.timestamp).toLocaleString()}</div>
                         <div className={styles["follower-feed-post-likes"]}>{feedPost.like_count}</div>
-                        <button className={styles['follower-feed-post-like']} onClick={(event) => likePost(event,feedPost.post_id)}/>
+                        <button className={styles['follower-feed-post-like']} onClick={(event) => likePost(event,feedPost.post_id,index)}/>
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
                         <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
                         {feedPost.link && <img className={styles["follower-feed-post-pic"]} src={feedPost.link} />}

@@ -3,13 +3,18 @@ import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
 
 import {useDropzone} from 'react-dropzone' 
 
+//css
 import arrow from '../../images/Arrow.png';
 import styles from './ProfileInfo.module.css';
 
+//component
 import SendProfileMessage from '../../components/Modals/SendProfileMessage';
 import EditPetDetails from '../Modals/EditPetDetails';
 import EditButton from '../Buttons/EditButton';
 import LoginRequired from '../Modals/LoginRequired';
+import Loader from '../UI/Spinner/ButtonLoader';
+
+//context
 import { RedirectPathContext } from '../../context/redirect-path';
 
 import axios from 'axios';
@@ -57,6 +62,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
     const [displayName, setDisplayName] = useState(profile.display_name);
     const [profilePic, setProfilePic] = useState(profile.profile_pic_link);
     const [profileType, setProfileType] = useState(profile.type);
+    const [loading, setLoading] = useState(false);
 
     // const [myFiles, setMyFiles] = useState([])
 
@@ -69,6 +75,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
             }
         }
 
+        setLoading(true);
         axios.get(apiGatewayURL)  //first get the presigned s3 url
             .then((response) =>{
                 console.log(response)
@@ -84,12 +91,15 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                     }).then((response) =>{
                         console.log(response.data);
                         setProfilePic(presignedFileURL);
+                        setLoading(false);
                     })
                     .catch((err) =>{
+                        setLoading(false);
                         console.log(err);
                     })
                 })
                 .catch((err) =>{
+                    setLoading(false);
                     console.log(err);
                     if(err.response.status == 403){
                         //display error message to user
@@ -98,6 +108,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                 })
             })
             .catch((err) =>{
+                setLoading(false);
                 console.log(err);
             })
     })
@@ -357,7 +368,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                     <section className={styles["follower-feed-new-post-attach-image"]}>
                         <div className={styles["follower-feed-new-post-attach-image-container"]}  {...getRootProps()}>
                             <input  {...getInputProps()} />
-                            <div className={styles["follower-feed-new-post-attach-image-info"]}>Edit</div>
+                            <div className={styles["follower-feed-new-post-attach-image-info"]}>{loading? <Loader /> : 'Edit'}</div>
                         </div>
                     </section>
                     

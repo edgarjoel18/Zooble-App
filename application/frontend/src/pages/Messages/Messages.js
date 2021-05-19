@@ -8,6 +8,7 @@ import RecievedMessage from '../../components/Modals/RecievedMessage'
 import SentMessage from '../../components/Modals/SentMessage'
 import AddIcon from '../../images/Created Icons/AddWhite.svg'
 import SendMessage from '../../components/Modals/SendMessage';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 function Messages() {
     const [recievedMessageModalDisplay,setRecievedMessageModalDisplay] = useState(false);
@@ -21,6 +22,8 @@ function Messages() {
 
     const [possibleMessageRecipients, setPossibleMessageRecipients] = useState([]);
 
+    const [loading, setLoding] = useState(false);
+
     function viewSentMessageModal(message){
         setSelectedMessage(message);
         setSentMessageModalDisplay(true);
@@ -33,6 +36,7 @@ function Messages() {
 
 
     function getMessages() {  //retrieve currently logged in user's messages
+        setLoding(true);
         const getSentMessages = axios.get('/api/sent-messages')
         const getRecievedMessages = axios.get('/api/recieved-messages')
 
@@ -41,8 +45,10 @@ function Messages() {
             console.log("responses: ", responses);
             setRecievedMessages(responses[0].data);
             setSentMessages(responses[1].data)
+            setLoding(false);
         })
         .catch(err =>{
+            setLoding(false);
             console.log(err);
         })
     }
@@ -111,20 +117,11 @@ function Messages() {
         <Tab key={tab} id={index} section={tab} selected={selectedTab} length={index === 0 ? recievedMessages.length : sentMessages.length} clicked={onTabClicked}/>
     ));
 
+    let displayMessage = <Spinner />
 
-    return (
-        <>
-            <div className={styles['messages-container']}>
-            <div className={styles['tabs-container']}>
-                <div className={styles['tabs']}>
-                    <div className={styles['messages-header']}>Messages</div>
-                    <div style={{display: 'flex'}}>
-                        {tabs}
-                    </div>
-                </div>
-            </div>
-            <div className={styles['recieved-messages-container']}>
-                {selectedTab === 0 && recievedMessages.length== 0 && 
+    if (!loading)
+        displayMessage = <>
+        {selectedTab === 0 && recievedMessages.length== 0 && 
                     <div className={styles['messages-container-no-messages']}>You have no new messages :(</div>
                 }
                 {selectedTab === 0 && recievedMessages.map((recievedMessage) =>(
@@ -154,6 +151,22 @@ function Messages() {
                         <img src={AddIcon} className={styles['new-message-icon']}/>
                         {/* <span className={styles['new-message-text']}>New Message</span> */}
                     </button>
+                </>
+
+
+    return (
+        <>
+            <div className={styles['messages-container']}>
+            <div className={styles['tabs-container']}>
+                <div className={styles['tabs']}>
+                    <div className={styles['messages-header']}>Messages</div>
+                    <div style={{display: 'flex'}}>
+                        {tabs}
+                    </div>
+                </div>
+            </div>
+            <div className={styles['recieved-messages-container']}>
+                {displayMessage}
                 </div>
             </div>
         <RecievedMessage display={recievedMessageModalDisplay} updateSentMessages={updateSentMessages} onClose={ () => setRecievedMessageModalDisplay(false)} selectedMessage={selectedMessage}></RecievedMessage>

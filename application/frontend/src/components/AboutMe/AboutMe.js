@@ -287,21 +287,23 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
                             }
                             <label>Hours: </label>
                         </div>
-                        {Object.keys(hoursState).map((key, index) => {
-                            console.log('mapping hoursState')
-                            console.log('hoursState[key]: ',hoursState[key])
+                        <table className={styles['hours-table']} >
+                            {Object.keys(hoursState).map((key, index) => {
+                                console.log('mapping hoursState')
+                                console.log('hoursState[key]: ',hoursState[key])
 
-                            if (index % 2 === 1)
-                                return null;
-                            
-                            let day = key.substr(0, 3);
-                            console.log(day)
-                      
-                            return <div className={styles.Days} key={key}>
-                                <label>{day[0].toUpperCase() + day.substring(1)}: </label>                              
-                                {hoursState[key].value !== "00:00:00" ? <span >{hoursState[key].label + " - " + hoursState[day +'_close'].label}</span> : <span>Closed</span>}
-                            </div>
-                        })}
+                                if (index % 2 === 1)
+                                    return null;
+                                
+                                let day = key.substr(0, 3);
+                                console.log(day)
+                        
+                                return <tr className={styles['hours-table-row']} key={key}>
+                                    <th className={styles['hours-table-header']} >{day[0].toUpperCase() + day.substring(1)}: </th>                              
+                                    <td className={styles['hours-table-cell']}>{hoursState[key].value !== "00:00:00" ? <span >{hoursState[key].label + " - " + hoursState[day +'_close'].label}</span> : <span>Closed</span>}</td>
+                                </tr>
+                            })}
+                        </table>
                     </div>
                     {/* {
                         props.isSelfView && (labelSelected === 'hours') && 
