@@ -14,7 +14,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 import {RedirectPathContext} from '../../context/redirect-path'
 
-function MyPets() {
+function MyPets(){
 
     const [deletionModalDisplay,setDeletionModalDisplay] = useState(false);
     const [additionModalDisplay, setAdditionModalDisplay] = useState(false);

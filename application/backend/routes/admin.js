@@ -29,4 +29,25 @@ router.get("/api/get-admin-feed-posts",(req,res)=>{
 
 })
 
+router.post("/api/delete-post",(req,res)=>{
+    console.log("POST /api/delete-post");
+
+    const {postID} = req.body
+    
+    connection.query(
+        `DELETE
+         FROM Post
+         WHERE Post.post_id = ${postID}
+        `,
+        function(err, result){
+            if(err)
+                console.log(err);
+            else{
+                res.status(200).json(result);
+            }
+        }
+    )
+
+})
+
 module.exports = router

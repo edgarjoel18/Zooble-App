@@ -7,6 +7,10 @@ import PostModal from '../../components/Modals/PostModal'
 
 import ArrowIcon from '../../images/Created Icons/Arrow.svg'
 
+import DeleteIcon from  '../../images/Created Icons/Exit-Cancel.svg'
+
+import FlagIcon from '../../images/Third Party Icons/icons8-empty-flag.png'
+
 function AdminFeed() {
     const [postModalDisplay, setPostModalDisplay] = useState(false);
     const [adminFeedPosts, setAdminFeedPosts] = useState([]);
@@ -67,6 +71,22 @@ function AdminFeed() {
           history.push(location);
     }
 
+    function removePost(event,postID){
+        if (!event) var event = window.event;
+        event.cancelBubble = true;
+        if (event.stopPropagation) event.stopPropagation();
+        
+        axios.post('/api/delete-post',{
+            postID: postID
+        })
+        .then(response =>{
+            console.log(response)
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+    }
+
     return (
         <>
             <div className={styles["follower-feed-container"]}>
@@ -86,9 +106,13 @@ function AdminFeed() {
                         <img className={styles["follower-feed-post-prof_pic"]} src={adminFeedPost.profile_pic_link} onClick={(event) => goToProfile(event,adminFeedPost.profile_id)}/>
                         <div className={styles["follower-feed-post-name"]} onClick={(event) => goToProfile(event,adminFeedPost.profile_id)}>{adminFeedPost.display_name} </div>
                         <div className={styles["follower-feed-post-timestamp"]}>{new Date(adminFeedPost.timestamp).toLocaleString()}</div>
-                        <div className={styles["follower-feed-post-admin-flags"]}>{adminFeedPost.flag_count}</div>
-                        <button className={styles['follower-feed-post-admin-flag']} />
+                        <div className={styles["follower-feed-post-admin-flags"]}>
+                            <span className={styles["follower-feed-post-flag-count"]}>{adminFeedPost.flag_count}</span>
+                            <img className={styles["follower-feed-post-admin-flag-icon"]} src={FlagIcon}/>
+                        </div>
+                        <span className={styles['follower-feed-post-admin-delete']}  onClick={(event) => removePost(event,adminFeedPost.post_id)}>Delete</span>
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
+
                         <div className={styles["follower-feed-post-body"]}>{adminFeedPost.body}</div>
                         <img className={styles["follower-feed-post-pic"]} src={adminFeedPost.link} />
                     </div>

@@ -12,8 +12,8 @@ import ButtonLoader from '../../components/UI/Spinner/ButtonLoader';
 
 import { RedirectPathContext } from '../../context/redirect-path';
 
-
-
+import LikeIcon from '../../images/Third Party Icons/icons8-thumbs-up-48.png'
+import FlagIcon from '../../images/Third Party Icons/icons8-empty-flag.png'
 
 
 // import ClipLoader from "react-spinners/ClipLoader";
@@ -359,10 +359,11 @@ function Feed() {
                         <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic_link} onClick={(event) => goToProfile(event,feedPost.profile_id)}/>
                         <div className={styles["follower-feed-post-name"]} onClick={(event) => goToProfile(event,feedPost.profile_id)}>{feedPost.display_name}</div>
                         <div className={styles["follower-feed-post-timestamp"]}>{new Date(feedPost.timestamp).toLocaleString()}</div>
-                        <div className={styles["follower-feed-post-likes"]}>{feedPost.like_count}</div>
-                        <button className={styles['follower-feed-post-like']} onClick={(event) => likePost(event,feedPost.post_id)}/>
-                        <div className={styles["follower-feed-post-flags"]}>{feedPost.flag_count}</div>
-                        <button className={styles['follower-feed-post-flag']} onClick={(event) => flagPost(event,feedPost.post_id)}/>
+                        <div className={styles["follower-feed-post-admin-flags"]}>
+                            <span className={styles["follower-feed-post-like-count"]}>{feedPost.like_count}</span>
+                            <img className={styles["follower-feed-post-like-icon"]} src={LikeIcon}/>
+                        </div>
+                        <span className={styles['follower-feed-post-flag']} onClick={(event) => flagPost(event,feedPost.post_id)}>Flag</span>
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
                         <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
                         {feedPost.link && <img className={styles["follower-feed-post-pic"]} src={feedPost.link} />}

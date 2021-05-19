@@ -13,7 +13,6 @@ const searchRouter = require('./routes/search.js');
 const dropdownRouter = require('./routes/dropdown-options.js');
 const uploadPostRouter = require('./routes/upload-post.js');
 const editPostRouter = require('./routes/edit-post.js');
-const deletePostRouter = require('./routes/delete-post.js');
 const feedRouter = require('./routes/feed.js');
 const commentsRouter = require('./routes/comments.js');
 const followUserRouter = require('./routes/follow-unfollow-user.js');
@@ -80,9 +79,6 @@ app.use(uploadPostRouter)
 
 //Edit Post
 app.use(editPostRouter)
-
-//Delete Post
-app.use(deletePostRouter)
 
 //Feed
 app.use(feedRouter);
