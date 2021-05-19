@@ -20,6 +20,7 @@ router.get("/api/get-profile-pic", (req,res) =>{
 
 router.get("/api/profile", (req,res) =>{
     let selfViewFlag=false
+    let adminViewFlag=false
     console.log("GET /api/profile")
     connection.query(
         `SELECT Profile.profile_pic_link, Profile.display_name, Profile.about_me, Profile.type, Profile.account_id, Profile.profile_id, Pet.reg_user_id,Profile.pet_id
@@ -48,9 +49,13 @@ router.get("/api/profile", (req,res) =>{
                      selfViewFlag = true
                  }
              }
+             if(req.session.role === 3){ //if the logged in user is an admin
+                adminViewFlag = true
+             }
              let response = {
                  profile : profile[0],
-                 selfView: selfViewFlag
+                 selfView: selfViewFlag,
+                 adminView: adminViewFlag
              }
              res.status(200).json(response);
          }

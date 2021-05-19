@@ -29,6 +29,11 @@ function Profile({appUser}) {
     const {profileID} = useParams();
     console.log("profileID: ",profileID);
 
+    const [userProfile, setUserProfile] = useState();
+    const [selfView, setSelfView] = useState(false);
+    const [adminView,setAdminView] = useState(false);
+    console.log('adminView: ', adminView)
+
     useEffect(() =>{
         redirectContext.updateLoading(true);
 
@@ -43,6 +48,7 @@ function Profile({appUser}) {
             console.log("responses: ", responses)
             setFetchedProfile(responses[0].data.profile)
             setSelfView(responses[0].data.selfView)
+            setAdminView(responses[0].data.adminView)
             setFetchedPhotoPosts(responses[1].data)
             setFetchedPets(responses[2].data)
             setTaggedPosts(responses[3].data)
@@ -59,8 +65,7 @@ function Profile({appUser}) {
     
     // console.log(appUser);
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
-    const [userProfile, setUserProfile] = useState();
-    const [selfView, setSelfView] = useState(false);
+
 
     function updateProfileHandler(type, value) {
         if (type === 'address' || type === 'phone' || type === 'hours') {
