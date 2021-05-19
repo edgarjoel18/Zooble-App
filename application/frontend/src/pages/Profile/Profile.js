@@ -34,7 +34,7 @@ function Profile({appUser}) {
 
         const getProfile = axios.get('/api/profile',{params: {profileID: profileID}})
         const getPhotoPosts = axios.get('/api/photo-posts',{params: {profileID: profileID}})
-        const getCurrentUserPets = axios.get('/api/get-current-user-pets',{params: {profileID: profileID}})
+        const getCurrentUserPets = axios.get('/api/current-user-pets',{params: {profileID: profileID}})
         const getTaggedPosts = axios.get('/api/tagged-posts',{params: {profileID: profileID}})
         const getIsFollowing = axios.get('/api/is-following',{params: {profileID: profileID}})
 
