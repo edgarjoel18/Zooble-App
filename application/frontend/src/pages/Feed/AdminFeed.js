@@ -108,7 +108,7 @@ function AdminFeed() {
                         <div className={styles["follower-feed-post-timestamp"]}>{new Date(adminFeedPost.timestamp).toLocaleString()}</div>
                         <div className={styles["follower-feed-post-admin-flags"]}>
                             <span className={styles["follower-feed-post-flag-count"]}>{adminFeedPost.flag_count}</span>
-                            <img className={styles["follower-feed-post-admin-flag-icon"]} src={FlagIcon} onClick={(event) => removePost(event,feedPost.post_id)}/>
+                            <img className={styles["follower-feed-post-admin-flag-icon"]} src={FlagIcon} onClick={(event) => removePost(event,adminFeedPost.post_id)}/>
                         </div>
                         <span className={styles['follower-feed-post-admin-delete']}  onClick={(event) => removePost(event,adminFeedPost.post_id)}>Delete</span>
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
@@ -118,7 +118,7 @@ function AdminFeed() {
                     </div>
                 ))}
             </div>
-            <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost} />
+            <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost}/>
         </>
     )
 }
