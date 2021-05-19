@@ -61,6 +61,7 @@ function Profile({appUser}) {
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
     const [userProfile, setUserProfile] = useState();
     const [selfView, setSelfView] = useState(false);
+    const [adminView, setAdminView] = useState(false);
 
     function updateProfileHandler(type, value) {
         if (type === 'address' || type === 'phone' || type === 'hours') {
@@ -102,6 +103,7 @@ function Profile({appUser}) {
                     profile={fetchedProfile}
                     updateProfile={updateProfileHandler}
                     followingStatus={followingStatus}
+                    isAdminView={adminView}
                 />
                 <div className={styles.Bottom}>
                     <AboutMe

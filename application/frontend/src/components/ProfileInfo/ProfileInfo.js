@@ -22,7 +22,7 @@ import axios from 'axios';
 //make this into environment variable before deploying!
 const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL'
 
-function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStatus}) {
+function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStatus, isAdminView}) {
 
     //image upload array
     console.log(profile.display_name);
@@ -414,7 +414,10 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                         </EditButton>
                     }
                 </div>
+                <div style={{display: 'flex'}}>
                 {displayAccountInfo}
+                {isAdminView && <button>Ban this user</button>}
+                </div>
             </div>
             <SendProfileMessage display={sendAMessageDisplay} profile={profile} onClose={()=> setSendAMessageDisplay(false)}/>
             <LoginRequired display={loginRequiredDisplay} onClose={() =>setLoginRequiredDisplay(false)} redirect={location.pathname} />    
