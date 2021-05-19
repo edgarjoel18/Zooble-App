@@ -4,12 +4,16 @@ const connection = require('../db');
 
 
 router.post('/api/flag-unflag', (req,res) =>{
+    console.log('POST /api/flag-unflag')
     const {postToFlag} = req.body;
+    console.log(postToFlag)
+    console.log(req.session.reg_user_id)
 
-    connection.query(`INSERT INTO PostFlag VALUES ('${req.session.reg_user_id}', '${postToFlag}')`,
+    connection.query(`INSERT INTO PostFlag (reg_user_id, post_id) VALUES ('${req.session.reg_user_id}', '${postToFlag}')`,
         function(err, result){
             if(err){
-                if(err.errno = 1062){
+                console.log(err)
+                if(err.errno == 1062){
                     console.log(1062);
                     connection.query(
                         `DELETE FROM PostFlag
@@ -20,6 +24,7 @@ router.post('/api/flag-unflag', (req,res) =>{
                                 console.log(err);
                             }
                             else{
+                                console.log('Unflagged the Post')
                                 console.log(result);
                                 res.status(200).json(result)
                             }
@@ -28,6 +33,7 @@ router.post('/api/flag-unflag', (req,res) =>{
                 }
             }
             else{
+                console.log('Successfully flagged the post')
                 res.status(200).json(result)
                 console.log(result);
             }

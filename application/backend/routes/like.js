@@ -3,23 +3,24 @@ const router = express.Router();
 const connection = require('../db');
 
 router.post("/api/like-unlike", (req,res) =>{
-    const regUserId = req.session.reg_user_id;
-    const postToLike = req.body.postToLike;
+    console.log("POST /api/like-unlike")
+    const {postToLike} = req.body;
 
-    connection.query(`INSERT INTO PostLike VALUES ('${regUserId}', '${postToLike}')`,
+    connection.query(`INSERT INTO PostLike VALUES ('${req.session.reg_user_id}', '${postToLike}')`,
          function(err, result){
              if(err){
-                if(err.errno = 1062){  //if duplicate key error means that the post has already been liked by the user
+                if(err.errno == 1062){  //if duplicate key error means that the post has already been liked by the user
                     console.log(1062);
                     connection.query(
                         `DELETE FROM PostLike 
-                         WHERE (PostLike.reg_user_id = '${regUserId}' 
+                         WHERE (PostLike.reg_user_id = '${req.session.reg_user_id}' 
                          AND PostLike.post_id = '${postToLike}')`,
                          function(err, result){
                              if(err){
                                  console.log(err);
                              }
                              else{
+                                console.log('Unliked the post')
                                 console.log(result);
                              }
                          }
@@ -28,6 +29,7 @@ router.post("/api/like-unlike", (req,res) =>{
              }
 
              else{
+                console.log('Successfully liked the post')
                  res.status(200).json(result)
                  console.log(result);
              }

@@ -15,6 +15,7 @@ router.get("/api/get-admin-feed-posts",(req,res)=>{
          LEFT JOIN User ON RegisteredUser.user_id = User.user_id
          LEFT JOIN Account ON User.user_id = Account.user_id
          LEFT JOIN Profile ON Account.account_id = Profile.account_id
+         AND Profile.pet_id IS NULL
          ORDER BY Post.flag_count DESC
         `,
         function(err, posts){
