@@ -72,7 +72,15 @@ function AdminFeed() {
             <div className={styles["follower-feed-container"]}>
                 <div className={styles["follower-feed-header"]}></div>
 
-                {adminFeedPosts.length == 0 && <li>No Feed Posts</li>}
+                {adminFeedPosts.length == 0 &&                     
+                    <>
+                        <div className={styles['follower-feed-no-posts-placeholder-header']}>
+                            No Flagged Posts to Show
+                        </div>
+                        <div className={styles['follower-feed-no-posts-placeholder-detail']}>
+                        </div>
+                    </>
+                }
                 {adminFeedPosts && adminFeedPosts.map((adminFeedPost) => (
                     <div className={styles["follower-feed-post"]} onClick={() => openPostModal(adminFeedPost)} >
                         <img className={styles["follower-feed-post-prof_pic"]} src={adminFeedPost.profile_pic_link} onClick={(event) => goToProfile(event,adminFeedPost.profile_id)}/>

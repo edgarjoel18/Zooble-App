@@ -84,19 +84,41 @@ router.get("/api/photo-posts", (req,res) =>{
 
 router.post("/api/profile-pic", (req,res) =>{
     console.log(req.body);
+    const {photoLink, profileID, profileType} = req.body // profileID only used if its a pet profile we want to update
     console.log("POST /api/profile-pic")
-    connection.query(`UPDATE Profile SET profile_pic_link = '${req.body.photoLink}' WHERE Profile.profile_id =${req.session.profile_id}`,
-        function(err, result){
-            if(err){
-                console.log(err)
-                res.status(500).json(err);
+    if(profileType === 'Pet'){ //we need to update pet's profile pic and also make sure that the updating party is the owner of the pet
+        connection.query(`
+        UPDATE Profile 
+        JOIN Pet ON Pet.pet_id = Profile.pet_id 
+        SET profile_pic_link = '${photoLink}'
+        WHERE Profile.profile_id = ${profileID}
+        AND Pet.reg_user_id = ${req.session.profile_id}`,
+            function(err, result){
+                if(err){
+                    console.log(err)
+                    res.status(500).json(err);
+                }
+                else{
+                    console.log(result);
+                    res.status(200).json(result);
+                }
             }
-            else{
-                console.log(result);
-                res.status(200).json(result);
+        )
+    }
+    else{
+        connection.query(`UPDATE Profile SET profile_pic_link = '${photoLink}' WHERE Profile.profile_id =${req.session.profile_id}`,
+            function(err, result){
+                if(err){
+                    console.log(err)
+                    res.status(500).json(err);
+                }
+                else{
+                    console.log(result);
+                    res.status(200).json(result);
+                }
             }
-        }
-    )
+        )
+    }
 })
 
 router.get("/api/profile-display-name", (req,res) =>{
