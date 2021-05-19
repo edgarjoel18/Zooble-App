@@ -35,7 +35,7 @@ router.post("/api/follow-unfollow-user", (req, res) => { // follow user
                                 else{
                                     console.log("Follower has been deleted")
                                     console.log(result);
-                                    res.status(200);
+                                    res.status(200).json(result);
                                     res.end;
                                 }
                             }
@@ -46,7 +46,7 @@ router.post("/api/follow-unfollow-user", (req, res) => { // follow user
                 console.log("Follower has been added");
                 //We don't have followers_count in Profile database entity but I think we should,
                 // then it would be updated in this section.
-                res.status(200);
+                res.status(200).json(follow);
                 res.end;
             }
     });
