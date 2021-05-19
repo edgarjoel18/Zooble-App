@@ -10,7 +10,7 @@ function Home({appUser}) {
 
     if(appUser){
         console.log('User is Logged In');
-       return <Redirect to='/Feed'/>;
+        return <Redirect to='/Feed'/>;
      }
 
     return (

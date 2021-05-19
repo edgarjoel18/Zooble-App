@@ -274,7 +274,7 @@ function search(){
                 console.log("response: ",response)
                 console.log("response.data: ",response.data)
                 if(response.data.length !== 0){
-                    setMaxResultsPages(Math.ceil(response.data[0].ResultsCount/10))
+                    setMaxResultsPages(Math.ceil(response.data[0].results_count/10))
                 }
                 console.log(response.data)
                 

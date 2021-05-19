@@ -25,9 +25,7 @@ const petProfileRouter = require('./routes/pet-profile.js');
 const businessProfileRouter = require('./routes/business-profile.js')
 const resetPasswordRouter = require('./routes/reset-password.js')
 const adminRouter = require('./routes/admin.js')
-
 const resetRouter = require('./routes/reset.js')
-
 const messagesRouter = require('./routes/messages.js')
 const postsRouter = require('./routes/posts.js')
 

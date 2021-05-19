@@ -39,11 +39,11 @@ import SignUpSuccess from './pages/Sign Up/SignUpSuccess'
 import MapSearch from './pages/MapSearch/MapSearch.js'
 
 import axios from 'axios';
-import UploadImage from './pages/UploadImage';
 
 const App = () => {
 
-  const [appUser,setAppUser] = useState("");
+  const [appUser,setAppUser] = useState();
+  const [loggedIn, setLoggedIn] = useState(false);
 
   console.log("rerendering app");
 
@@ -52,7 +52,8 @@ const App = () => {
       console.log(response.data);
       console.log(response.data);
       setAppUser(response.data);
-      console.log(appUser);
+      setLoggedIn(true)
+      console.log('appUser: ',appUser);
     })
     .catch((err) =>{
       console.log(err);
@@ -68,8 +69,19 @@ const App = () => {
     console.log(user);
   }
 
+  function PrivateRoute({children, ...rest}){
+    return (
+    <Route {...rest} render={()=>{
+      return appUser ? children : children
+    }}/>)
+  }
 
-
+  function AdminRoute({children, ...rest}){
+    return (
+    <Route {...rest} render={()=>{
+      return appUser ? children : children
+    }}/>)
+  }
 
 
   return (
@@ -99,30 +111,40 @@ const App = () => {
         <Route path="/Cameron" component={Cameron}/>
         <Route path="/Wameedh" component={Wameedh}/>
 
-        <Route path="/Feed" component={Feed} appUser={appUser}/>
-        <Route path="/AdminFeed" component={AdminFeed}/>
+        {/* Public Pages */}
         <Route path="/MapSearch" component={MapSearch}/>
         <Route exact path="/Profile/:profileID">
           <ProfilePage appUser={appUser}/>
         </Route>
         <Route path="/Photos/:profileID" component={Photos}/>
         <Route path="/Followers/:profileID" component={Followers}/>
+
+        {/* User Pages */}
+        <PrivateRoute path="/Feed">
+          <Feed appUser={appUser}/>
+        </PrivateRoute>
+
         {/* <Route path="/MyPhotos" component={MyPhotos}/> */}
-        <Route path="/Messages" component={Messages}/>
-        <Route path="/MyPets" component={MyPets}/>
-        <Route path="/Pets" component={Pets}/>
+        <PrivateRoute path="/Messages">
+          <Messages/>
+        </PrivateRoute>
+        <PrivateRoute path="/MyPets">
+          <MyPets/>
+        </PrivateRoute>
+        <PrivateRoute path="/Pets">
+          <Pets/>
+        </PrivateRoute> 
         {/* <Route path="/ExploreUsers" component={ExploreUsers}/> */}
 
         <Route path="/SignUpSuccess" component={SignUpSuccess}/>
-        {/* <Route path="/user/:user" component={ProfilePage}/>
-        <Route path="/pet/:pet" component={ProfilePage}/>
-        <Route path="/shelter/:shelter" component={ProfilePage}/>
-        <Route path="/business/:business" component={ProfilePage}/> */}
         <Route path="/business/Register" component={ResetPage}/>
-        <Route path="/uploadImage" component={UploadImage}/>
 
 
         <Route path="/reset/:token" component={ResetPage}/>
+
+        <Route path="/AdminFeed">
+          <AdminFeed/>
+        </Route>
 
         {/* <Redirect to="/" /> */}
       </Switch>

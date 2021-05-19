@@ -173,7 +173,7 @@ router.get("/api/search", (req,res) =>{
 
         if(searchBizCategories && searchBizCategories[0] !== 'undefined'){
             query =             
-            `SELECT *, COUNT(*) OVER (),
+            `SELECT *, COUNT(*) OVER () as results_count,
             (3959 * acos(cos(radians('${searchLatitude}'))* cos(radians(Address.latitude))* cos(radians(Address.longitude) - radians('${searchLongitude}')) + sin(radians(${searchLatitude})) * sin(radians(Address.latitude)))) as distance
             FROM Business
             LEFT JOIN Commerce ON Business.business_id = Commerce.business_id
@@ -204,7 +204,7 @@ router.get("/api/search", (req,res) =>{
         }
         else{
             query =             
-            `SELECT *,COUNT(*) OVER () as ResultsCount,
+            `SELECT *,COUNT(*) OVER () as results_count,
             (3959 * acos(cos(radians('${searchLatitude}'))* cos(radians(Address.latitude))* cos(radians(Address.longitude) - radians('${searchLongitude}')) + sin(radians(${searchLatitude})) * sin(radians(Address.latitude)))) as distance
             FROM Business
             LEFT JOIN Shelter ON Business.business_id = Shelter.business_id
@@ -239,7 +239,7 @@ router.get("/api/search", (req,res) =>{
 
         if(searchPetTypes && searchPetTypes[0] !== 'undefined'){
             query =
-            `SELECT *,
+            `SELECT *,COUNT(*) OVER () as results_count,
             (3959 * acos(cos(radians('${searchLatitude}'))* cos(radians(Address.latitude))* cos(radians(Address.longitude) - radians('${searchLongitude}')) + sin(radians(${searchLatitude})) * sin(radians(Address.latitude)))) as distance
             FROM Business
             JOIN Shelter ON Business.business_id = Shelter.business_id
@@ -270,7 +270,7 @@ router.get("/api/search", (req,res) =>{
         }
         else{
             query = 
-            `SELECT *,
+            `SELECT *,COUNT(*) OVER () as results_count,
             (3959 * acos(cos(radians('${searchLatitude}'))* cos(radians(Address.latitude))* cos(radians(Address.longitude) - radians('${searchLongitude}')) + sin(radians(${searchLatitude})) * sin(radians(Address.latitude)))) as distance
             FROM Business
             JOIN Shelter ON Business.business_id = Shelter.business_id
@@ -297,9 +297,10 @@ router.get("/api/search", (req,res) =>{
         });
     }
     else if(searchCategory == 'Pet Owners'){
-        console.log('searching through RegisteredPetOwner')
-        connection.query(
-            `SELECT *
+        if(name != ''){ 
+            console.log('searching through RegisteredPetOwner')
+            connection.query(
+            `SELECT *, COUNT(*) OVER () as results_count
             FROM Profile
             JOIN Account ON Profile.account_id = Account.account_id
             JOIN RegisteredUser ON Account.user_id = RegisteredUser.user_id
@@ -310,14 +311,19 @@ router.get("/api/search", (req,res) =>{
             AND ((LOWER(Profile.display_name) LIKE '%${name}%') OR (LOWER(Credentials.username) LIKE '%${name}%'))
             `, 
             function(err, results) {
-            if(err){
-                throw err;
-            } else {
-                requestedSearchResults = results
-                console.log("Pet Owner Results: ", requestedSearchResults);
-                res.json(requestedSearchResults);
-            }
-        });
+                if(err){
+                    throw err;
+                } else {
+                    requestedSearchResults = results
+                    console.log("Pet Owner Results: ", requestedSearchResults);
+                    res.status(200).json(requestedSearchResults);
+                }
+            });
+        }
+        else{ //if the user didn't type anything then don't return anything because there is no proximity tracking
+            return([]);
+        }
+        
     }
 
 });
