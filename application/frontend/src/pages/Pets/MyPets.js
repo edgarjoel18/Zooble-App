@@ -101,7 +101,7 @@ function MyPets() {
         <div className={styles['my-pets-container']}>
             <div className={styles['my-pets-header']}>
                 My Pets
-                <span onClick={() => history.goBack()} >Back to Profile</span>
+                <span onClick={() => history.push('/feed')} >To feed posts</span>
             </div>
             <div className={styles['my-pets-container-pets']}>
                 {displayMyPets}

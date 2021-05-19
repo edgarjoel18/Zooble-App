@@ -361,8 +361,6 @@ function Feed() {
             </div>
     )
 
-    console.log(redirectContext.loading)
-
     if (redirectContext.loading) {
         displayFeed = <Spinner />
     }

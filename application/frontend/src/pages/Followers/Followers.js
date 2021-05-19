@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import {useParams} from "react-router-dom";
 import UserProfileCard from "../../components/UserProfileCard/UserProfileCard";
 
-// import { RedirectPathContext } from '../../context/redirect-path';
-
-// import Spinner from '../../components/UI/Spinner/Spinner';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 // Import Components Here
 function Followers() {
@@ -15,6 +13,7 @@ function Followers() {
 
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getFollowers = axios.get('/api/followers',{params: {profileID}}) // call to get followers
  
@@ -23,14 +22,16 @@ function Followers() {
   // const redirectContext = useContext(RedirectPathContext);
 
   useEffect(() =>{
-    // redirectContext.updateLoading(true);
+    setLoading(true);
     Promise.all([getFollowers, getFollowing])
     .then((responses)=>{
       console.log("responses: ", responses);
       setFollowers(responses[0].data);
       setFollowing(responses[1].data);
+      setLoading(false);
     })
     .catch((err) =>{
+      setLoading(false);
       console.log(err)
     })
   },[profileID])
@@ -38,7 +39,7 @@ function Followers() {
 
   return (
     <div>
-      <UserProfileCard followersList={followers} followingList={following}/>
+      {loading ? <Spinner /> : <UserProfileCard followersList={followers} followingList={following}/>}
     </div>
   );
 }

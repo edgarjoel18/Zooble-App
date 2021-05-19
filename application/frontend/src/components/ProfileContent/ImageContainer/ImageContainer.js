@@ -38,12 +38,30 @@ function ImageContainer({previews, profile, title, selfView}) {
         console.log('displayImageStack', previews);
         console.log("val: ",val)
         if (val === 0)
-            return (
-                <Link>
-                    <div className={styles.EmptyDiv} >
-                    </div>
-                </Link>
-            );
+            if (title === 'Photos'  || title === 'My Photos' )
+                return (
+                    <Link>
+                        <div className={styles.EmptyDiv} >
+                            <h3>No Photos to show</h3>
+                        </div>
+                    </Link>
+                );
+            else if (title === 'My Siblings' )
+                return (
+                    <Link>
+                        <div className={styles.EmptyDiv} >
+                            <h3>No Siblings to show</h3>
+                        </div>
+                    </Link>
+                );
+            else if (title === 'Pets')
+                return (
+                    <Link>
+                        <div className={styles.EmptyDiv} >
+                            <h3>No Pets to show</h3>
+                        </div>
+                    </Link>
+                );
         // set limited amount of photos displayed 
         let marginToRight = null;
         if (accountType === 'Shelter') {
