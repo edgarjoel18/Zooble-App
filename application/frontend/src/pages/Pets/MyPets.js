@@ -36,7 +36,9 @@ function MyPets() {
 
     const [ageOptions, setAgeOptions] = useState([]);
 
-    const redirectContext = useContext(RedirectPathContext);
+    const [loading, setLoading] = useState(false);
+
+    //const redirectContext = useContext(RedirectPathContext);
     const history = useHistory();
 
     function viewDeletionModal(pet){
@@ -53,7 +55,7 @@ function MyPets() {
     }
 
     useEffect(() => {
-        redirectContext.updateLoading(true);
+        setLoading(true);
 
         const getCurrentUserPets = axios.get('/api/current-user-pets') 
         const getPetTypes = axios.get('/api/pet-types')
@@ -72,13 +74,16 @@ function MyPets() {
             setAgeOptions(responses[4].data);
             setSizeOptions(responses[5].data);
             setColorOptions(responses[6].data);
-            redirectContext.updateLoading(false);
+            setLoading(false);
+        })
+        .catch(err =>{
+            console.log(err);
         }) 
     }, [])
 
     let displayMyPets = <Spinner />
 
-    if (!redirectContext.loading)
+    if (!loading)
         displayMyPets = <>
             <div className={styles['my-pets-container-add-pet']} onClick={() => setAdditionModalDisplay(true)}>
                 <img className={styles['my-pets-container-add-pet-icon']} src={AddIcon}/>

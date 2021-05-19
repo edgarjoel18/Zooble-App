@@ -9,45 +9,14 @@ import ArrowIcon from '../../images/Created Icons/Arrow.svg'
 
 function AdminFeed() {
     const [postModalDisplay, setPostModalDisplay] = useState(false);
-    const [feedPosts, setFeedPosts] = useState([
-        /* {
-            post_id: 1,
-            user_display_name: 'Burgsdale Pet Shelter',
-            link: "/Profile/ShelterId=2",
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/BurgsdalePetShelterPic.jpg',
-            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
-            flags: 30,
-            timestamp: '12/25/20 at 11:05 AM',
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        },
-        {
-            post_id: 2,
-            user_display_name: 'Paw Spa',
-            link: "/Profile/BusinessId=2",
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/PawSpaPic.jpg',
-            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg',
-            flags: 20,
-            timestamp: '12/25/20 at 11:05 AM',
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        },
-        {
-            post_id: 3,
-            user_display_name: 'Alex',
-            link: "/Profile/PetOwnerId=1",
-            profile_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/AlexPic.jpg',
-            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
-            flags: 9,
-            timestamp: '12/25/20 at 11:05 AM',
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,'
-        } */
-    ]);
+    const [adminFeedPosts, setAdminFeedPosts] = useState([]);
 
     useEffect(() => {
         console.log('/api/get-admin-feed-posts');
         axios.get('/api/get-admin-feed-posts')
             .then(response => {
                 console.log(response.data);
-                setFeedPosts(response.data);
+                setAdminFeedPosts(response.data);
             })
             .catch(err => {
                 console.log("Error: ");
@@ -85,22 +54,22 @@ function AdminFeed() {
             <div className={styles["follower-feed-container"]}>
                 <div className={styles["follower-feed-header"]}></div>
 
-                {feedPosts.length == 0 && <li>No Feed Posts</li>}
-                {feedPosts && feedPosts.map((feedPost) => (
-                    <div className={styles["follower-feed-post"]} onClick={() => openPostModal(feedPost)} >
-                        <NavLink to={feedPost.link}>
-                            <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic} />
-                        </NavLink>
-                        <NavLink style={{ textDecoration: 'none' }} to={feedPost.link}>
-                            <div className={styles["follower-feed-post-name"]}>{feedPost.user_display_name}</div>
-                        </NavLink>
+                {adminFeedPosts.length == 0 && <li>No Feed Posts</li>}
+                {adminFeedPosts && adminFeedPosts.map((adminFeedPost) => (
+                    <div className={styles["follower-feed-post"]} onClick={() => openPostModal(adminFeedPost)} >
+                        {/* <NavLink to={adminFeedPost.link}> */}
+                            <img className={styles["follower-feed-post-prof_pic"]} src={adminFeedPost.profile_pic_link} />
+                        {/* </NavLink> */}
+                        {/* <NavLink style={{ textDecoration: 'none' }} to={adminFeedPost.link}> */}
+                            <div className={styles["follower-feed-post-name"]}>{adminFeedPost.display_name}</div>
+                        {/* </NavLink> */}
 
-                        <div className={styles["follower-feed-post-timestamp"]}>{feedPost.timestamp}</div>
-                        <div className={styles["follower-feed-post-admin-flags"]}>{feedPost.flags}</div>
+                        <div className={styles["follower-feed-post-timestamp"]}>{adminFeedPost.timestamp}</div>
+                        <div className={styles["follower-feed-post-admin-flags"]}>{adminFeedPost.flag_count}</div>
                         <button className={styles['follower-feed-post-admin-flag']} />
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
-                        <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
-                        <img className={styles["follower-feed-post-pic"]} src={feedPost.pic} />
+                        <div className={styles["follower-feed-post-body"]}>{adminFeedPost.body}</div>
+                        <img className={styles["follower-feed-post-pic"]} src={adminFeedPost.link} />
                     </div>
                 ))}
             </div>

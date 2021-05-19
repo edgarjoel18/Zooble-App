@@ -59,7 +59,7 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
             size: petSize
         })
         .then(response =>{
-            console.log(response);
+            console.log('/api/create-pet-profile',response);
             setLoading(false);
             onClose();
         })
@@ -69,7 +69,7 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
             //display error to user
         })
         // remove later when the setLoading is working in the then block 
-        setLoading(false);
+        // setLoading(false);
     }
 
     const animatedComponents = makeAnimated();

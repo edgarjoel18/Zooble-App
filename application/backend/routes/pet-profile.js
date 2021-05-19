@@ -5,6 +5,7 @@ const router = express.Router();
 router.post("/api/create-pet-profile",(req,res)=>{
     console.log("POST /api/create-pet-profile");
     console.log("req.body: ", req.body);
+    let insertedPet
 
     // if(req.body.dogBreed.length != 0){
     //     console.log("Its a dog!")
@@ -28,6 +29,7 @@ router.post("/api/create-pet-profile",(req,res)=>{
              else{
                 console.log("Inserted Pet successfully");
                 console.log(userPet);
+                insertedPet = userPet
                  connection.query(
                      `INSERT INTO Profile
                       (display_name,about_me, account_id, pet_id, type)
@@ -81,7 +83,7 @@ router.post("/api/create-pet-profile",(req,res)=>{
                                                         }
                                                 })
                                             }
-                                            // res.status(200).json(insertedDog);
+                                            res.status(200).json(insertedDog);
                                         }
                                     })
                                 }
@@ -106,16 +108,19 @@ router.post("/api/create-pet-profile",(req,res)=>{
                                                     }
                                                 })
                                             }
-                                            // res.status(200).json(insertedCat);
+                                            res.status(200).json(insertedCat);
                                             // res.end();
                                         }
                                     })
+                                }
+                                else{
+                                    res.status(200).json(insertedPet);
                                 }
                           }
                     })
                 }
     })
-    // res.status(200).json(userPet);
+    
 })
 
 router.get("/api/tagged-posts", (req,res) =>{
