@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { NavLink, useHistory } from "react-router-dom";
+import {Link, useHistory } from "react-router-dom";
 import axios from 'axios';
 
 import styles from './Feed.module.css'
@@ -10,6 +10,8 @@ import ArrowIcon from '../../images/Created Icons/Arrow.svg'
 function AdminFeed() {
     const [postModalDisplay, setPostModalDisplay] = useState(false);
     const [adminFeedPosts, setAdminFeedPosts] = useState([]);
+
+    const history = useHistory();
 
     useEffect(() => {
         console.log('/api/get-admin-feed-posts');
@@ -39,6 +41,9 @@ function AdminFeed() {
     const [attachedImage, setAttachedImage] = useState(false);  //real thing will be null or attached image?
 
     function openPostModal(feedPost) {
+        if (!event) var event = window.event;
+        event.cancelBubble = true;
+        if (event.stopPropagation) event.stopPropagation();
         console.log(feedPost);
         setSelectedPost(feedPost);
         setPostModalDisplay(true);
@@ -49,6 +54,19 @@ function AdminFeed() {
         setPostModalDisplay(false);
     }
 
+    function goToProfile(event,profileID){
+        console.log()
+        //stop from opening post modal
+        if (!event) var event = window.event;
+        event.cancelBubble = true;
+        if (event.stopPropagation) event.stopPropagation();
+
+        const location = {
+            pathname: "/Profile/" + profileID,
+          }
+          history.push(location);
+    }
+
     return (
         <>
             <div className={styles["follower-feed-container"]}>
@@ -57,14 +75,9 @@ function AdminFeed() {
                 {adminFeedPosts.length == 0 && <li>No Feed Posts</li>}
                 {adminFeedPosts && adminFeedPosts.map((adminFeedPost) => (
                     <div className={styles["follower-feed-post"]} onClick={() => openPostModal(adminFeedPost)} >
-                        {/* <NavLink to={adminFeedPost.link}> */}
-                            <img className={styles["follower-feed-post-prof_pic"]} src={adminFeedPost.profile_pic_link} />
-                        {/* </NavLink> */}
-                        {/* <NavLink style={{ textDecoration: 'none' }} to={adminFeedPost.link}> */}
-                            <div className={styles["follower-feed-post-name"]}>{adminFeedPost.display_name}</div>
-                        {/* </NavLink> */}
-
-                        <div className={styles["follower-feed-post-timestamp"]}>{adminFeedPost.timestamp}</div>
+                        <img className={styles["follower-feed-post-prof_pic"]} src={adminFeedPost.profile_pic_link} onClick={(event) => goToProfile(event,adminFeedPost.profile_id)}/>
+                        <div className={styles["follower-feed-post-name"]} onClick={(event) => goToProfile(event,adminFeedPost.profile_id)}>{adminFeedPost.display_name} </div>
+                        <div className={styles["follower-feed-post-timestamp"]}>{new Date(adminFeedPost.timestamp).toLocaleString()}</div>
                         <div className={styles["follower-feed-post-admin-flags"]}>{adminFeedPost.flag_count}</div>
                         <button className={styles['follower-feed-post-admin-flag']} />
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}

@@ -8,7 +8,7 @@ router.get("/api/get-admin-feed-posts",(req,res)=>{
     let username = req.session.username;
     let postsWithLikes = []; //array for holding objects with posts and likes
     connection.query(
-        `SELECT Post.post_id, Post.timestamp, Post.body, Post.like_count, Profile.display_name, Profile.profile_pic_link, Profile.pet_id, Photo.link, Post.flag_count
+        `SELECT Profile.profile_id, Post.post_id, Post.timestamp, Post.body, Post.like_count, Profile.display_name, Profile.profile_pic_link, Profile.pet_id, Photo.link, Post.flag_count
          FROM Post
          LEFT JOIN Photo ON Post.post_id = Photo.post_id
          LEFT JOIN RegisteredUser ON RegisteredUser.reg_user_id = Post.reg_user_id

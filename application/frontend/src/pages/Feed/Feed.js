@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useContext } from 'react'
-import { NavLink, useHistory } from "react-router-dom";
+import {Link, useHistory } from "react-router-dom";
 import {useDropzone} from 'react-dropzone'
 import axios from 'axios';
 import Select from 'react-select';  
@@ -50,6 +50,8 @@ function Feed() {
     const [update, setUpdate] = useState(false);
 
     const redirectContext = useContext(RedirectPathContext);
+
+    const history = useHistory()
 
     function customTheme(theme) { //move this a separate file and import maybe?
         return {
@@ -296,6 +298,19 @@ function Feed() {
         return
     }
 
+    function goToProfile(event,profileID){
+        console.log()
+        //stop from opening post modal
+        if (!event) var event = window.event;
+        event.cancelBubble = true;
+        if (event.stopPropagation) event.stopPropagation();
+
+        const location = {
+            pathname: "/Profile/" + profileID,
+          }
+          history.push(location);
+    }
+
     function closePostModal() {
         setPostModalDisplay(false);
     }
@@ -341,13 +356,8 @@ function Feed() {
                     </>}
                 {feedPosts && feedPosts.map((feedPost, index) => (
                     <div key={feedPost.post_id} className={styles["follower-feed-post"]} onClick={(event) => openPostModal(event,feedPost)} >
-                        <NavLink to={"/Profile/ShelterId=2"}>  {/* Need to replace these with real links */}
-                            <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic_link} />
-                        </NavLink>
-                        <NavLink style={{textDecoration: 'none'}} to={"/Profile/ShelterId=2"}>   {/* Need to replace these with real links */}
-                        <div className={styles["follower-feed-post-name"]}>{feedPost.display_name}</div>
-                        </NavLink>
- 
+                        <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic_link} onClick={(event) => goToProfile(event,feedPost.profile_id)}/>
+                        <div className={styles["follower-feed-post-name"]} onClick={(event) => goToProfile(event,feedPost.profile_id)}>{feedPost.display_name}</div>
                         <div className={styles["follower-feed-post-timestamp"]}>{new Date(feedPost.timestamp).toLocaleString()}</div>
                         <div className={styles["follower-feed-post-likes"]}>{feedPost.like_count}</div>
                         <button className={styles['follower-feed-post-like']} onClick={(event) => likePost(event,feedPost.post_id)}/>
