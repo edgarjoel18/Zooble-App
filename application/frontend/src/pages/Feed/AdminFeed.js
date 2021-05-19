@@ -96,8 +96,8 @@ function AdminFeed() {
                         </NavLink>
 
                         <div className={styles["follower-feed-post-timestamp"]}>{feedPost.timestamp}</div>
-                        <div className={styles["follower-feed-post-flags"]}>{feedPost.flags}</div>
-                        <button className={styles['follower-feed-post-flag']} />
+                        <div className={styles["follower-feed-post-admin-flags"]}>{feedPost.flags}</div>
+                        <button className={styles['follower-feed-post-admin-flag']} />
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
                         <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
                         <img className={styles["follower-feed-post-pic"]} src={feedPost.pic} />

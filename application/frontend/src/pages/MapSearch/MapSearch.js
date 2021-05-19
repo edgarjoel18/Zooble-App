@@ -109,6 +109,9 @@ function MapSearch(props) {
     const [filterOverlayDisplay, setFilterOverlayDisplay] = useState('none');
     const [searchResultsDisplay, setSearchResultsDisplay] = useState('block')
 
+    //for storing the number of pages of results
+    const [maxResultsPages,setMaxResultsPages] = useState(1);
+
 
 
 
@@ -270,9 +273,11 @@ function search(){
             .then(response =>{
                 console.log("response: ",response)
                 console.log("response.data: ",response.data)
-                if(response.data.length === 0){
-                    previousPage();
+                if(response.data.length !== 0){
+                    setMaxResultsPages(Math.ceil(response.data[0].ResultsCount/10))
                 }
+                console.log(response.data)
+                
                 setRecievedSearchResults(response.data);
                 displaySearchResults();
                 console.log("Recieved Search Results: ", recievedSearchResults)
@@ -478,8 +483,8 @@ function search(){
                             </ul>
                         </div>
                         <div className={styles['map-search-results-page-navigation']}>
-                            {currentPage != 1 && <button className={styles['map-search-results-page-navigation-back']} onClick={previousPage}>Prev Page</button>}
-                            <button className={styles['map-search-results-page-navigation-next']} onClick={nextPage}>Next Page</button>
+                            {currentPage != 1 && maxResultsPages != 1 && <button className={styles['map-search-results-page-navigation-back']} onClick={previousPage}>Prev Page</button>}
+                            {currentPage < maxResultsPages && <button className={styles['map-search-results-page-navigation-next']} onClick={nextPage}>Next Page</button>}
                         </div>
                     </>
                 </div>

@@ -7,18 +7,18 @@ const randomToken = require('random-token');
 
 router.post("/api/resetpassword", (req, res) => {
     console.log("/resetpassword")
-    console.log(req)
 
     const email = req.body.email;
+    const token = randomToken(16);
 
+    console.log(email)
     if(req.body.email == ''){
         res.status(400).send('Email required');
     }
 
-    connection.query('SELECT * FROM Credentials WHERE email = ?', [email], function(error, results, fields){
+    connection.query('SELECT * FROM User WHERE email = ?', [email], function(error, results, fields){
         console.log(results)
         if(results.length > 0 && email == results[0].email){
-            const token = randomToken(16);
             // Needs to be inserted into a "token" column in the user in the
             // database
             const resetPasswordToken = token;
@@ -35,11 +35,12 @@ router.post("/api/resetpassword", (req, res) => {
     });
 
     const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true, // use SSL
         auth: {
-            user: 'gideon.mcclure@ethereal.email',
-            pass: 'THX48h5WWyfJNycS7w'
+            user: 'zoobleinc@gmail.com',
+            pass: 'Testtest9!'
         }
     });
 

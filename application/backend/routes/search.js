@@ -173,7 +173,7 @@ router.get("/api/search", (req,res) =>{
 
         if(searchBizCategories && searchBizCategories[0] !== 'undefined'){
             query =             
-            `SELECT *,
+            `SELECT *, COUNT(*) OVER (),
             (3959 * acos(cos(radians('${searchLatitude}'))* cos(radians(Address.latitude))* cos(radians(Address.longitude) - radians('${searchLongitude}')) + sin(radians(${searchLatitude})) * sin(radians(Address.latitude)))) as distance
             FROM Business
             LEFT JOIN Commerce ON Business.business_id = Commerce.business_id
@@ -204,7 +204,7 @@ router.get("/api/search", (req,res) =>{
         }
         else{
             query =             
-            `SELECT *,
+            `SELECT *,COUNT(*) OVER () as ResultsCount,
             (3959 * acos(cos(radians('${searchLatitude}'))* cos(radians(Address.latitude))* cos(radians(Address.longitude) - radians('${searchLongitude}')) + sin(radians(${searchLatitude})) * sin(radians(Address.latitude)))) as distance
             FROM Business
             LEFT JOIN Shelter ON Business.business_id = Shelter.business_id
@@ -228,8 +228,8 @@ router.get("/api/search", (req,res) =>{
             } 
             else {
                 requestedSearchResults = results;
-                // console.log(requestedSearchResults);
-                res.json(requestedSearchResults);
+                console.log(requestedSearchResults);
+                res.status(200).json(requestedSearchResults);
             }       
         });
     }
