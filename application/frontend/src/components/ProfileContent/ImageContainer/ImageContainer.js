@@ -141,7 +141,9 @@ function ImageContainer({previews, profile, title, selfView}) {
     // }
     
     let seeAll = null;
-    if (title === 'Photos' || title === 'My Photos') {
+    if (previews.length === 0)
+        seeAll = null;
+    else if (title === 'Photos' || title === 'My Photos') {
         selfView ?  //this won't work because the user will still able to go to photos/:profileId by directUrl, it will be better to check ownership on the page itself
         seeAll = <Link style={{cursor: 'pointer', float: 'right'}} to={"/Photos/" + profile.profile_id}>See All</Link>
         :

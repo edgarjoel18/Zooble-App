@@ -24,7 +24,7 @@
     background-position: center;
     color: #ccc;
     cursor:initial;
-    box-shadow: var(--elevation-1);
+    /* box-shadow: var(--elevation-1); */
 }
 
 .EmptyDiv h3 {
