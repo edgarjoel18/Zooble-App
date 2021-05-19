@@ -11,7 +11,7 @@ import DeleteIcon from  '../../images/Created Icons/Exit-Cancel.svg'
 
 import FlagIcon from '../../images/Third Party Icons/icons8-empty-flag.png'
 
-import ConfirmPetDeletion from '../../components/Modals/ConfirmPetDeletion';
+import ConfirmDeletion from '../../components/Modals/ConfirmDeletion';
 
 function AdminFeed() {
     const [postModalDisplay, setPostModalDisplay] = useState(false);
@@ -128,7 +128,7 @@ function AdminFeed() {
                 ))}
             </div>
             <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost}/>
-            <ConfirmPetDeletion display={deletionModalDisplay} onClose={() => setDeletionModalDisplay(false)} message={'Delete post by ' + selectedPost.display_name +'?'} deleteAction={removePost}/>
+            <ConfirmDeletion display={deletionModalDisplay} onClose={() => setDeletionModalDisplay(false)} message={'Delete post by ' + selectedPost.display_name +'?'} deleteAction={removePost}/>
         </>
     )
 }

@@ -33,21 +33,47 @@ router.post("/api/delete-post",(req,res)=>{
     console.log("POST /api/delete-post");
 
     const {postID} = req.body
-    
-    connection.query(
-        `DELETE
-         FROM Post
-         WHERE Post.post_id = ${postID}
-        `,
-        function(err, result){
-            if(err)
-                console.log(err);
-            else{
-                res.status(200).json(result);
-            }
-        }
-    )
 
+
+    if(req.session.role === 3){ //check if logged in user has admin privileges
+        connection.query(
+            `DELETE
+            FROM Post
+            WHERE Post.post_id = ${postID}
+            `,
+            function(err, result){
+                if(err)
+                    console.log(err);
+                else{
+                    res.status(200).json(result);
+                }
+            }
+        )
+    }
+})
+
+router.post("/api/delete-user",(req,res) =>{
+    console.log("POST /api/delete-user");
+    const {profileID} = req.body
+
+    if(req.session.role === 3){ //check if logged in user has admin privileges
+        connection.query(
+            `DELETE User
+             FROM User
+             JOIN Account ON Account.user_id = User.user_id
+             JOIN Profile ON Profile.account_id = Account.account_id
+             WHERE Profile.profile_id = ${profileID}
+            `,
+            function(err, result){
+                if(err)
+                    console.log(err);
+                else{
+                    res.status(200).json(result);
+                }
+            }
+        )
+    }
+    
 })
 
 module.exports = router

@@ -22,7 +22,7 @@ router.post("/api/like-unlike", (req,res) =>{
                              else{
                                 console.log('Unliked the post')
                                 console.log(result);
-                                res.status(200).json(result)
+                                res.status(200).json('unliked')
                              }
                          }
                     )
@@ -32,7 +32,7 @@ router.post("/api/like-unlike", (req,res) =>{
              else{
                 console.log('Successfully liked the post')
                  console.log(result);
-                 res.status(200).json(result)
+                 res.status(200).json('liked')
              }
          }
     )

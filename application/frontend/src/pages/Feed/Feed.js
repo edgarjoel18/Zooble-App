@@ -171,11 +171,11 @@ function Feed() {
         })
         .then((response) => {
             console.log(response.data)
-            let updatedPosts = [...feedPosts];
-            console.log("Like count is " + updatedPosts[index].like_count)
-            updatedPosts[index].like_count++;
-            setFeedPosts(updatedPosts);
-            console.log(response);
+            // let updatedPosts = [...feedPosts];
+            // console.log("Like count is " + updatedPosts[index].like_count)
+            // updatedPosts[index].like_count++;
+            // setFeedPosts(updatedPosts);
+            // console.log(response);
         })
         .catch((err)=>{
             console.log(err);
