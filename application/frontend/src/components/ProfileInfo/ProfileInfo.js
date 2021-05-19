@@ -416,7 +416,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                 </div>
                 <div style={{display: 'flex'}}>
                 {displayAccountInfo}
-                {isAdminView && <button>Ban this user</button>}
+                {isAdminView && !isSelfView && <button className={styles['ban-button']} >Ban this user</button>}
                 </div>
             </div>
             <SendProfileMessage display={sendAMessageDisplay} profile={profile} onClose={()=> setSendAMessageDisplay(false)}/>
