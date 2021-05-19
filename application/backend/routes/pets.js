@@ -43,4 +43,26 @@ router.get("/api/pets",(req,res)=>{
 })
 
 
+router.post("/api/delete-pet",(req,res) =>{
+    const {petProfileID} = req.body
+
+    console.log("POST /api/delete-pet");
+    console.log(petProfileID)
+
+    connection.query(
+        `DELETE Pet
+         FROM Pet
+         INNER JOIN Profile ON Profile.pet_id = Pet.pet_id
+         WHERE Profile.profile_id = ${petProfileID}
+        `,
+        function(err, result){
+            if(err)
+                console.log(err);
+            else{
+                res.status(200).json(result);
+            }
+        }
+    )
+})
+
 module.exports = router
