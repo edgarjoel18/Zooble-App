@@ -11,10 +11,13 @@ import styles from './EditPetDetails.module.css'
 function EditPetDetails(props) {
 
     //full version should recieve pet types and breeds from db and display in dropdown
-    // const [petType,setPetType] = useState();  //set this to already existing pet type stored in db for real version
-    const [petBreeds, setPetBreed] = useState([]);
+    const [petType,setPetType] = useState([]);  //set this to already existing pet type stored in db for real version
+    const [dogBreed, setDogBreed] = useState([]);
     const [petColors, setPetColors] = useState([]);
-    const [petSize, setPetSize] = useState();
+    const [petSize, setPetSize] = useState([]);
+    const [catBreed, setCatBreed] = useState([]);
+    const [petAge, setPetAge] = useState([]); 
+
 
     const typeOptions = [];
 
@@ -91,15 +94,16 @@ function EditPetDetails(props) {
                         isMulti
                     />
                 </div>
-                <div className={styles['edit-pet-details-size']}>
-                    <label for="size">Size</label>
-                    <Select id="size" name="pet_size"
-                        onChange={setPetSize}
-                        options={ sizeOptions}
-                        theme={customTheme}
-                        placeholder="Select Pet Size"
-                        isSearchable
-                    />
+                <div className={styles['edit-pet-details-age']}>
+                        <label for="age">Age</label>
+                        <Select id="age" name="pet_age"
+                            onChange={setPetAge}
+                            options={ageOptions}
+                            theme={customTheme}
+                            value={petAge}
+                            placeholder="Select Pet Age"
+                            isSearchable
+                        />
                 </div>
                 <div className={styles['edit-pet-details-size']}>
                     <label for="size">Size</label>
@@ -111,6 +115,32 @@ function EditPetDetails(props) {
                         isSearchable
                     />
                 </div>
+                {petType && petType.label == 'Dog' && <div className={styles['edit-pet-details-breed']}>
+                        <label for="breed">Breed</label>
+                        <Select id="breed" name="pet_breed"
+                            // onChange={props.updatePetBreed}
+                            onChange={setDogBreed}
+                            options={ dogBreedOptions}
+                            theme={customTheme}
+                            placeholder="Select Dog Breed"
+                            isSearchable
+                            isMulti
+                            components={animatedComponents}
+                        />
+                    </div>}
+                {petType && petType.label == 'Cat' && <div className={styles['edit-pet-details-breed']}>
+                    <label for="breed">Breed</label>
+                    <Select id="breed" name="pet_breed"
+                        // onChange={props.updatePetBreed}
+                        onChange={setCatBreed}
+                        options={ catBreedOptions}
+                        theme={customTheme}
+                        placeholder="Select Cat Breed"
+                        isSearchable
+                        isMulti
+                        components={animatedComponents}
+                    />
+                </div>}
                 <button className={styles['edit-pet-details-submit']} onClick={props.onClose}>Submit</button>
             </div>
             

@@ -305,12 +305,12 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                         </h3>
                     </div>
                     <EditPetDetails 
-                    display={editPetDetailsDisplay} 
-                    updateProfile={updateProfile} 
-                    profile={profile} 
-                    onClose={()=> setEditPetDetailsDisplay(false)}
-                    updatePetType={setPetType}
-                    updatePetBreed={setPetBreed}
+                        display={editPetDetailsDisplay} 
+                        updateProfile={updateProfile} 
+                        profile={profile} 
+                        onClose={()=> setEditPetDetailsDisplay(false)}
+                        updatePetType={setPetType}
+                        updatePetBreed={setPetBreed}
                     />
                 </React.Fragment>
             )

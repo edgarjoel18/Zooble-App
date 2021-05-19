@@ -56,15 +56,6 @@ function Profile({appUser}) {
         })
     },[profileID])
 
-
-
-    // ROUTING FOR THE DYNAMIC PROFILE PAGES 
-    const [email, setEmail] = useState('')
-    const [username, setUname] = useState('')
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-
-
     
     // console.log(appUser);
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
