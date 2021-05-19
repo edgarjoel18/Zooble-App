@@ -167,6 +167,21 @@ function Feed() {
         })
     }
 
+    function flagPost(event,feedPostID){
+        if (!event) var event = window.event;
+        event.cancelBubble = true;
+        if (event.stopPropagation) event.stopPropagation();
+        axios.post("/api/flag-unflag",{
+            postToFlag: feedPostID
+        })
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    }
+
     function getPosts(){
         axios.get('/api/get-feed-posts')
         .then(response =>{
@@ -316,7 +331,7 @@ function Feed() {
                         <div className={styles["follower-feed-post-likes"]}>{feedPost.like_count}</div>
                         <button className={styles['follower-feed-post-like']} onClick={(event) => likePost(event,feedPost.post_id)}/>
                         <div className={styles["follower-feed-post-flags"]}>{feedPost.like_count}</div>
-                        <button className={styles['follower-feed-post-flag']} onClick={(event) => likePost(event,feedPost.post_id)}/>
+                        <button className={styles['follower-feed-post-flag']} onClick={(event) => flagPost(event,feedPost.post_id)}/>
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
                         <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
                         {feedPost.link && <img className={styles["follower-feed-post-pic"]} src={feedPost.link} />}

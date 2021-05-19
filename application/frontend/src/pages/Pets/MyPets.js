@@ -94,7 +94,7 @@ function MyPets() {
             </div>
         </div>
         <ConfirmPetDeletion display={deletionModalDisplay} onClose={() => setDeletionModalDisplay(false)} selectedPet={selectedPet}/>
-        <AddAPet display={additionModalDisplay} typeOptions={typeOptions} dogBreedOptions={dogBreedOptions} catBreedOptions={catBreedOptions} colorOptions={colorOptions} sizeOptions={sizeOptions} ageOptions={ageOptions} onClose={() => setAdditionModalDisplay()}/>
+        <AddAPet display={additionModalDisplay} onClose={() => setAdditionModalDisplay(false)} typeOptions={typeOptions} dogBreedOptions={dogBreedOptions} catBreedOptions={catBreedOptions} colorOptions={colorOptions} sizeOptions={sizeOptions} ageOptions={ageOptions}/>
         </>
     )
 }

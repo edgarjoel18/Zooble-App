@@ -41,33 +41,35 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
     let hoursLabels = [];
 
     useEffect(() =>{
-        axios.get('/api/hours',{params: {profileID: profileID}})
-        .then(response =>{
-            console.log('/api/hours: ',response.data);
-            setHoursState(response.data);
-            console.log('hoursState: ', hoursState)
-        })
-        .catch(err =>{
-            console.log(err);
-        })
+        if(profile.type === "Business"){
+            axios.get('/api/hours',{params: {profileID: profileID}})
+            .then(response =>{
+                console.log('/api/hours: ',response.data);
+                setHoursState(response.data);
+                console.log('hoursState: ', hoursState)
+            })
+            .catch(err =>{
+                console.log(err);
+            })
 
-        axios.get('/api/business-address',{params: {profileID: profileID}})
-        .then(response =>{
-            console.log('/api/business-address: ',response.data.address);
-            setLocation(response.data.address);
-        })
-        .catch(err =>{
-            console.log(err);
-        })
+            axios.get('/api/business-address',{params: {profileID: profileID}})
+            .then(response =>{
+                console.log('/api/business-address: ',response.data.address);
+                setLocation(response.data.address);
+            })
+            .catch(err =>{
+                console.log(err);
+            })
 
-        axios.get('/api/business-phone-number',{params: {profileID: profileID}})
-        .then(response =>{
-            console.log('/api/business-phone-number: ', response.data);
-            setPhone(response.data.phone_num);
-        })
-        .catch(err =>{
-            console.log(err);
-        })
+            axios.get('/api/business-phone-number',{params: {profileID: profileID}})
+            .then(response =>{
+                console.log('/api/business-phone-number: ', response.data);
+                setPhone(response.data.phone_num);
+            })
+            .catch(err =>{
+                console.log(err);
+            })
+        }
     },[profileID])
 
     // limited time editing

@@ -56,6 +56,7 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
         })
         .catch(err =>{
             console.log(err);
+            //display error to user
         })
     }
 
