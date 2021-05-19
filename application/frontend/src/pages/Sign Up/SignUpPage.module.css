@@ -162,6 +162,8 @@
 @media only screen and (min-width: 414px) and (max-width: 1024px) {
     .signup-fields-container {
         grid-template-columns: 1fr; /* One column */
+        width: 50%;
+        align-items: center;
     }    
 }
 
@@ -169,5 +171,6 @@
     .signup-fields-container {
         grid-template-columns: 1fr; /* One column */
         gap: 5px;
+        align-items: center;
     }    
 }

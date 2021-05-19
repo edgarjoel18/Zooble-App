@@ -75,6 +75,8 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
             }
         }
 
+
+
         setLoading(true);
         axios.get(apiGatewayURL)  //first get the presigned s3 url
             .then((response) =>{
@@ -88,6 +90,8 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                     console.log("Presigned File URL: ", presignedFileURL);
                     axios.post('/api/profile-pic',{
                         photoLink: presignedFileURL,
+                        profileID: profile.profile_id,
+                        profileType: profile.type
                     }).then((response) =>{
                         console.log(response.data);
                         setProfilePic(presignedFileURL);

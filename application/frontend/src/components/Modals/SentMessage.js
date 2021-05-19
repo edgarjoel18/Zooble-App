@@ -11,7 +11,7 @@ function SentMessage({display, onClose, selectedMessage}) {
         <Modal display={display} onClose={onClose}>
             <div className={styles['view-message-header']}>{selectedMessage.subject}</div>
             <div className={styles['view-message-container']}>
-                <div className={styles['view-message-sender']}>From: {selectedMessage.display_name}</div>
+                <div className={styles['view-message-sender']}>To: {selectedMessage.display_name}</div>
                 <div className={styles['view-message-timestamp']}>{new Date(selectedMessage.timestamp).toLocaleString()}</div>
                 <div className={styles['view-message-body']} >{selectedMessage.body}</div>
             </div>

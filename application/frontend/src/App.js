@@ -131,7 +131,7 @@ const App = () => {
         <PrivateRoute path="/MyPets">
           <MyPets/>
         </PrivateRoute>
-        <PrivateRoute path="/Pets">
+        <PrivateRoute path="/Pets/:profileID">
           <Pets/>
         </PrivateRoute> 
         {/* <Route path="/ExploreUsers" component={ExploreUsers}/> */}

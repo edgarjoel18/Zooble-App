@@ -1,82 +1,58 @@
-import {useState} from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import {useState, useEffect} from 'react'
+import { Link, useHistory, useParams } from 'react-router-dom'
 
-import styles from './MyPets.module.css'  //same style as my pets without add pet button 
+import styles from './MyPets.module.css'  //same style as my pets without add pet button
 
 import AddIcon from '../../images/Created Icons/Add.svg'
+import Spinner from '../../components/UI/Spinner/Spinner';
+
+import axios from 'axios'
 function Pets() {
 
-    const [Pets,setPets] = useState([
-    {
-        pet_id: 1,
-        pet_name: 'Max',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
-    },
-    {
-        pet_id: 2,
-        pet_name: 'Juju',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'
-    },
-    {
-        pet_id: 3,
-        pet_name: 'Mimi',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg'
-    },
-    {
-        pet_id: 4,
-        pet_name: 'Max',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
-    },
-    {
-        pet_id: 5,
-        pet_name: 'Juju',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'
-    },
-    {
-        pet_id: 6,
-        pet_name: 'Mimi',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg'
-    },
-    {
-        pet_id: 7,
-        pet_name: 'Max',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg'
-    },
-    {
-        pet_id: 8,
-        pet_name: 'Juju',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg'
-    },
-    {
-        pet_id: 9,
-        pet_name: 'Mimi',
-        pet_prof_pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg'
-    },
-    ])
+    const {profileID} = useParams(); 
+    console.log('profileID: ',profileID)
+
+    const [pets,setPets] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() =>{
+        setLoading(true)
+        axios.get('/api/pets',{params:{profileID}})
+        .then(response =>{
+            console.log(response.data);
+            setPets(response.data);
+            setLoading(false);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+    },[profileID])
+
+    
 
     let history = useHistory();
 
     return (
         <>
-        <div className={styles['my-pets-container']}>
+        {loading && <Spinner/>}
+        {!loading && <div className={styles['my-pets-container']}>
             <div className={styles['my-pets-header']}>
                 Pets
                 <span onClick={() => history.goBack()} >Back to Profile</span>
             </div>
             <div className={styles['my-pets-container-pets']}>
-                {Pets.length == 0 && <div className={styles['my-pets-container-no-pets']}>This User has No Pets :(</div>}
-                {Pets && Pets.map((pet) =>(
-                    
-                    <div className={styles['my-pets-container-pet']} onClick={() => history.push('/Profile/' + pet.pet_name)}>
+                {pets.length == 0 && <div className={styles['my-pets-container-no-pets']}>This User has No Pets :(</div>}
+                {pets && pets.map((pet) =>(
+                    <div className={styles['my-pets-container-pet']} onClick={() => history.push('/Profile/' + pet.profile_id)}>
                         <div className={styles.LinkDiv}>
-                        <img className={styles['my-pets-container-pet-pic']} src={pet.pet_prof_pic}/>
-                        <div className={styles['my-pets-container-pet-name']}>{pet.pet_name}</div>
+                        <img className={styles['my-pets-container-pet-pic']} src={pet.profile_pic_link}/>
+                        <div className={styles['my-pets-container-pet-name']}>{pet.display_name}</div>
                         </div>
                     </div>
                     
                 ))}
             </div>
-        </div>
+        </div>}
         </>
     )
 }

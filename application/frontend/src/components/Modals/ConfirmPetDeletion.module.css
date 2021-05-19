@@ -35,6 +35,10 @@
     box-shadow: var(--elevation-1);
 }
 
+.delete-pet-confirm-button:hover{
+    font-weight: 600;
+}
+
 .delete-pet-cancel-button{
     background-color: white;
     color: var(--primary-clr);

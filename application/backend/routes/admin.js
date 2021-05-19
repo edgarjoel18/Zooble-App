@@ -8,7 +8,7 @@ router.get("/api/get-admin-feed-posts",(req,res)=>{
     let username = req.session.username;
     let postsWithLikes = []; //array for holding objects with posts and likes
     connection.query(
-        `SELECT Post.post_id, Post.timestamp, Post.body, Post.like_count, Profile.display_name, Profile.profile_pic_link, Profile.pet_id, Photo.link, Post.flag_count
+        `SELECT Profile.profile_id, Post.post_id, Post.timestamp, Post.body, Post.like_count, Profile.display_name, Profile.profile_pic_link, Profile.pet_id, Photo.link, Post.flag_count
          FROM Post
          LEFT JOIN Photo ON Post.post_id = Photo.post_id
          LEFT JOIN RegisteredUser ON RegisteredUser.reg_user_id = Post.reg_user_id
@@ -23,6 +23,27 @@ router.get("/api/get-admin-feed-posts",(req,res)=>{
                 console.log(err);
             else{
                 res.status(200).json(posts);
+            }
+        }
+    )
+
+})
+
+router.post("/api/delete-post",(req,res)=>{
+    console.log("POST /api/delete-post");
+
+    const {postID} = req.body
+    
+    connection.query(
+        `DELETE
+         FROM Post
+         WHERE Post.post_id = ${postID}
+        `,
+        function(err, result){
+            if(err)
+                console.log(err);
+            else{
+                res.status(200).json(result);
             }
         }
     )
