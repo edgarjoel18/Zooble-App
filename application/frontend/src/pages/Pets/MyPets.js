@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext} from 'react'
 import {Link, useHistory} from 'react-router-dom'
 
 import styles from './MyPets.module.css'
@@ -10,6 +10,10 @@ import DeleteIcon from  '../../images/Created Icons/Exit-Cancel.svg'
 import ConfirmPetDeletion from '../../components/Modals/ConfirmPetDeletion';
 
 import AddAPet from '../../components/Modals/AddAPet';
+import Spinner from '../../components/UI/Spinner/Spinner';
+
+import {RedirectPathContext} from '../../context/redirect-path'
+
 function MyPets() {
 
     const [deletionModalDisplay,setDeletionModalDisplay] = useState(false);
@@ -32,7 +36,8 @@ function MyPets() {
 
     const [ageOptions, setAgeOptions] = useState([]);
 
-    let history = useHistory();
+    const redirectContext = useContext(RedirectPathContext);
+    const history = useHistory();
 
     function viewDeletionModal(pet){
         setSelectedPet(pet);
@@ -48,7 +53,8 @@ function MyPets() {
     }
 
     useEffect(() => {
-        
+        redirectContext.updateLoading(true);
+
         const getCurrentUserPets = axios.get('/api/current-user-pets') 
         const getPetTypes = axios.get('/api/pet-types')
         const getDogBreeds = axios.get('/api/dog-breeds')
@@ -66,18 +72,14 @@ function MyPets() {
             setAgeOptions(responses[4].data);
             setSizeOptions(responses[5].data);
             setColorOptions(responses[6].data);
+            redirectContext.updateLoading(false);
         }) 
     }, [])
 
-    return (
-        <>
+    let displayMyPets = <Spinner />
 
-        <div className={styles['my-pets-container']}>
-            <div className={styles['my-pets-header']}>
-                My Pets
-                <span onClick={() => history.goBack()} >Back to Profile</span>
-            </div>
-            <div className={styles['my-pets-container-pets']}>
+    if (!redirectContext.loading)
+        displayMyPets = <>
             <div className={styles['my-pets-container-add-pet']} onClick={() => setAdditionModalDisplay(true)}>
                 <img className={styles['my-pets-container-add-pet-icon']} src={AddIcon}/>
                 <div className={styles['my-pets-container-add-pet-text']}>Add a Pet</div>
@@ -91,6 +93,18 @@ function MyPets() {
                         <img className={styles['my-pets-container-pet-delete']} onClick={()=>viewDeletionModal(pet)}src={DeleteIcon}/>
                     </div>
             ))}
+        </>
+
+    return (
+        <>
+
+        <div className={styles['my-pets-container']}>
+            <div className={styles['my-pets-header']}>
+                My Pets
+                <span onClick={() => history.goBack()} >Back to Profile</span>
+            </div>
+            <div className={styles['my-pets-container-pets']}>
+                {displayMyPets}
             </div>
         </div>
         <ConfirmPetDeletion display={deletionModalDisplay} onClose={() => setDeletionModalDisplay(false)} selectedPet={selectedPet}/>

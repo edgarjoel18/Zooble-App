@@ -9,6 +9,9 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import axios from 'axios';
 
+//component
+import ButtonLoader from '../UI/Spinner/ButtonLoader';
+
 function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,colorOptions,sizeOptions,ageOptions}) {
 
     //States to be set and sent to db
@@ -19,6 +22,10 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
     const [petType, setPetType] = useState();
     const [dogBreed, setDogBreed] = useState([]);
     const [catBreed, setCatBreed] = useState([]);
+    //Loading UI
+    const [loading, setLoading] = useState(false);
+
+
 
     function customTheme(theme){
         return {
@@ -40,6 +47,7 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
         // if(petType.label != 'Dog'){
         //     setCatBreed([]);
         // }
+        setLoading(true);
 
         axios.post('/api/create-pet-profile',{
             name: petName,
@@ -52,12 +60,16 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
         })
         .then(response =>{
             console.log(response);
+            setLoading(false);
             onClose();
         })
         .catch(err =>{
+            setLoading(false);
             console.log(err);
             //display error to user
         })
+        // remove later when the setLoading is working in the then block 
+        setLoading(false);
     }
 
     const animatedComponents = makeAnimated();
@@ -157,7 +169,7 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
                             components={animatedComponents}
                         />
                     </div>}
-                    <button className={styles['edit-pet-details-submit']} type='submit'>Submit</button>
+                    <button className={styles['edit-pet-details-submit']} type='submit'>{loading ? <ButtonLoader/> : 'Submit'}</button>
                 </div>
             </form>
         </Modal>
