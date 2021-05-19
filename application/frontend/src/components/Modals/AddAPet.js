@@ -86,11 +86,13 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
                             id="name" 
                             name="pet_name" 
                             maxLength="25"
+                            style={{paddingLeft: '13px'}}
                             required
                             value={petName}
                             // value={props.profile.userName}
                             // onChange={event => props.updateProfile('userName', event.target.value)} 
                             onChange={event => setPetName(event.target.value)}
+                            placeholder="Name"
                         />
                     </div>
                     <div className={styles['edit-pet-details-type']}>

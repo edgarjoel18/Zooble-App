@@ -14,14 +14,22 @@
 
 .EmptyDiv {
     display: block;
+    text-align: center;
+    position: relative;
     width: 162px;
     height: 162px;
     border-radius: 10px;
     background-repeat: no-repeat;
     background-size: 40px 40px;
-    background-image: url('../../../images/Created\ Icons/Add.svg');
     background-position: center;
+    color: #ccc;
+    cursor:initial;
     box-shadow: var(--elevation-1);
+}
+
+.EmptyDiv h3 {
+    position: absolute;
+    top: 40px;
 }
 
 .ImageStack_pic{
