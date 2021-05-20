@@ -39,11 +39,13 @@ import SignUpSuccess from './pages/Sign Up/SignUpSuccess'
 import MapSearch from './pages/MapSearch/MapSearch.js'
 
 import axios from 'axios';
+import Spinner from './components/UI/Spinner/Spinner';
 
 const App = () => {
 
   const [appUser,setAppUser] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   console.log("rerendering app");
 
@@ -53,12 +55,14 @@ const App = () => {
       console.log(response.data);
       setAppUser(response.data);
       setLoggedIn(true)
+      setLoading(false)
       console.log('appUser: ',appUser);
     })
     .catch((err) =>{
+      setLoading(false)
       console.log(err);
     })
-    // console.log('AppUser in App changed to: ', appUser)
+    console.log('AppUser in App changed to: ', appUser)
   },[])
 
 
@@ -85,7 +89,9 @@ const App = () => {
 
 
   return (
-    <Router>
+    <>
+    {loading && <Spinner/>}
+    {!loading && <Router>
       <NavBar
             appUser={appUser}
             updateLoginState={updateLoginState} 
@@ -149,6 +155,8 @@ const App = () => {
         {/* <Redirect to="/" /> */}
       </Switch>
     </Router>
+  }
+  </>
   );
 }
 
