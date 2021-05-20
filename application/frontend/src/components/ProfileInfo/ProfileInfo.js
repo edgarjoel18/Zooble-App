@@ -21,7 +21,7 @@ import axios from 'axios';
 import ConfirmDeletion from '../Modals/ConfirmDeletion';
 
 //make this into environment variable before deploying!
-const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL'
+const apiGatewayURL = process.env.REACT_APP_API_GATEWAY;
 
 function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStatus, isAdminView}) {
 

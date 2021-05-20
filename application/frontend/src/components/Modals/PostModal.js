@@ -84,7 +84,7 @@ function PostModal({display,onClose,selectedPost}) {
 
     if (!loading) {
         if (comments.length == 0 )
-            displayComment = <li style={{marginLeft: '5px'}}>No Comments yet</li>
+            displayComment = <li style={{marginLeft: '15px'}}>No Comments yet</li>
         else {
         displayComment = (
             comments && comments.map((comment)=>(
