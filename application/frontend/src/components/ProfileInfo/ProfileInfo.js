@@ -137,7 +137,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
     function cancelEditHandler() {
         console.log('cancel editing')
         axios.post('/api/name',{
-            newFirstName: 'Bob'
+            newFirstName: displayName
         })
         .then((res) =>{
             console.log(res.data);
@@ -278,7 +278,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                         value={displayName} 
                         readOnly={!editing}
                         maxLength = "25"
-                        onChange={event => updateProfile('userName', event.target.value)} 
+                        onChange={event => setDisplayName(event.target.value)} 
                     />
                 </h1> 
             )
