@@ -137,8 +137,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
     function cancelEditHandler() {
         console.log('cancel editing')
         axios.post('/api/name',{
-            newFirstName: 'John',
-            profileID: profile.profile_id
+            newFirstName: 'John'
         })
         .then((res) =>{
             console.log(res.data);
