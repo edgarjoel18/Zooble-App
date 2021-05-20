@@ -53,8 +53,10 @@ router.get("/api/posts",(req,res)=>{
           OFFSET ${offset}
         `,
         function(err, posts){
-            if(err)
+            if(err){
                 console.log(err);
+                res.status(500).json(err);
+            }
             else{
                 console.log(posts)
                 res.status(200).json(posts);

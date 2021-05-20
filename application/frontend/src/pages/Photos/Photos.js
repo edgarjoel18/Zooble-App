@@ -36,6 +36,11 @@ function Photos() {
             setName(responses[1].data.display_name);
             redirectContext.updateLoading(false);
         })
+        .catch((err) =>{
+            redirectContext.updateLoading(false);
+            console.log(err)
+            //display error message to the user
+        })
 
     }, [profileID])
     

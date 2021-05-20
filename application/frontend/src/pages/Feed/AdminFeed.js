@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback,useRef } from 'react'
 import {Link, useHistory } from "react-router-dom";
 import axios from 'axios';
 
@@ -13,26 +13,33 @@ import FlagIcon from '../../images/Third Party Icons/icons8-empty-flag.png'
 
 import ConfirmDeletion from '../../components/Modals/ConfirmDeletion';
 
+import useFeed from './useFeed'
+
 function AdminFeed() {
     const [postModalDisplay, setPostModalDisplay] = useState(false);
     const [deletionModalDisplay,setDeletionModalDisplay] = useState(false);
 
-    const [adminFeedPosts, setAdminFeedPosts] = useState([]);
+    const [offset, setOffset] = useState(0);
+
+
+    const {feedPosts, hasMore, postsLoading,error} = useFeed(offset,true); //custom hook for loading posts
+
+    const observer = useRef()
+
+    const lastPostElementRef = useCallback((node) =>{
+        if(postsLoading) return
+        if(observer.current) observer.current.disconnect()
+        observer.current = new IntersectionObserver(entries =>{
+            if(entries[0].isIntersecting ){
+                console.log('intersecting')
+                setOffset(prevOffset => prevOffset + 10)
+            }
+        })
+        if(node) observer.current.observe(node)
+        console.log('node:',node)
+    }, [postsLoading, hasMore])
 
     const history = useHistory();
-
-    useEffect(() => {
-        console.log('/api/get-admin-feed-posts');
-        axios.get('/api/get-admin-feed-posts')
-            .then(response => {
-                console.log(response.data);
-                setAdminFeedPosts(response.data);
-            })
-            .catch(err => {
-                console.log("Error: ");
-                console.log(err);
-            })
-    }, [])
 
     const [selectedPost, setSelectedPost] = useState({});
     const [createPostOverlayDisplayBool, setCreatePostOverlayDisplayBool] = useState(true);
@@ -101,7 +108,7 @@ function AdminFeed() {
             <div className={styles["follower-feed-container"]}>
                 <div className={styles["follower-feed-header"]}></div>
 
-                {adminFeedPosts.length == 0 &&                     
+                {feedPosts.length == 0 &&                     
                     <>
                         <div className={styles['follower-feed-no-posts-placeholder-header']}>
                             No Flagged Posts to Show
@@ -110,22 +117,44 @@ function AdminFeed() {
                         </div>
                     </>
                 }
-                {adminFeedPosts && adminFeedPosts.map((adminFeedPost) => (
-                    <div className={styles["follower-feed-post"]} onClick={() => openPostModal(adminFeedPost)} >
-                        <img className={styles["follower-feed-post-prof_pic"]} src={adminFeedPost.profile_pic_link} onClick={(event) => goToProfile(event,adminFeedPost.profile_id)}/>
-                        <div className={styles["follower-feed-post-name"]} onClick={(event) => goToProfile(event,adminFeedPost.profile_id)}>{adminFeedPost.display_name} </div>
-                        <div className={styles["follower-feed-post-timestamp"]}>{new Date(adminFeedPost.timestamp).toLocaleString()}</div>
-                        <div className={styles["follower-feed-post-admin-flags"]}>
-                            <span className={styles["follower-feed-post-flag-count"]}>{adminFeedPost.flag_count}</span>
-                            <img className={styles["follower-feed-post-admin-flag-icon"]} src={FlagIcon} onClick={(event) => removePost(event,adminFeedPost.post_id)}/>
-                        </div>
-                        <span className={styles['follower-feed-post-admin-delete']}  onClick={(event) => openDeletionModal(event,adminFeedPost)}>Delete</span>
-                        {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
+                {feedPosts && feedPosts.map((adminFeedPost,index) => {
+                    if(feedPosts.length === index + 1){
+                        return (
+                            <div ref={lastPostElementRef} className={styles["follower-feed-post"]} onClick={() => openPostModal(adminFeedPost)} >
+                                <img className={styles["follower-feed-post-prof_pic"]} src={adminFeedPost.profile_pic_link} onClick={(event) => goToProfile(event,adminFeedPost.profile_id)}/>
+                                <div className={styles["follower-feed-post-name"]} onClick={(event) => goToProfile(event,adminFeedPost.profile_id)}>{adminFeedPost.display_name} </div>
+                                <div className={styles["follower-feed-post-timestamp"]}>{new Date(adminFeedPost.timestamp).toLocaleString()}</div>
+                                <div className={styles["follower-feed-post-admin-flags"]}>
+                                    <span className={styles["follower-feed-post-flag-count"]}>{adminFeedPost.flag_count}</span>
+                                    <img className={styles["follower-feed-post-admin-flag-icon"]} src={FlagIcon} onClick={(event) => removePost(event,adminFeedPost.post_id)}/>
+                                </div>
+                                <span className={styles['follower-feed-post-admin-delete']}  onClick={(event) => openDeletionModal(event,adminFeedPost)}>Delete</span>
+                                {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
 
-                        <div className={styles["follower-feed-post-body"]}>{adminFeedPost.body}</div>
-                        <img className={styles["follower-feed-post-pic"]} src={adminFeedPost.link} />
-                    </div>
-                ))}
+                                <div className={styles["follower-feed-post-body"]}>{adminFeedPost.body}</div>
+                                <img className={styles["follower-feed-post-pic"]} src={adminFeedPost.link} />
+                            </div>
+                        )
+                    }
+                    else{
+                        return (
+                            <div className={styles["follower-feed-post"]} onClick={() => openPostModal(adminFeedPost)} >
+                                <img className={styles["follower-feed-post-prof_pic"]} src={adminFeedPost.profile_pic_link} onClick={(event) => goToProfile(event,adminFeedPost.profile_id)}/>
+                                <div className={styles["follower-feed-post-name"]} onClick={(event) => goToProfile(event,adminFeedPost.profile_id)}>{adminFeedPost.display_name} </div>
+                                <div className={styles["follower-feed-post-timestamp"]}>{new Date(adminFeedPost.timestamp).toLocaleString()}</div>
+                                <div className={styles["follower-feed-post-admin-flags"]}>
+                                    <span className={styles["follower-feed-post-flag-count"]}>{adminFeedPost.flag_count}</span>
+                                    <img className={styles["follower-feed-post-admin-flag-icon"]} src={FlagIcon} onClick={(event) => removePost(event,adminFeedPost.post_id)}/>
+                                </div>
+                                <span className={styles['follower-feed-post-admin-delete']}  onClick={(event) => openDeletionModal(event,adminFeedPost)}>Delete</span>
+                                {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
+
+                                <div className={styles["follower-feed-post-body"]}>{adminFeedPost.body}</div>
+                                <img className={styles["follower-feed-post-pic"]} src={adminFeedPost.link} />
+                            </div>
+                        )
+                    }
+                })}
             </div>
             <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost}/>
             <ConfirmDeletion display={deletionModalDisplay} onClose={() => setDeletionModalDisplay(false)} message={'Delete post by ' + selectedPost.display_name +'?'} deleteAction={removePost}/>

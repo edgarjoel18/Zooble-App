@@ -26,7 +26,6 @@ const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/de
 function Feed() {
 
     const [postModalDisplay, setPostModalDisplay] = useState(false);
-    // const [feedPosts, setFeedPosts] = useState([]);
 
     //creating a post display
     const [createPostDisplayName, setCreatePostDisplayName] = useState('');
@@ -55,7 +54,7 @@ function Feed() {
 
 
     const [offset, setOffset] = useState(0)
-    const {feedPosts, hasMore, postsLoading,error} = useFeed(offset); //custom hook for loading posts
+    const {feedPosts, hasMore, postsLoading,error} = useFeed(offset, false); //custom hook for loading posts
 
     const observer = useRef()
 
@@ -98,47 +97,27 @@ function Feed() {
     //runs on refresh
     useEffect(() => { //get profile pic and name of user  //
         redirectContext.updateLoading(true);
-        console.log('/api/feed-user');
-        axios.get('/api/feed-user')
-        .then(response =>{
-            console.log('/api/get-feed-user response.data: ', response.data);
-            setCreatePostDisplayName(response.data.display_name);
-            setCreatePostProfilePic(response.data.profile_pic_link);
-        })
-        .catch(err =>{
-            console.log("Error: ");
-            console.log(err);
-        })
 
-        // console.log('/api/posts');
-        // axios.get('/api/posts')
-        // .then(response =>{
-        //     console.log("Feed Posts: ", response.data);
-        //     setFeedPosts(response.data);
-        // })
-        // .catch(err =>{
-        //     redirectContext.updateLoading(false);
-        //     console.log("Error: ");
-        //     console.log(err);
-        // })
+        const getFeedUser = axios.get('/api/feed-user')
+        const getFeedUserPets =  axios.get('/api/current-user-pets')
 
-        axios.get('/api/current-user-pets')
-        .then(response =>{
-            console.log("Taggable Pets: ",response.data);
+        Promise.all([getFeedUser,getFeedUserPets])
+        .then((responses) =>{
+            setCreatePostDisplayName(responses[0].data.display_name);
+            setCreatePostProfilePic(responses[0].data.profile_pic_link);
+    
             let taggablePetOptions = [];
-
             //construct compatible list of options for react-select from backend response
-            for(let i = 0; i < response.data.length; i++){
-                taggablePetOptions.push({value: response.data[i].pet_id, label: response.data[i].display_name});
+            for(let i = 0; i < responses[1].data.length; i++){
+                taggablePetOptions.push({value: responses[1].data[i].pet_id, label: responses[1].data[i].display_name});
             }
-            console.log("Taggable Pet Options: ",taggablePetOptions)
             setTaggablePets(taggablePetOptions);
             redirectContext.updateLoading(false);
         })
         .catch(err =>{
             redirectContext.updateLoading(false);
-            console.log("Error: ");
             console.log(err);
+            //display error message to the user
         })
     }, [update])
 
