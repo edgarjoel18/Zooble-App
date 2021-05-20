@@ -3,6 +3,8 @@ import {useRef, useEffect, useState} from "react";
 import {NavLink, useHistory} from "react-router-dom";
 import DropdownArrow from '../../images/Created Icons/Arrow.svg';
 
+import useWindowDimensions from '../ProfileContent/ImageContainer/useWindowDimensions';
+
 import styles from './NavBar.module.css'
 
 
@@ -33,6 +35,7 @@ function NavBarRight({appUser, updateLoginState}) {
   const history = useHistory();
 
   const [accountMenuDisplay, setAccountMenuDisplay] = useState({display: 'none'});
+  const { width } = useWindowDimensions();
 
   function logoutHandler(){
     axios.post("/api/logout", {withCredentials: true}).then((response) =>{
@@ -77,6 +80,7 @@ function NavBarRight({appUser, updateLoginState}) {
               <NavLink className={styles["account-menu-dropdown-link"]} to={`/Profile/${appUser.profileID}`}>My Profile</NavLink>
             </li>
             <li><NavLink className={styles["account-menu-dropdown-link"]} to="/MyPets">My Pets</NavLink></li>
+            <li>{(width < 770) && <NavLink className={styles["account-menu-dropdown-link"]} to="/Messages" >Messages</NavLink>}</li>
             <li><NavLink className={styles["account-menu-dropdown-link"]} to="/" onClick={logoutHandler}>Logout</NavLink></li>
           </ul>
         </span>}
