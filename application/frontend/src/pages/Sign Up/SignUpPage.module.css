@@ -1,7 +1,7 @@
 .signup-container {
     margin: 200px auto;
     border-radius: 7.5px;
-    width: 800px;
+    width: 50%;
     box-shadow: var(--elevation-1);
     display: flex;
     flex-direction: column;
@@ -20,9 +20,9 @@
     padding-top: 50px;
     display: grid;
     grid-template-columns: 2;
-    /* grid-template-areas: 'fname               lname'
-                         'email            username'
-                         'password confirm-password'; */
+    grid-template-areas: 'fname-input-container lname-input-container'
+                         'email-input-container username-input-container'
+                         'password-input-container confirm-password-input-container'; 
     grid-template-rows: 3;
     gap: 50px;
     justify-content: center;
@@ -160,17 +160,42 @@
 }
 
 @media only screen and (min-width: 414px) and (max-width: 1024px) {
+    .signup-container-header {
+        font-size: var(--h2);
+        font-weight: bold;
+    }
     .signup-fields-container {
-        grid-template-columns: 1fr; /* One column */
-        width: 50%;
-        align-items: center;
-    }    
+        grid-template-areas: 
+            'fname-input-container' 
+            'lname-input-container'
+            'email-input-container' 
+            'username-input-container'
+            'password-input-container' 
+            'confirm-password-input-container';
+        display: flex;
+        flex-direction: column;
+        grid-gap: 0px;
+        gap: 0px;
+    }  
 }
 
 @media only screen and (max-width: 414px){
+    .signup-container-header {
+        font-size: var(--h2);
+        font-weight: bold;
+    }
     .signup-fields-container {
-        grid-template-columns: 1fr; /* One column */
-        gap: 5px;
-        align-items: center;
-    }    
+        display: flex;
+        flex-direction: column;
+        grid-gap: 0px;
+        gap: 0px;
+        text-align: center;
+    }
+    .signup-fields-container input {
+        width: 90%;   
+    }  
+    .submit-btn {
+        width: 100px; 
+        height: 100px;
+    }
 }
