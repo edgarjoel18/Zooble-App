@@ -1,6 +1,7 @@
 .Profile {
     max-width: 1440px;
     margin: 30px auto;
+    font-family: var(--ff-primary);
 }
 
 .SwitchView {
@@ -54,7 +55,7 @@
     right: 0;
     height: 14px;
     width: 14px;
-    background-color: rgb(11, 243, 81);
+    background-color: var(--primary-clr);
     border-radius: 50%;
     transition: all 0.5s;
 }

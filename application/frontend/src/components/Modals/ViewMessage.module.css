@@ -1,5 +1,5 @@
 .view-message-header{
-    font-family: var(--ff-primary);
+    font-family: var(--ff-tertiary);
     font-size: var(--h1);
     font-weight: 600;
     width: 95%;
@@ -29,7 +29,7 @@
     height: 300px;
     width:95%;
     overflow-y: auto;
-    font-family: var(--ff-secondary);
+    font-family: var(--ff-primary);
     box-shadow: var(--elevation-1);
     border-radius: 7.5px;
     padding: 10px;
@@ -53,8 +53,18 @@
     box-shadow: var(--elevation-1);
     cursor: pointer;
     font-family: var(--ff-primary);
+    font-size: var(--h3);
     text-align: center;
     line-height: 32px;
     float: right;
     margin: 15px 2.5% 15px 0;
+    transition: .15s ease-in-out;
+}
+
+.view-message-reply-button:hover{
+    opacity: .75;
+}
+
+.view-message-container{
+    width: 750px;
 }

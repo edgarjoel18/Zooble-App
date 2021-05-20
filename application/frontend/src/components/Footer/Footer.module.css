@@ -4,6 +4,7 @@
     color: white;
     display: grid;
     grid-template-columns: 5;
+    font-family: var(--ff-primary);
 }
 
 .our-team-footer{
@@ -53,4 +54,10 @@ i {
     border: none;
     background-color: transparent;
     color:var(--reversed-txt-clr);
+    cursor: pointer;
+}
+
+.icons-8-attribution{
+    margin-left: auto;
+    padding:10px;
 }

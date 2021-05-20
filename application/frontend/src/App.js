@@ -1,6 +1,6 @@
-import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
+import {BrowserRouter as Router, Switch, Route, Redirect, useParams} from 'react-router-dom'
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Home from './pages/Home/Home'
 import Edgar from './pages/AboutMe/Edgar'
 import Cameron from './pages/AboutMe/Cameron'
@@ -18,49 +18,92 @@ import ShelterSignUpPage from './pages/Sign Up/ShelterSignUp.js'
 import ShelterSignUpPage2 from './pages/Sign Up/ShelterSignUpPage2.js'
 import BusinessSignUpPage from './pages/Sign Up/BusinessSignUp.js'
 import BusinessSignUpPage2 from './pages/Sign Up/BusinessSignUpPage2.js'
-import ProfilePage from './pages/Profile/Profile'
-import PetOwnerPage from './pages/Profile/PetOwnerProfilePage'
+import ProfilePage from './pages/Profile/Profile';
 import Messages from './pages/Messages/Messages'
 import MyPets from './pages/Pets/MyPets'
 import Pets from './pages/Pets/Pets'
+import ResetPage from './pages/Reset/ResetPage'
 
+import AdminFeed from './pages/Feed/AdminFeed.js';
 import Feed from './pages/Feed/Feed.js'
-import Photo from './pages/Photo/Photo';
+import Photos from './pages/Photos/Photos';
 import Followers from './pages/Followers/Followers';
-import ExploreUsers from './pages/ExploreUsers/ExploreUsers';
+
+import SignUpSuccess from './pages/Sign Up/SignUpSuccess'
+
 
 import MapSearch from './pages/MapSearch/MapSearch.js'
 
-function App() {
-  const [appUser, setAppUser] = useState(null);
+import axios from 'axios';
+import Spinner from './components/UI/Spinner/Spinner';
+
+const App = () => {
+
+  const [appUser,setAppUser] = useState();
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  console.log("rerendering app");
+
+  useEffect(() => {
+    axios.get("/api/login",{withCredentials: true}).then((response) =>{
+      console.log(response.data);
+      setAppUser(response.data);
+      setLoggedIn(true)
+      setLoading(false)
+      console.log('appUser: ',appUser);
+    })
+    .catch((err) =>{
+      setLoading(false)
+      console.log(err);
+    })
+    console.log('AppUser in App changed to: ', appUser)
+  },[])
+
+
+  function updateLoginState(loggedIn, user){
+    console.log("Updating Login State");
+    console.log(loggedIn);
+    setAppUser(user);
+    console.log(user);
+  }
+
+  function PrivateRoute({children, ...rest}){
+    return (
+    <Route {...rest} render={()=>{
+      return appUser ? children : <Redirect to={'/login-page'}/>
+    }}/>)
+  }
+
+  function AdminRoute({children, ...rest}){
+    return (
+    <Route {...rest} render={()=>{
+      return appUser ? children :  <Redirect to={'/login-page'}/>
+    }}/>)
+  }
+
 
   return (
-    <Router>
-      <NavBar appUser={appUser}/>
+    <>
+    {loading && <Spinner/>}
+    {!loading && <Router>
+      <NavBar
+            appUser={appUser}
+            updateLoginState={updateLoginState} 
+      />
        <Switch>
-        <Route path="/" exact component={Home}/>
-        <Route 
-          path="/login-page" 
-          exact component={LoginPage}
-          appUser={appUser} 
-          setAppUser={setAppUser}
-        />
+        <Route exact path="/" >
+          <Home appUser={appUser} />
+        </Route>
+        <Route exact path="/login-page" >
+          <LoginPage appUser={appUser} updateLoginState={updateLoginState}/>
+        </Route>
         <Route path="/account-type" exact component={AccountTypePage}/>
         <Route path="/signup-page" exact component={SignUpPage}/>
         <Route path="/shelter-signup" exact component={ShelterSignUpPage}/>
         <Route path="/shelter-signup2" exact component={ShelterSignUpPage2}/>
         <Route path="/business-signup" exact component={BusinessSignUpPage}/>
         <Route path="/business-signup2" exact component={BusinessSignUpPage2}/>
-        <Route path="/Feed" component={Feed}/>
-        <Route path="/MapSearch" component={MapSearch}/>
-        <Route path="/Profile" exact component={ProfilePage}/>
-        <Route path="/Profile/Alex" component={PetOwnerPage}/>
-        <Route path="/Photo" component={Photo}/>
-        <Route path="/Messages" component={Messages}/>
-        <Route path="/MyPets" component={MyPets}/>
-        <Route path="/Pets" component={Pets}/>
-        <Route path="/Followers" component={Followers}/>
-        <Route path="/ExploreUsers" component={ExploreUsers}/>
         <Route path="/Edgar" component={Edgar}/>
         <Route path="/Daniel" component={Daniel}/>
         <Route path="/Em" component={Em}/>
@@ -68,9 +111,47 @@ function App() {
         <Route path="/Wenjie" component={Wenjie}/>
         <Route path="/Cameron" component={Cameron}/>
         <Route path="/Wameedh" component={Wameedh}/>
-        <Redirect to="/" />
+
+        {/* Public Pages */}
+        <Route path="/MapSearch" component={MapSearch}/>
+        <Route exact path="/Profile/:profileID">
+          <ProfilePage appUser={appUser}/>
+        </Route>
+        <Route path="/Photos/:profileID" component={Photos}/>
+        <Route path="/Followers/:profileID" component={Followers}/>
+
+        {/* User Pages */}
+        <PrivateRoute path="/Feed">
+          <Feed appUser={appUser}/>
+        </PrivateRoute>
+
+        {/* <Route path="/MyPhotos" component={MyPhotos}/> */}
+        <PrivateRoute path="/Messages">
+          <Messages/>
+        </PrivateRoute>
+        <PrivateRoute path="/MyPets">
+          <MyPets/>
+        </PrivateRoute>
+        <PrivateRoute path="/Pets/:profileID">
+          <Pets/>
+        </PrivateRoute> 
+        {/* <Route path="/ExploreUsers" component={ExploreUsers}/> */}
+
+        <Route path="/SignUpSuccess" component={SignUpSuccess}/>
+        <Route path="/business/Register" component={ResetPage}/>
+
+
+        <Route path="/reset/:token" component={ResetPage}/>
+
+        <Route path="/AdminFeed">
+          <AdminFeed appUser={appUser}/>
+        </Route>
+
+        {/* <Redirect to="/" /> */}
       </Switch>
     </Router>
+  }
+  </>
   );
 }
 

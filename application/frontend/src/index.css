@@ -17,11 +17,13 @@ html,body {
 :root{
 
   /* UI Colors*/
-  --primary-clr: #1CB48F;
+  --primary-clr: #24949a;
   --inset-txt-field-clr: #FCF8F8;
   --site-preview-1-container-color: #C6A5A5;
-  --site-preview-2-container-color:  #a0bcf7;
+  --site-preview-2-container-color:  #9cc0f9;
   --cancel-delete-exit-color: #EB1B1B;
+  --accent-color-2: #131b49;
+  --accent-color-1: #feebde;
   
   /*text colors*/
   --primary-txt-clr: #000;
@@ -30,8 +32,9 @@ html,body {
   --reversed-txt-clr: #fff;
 
   /*typography*/ 
-  --ff-primary: 'Open Sans', sans-serif;
+  --ff-primary: 'Roboto', sans-serif;
   --ff-secondary: 'Roboto', sans-serif;
+  --ff-tertiary: 'Nunito', sans-serif;
 
   /* shadows */
   --elevation-0: none;
@@ -47,6 +50,8 @@ html,body {
   --elevation-10: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.20); 
   
   /*font sizes */
+  --hero: 2.5em;
+  --h0: 2.5em;
   --h1: 2em;
   --h2: 1.5em;
   --h3: 1.17em;
@@ -88,7 +93,6 @@ h2{
 h3{
   font-family: var(--ff-primary) !important;
 }
-
 
 
 

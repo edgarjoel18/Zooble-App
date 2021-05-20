@@ -6,37 +6,73 @@ import styled from 'styled-components';
 
 import PostModal from '../../Modals/PostModal'
 
-function ImageContainer(props) {
+function ImageContainer({previews, profile, title, selfView}) {
+    console.log("previews: ",previews);
+    console.log("previews.length: ",previews.length);
+
     const [postModalDisplay, setPostModalDisplay] = useState(false);
+    const [imageStack, setImageStack] = useState();
+
+    const [selectedPost,setSelectedPost] = useState({});
+
     let history = useHistory();
 
     function closePostModal(){
         console.log('exit button clicked')
         setPostModalDisplay(false);
     }
-    function presentPostModal(postImage){
+    function presentPostModal(index){
+        setSelectedPost(previews[index])
         console.log('clicked on image');
         setPostModalDisplay(true);
     }
-    const[imageStack, setImageStack] = useState();
 
     useEffect (() => {
-        setImageStack(displayImageStack(props.image.length, props.accountType));
-        console.log(props.profile)
-    }, [])
+        console.log("ImageContainer useEffect");
+        setImageStack(displayImageStack(previews.length, profile.type));
+        console.log(profile)
+    }, [previews])
 
     //display a given number of pictures
     const displayImageStack = (val, accountType) => {
-        console.log('displayImageStack');
-        if (props.image.length === 0)
-            return (
-                <Link>
-                    <div className={styles.EmptyDiv} >
-                    </div>
-                </Link>
-            );
+        console.log('displayImageStack', previews);
+        console.log("val: ",val)
+        if (val === 0)
+            if (title === 'Photos'  || title === 'My Photos' )
+                return (
+                    <Link>
+                        <div className={styles.EmptyDiv} >
+                            <h3>No Photos to show</h3>
+                        </div>
+                    </Link>
+                );
+            else if (title === 'My Siblings' )
+                return (
+                    <Link>
+                        <div className={styles.EmptyDiv} >
+                            <h3>No Siblings to show</h3>
+                        </div>
+                    </Link>
+                );
+            else if (title === 'Pets')
+                return (
+                    <Link>
+                        <div className={styles.EmptyDiv} >
+                            <h3>No Pets to show</h3>
+                        </div>
+                    </Link>
+                );
+        // set limited amount of photos displayed 
         let marginToRight = null;
-        accountType === 'shelter' ? marginToRight = 40 : marginToRight = 67.6;
+        if (accountType === 'Shelter') {
+            marginToRight = 40;
+            val = Math.min(val, 3);
+        }
+        else {
+            marginToRight = 67.6;
+            val = Math.min(val, 6);
+        }
+        //accountType === 'Shelter' ? marginToRight = 40 : marginToRight = 67.6;
         let imageStack = [];
         for (let i = 0; i < val; i++) {
             imageStack.push(i);
@@ -55,7 +91,7 @@ function ImageContainer(props) {
                         //right = '0';
                         left = '0';
                     }
-                    const Img = styled.img `
+                    const Img = styled.div `
                         height: 162px;
                         width: 162px;
                         top: ${top};
@@ -63,52 +99,70 @@ function ImageContainer(props) {
                         position: ${position};
                         margin-left: ${(val-index-1) * marginToRight  + 'px'};
                         border-radius: 15px;
-                        box-shadow: var(--elevation-1); //-${index < 6 ? 6-index : 1}
-                        object-fit: cover;
+                        text-align: center;
+                        box-shadow: var(--elevation-1);
                         `;
-                    return (
-                        // <a href={props.image[index].profile_pic} key={props.image[index].pet_id} > //Removed to test post modal functionality
-                        <div onClick={() => presentPostModal(props.image[index].profile_pic)} key={props.image[index].pet_id}>
+                    let displayPostModal = (
+                        <div onClick={() => presentPostModal(index)} key={previews[index].timestamp + index}>
                             <Img 
-                                //key={props.image[index].pet_id}
-                                src={props.image[index].profile_pic} 
-                                alt="No Image Found"
                                 className={styles.ImageStack_pic}
-                            />
+                            >
+                                <img src={previews[index].link} alt="No Image Found" className={styles.ImageStack_pic} />
+                            </Img>
                         </div>
-                        //</a>
-                    );
+                    )
+                    if (title === 'My Siblings' || title === 'My Pets' || title === 'Pets')
+                        displayPostModal = (
+                            <Link to={"/Profile/" + previews[index].profile_id} key={index} >
+                                    <Img 
+                                        className={styles.ImageStack_pic}
+                                    >
+                                    <img src={previews[index].profile_pic_link} alt="No Image Found" className={styles.ImageStack_pic} />
+                                    <div className={styles.ImageStackText} >{previews[index].display_name}</div>
+                                </Img>
+                            </Link>
+                        )
+                    return displayPostModal
                 })}
             </div>
         );
     }
 
-    function seeAllImageHandler() {
-        const queryParams = (
-            encodeURIComponent('id') + '=' + encodeURIComponent(props.profile.id) + '&' 
-            + encodeURIComponent('name') + '=' + encodeURIComponent(props.profile.userName)
-            );
-        history.push({
-            pathname: '/Photo',
-            search: '?' + queryParams
-        });
+    // function seeAllImageHandler(path) {
+    //     const queryParams = (
+    //         encodeURIComponent('id') + '=' + encodeURIComponent(profile.id) + '&' 
+    //         + encodeURIComponent('name') + '=' + encodeURIComponent(profile.userName)
+    //         );
+    //     history.push({
+    //         pathname: path,
+    //         search: '?' + queryParams
+    //     });
 
-    }
+    // }
     
     let seeAll = null;
-    if (props.title === 'Photos' || props.title === 'My Photos') {
-        seeAll = <p style={{cursor: 'pointer'}} onClick={() => seeAllImageHandler()} >See All</p>;
+    if (previews.length === 0)
+        seeAll = null;
+    else if (title === 'Photos' || title === 'My Photos') {
+        selfView ?  //this won't work because the user will still able to go to photos/:profileId by directUrl, it will be better to check ownership on the page itself
+        seeAll = <Link style={{cursor: 'pointer', float: 'right'}} to={"/Photos/" + profile.profile_id}>See All</Link>
+        :
+        seeAll = <Link style={{cursor: 'pointer', float: 'right'}} to={"/Photos/" + profile.profile_id}>See All</Link>
+    }
+    else if (title === 'My Pets') {
+        seeAll = <Link style={{cursor: 'pointer', float: 'right'}} to={"/Pets/" + profile.profile_id}>See All</Link>
     }
     else {
-        seeAll = <p style={{cursor: 'pointer'}} onClick={() => alert('coming soon')} >See All</p>
+        seeAll = <Link style={{cursor: 'pointer', float: 'right'}} to={"/Pets/" + profile.profile_id}>See All</Link>
     }
 
     return (
         <>
         {/* for debugging  <button onClick={()=>{setPostModalDisplay(true)}}></button> */}
-        <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={{}}/>
+        <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost}/>
         <div className={styles.ImageContainer} >
-            <h2>{props.title}</h2>
+            {/* {typeof previews[0] !== 'undefined' && <img src={previews[0].link}/>} */}
+            <h2>{title}</h2>
             {imageStack}
             {seeAll}
         </div>

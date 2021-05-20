@@ -2,22 +2,19 @@
     display: flex;
 }
 
-.Image {
-    width: 223px;
-    height: 223px;
-    border-radius: 10px;
-    box-shadow: var(--elevation-2);
-}
 
 .UserName {
     font-weight: 600;
+    font-family: var(--ff-primary);
+    white-space: nowrap;
 }
 
 .UserName input {
-    width: 600px;
+    width: 480px;
     outline: none;
-    border: solid var(--primary-clr) 3px;
+    border: solid var(--primary-clr) 2px;
     border-radius: 10px;
+    text-overflow: ellipsis;
 }
 
 .UserName input:read-only {
@@ -33,7 +30,8 @@
 }
 
 .ButtonContainer {
-    display: inline;
+    display: flex;
+    flex-wrap: nowrap;
     height: 42px;
     font-size: 20px;
     font-weight: 400;
@@ -41,33 +39,17 @@
 
 .ButtonContainer a {
     text-decoration: none;
+    display: inline-block;
+    width: 100%;
 }
-
-/* .Dropdown {
-    background-color: var(--reversed-txt-clr);
-    border: solid var(--primary-clr) 2px;
-    width: 170px;
-    height: 100%;
-    padding-left: 10px;
-    border-radius:7px;
-    color: var(--primary-clr);
-    background: url("../../images/PNGIX.com_north-arrow-png_562032.png") no-repeat right;
-    background-size: 20px 15px;
-    background-position-x: 140px;
-    margin-right: 15px;
-    box-sizing: border-box;
-    box-shadow: var(--elevation-1);
-    outline: none;
-    cursor: pointer;
-} */
 
 .DropdownButton {
     background-color: var(--reversed-txt-clr);
-    border: solid var(--primary-clr) 2px;
+    border: solid var(--accent-color-2) 2px;
     width: 170px;
     height: 100%;
     margin-right: 30px;
-    color: var(--primary-clr);
+    color: var(--accent-color-2);
     border-radius:7px;
     box-sizing: border-box;
     /* box-shadow: var(--elevation-1); */
@@ -75,30 +57,67 @@
     cursor: pointer;
 }
 
-.DropdownHidden {
-    display: none;
-}
+/* .DropdownButton:hover{
+    border-width: 3px;
+} */
 
-.DropdownContent {
+/* .DropdownHidden {
+    display: none;
+} */
+
+/* .DropdownContent {
     display: flex;
     flex-direction: column;
     position: absolute;
     background-color: #ffffff;
     text-align: center;
-    color: var(--primary-txt-clr);
+    color: var(--primary-clr);
     min-width: 170px;
     box-shadow: var(--elevation-1);
-    z-index: 101;
-}
+    z-index: 100;
+    border-radius: 7.5px;
+} */
 
 .DropdownItem {
-    width: 100%;
+    padding-left: 0;
 }
 
-
 .DropdownItem:hover {
-    width: 100%;
     color: var(--primary-clr);
+}
+
+.DropdownContent{
+    opacity: 0;
+    width: 200px;
+    padding-left: 20px;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+    margin-top: 0px;
+    list-style: none;
+    border-radius: 7.5px;
+    position:absolute;
+    background-color: white;
+    box-shadow: var(--elevation-1);
+    z-index: 1;
+}
+
+/* .DropdownButton:focus + ul{
+    opacity:1;
+    visibility: visible;
+    transform: translateY(0px);
+} */
+
+.DropdownButton:hover + ul, .UnfollowButton:hover + ul{
+    opacity:1;
+    visibility: visible;
+    transform: translateY(0px);
+}
+
+.DropdownContent:hover{
+    opacity:1;
+    visibility: visible;
+    transform: translateY(0px);
 }
 
 .FristButton {
@@ -124,11 +143,16 @@
     border-radius:7px;
     box-sizing: border-box;
     border: none;
-    box-shadow: var(--elevation-1);
+    /* box-shadow: var(--elevation-1); */
     text-align: center;
     align-items: center;
     outline: none;
     cursor: pointer;
+    transition: .15s ease-in-out;
+}
+
+.Button:hover{
+    opacity: .75;
 }
 
 .EditButton {
@@ -140,4 +164,49 @@
 
 .DropdownText {
     flex-grow: 1;
+}
+
+.UnfollowButton {
+    background-color: #ccc;
+    border: none;
+    width: 170px;
+    height: 100%;
+    margin-right: 30px;
+    color: #545454;
+    border-radius:7px;
+    box-sizing: border-box;
+    outline: none;
+    cursor: pointer;
+}
+
+
+.Image {
+    width: 223px;
+    height: 223px;
+    border-radius: 10px;
+    box-shadow: var(--elevation-2);
+    object-fit: cover;
+}
+
+.ImageStackText {
+    position: absolute;
+    width: 100%;
+    padding: 5px;
+    color: white;
+    bottom: 0px;
+    background-color: var(--primary-clr);
+    align-content: center;
+    border-radius: 0 0 7.5px 7.5px;
+    box-shadow: var(--elevation-1);
+    cursor: pointer;
+}
+
+.ban-button {
+    margin-left: 30px;
+    color: white;
+    background-color: red;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
 }

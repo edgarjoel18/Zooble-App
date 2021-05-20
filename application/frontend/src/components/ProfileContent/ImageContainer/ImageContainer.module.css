@@ -14,53 +14,51 @@
 
 .EmptyDiv {
     display: block;
+    text-align: center;
+    position: relative;
     width: 162px;
     height: 162px;
     border-radius: 10px;
     background-repeat: no-repeat;
     background-size: 40px 40px;
-    background-image: url('../../../images/addIcon.png');
     background-position: center;
-    box-shadow: var(--elevation-1);
+    color: #ccc;
+    cursor:initial;
+    /* box-shadow: var(--elevation-1); */
+}
+
+.EmptyDiv h3 {
+    position: absolute;
+    top: 40px;
 }
 
 .ImageStack_pic{
+    width: 162px;
+    height: 162px;
+    border-radius: 15px;
     cursor:pointer;
+    object-fit: cover;
+    overflow: hidden;
 }
+
+.ImageStack_pic img{
+    transition: transform .25s ease;
+}
+
 
 .ImageStack_pic:hover{
     z-index: 1;
-    box-shadow: var(--elevation-2);
+    transform: scale(1.1);
+    
 }
 
-/* .TopImage {
-    display: block;
-    width: 162px;
-    height: 162px;
-    border-radius: 10px;
-    margin-right: 120px;
-    box-shadow: var(--elevation-6);
-}
-
-.MiddleImage {
-    width: 162px;
-    height: 162px;
-    border-radius: 10px;
+.ImageStackText {
     position: absolute;
-    right: 0;
-    top: 0;
-    z-index: -1;
-    margin-right: 60px;
-    box-shadow: var(--elevation-4);
+    width: 100%;
+    padding: 5px;
+    color: white;
+    background-color: var(--primary-clr);
+    bottom: 0;
+    align-content: center;
+    border-radius: 0 0 15px 15px;
 }
-
-.BottomImage {
-    width: 162px;
-    height: 162px;
-    border-radius: 10px;
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: -2;
-    box-shadow: var(--elevation-4);
-} */

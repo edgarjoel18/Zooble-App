@@ -1,63 +1,240 @@
-import {useState} from 'react'
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-import styles from './Messages.module.css';
-import ViewMessage from '../../components/Modals/ViewMessage'
+import Tab from "./Tab";
+
+import styles from "./Messages.module.css";
+import RecievedMessage from "../../components/Modals/RecievedMessage";
+import SentMessage from "../../components/Modals/SentMessage";
+import AddIcon from "../../images/Created Icons/AddWhite.svg";
+import SendMessage from "../../components/Modals/SendMessage";
+import Spinner from "../../components/UI/Spinner/Spinner";
 
 function Messages() {
-    const [messageModalDisplay,setMessageModalDisplay] = useState(false);
+  const [recievedMessageModalDisplay, setRecievedMessageModalDisplay] =
+    useState(false);
+  const [sentMessageModalDisplay, setSentMessageModalDisplay] = useState(false);
+  const [sendMessageModalDisplay, setSendMessageModalDisplay] = useState(false);
 
-    const [selectedMessage, setSelectedMessage] = useState({});
+  const [selectedMessage, setSelectedMessage] = useState({});
 
-    const [messages, setMessages] = useState([
-        {
-            message_id: 1,
-            subject: 'How are you doing?',
-            timestamp: '12/25/20 at 11:05 AM',
-            sender: 'Bob',
-            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg',
-            body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada. Praesent congue erat at massa. Sed cursus turpis vitae tortor. Donec posuere vulputate arcu. Phasellus accumsan cursus velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac placerat dolor lectus quis orci. Phasellus consectetuer vestibulum elit. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc. Vestibulum fringilla pede sit amet augue. In turpis. Pellentesque posuere. Praesent turpis. Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Donec elit libero, sodales nec, volutpat a, suscipit non, turpis. Nullam sagittis. Suspendisse pulvinar, augue ac venenatis condimentum, sem libero volutpat nibh, nec pellentesque velit pede quis nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce id purus. Ut varius tincidunt libero. Phasellus dolor. Maecenas vestibulum mollis diam. Pellentesque ut neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In dui magna, posuere eget, vestibulum et, tempor auctor, justo. In ac felis quis tortor malesuada pretium. Pellentesque auctor neque nec urna. Proin sapien ipsum, porta a, auctor quis, euismod ut, mi. Aenean viverra rhoncus pede. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut non enim eleifend felis pretium feugiat. Vivamus quis mi. Phasellus a est. Phasellus magna. In hac habitasse platea dictumst. Curabitur at lacus ac velit ornare lobortis. Curabitur a felis in nunc fringilla tristique. Morbi mattis ullamcorper velit. Phasellus gravida semper nisi. Nullam vel sem. Pellentesque libero tortor, tincidunt et, tincidunt eget, semper nec, quam. Sed hendrerit. Morbi ac felis. Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi. Nunc nulla. Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Donec venenatis vulputate lorem. Morbi nec metus. Phasellus blandit leo ut odio. Maecenas ullamcorper, dui et placerat feugiat, eros pede varius nisi, condimentum viverra felis nunc et lorem. Sed magna purus, fermentum eu, tincidunt eu, varius ut, felis. In auctor lobortis lacus. Quisque libero metus, condimentum nec, tempor a, commodo mollis, magna. Vestibulum ullamcorper mauris at ligula. Fusce fermentum. Nullam cursus lacinia erat. Praesent blandit laoreet nibh. Fusce convallis metus id felis luctus adipiscing. Pellentesque egestas, neque sit amet convallis pulvinar, justo nulla eleifend augue, ac auctor orci leo non est. Quisque id mi. Ut tincidunt tincidunt erat. Etiam feugiat lorem non metus. Vestibulum dapibus nunc ac augue. Curabitur vestibulum aliquam leo. Praesent egestas neque eu enim. In hac habitasse platea dictumst. Fusce a quam. Etiam ut purus mattis mauris sodales aliquam. Curabitur nisi. Quisque malesuada placerat nisl. Nam ipsum risus, rutrum vitae, vestibulum eu, molestie vel, lacus. Sed augue ipsum, egestas nec, vestibulum et, malesuada adipiscing, dui. Vestibulum facilisis, purus nec pulvinar iaculis, ligula mi congue nunc, vitae euismod ligula urna in dolor. Mauris sollicitudin fermentum libero. Praesent nonummy mi in odio. Nunc interdum lacus sit amet orci. Vestibulum rutrum, mi nec elementum vehicula, eros quam gravida nisl, id fringilla neque ante vel mi. Morbi mollis tellus ac sapien. Phasellus volutpat, metus eget egestas mollis, lacus lacus blandit dui, id egestas quam mauris ut lacus. Fusce vel dui. Sed in libero ut nibh placerat accumsan. Proin faucibus arcu quis ante. In consectetuer turpis ut velit. Nulla sit amet est. Praesent metus tellus, elementum eu, semper a, adipiscing nec, purus. Cras risus ipsum, faucibus ut, ullamcorper id, varius ac, leo. Suspendisse feugiat. Suspendisse enim turpis, dictum sed, iaculis a, condimentum nec, nisi. Praesent nec nisl a purus blandit viverra. Praesent ac massa at ligula laoreet iaculis. Nulla neque dolor, sagittis eget, iaculis quis, molestie non, velit. Mauris turpis nunc, blandit et, volutpat molestie, porta ut, ligula. Fusce pharetra convallis urna. Quisque ut nisi. Donec mi odio, faucibus at, scelerisque quis, '
-        },
-        {
-            message_id: 2,
-            subject: 'What\'s Up Doc?',
-            timestamp: '12/25/20 at 11:05 AM',
-            sender: 'Bugs',
-            pic: 'https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg',
-            body: 'Ipsum a arcu cursus vitae. Viverra mauris in aliquam sem fringilla ut morbi tincidunt augue. Mattis vulputate enim nulla aliquet porttitor lacus. In dictum non consectetur a erat nam at. Euismod nisi porta lorem mollis aliquam ut porttitor leo. Nunc consequat interdum varius sit amet. Diam maecenas ultricies mi eget mauris pharetra et. Pellentesque elit ullamcorper dignissim cras. Vel facilisis volutpat est velit egestas dui. Varius quam quisque id diam vel quam elementum. Amet nisl purus in mollis nunc sed id semper risus. Vel eros donec ac odio. Nunc sed augue lacus viverra vitae congue eu consequat ac. Dolor sit amet consectetur adipiscing. Nisi lacus sed viverra tellus in hac habitasse platea dictumst. Imperdiet dui accumsan sit amet nulla facilisi morbi tempus iaculis. Sed viverra ipsum nunc aliquet bibendum enim. Sem et tortor consequat id porta. At volutpat diam ut venenatis tellus in metus vulputate. Ornare massa eget egestas purus viverra accumsan in nisl nisi.'
-        },
-    ]);
+  const [recievedMessages, setRecievedMessages] = useState([]);
+  const [sentMessages, setSentMessages] = useState([]);
 
-    function viewMessageModal(message){
-        setSelectedMessage(message);
-        setMessageModalDisplay(true);
-    }
+  const [possibleMessageRecipients, setPossibleMessageRecipients] = useState(
+    []
+  );
 
-    function closeMessageModal(){
-        setMessageModalDisplay(false);
-    }
+  const [loading, setLoding] = useState(false);
 
-    return (
-        <>
-        <div className={styles['messages-header']}>
-            Messages
-        </div>
-        <div className={styles['messages-container']}>
-        
-        {messages.length== 0 && <div className={styles['messages-container-no-messages']}>You have no messages :(</div>}
-        {messages && messages.map((message) =>(
-                <>
-                <div className={styles['messages-container-message']} onClick={()=>viewMessageModal(message)}>
-                    <img className={styles['messages-container-message-pic']} src={message.pic}/>
-                    <div className={styles['messages-container-message-subject']}>{message.subject}</div>
-                    <div className={styles['messages-container-message-timestamp']}>{message.timestamp}</div>
-                    <div className={styles['messages-container-message-sender']}>{message.sender}</div>
+  function viewSentMessageModal(message) {
+    setSelectedMessage(message);
+    setSentMessageModalDisplay(true);
+  }
+
+  function viewRecievedMessageModal(message) {
+    setSelectedMessage(message);
+    setRecievedMessageModalDisplay(true);
+  }
+
+  function getMessages() {
+    //retrieve currently logged in user's messages
+    setLoding(true);
+    const getSentMessages = axios.get("/api/sent-messages");
+    const getRecievedMessages = axios.get("/api/recieved-messages");
+
+    Promise.all([getRecievedMessages, getSentMessages])
+      .then((responses) => {
+        console.log("responses: ", responses);
+        setRecievedMessages(responses[0].data);
+        setSentMessages(responses[1].data);
+        setLoding(false);
+      })
+      .catch((err) => {
+        setLoding(false);
+        console.log(err);
+      });
+  }
+
+  function getMessageRecipients() {
+    const getFollowers = axios.get("/api/followers");
+    const getFollows = axios.get("/api/following");
+
+    Promise.all([getFollowers, getFollows]).then((responses) => {
+      console.log("responses: ", responses);
+
+      const followers = responses[0].data;
+      const follows = responses[1].data;
+
+      let followersAndFollows = followers.concat(follows);
+      console.log("Followers And Follows: ", followersAndFollows);
+
+      let recipients = [];
+      let recipientSet = new Set();
+
+      //followers and follows
+      for (const person of followersAndFollows) {
+        const personJSON = JSON.stringify(person); //stringify to check uniqueness
+        if (!recipientSet.has(personJSON)) {
+          recipients.push(person);
+        }
+        recipientSet.add(personJSON);
+      }
+      console.log("recipients: ", recipients);
+      //create array compatible with react-select
+      let recipientOptions = [];
+      for (const recipient of recipients) {
+        console.log("recipient: ", recipient);
+        recipientOptions.push({
+          value: recipient.profile_id,
+          label: recipient.display_name,
+          pic: recipient.profile_pic_link,
+        });
+      }
+
+      console.log("recipientOptions: ", recipientOptions);
+
+      setPossibleMessageRecipients(recipientOptions);
+    });
+  }
+
+  function updateSentMessages(newSentMessage) {
+    // setSentMessages([...sentMessages, newSentMessage]);
+  }
+
+  useEffect(() => {
+    //retrieve messages on refresh
+    getMessages();
+    getMessageRecipients();
+    console.log("sentMessages: ", sentMessages);
+    console.log("recievedMessages: ", recievedMessages);
+    // getFollowers(); //get followers/followed to populate dropdown in send message modal
+  }, []);
+
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const onTabClicked = (value) => {
+    console.log("Tab " + value + " was clicked");
+    setSelectedTab(value);
+  };
+
+  let tabs = ["Received", "Sent"].map((tab, index) => (
+    <Tab
+      key={tab}
+      id={index}
+      section={tab}
+      selected={selectedTab}
+      length={index === 0 ? recievedMessages.length : sentMessages.length}
+      clicked={onTabClicked}
+    />
+  ));
+
+  let displayMessage = <Spinner />;
+
+  if (!loading)
+    displayMessage = (
+      <>
+        {selectedTab === 0 && recievedMessages.length == 0 && (
+          <div className={styles["messages-container-no-messages"]}>
+            You have no new messages :(
+          </div>
+        )}
+        {selectedTab === 0 &&
+          recievedMessages.map((recievedMessage) => (
+            <>
+              <div
+                key={recievedMessage.message_id}
+                className={styles["messages-container-message"]}
+                onClick={() => viewRecievedMessageModal(recievedMessage)}
+              >
+                <img
+                  className={styles["messages-container-message-pic"]}
+                  src={recievedMessage.profile_pic_link}
+                />
+                <div className={styles["messages-container-message-subject"]}>
+                  {recievedMessage.subject}
                 </div>
-                </>
-            ))}
+                <div className={styles["messages-container-message-timestamp"]}>
+                  {new Date(recievedMessage.timestamp).toLocaleString()}
+                </div>
+                <div className={styles["messages-container-message-sender"]}>
+                  {recievedMessage.display_name}
+                </div>
+              </div>
+            </>
+          ))}
+        {selectedTab === 1 && sentMessages.length == 0 && (
+          <div className={styles["messages-container-no-messages"]}>
+            You have no messages :(
+          </div>
+        )}
+        {selectedTab === 1 &&
+          sentMessages.map((sentMessage) => (
+            <>
+              <div
+                key={sentMessage.message_id}
+                className={styles["messages-container-message"]}
+                onClick={() => viewSentMessageModal(sentMessage)}
+              >
+                <img
+                  className={styles["messages-container-message-pic"]}
+                  src={sentMessage.profile_pic_link}
+                />
+                <div className={styles["messages-container-message-subject"]}>
+                  {sentMessage.subject}
+                </div>
+                <div className={styles["messages-container-message-timestamp"]}>
+                  {new Date(sentMessage.timestamp).toLocaleString()}
+                </div>
+                <div className={styles["messages-container-message-sender"]}>
+                  {sentMessage.display_name}
+                </div>
+              </div>
+            </>
+          ))}
+        <button
+          className={styles["new-message-button"]}
+          onClick={() => setSendMessageModalDisplay(true)}
+        >
+          <img src={AddIcon} className={styles["new-message-icon"]} />
+          {/* <span className={styles['new-message-text']}>New Message</span> */}
+        </button>
+      </>
+    );
+
+  return (
+    <>
+      <div className={styles["messages-container"]}>
+        <div className={styles["tabs-container"]}>
+          <div className={styles["tabs"]}>
+            <div className={styles["messages-header"]}>Messages</div>
+            <div className="double-tabs" style={{ display: "flex" }}>
+              {tabs}
+            </div>
+          </div>
         </div>
-        <ViewMessage display={messageModalDisplay} onClose={closeMessageModal} selectedMessage={selectedMessage}></ViewMessage>
-        </>
-    )
+        <div className={styles["recieved-messages-container"]}>
+          {displayMessage}
+        </div>
+      </div>
+      <RecievedMessage
+        display={recievedMessageModalDisplay}
+        updateSentMessages={updateSentMessages}
+        onClose={() => setRecievedMessageModalDisplay(false)}
+        selectedMessage={selectedMessage}
+      ></RecievedMessage>
+      <SentMessage
+        display={sentMessageModalDisplay}
+        onClose={() => setSentMessageModalDisplay(false)}
+        selectedMessage={selectedMessage}
+      ></SentMessage>
+      <SendMessage
+        display={sendMessageModalDisplay}
+        onClose={() => setSendMessageModalDisplay(false)}
+        recipientOptions={possibleMessageRecipients}
+      />
+    </>
+  );
 }
 
-export default Messages
+export default Messages;

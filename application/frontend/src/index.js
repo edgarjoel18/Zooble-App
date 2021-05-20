@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import RedirectPathContextProvider from './context/redirect-path';
 
 ReactDOM.render(
-  <App />,
+  <RedirectPathContextProvider>
+    <App />
+  </RedirectPathContextProvider>,
   document.getElementById('root')
 );
 

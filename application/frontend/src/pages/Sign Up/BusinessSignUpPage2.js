@@ -1,59 +1,254 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import styles from './BusinessSignUpPage2.module.css';
+import { useState, useEffect } from 'react';
+import {useHistory} from 'react-router'
+import {useLocation} from "react-router-dom";
+import Axios from 'axios';
+import styles from './SignUpPage2.module.css';
 
-function BusinessSignUpPage2() {
+import BaseSelect from "react-select";
+import FixRequiredSelect from "../../mods/FixRequiredSelect";
+import makeAnimated from 'react-select/animated';
+
+//Import Modals
+import TermsAndConditions from '../../components/Modals/TermsAndConditions'
+import PrivacyPolicy from '../../components/Modals/PrivacyPolicy'
+
+//For address input and suggestions
+import {
+    Combobox,
+    ComboboxInput,
+    ComboboxPopover,
+    ComboboxList,
+    ComboboxOption,
+  } from "@reach/combobox";
+  import "@reach/combobox";
+
+import usePlacesAutocomplete,{
+getGeocode,
+getLatLng,
+} from "use-places-autocomplete";
+
+let typeOptions = []; //for storing business type options
+
+const Select = props => (
+    <FixRequiredSelect
+      {...props}
+      SelectComponent={BaseSelect}
+      options={props.options || typeOptions}
+    />
+);
+
+function BusinessSignUpPage2(props) {
+
+    const [typeOptions, setTypeOptions] = useState([]);
+
+
+    useEffect(() => {  //run once when page loads/refresh
+        Axios.get('/api/business-types')   //get business types from database
+        .then(response =>{
+            setTypeOptions(response.data);
+        })
+    }, [])
+    
+    const location = useLocation();
+    let state = props.location.state;
+    console.log(state);
+    
+    const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
+    const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
+
+    const [failedSubmit, setFailedSubmit] = useState(false)
+
+    function openTermsAndConditionsModal() {
+        setTermsAndConditionsDisplay(true);
+    }
+
+    function closeTermsAndConditionsModal() {
+        setTermsAndConditionsDisplay(false);
+    }
+
+    function openPrivacyPolicyModal() {
+        setPrivacyPolicyDisplay(true);
+    }
+
+    function closePrivacyPolicyModal() {
+        setPrivacyPolicyDisplay(false);
+    }
+
+    const [selectedBusinessType, setSelectedBusinessType] = useState();
+
+    const [name, setName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [address, setAddress] = useState('');
+    const [latitude, setLatitude] = useState();
+    const [longitude, setLongitude] = useState();
+
+
+    function customTheme(theme) { //move this a separate file and import maybe?
+        return {
+            ...theme,
+            colors: {
+                ...theme.colors,
+                primary25: '#B3B3B3',
+                primary: '#1CB48F',
+            }
+        }
+    }
+
+    const customStyles = {
+        control: (base, state) => ({
+          ...base,
+          height: '54.5px',
+          'min-height': '54.5px',
+          'border-radius': '7.5px',
+        }),
+    };
+
+    const animatedComponents = makeAnimated();
+
+    const history= useHistory();
+
+    //Use Places Autocomplete call
+    const {
+        ready, 
+        value, 
+        suggestions: {status, data}, 
+        setValue, 
+        clearSuggestions,
+        } = usePlacesAutocomplete({
+        requestOptions:{
+            location: {lat: () => 37.773972,lng: () => -122.431297},
+            radius: 200 * 1000,
+        },
+        });
+
+    function signUpBusiness(event){
+        event.preventDefault();
+        console.log('Email: ', state.email)
+        console.log('FirstName: ', state.firstName)
+        console.log('LastName: ', state.lastName)
+        console.log('Username: ', state.username)
+        console.log('Password: ', state.password)
+        console.log('RedonePassword: ', state.redonePassword)
+        console.log('Shelter Name: ', name)
+        console.log('Shelter Phone Number: ', phoneNumber)
+        console.log('Address: ', address)
+        console.log('Latitude: ', latitude)
+        console.log('Longitude: ', longitude)
+        console.log('Business Type: ', selectedBusinessType.value)
+        Axios.post('/api/sign-up/business', { 
+            email: state.email,
+            firstName: state.firstName,
+            lastName: state.lastName,
+            uname: state.username,
+            password: state.password,
+            redonePassword: state.redonePassword,
+            businessName: name,
+            phoneNumber: phoneNumber,
+            address: address,
+            latitude: latitude,
+            longitude: longitude,
+            type: selectedBusinessType.value
+        },{withCredentials:true}).then(response => {
+            console.log(response);
+            console.log(response.data);
+            // if(response.data.affectedRows === 1){
+                history.push("/SignUpSuccess");
+            // }
+
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
 
     return (
-        <form className={styles['business-form']}>
-            <div className={styles['business-container']}>
-                <h1>Business Details</h1>
-                <Grid container>
-                    <Grid item xs={12}>
-                        <div className={styles['input-container']}>
-                            <label className={styles['business-name-input-label']} for='business-name'><h3>Business Name</h3></label>
-                            <input
-                                type='text'
-                                placeholder='Enter business name'
-                                name='business-name'
-                            />
-                        </div>
+        <>
+        <form className={styles['signup-container']} onSubmit={signUpBusiness}>
+            <div className={styles['signup-container-header']}>
+                Business Details
+            </div>
+            <div className={styles['signup-fields-container']}>
+                    <div className={styles['name-input-container']}>
+                        <label className={styles['name-input-label']} for='business-name'>Business Name</label>
+                        <input
+                            type='text'
+                            placeholder='Enter Business Name'
+                            name='business-name'
+                            required
+                            oninvalid={()=>{console.log('')}}
+                            onChange={e => setName(e.target.value)}
+                        />
+                    </div>
 
-                        <div className={styles['input-container']}>
-                            <label className={styles['business-address-input-label']} for='business-address'><h3>Business Address</h3></label>
-                            <input
-                                type='text'
-                                placeholder='1600 Holloway Ave, San Francisco, CA, 94132'
-                                name='business-address'
-                            />
-                        </div>
-                    </Grid>
+                    <div className={styles['phone-number-input-container']}>
+                        <label className={styles['phone-number-input-label']} for='business-phone-number'>Phone Number</label>
+                        <input
+                            type='text'
+                            placeholder='(000) 000-0000'
+                            name='business-phone-number'
+                            required
+                            pattern="[0-9]*"
+                            maxLength={10}
+                            onChange={e => setPhoneNumber(e.target.value)}
+                        />
+                    </div>
 
-                    <Grid item xs={6}>
-                        <div className={styles['input-container']}>
-                            <label className={styles['business-categories-input-label']} for='business-categories'><h3>Business Categories</h3></label>
-                            <input
-                                type='text'
-                                placeholder='business category'
-                                name='business-categories'
+                    <div className={styles['address-input-container']}>
+                        <label className={styles['address-input-label']} for='business-address'>Business Address</label>
+                        <Combobox 
+                            onSelect={async (address)=>{
+                            setValue(address,false);
+                            clearSuggestions();
+                            try{
+                                const results = await getGeocode({address});
+                                const{lat,lng} = await getLatLng(results[0]);
+                                console.log(lat,lng);
+                                setLatitude(lat);
+                                setLongitude(lng);
+                            } catch(error){
+                                console.log("error!")
+                            }
+                                console.log(address)
+                                setAddress(address);
+                            }}
+                            >
+                            <ComboboxInput 
+                                value={value}
+                                placeholder= "Start Typing your Business's Address"
+                                onChange={(e)=> {
+                                    setValue(e.target.value);
+                                    //record lat lng to store in database
+                                }}
+                                required
+                                disabled={!ready}
                             />
-                        </div>
-                    </Grid>
-
-                    <Grid item xs={6}>
-                        <div className={styles['input-container']}>
-                            <label className={styles['business-phone-number-input-label']} for='business-phone-number'><h3>Phone Number</h3></label>
-                            <input
-                                type='text'
-                                placeholder='555 555 5555'
-                                name='business-phone-number'
-                            />
-                        </div>
-                    </Grid>
-                </Grid>
+                            <ComboboxPopover>
+                                <ComboboxList className={styles['combobox-list']}>
+                                    {status === "OK" && data.map(({id,description}) => 
+                                    <ComboboxOption key={id} value={description}/>
+                                )}
+                                </ComboboxList>
+                            </ComboboxPopover>
+                        </Combobox>
+                    </div>
+                <div className={styles['types-input-container']}>
+                    <label className={styles['types-input-label']} for='business-categories'>Business Categories</label>
+                        <Select id="business-type" name="business_type" className={styles['Select']}
+                            onChange={setSelectedBusinessType}
+                            options={typeOptions}
+                            placeholder="Business Type"
+                            theme={customTheme}
+                            styles={customStyles}
+                            isSearchable
+                            // isMulti
+                            components={animatedComponents}
+                            required
+                        />
+                </div>
+            </div>
 
                 <div className={styles['checkbox-container']}>
-                    <p>By creating an account you agree to our <a href='#'>Terms & Privacy</a>
+                    <p>By creating an account you agree to our <button className={styles['terms-button']} onClick={openTermsAndConditionsModal}>Terms</button> &<button className={styles['policy-button']} onClick={openPrivacyPolicyModal}>Privacy Policy</button>
                         <label>
                             <input
                                 type='checkbox'
@@ -66,8 +261,12 @@ function BusinessSignUpPage2() {
                 <div className={styles['btn-container']}>
                     <button type='submit' className={styles['submit-btn']}>Sign Up</button>
                 </div>
-            </div>
-        </form >
+
+        </form>
+        {/* Modals */}
+        <TermsAndConditions display={termsAndConditionsDisplay} onClose={closeTermsAndConditionsModal} />
+        <PrivacyPolicy display={privacyPolicyDisplay} onClose={closePrivacyPolicyModal} />
+        </>
     );
 }
 

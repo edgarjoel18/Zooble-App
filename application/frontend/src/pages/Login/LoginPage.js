@@ -1,42 +1,63 @@
-import React, {useState} from "react";
+import React, { useContext, useState } from "react";
 import Axios from "axios";
 import styles from './LoginPage.module.css';
-import {Redirect, useHistory} from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+import ForgotPassword from "../../components/Modals/ForgotPassword";
 
-function LoginPage({appUser, setAppUser}) {
+import { RedirectPathContext } from '../../context/redirect-path';
+
+function LoginPage({appUser, updateLoginState}) {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    //toggle forgot password modal
+    const [forgotPasswordModalDisplay, setForgotPasswordModalDisplay] = useState(false);
+
+    const [error, setError] = useState(null);
+
+    const redirectContext = useContext(RedirectPathContext);
 
     let history = useHistory();
 
-    function loginHandler(e){
-        console.log(username)
-        console.log(password)
+    const errorDisplay = error ? 
+    <div className={styles['login-error-container']}>
+        {error}
+    </div> : "";
 
-         Axios.get('/login',{
-           params: {
-             username: username,
-             password: password,
-             }})
-           .then(response =>{
-           console.log(response)
-           console.log(response.data)
-            history.push('/feed')
-        })
-        .catch(error =>{
-            console.log("Error");
-        })
+    function loginHandler(event) {
+        event.preventDefault();
+        console.log(username);
+        console.log(password);
+            
+            console.log("AppUser in Login Handler: " + appUser);
+            Axios.post('/api/login', {
+                    username: username,
+                    password: password,
+                },{withCredentials:true})
+                .then(response => {
+                    console.log(response.data)
+
+                    if(response.data){
+                        updateLoginState(true,response.data);
+                        history.push(redirectContext.redirectPath)
+                    }
+                })
+                .catch(error => {
+                    if(error.response.data ==="no match"){
+                        setError("Username or Password is Incorrect");
+                    }
+                })
     }
 
-    if (isLoggedIn){
-        console.log(isLoggedIn);
-        return <Redirect to="/Feed"/>
+    if(appUser){
+         console.log('User is Logged In');
+        return <Redirect to={redirectContext.redirectPath} />
     }
+
     return (
-            <>
-            <div className={styles['login-container']}>
+        <>
+            <form className={styles['login-container']} onSubmit={loginHandler}>
                 <div className={styles['login-header']}>Login</div>
                 <div className={styles['username-input-container']}>
                     <label className={styles['username-input-label']} for='username'>Username</label>
@@ -45,30 +66,41 @@ function LoginPage({appUser, setAppUser}) {
                         placeholder='Enter Username'
                         name='username'
                         value={username}
-                        onChange={e =>setUsername(e.target.value)}
+                        onChange={e => setUsername(e.target.value)}
+                        required
                     />
                 </div>
                 <div className={styles['password-input-container']}>
                     <label className={styles['password-input-label']} for='password'>Password</label>
+                    <span className={styles['forgot-password']}>
+                        <button onClick={() => setForgotPasswordModalDisplay(true)}> Forgot password?</button>
+                    </span>
                     <input
                         type='password'
                         placeholder='Enter password'
                         name='password'
                         value={password}
-                        onChange={e =>setPassword(e.target.value)}
+                        onChange={e => setPassword(e.target.value)}
+                        required
                     />
                 </div>
-                <div className={styles['forgot-password']}>
-                    <a href='#'> Forgot password?</a>
-                </div>
+
                 <div className={styles['btn-container']}>
-                    <button type='submit' className={styles['submit-btn']} onClick={loginHandler}>Login</button>
+                    <button type='submit' className={styles['submit-btn']}>Login</button>
+
+
                 </div>
-                <p className={styles['create-account']}>
+                <div className={styles['checkbox']}>
+                        <input type='checkbox' name='remember'/> Remember Me
+                    </div>
+
+                <div className={styles['create-account-link']}>
                     Not registered? <a href='/account-type'>Create an account</a>
-                </p>
-            </div>
-            </>
+                </div>
+                {errorDisplay}
+            </form>
+            <ForgotPassword display={forgotPasswordModalDisplay} onClose={()=>setForgotPasswordModalDisplay(false)}/>
+        </>
     );
 }
 

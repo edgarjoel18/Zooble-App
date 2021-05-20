@@ -6,13 +6,15 @@
 /* Image Half */
 .post-image{
     grid-column: 1/span 1;
+    background-color: black;
 }
 
 /* Post and Comments Half */
 .post-content{
-    margin-top: 30px;
+    padding-top:30px;
     height: 100%;
     grid-column: 2 /span 1;
+    box-shadow: var(--elevation-1);
 }
 
 .post-image img{
@@ -34,7 +36,6 @@
                             "post-detail-pic  post-detail-timestamp "
                             "post-detail-body post-detail-body      post-detail-body"; */
     margin-right:35px;
-
 }
 
 /* Profile Pic */
@@ -79,10 +80,17 @@
     background-size: 34px 34px;
     cursor:pointer;
     grid-area: 2 / 3 / span 1 /span 1;
+    transition: .15s ease-in-out;
+}
+
+.post-detail-like:hover{
+    opacity: .75;
 }
 
 .post-detail-likes{
     grid-area: 3 / 3 / span 1 / span 1;
+    text-align: center;
+    line-height: 34px;
 }
 
 /* Comments  */
@@ -98,7 +106,7 @@
 
 .post-comment{
     display: grid;
-    grid-template-columns: 75px auto 25px;
+    grid-template-columns: 75px auto 35px;
     grid-template-rows: repeat(3, 25px) auto;
     /* grid-template-areas: "comment-pic    comment-name       comment-like "
                             "comment-pic    *****************  comment-likes"
@@ -143,6 +151,12 @@
     border-style: none;
     background: url('../../images/Third\ Party\ Icons/icons8-thumbs-up-48.png') no-repeat;
     background-size: 24px 24px;
+    transition: .15s ease-in-out;
+    cursor: pointer;
+}
+
+.post-comment-like:hover{
+    opacity: .75;
 }
 
 .post-comment-likes{
@@ -168,7 +182,11 @@
     cursor: pointer;
     margin-right: 15px;
     margin-bottom: 15px;
-    
+    transition: .15s ease-in-out;
+}
+
+.post-leave-comment button:hover{
+    opacity: .75;
 }
 
 .post-leave-comment span {
@@ -176,3 +194,29 @@
     font-family: var(--ff-primary);
     font-weight: 600;
 }
+
+@media only screen and (max-width: 1300px){
+    .post-container {
+        display: flex;
+        flex-direction: column;
+        
+    }
+    .post-comment {
+        height: 100px;
+    }
+    .post-comments {
+        height: 100%;
+        font-size: var(--h5);
+    }
+}
+
+.post-container-no-image{
+    width: 100%;
+}
+
+.post-comments-placeholder{
+    margin-left: 15px;
+}
+
+
+

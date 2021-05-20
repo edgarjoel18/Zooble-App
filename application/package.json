@@ -6,19 +6,20 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node ./backend/index.js",
+    "server_dev": "nodemon ./backend/index.js",
     "client": "cd ./frontend && npm start",
     "client_build": "cd ./frontend && npm run build",
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "deploy": "concurrently \"npm run server\" \"npm run client_build\""
+    "deploy": "concurrently \"npm run server\" \"npm run client_build\"",
+    "dev": "concurrently \"npm run server_dev\" \"npm run client\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.0.1",
-    "concurrently": "^6.0.0",
-    "express-session": "^1.17.1",
-    "mysql": "^2.18.1",
-    "mysql2": "^2.2.5",
-    "password-validator": "^5.1.1"
+    "concurrently": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
+    "nodemon": "^2.0.7"
   }
 }

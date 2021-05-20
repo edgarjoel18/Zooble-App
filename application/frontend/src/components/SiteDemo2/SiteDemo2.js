@@ -1,7 +1,7 @@
-import React,{useState} from "react";
+import {useState} from "react";
+import { useHistory } from "react-router";
 
-import testImg from '../../images/testImages/test.jpg';
-import mapSearchDemo from '../../images/testImages/homepageSideDemo2.png'
+import MapSearchPreview from '../../images/MapSearchPreview.png'
 
 import styles from './SiteDemo2.module.css';
 
@@ -9,24 +9,32 @@ import styles from './SiteDemo2.module.css';
 function SiteDemo2() {
   const [text, setText] = useState('Try the Tool');
 
+  const history = useHistory();
 
-  function onMouseover(e){
-    setText('Coming Soon');
-  }
-
-  function onMouseout(e){
-    setText('Try the Tool');
+  function searchLocalBusinesses(){
+    navigator.geolocation.getCurrentPosition((position)=>{
+      const location = {
+        pathname:'/MapSearch',
+        state: {lat:position.coords.latitude, lng:position.coords.longitude, searchTerm: "", searchCategoryParam: "Businesses"}
+      }
+      history.push(location);
+    })
   }
 
   return (
     <div className={styles['site-demo2-container']}>
-      <div className={styles['site-demo2-box1']}>
-        <p className={styles['site-demo2-text']}> <h2>Use our tool to find pets and <br/>resources near you</h2> </p>
-        <button className={styles['site-demo2-button']} onMouseEnter={onMouseover} onMouseLeave={onMouseout}>
-            <span><h3>{text}</h3></span>
+      <div className={styles['right-side']}>
+      <div className={styles['right-side-text']}>
+            <p className={styles['side-text']}>Use our location search tool to find a pet-friendly small businesses near you </p>
+            <button className={styles['site-demo2-button']} onClick={searchLocalBusinesses}>
+            {text}
         </button>
+        </div>
+        {/* <img className={styles['left-side-map']} src={MapSearchPreview} /> */}
       </div>
-      {/* <img className={styles['site-demo2-box2']} src={mapSearchDemo} /> */}
+      {/* <div className={styles['right-side']}>
+        
+      </div> */}
     </div>
   );
 }

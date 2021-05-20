@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
-import Rating from '@material-ui/lab/Rating';
-import Box from '@material-ui/core/Box';
+// import Rating from '@material-ui/lab/Rating';
+// import Box from '@material-ui/core/Box';
 
 import styles from './Reviews.module.css';
 
@@ -33,21 +33,28 @@ function Reviews(props) {
     let displayReviews = null
     if (props.reviews.length !== 0) {
         displayReviews = (
-            props.reviews.slice(0,3).map(ele => (
-                <Box 
-                    key={ele.user_id}
-                    className={styles.Reviews} 
-                    component="fieldset" mb={3} 
-                    borderColor="transparent"
-                >
+            props.reviews.slice(props.reviews.length - 3 >= 0 ? props.reviews.length - 3 : 0, props.reviews.length).map(ele => (
+                // <Box 
+                //     key={ele.user_id}
+                //     className={styles.Reviews} 
+                //     component="fieldset" mb={3} 
+                //     borderColor="transparent"
+                // >
                     <textarea
                         rows='4'
                         cols='8'
                         readOnly
                         value={ele.review} 
+                        style={{textAlign: 'center'}}
                     />
-                    <Rating name="read-only" value={ele.rating} readOnly style={{float: 'right', paddingLeft: '15px', color: '#1CB48F' }} />
-                </Box>
+                    /* <Rating 
+                        name="read-only" 
+                        value={ele.rating} 
+                        precision={0.5} 
+                        readOnly 
+                        style={{float: 'right', paddingLeft: '15px', color: '#1CB48F' }} 
+                    /> */
+                // </Box>
             ))
         );
     }
@@ -55,6 +62,7 @@ function Reviews(props) {
         displayReviews = <div className={styles.EmptyReviews} ><h2>Don't have any reviews yet</h2></div>
     }
 
+    console.log(props.reviews);
 
     return (  
         <div className={styles.Container} >      

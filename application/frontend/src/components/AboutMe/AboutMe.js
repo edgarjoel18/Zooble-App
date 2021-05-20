@@ -1,29 +1,76 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import Tag from './Tag/Tag';
+import EditAddress from '../../components/Modals/EditAddress'
+
+import Tab from './Tab/Tab';
+import EditButton from '../Buttons/EditButton'
 
 import styles from './AboutMe.module.css';
-import { Link } from 'react-router-dom';
 
-const shelterProfileTags = ["About", "Contact Info", "Recent Posts"]
-const businessProfileTags = ["About", "Business Info", "Recent Posts"]
-const petOwnerProfileTags = ["About", "Recent Posts"]
 
-function AboutMe(props) {
+import EditBusinessHours from '../../components/Modals/EditBusinessHours'
+import axios from 'axios';
+
+const shelterProfileTabs = ["About", "Contact Info"]//, "Recent Posts"]
+const businessProfileTabs = ["About", "Business Info"]//, "Recent Posts"]
+const petOwnerProfileTabs = ["About"]//, "Recent Posts"]
+
+function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phoneNumber, hours, profileID}) {
+    console.log("profile: ", profile)
+
+    //not sure if these need to have state yet
+    let latitude; 
+    let longitude;
+    //not sure if these need to have state yet
+    
     const [selected, setSelected] = useState('About');
-    //const [address, setAddress] = useState('');
-    //const [phone, setPhone] = useState('');
-    //const [hours, setHours] = useState({});
-    //const [about, setAbout] = useState('');
     const [changing, setChanging] = useState(false);
     const [labelSelected, setLabelSelected] = useState();
 
-    // useEffect(() => {
-    //     setPhone(shelterInfo.phone);
-    //     setHours(shelterInfo.hours);
-    //     setAbout(shelterAbout);
-    // }, [])
-    
+    const [editHoursDisplay, setEditHoursDisplay] = useState(false);
+    const [editAddressDisplay, setEditAddressDisplay] = useState(false);
+
+    const [aboutMeContent, setAboutMeContent] = useState(aboutMeBody);
+    const [phone, setPhone] = useState();
+    const [location, setLocation] = useState();
+    const [hoursState, setHoursState] = useState({});
+
+    console.log('location is ' + address);
+    console.log('phone is ' + phone);
+
+    let hoursLabels = [];
+
+    useEffect(() =>{
+        if(profile.type === "Business"){
+            axios.get('/api/hours',{params: {profileID: profileID}})
+            .then(response =>{
+                console.log('/api/hours: ',response.data);
+                setHoursState(response.data);
+                console.log('hoursState: ', hoursState)
+            })
+            .catch(err =>{
+                console.log(err);
+            })
+
+            axios.get('/api/business-address',{params: {profileID: profileID}})
+            .then(response =>{
+                console.log('/api/business-address: ',response.data.address);
+                setLocation(response.data.address);
+            })
+            .catch(err =>{
+                console.log(err);
+            })
+
+            axios.get('/api/business-phone-number',{params: {profileID: profileID}})
+            .then(response =>{
+                console.log('/api/business-phone-number: ', response.data);
+                setPhone(response.data.phone_num);
+            })
+            .catch(err =>{
+                console.log(err);
+            })
+        }
+    },[profileID])
 
     // limited time editing
     // useEffect(() => {
@@ -36,10 +83,48 @@ function AboutMe(props) {
     //         clearTimeout(timer);
     //     });
 
+    // useEffect(()=>{
+    //     let hoursLabels = ['Sunday: ','Sunday: ', 'Monday: ','Monday: ', 'Tuesday: ', 'Tuesday: ', 'Wednesday: ','Wednesday: ', 'Thursday: ', 'Thursday: ','Friday: ','Friday: ', 'Saturday: ', 'Saturday: '];
+    //     for(let i = 0; i < hours.length; i+=2){
+    //         hoursDisplay.push(<li>{hoursLabels[i]}: {hours[i]}-{hours[i+1]}</li>)
+    //     }
+    //     console.log('hoursDisplay: ', hoursDisplay);
+    // }, [])
+
 
     // }, [address, phone, changing])
 
-    function onTagClickHandler(id) {
+    function submitAboutMeEdit(){
+        console.log('about me content is ' + aboutMeContent)
+        axios.post("/api/about-me",{
+            newAboutMe: aboutMeContent,
+            profileID: profile.profile_id
+        })
+        .then(response =>{
+            console.log(response);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+    }
+
+    //I'll handle the location edit later - Daniel
+
+
+    function submitPhoneEdit(){
+        console.log('updatedPhone is ' + phone)
+        axios.post("/api/phone-number",{
+            newPhoneNumber: phone
+        })
+        .then(response =>{
+            console.log(response);
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+    }
+
+    function onTabClickHandler(id) {
         setSelected(id);
     }
 
@@ -50,58 +135,78 @@ function AboutMe(props) {
     }
 
     function cancelEditingHandler() {
+        console.log("cancel editing handler");
         setChanging(false);
         setLabelSelected('');
         console.log('cancel')
     }
 
-    let profileTags = null;
-    let displayPetOwnerLink = null;
-    switch (props.profile.accountType) {
-        case 'shelter':
-            profileTags = shelterProfileTags;
-            break;
-        case 'business':
-            profileTags = businessProfileTags;
-            break;
-        case 'pet owner':
-            profileTags = petOwnerProfileTags;
-            break;
-        case 'pet':
-            profileTags = petOwnerProfileTags;
-            displayPetOwnerLink = (
-                <div>
-                    <span className={styles.petOwnerLinkLable} >My Owner: </span>
-                    <Link to="/Profile/Alex" >{props.profile.petOwner}</Link>
-                </div>
-            )
-            break;
-        default:
-            profileTags = null;
+    function autoGrowHandler(event) {
+        let address = document.getElementById('tab-address');
+        address.style.height = '45px';
+        console.log(address.scrollHeight);
+        if (address.scrollHeight < 105) {
+            setLocation(event.target.value);
+            address.style.height = address.scrollHeight + 'px' 
+        }
+        else 
+            address.style.height = '105px';
     }
 
-    let tags = profileTags.map(tag => (
-        <Tag key={tag} id={tag} section={tag} selected={selected} clicked={onTagClickHandler} accountType={props.profile.accountType} />
+
+    let profileTabs = null;
+    // let displayPetOwnerLink = null;
+    switch (profile.type) {
+        case 'Shelter':
+            profileTabs = shelterProfileTabs;
+            break;
+        case 'Business':
+            profileTabs = businessProfileTabs;
+            break;
+        case 'PetOwner':
+            profileTabs = petOwnerProfileTabs;
+            break;
+        case 'Pet':
+            profileTabs = petOwnerProfileTabs;
+            // displayPetOwnerLink = (
+            //     <div>
+            //         <span className={styles.PetOwnerLinkLabel} >My Owner: </span>
+            //         <Link to="/Profile/Alex" >{props.profile.petOwner}</Link>
+            //     </div>
+            // )
+            break;
+        default:
+            profileTabs = ["No Tabs"];
+    }
+
+    let tabs = profileTabs.map(tab => (
+        <Tab key={tab} id={tab} section={tab} selected={selected} clicked={onTabClickHandler} accountType={profile.type} />
     ))
 
+    console.log('hours is ' + JSON.stringify(hours));
     let content = null; 
     switch (selected) {
         case 'About':
             content = (
                 <div>
-                    {displayPetOwnerLink}
+                    {/* {displayPetOwnerLink} */}
                     <textarea 
                         className={styles.TextArea} 
-                        value={props.profile.about} 
-                        onChange={event => props.updateProfile('about', event.target.value)}
+                        placeholder='Write down something to share with others😃'
+                        value={aboutMeContent} 
+                        onChange={event => setAboutMeContent(event.target.value)}
                         readOnly={!changing || !(labelSelected === 'about')}
                         rows='14' 
                         cols='50' 
                     />
-                    { props.isSelfView && ((labelSelected !== 'about') ? 
-                        <button onClick={() => changingInfoHandler('about')} >edit</button>:
-                        <button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
-                        )
+                    { isSelfView && ((labelSelected !== 'about') ? 
+                        // <button onClick={() => changingInfoHandler('about')} >edit</button>
+                        <EditButton edit clicked={() => changingInfoHandler('about')}>Edit</EditButton> 
+                        :
+                        <EditButton style={{float: 'right'}} save clicked={() => {
+                            cancelEditingHandler();
+                            submitAboutMeEdit();
+                        }}>Save</EditButton>)
                     }
                 </div>
             );
@@ -110,66 +215,118 @@ function AboutMe(props) {
         case 'Business Info':
             content = (
                 <div>
-                    {props.isSelfView && (labelSelected !== 'address') && <button onClick={() => changingInfoHandler('address')} >edit</button>}
-                    <label>Address: </label>
+                    {
+                        isSelfView && (labelSelected !== 'address') && 
+                        // <button onClick={() => changingInfoHandler('address')} >edit</button>
+                        <EditButton edit clicked={() => setEditAddressDisplay(true)}>Edit</EditButton>
+                    }
+                    <label for="tab-address" >Address: </label>
                     <textarea 
-                        value={props.profile.contactInfo.address} 
+                        id="tab-address"
+                        value={location} 
                         readOnly={!changing || !(labelSelected === 'address')}
-                        onChange={event => props.updateProfile('address', event.target.value)} 
-                        style={{resize: 'none', borderColor: 'var(--primary-clr)', outline: 'none'}}
-                        rows='2' 
-                        cols='50' 
+                        onChange={event => autoGrowHandler(event)} 
+                        className={styles.AddressTextArea}
+                        rows='1' 
+                        cols='51' 
                     />
+                    <br />
                     {
                         (labelSelected === 'address') && 
-                        <button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
+                        //<button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
+                        <>
+                            {/* <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton> */}
+                            {/* <EditButton style={{float: 'right'}} save clicked={() => {
+                                cancelEditingHandler();
+                                submitLocationEdit();
+                            }}>Save</EditButton> */}
+                            <br />
+                        </>
                     }
-                    <br />
-                    {props.isSelfView && (labelSelected !== 'phone number') && <button onClick={() => changingInfoHandler('phone number')} >edit</button>}
-                    <label>Phone Number: </label>
+                    {
+                        isSelfView && (labelSelected !== 'phone number') && 
+                        //<button onClick={() => changingInfoHandler('phone number')} >edit</button>
+                        <EditButton edit clicked={() => changingInfoHandler('phone number')}>Edit</EditButton>
+                    }
+                    <label for="phone" >Phone Number: </label>
                     <input 
-                        type="text" 
-                        value={props.profile.contactInfo.phone} 
+                        id="phone"
+                        type="tel" 
+                        // value={`(${phone.substring(0,3)}) ${phone.substring(3,6)}-${phone.substring(6,10)}`} 
+                        value={phone}
                         readOnly={!changing || !(labelSelected === 'phone number')}
-                        onChange={event => props.updateProfile('phone', event.target.value)} 
+                        maxLength = "10"
+                        onKeyPress={event => {
+                            if(event.key === 'Enter'){
+                                cancelEditingHandler();
+                            }
+                          }}
+                        onChange={event => setPhone(event.target.value)} 
                     />
                     {
                         (labelSelected === 'phone number') && 
-                        <button style={{marginLeft: '5px'}} onClick={cancelEditingHandler} >Save</button>
+                        // <button style={{marginLeft: '5px'}} onClick={cancelEditingHandler} >Save</button>
+                        // <EditButton save clicked={cancelEditingHandler}>Save</EditButton>
+                        <EditButton save clicked={() => {
+                            cancelEditingHandler();
+                            submitPhoneEdit();
+                        }}>Save</EditButton> 
                     }
                     <br />
                     {/* // need to make a modal here to set hours  */}
-                    <div style={{textAlign: 'center'}}>
-                    {
-                        props.isSelfView && (labelSelected !== 'hours') && 
-                        <button onClick={() => changingInfoHandler('hours')} >edit</button>
-                    }
-                    <label>Hours: </label>
-                    {Object.keys(props.profile.contactInfo.hours).map(key => (
-                        <div key={key} >
-                            <label>{key}: </label>
-                            <span >{props.profile.contactInfo.hours[key]}</span>
+                    <div className={styles.HoursDiv} >
+                        <div>
+                            {
+                                isSelfView && (labelSelected !== 'hours') && 
+                                //<button onClick={() => changingInfoHandler('hours')} >edit</button>
+                                <EditButton edit clicked={() => {
+                                    setEditHoursDisplay(true);
+                                    changingInfoHandler('hours')
+                                    }}
+                                >
+                                    Edit
+                                </EditButton>
+                            }
+                            <label>Hours: </label>
                         </div>
-                    ))}
+                        <table className={styles['hours-table']} >
+                            {Object.keys(hoursState).map((key, index) => {
+                                console.log('mapping hoursState')
+                                console.log('hoursState[key]: ',hoursState[key])
+
+                                if (index % 2 === 1)
+                                    return null;
+                                
+                                let day = key.substr(0, 3);
+                                console.log(day)
+                        
+                                return <tr className={styles['hours-table-row']} key={key}>
+                                    <th className={styles['hours-table-header']} >{day[0].toUpperCase() + day.substring(1)}: </th>                              
+                                    <td className={styles['hours-table-cell']}>{hoursState[key].value !== "00:00:00" ? <span >{hoursState[key].label + " - " + hoursState[day +'_close'].label}</span> : <span>Closed</span>}</td>
+                                </tr>
+                            })}
+                        </table>
                     </div>
-                    {
+                    {/* {
                         props.isSelfView && (labelSelected === 'hours') && 
-                        <button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
-                    }
+                        //<button style={{marginLeft: '5px', float: 'right'}} onClick={cancelEditingHandler} >Save</button>
+                        <EditButton style={{float: 'right'}} save clicked={cancelEditingHandler}>Save</EditButton>
+                    } */}
                 </div>
             );
             break;
         case 'Recent Posts':
-            content = <p>Coming soon</p>
+            content = <span>Coming soon</span>
             break;
         default:
-            content = <p>Error</p>;
+            content = <span>Error</span>;
     }
 
     return (
+        <>
         <div className={styles.AboutMe} >
             <div style={{display: "flex", flexDirection: "column"}} >
-                {tags}
+                {tabs}
             </div>
             <div className={styles.Container} >
                 <div className={styles.Content} >
@@ -177,6 +334,12 @@ function AboutMe(props) {
                 </div>
             </div>
         </div>
+        <EditBusinessHours display={editHoursDisplay} hours={hoursState} setHours={setHoursState} onClose={()=> {
+            cancelEditingHandler(); 
+            setEditHoursDisplay(false);
+            }}/>
+        <EditAddress display={editAddressDisplay} setAddressState={setLocation} onClose={() => setEditAddressDisplay(false)}/>
+        </>
     );
 }
 

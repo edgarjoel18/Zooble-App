@@ -1,208 +1,114 @@
-import { Tabs, Tab, AppBar, Card, Typography, Grid } from "@material-ui/core";
-// import { Card, CardColumns, Col } from "react-bootstrap";
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import Tab from "./Tab/Tab";
 import styles from "./UserProfileCard.module.css";
 
-function UserProfileCard(props) {
-  const [followersList, setFollowersList] = useState([
-    {
-      pet_id: 1,
-      name: "Max",
-      size_name: "small",
-      age_name: "two",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
-    },
-    {
-      pet_id: 2,
-      name: "Juju",
-      size_name: "larg",
-      age_name: "ten",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
-    },
-    {
-      pet_id: 3,
-      name: "Mimi",
-      size_name: "medium",
-      age_name: "six",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
-    },
-    {
-      pet_id: 1,
-      name: "Max",
-      size_name: "small",
-      age_name: "two",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
-    },
-    {
-      pet_id: 2,
-      name: "Juju",
-      size_name: "larg",
-      age_name: "ten",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
-    },
-    {
-      pet_id: 3,
-      name: "Mimi",
-      size_name: "medium",
-      age_name: "six",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
-    },
-  ]);
+/****************************************************************************
+ * File name: UserProfileCard.js
+ * Description: The code below will utilize css modules and hooks in order
+ * to format the Followers page for the website.
+ * Expected Output: The page will have two tabs (e.g. following, followers)
+ * which will show a column of users that correspond to  their respective
+ * tab. It will display a back to profile link at a screen size that is
+ * greater than 415px. Otherwise it will be hidden for smaller mobile phones.
+ ***************************************************************************/
+function UserProfileCard({ followersList, followingList }) {
+  let history = useHistory();
 
-  const [followingList, setFollowingList] = useState([
-    {
-      pet_id: 1,
-      name: "Max Test Following 1",
-      size_name: "small",
-      age_name: "two",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
-    },
-    {
-      pet_id: 2,
-      name: "Juju Test Following 2",
-      size_name: "larg",
-      age_name: "ten",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
-    },
-    {
-      pet_id: 3,
-      name: "Mimi Test Following 3",
-      size_name: "medium",
-      age_name: "six",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
-    },
-    {
-      pet_id: 1,
-      name: "Max Test Following 4",
-      size_name: "small",
-      age_name: "two",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MaxPic.jpg",
-    },
-    {
-      pet_id: 2,
-      name: "Juju Test Following 5",
-      size_name: "larg",
-      age_name: "ten",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/JujuPic.jpg",
-    },
-    {
-      pet_id: 3,
-      name: "Mimi Test Following 6",
-      size_name: "medium",
-      age_name: "six",
-      profile_pic:
-        "https://csc648groupproject.s3-us-west-2.amazonaws.com/MimiPic.jpg",
-    },
-  ]);
-
-  const EuCard = ({ title, src, thethingyintheplace }) => {
+  const FollowerCard = ({ title, src, key }) => {
     return (
-      <Card className="eu-card" key={`${thethingyintheplace}_Card_Item`}>
-        <div style={{ display: "flex", width: "100%", padding: "14px" }}>
-          <div style={{ marginRight: "10px" }}>
-            <img src={src} className="eu-card-img" />
-          </div>
-          <div>
-            <div>{title}</div>
-          </div>
-        </div>
-      </Card>
+      <div className={styles["follower-card"]}>
+        <img src={src} className={styles["follower-card-pic"]} />
+        <div className={styles["follower-card-name"]}>{title}</div>
+      </div>
     );
   };
 
-  const Panel = (props) => (
-    <div>
-      <Typography>{props.children}</Typography>
-    </div>
-  );
-
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const onTabClicked = (event, newValue) => {
-    setSelectedTab(newValue);
+  const onTabClicked = (value) => {
+    console.log("[Tag] " + value + " is clicked");
+    setSelectedTab(value);
   };
 
-  return (
-    <div className="tabContainer">
-      <AppBar
-        position="relative"
-        elevation={0}
-        style={{
-          backgroundColor: "transparent",
-          color: "black",
-          width: "1000px",
-          margin: "auto",
-        }}
-      >
-        <Tabs
-          value={selectedTab}
-          onChange={onTabClicked}
-          TabIndicatorProps={{ style: { background: "#00cc99" } }}
-        >
-          <Tab label="Followers" />
-          <Tab label="Following" />
-        </Tabs>
-      </AppBar>
-      {selectedTab === 0 && (
-        <Card elevation={0}>
-          <div
-            style={{
-              columns: "2",
-              maxWidth: "1000px",
-              margin: "0 auto",
-              width: "80%",
-              height: "50%",
-            }}
-          >
-            {" "}
-            {followersList.map((item, index) => (
-              <div
-                style={{
-                  padding: " 10px 0px",
-                }}
-              >
-                <EuCard
-                  title={item.name}
-                  src={item.profile_pic}
-                  thethingyintheplace={index}
-                />
-              </div>
-            ))}
-          </div>
-        </Card>
-      )}
+  let tabs = ["Followers", "Following"].map((tab, index) => (
+    <Tab
+      key={tab}
+      id={index}
+      section={tab}
+      selected={selectedTab}
+      length={index === 0 ? followersList.length : followingList.length}
+      clicked={onTabClicked}
+    />
+  ));
 
-      {selectedTab === 1 && (
-        <Card elevation={0}>
-          <div style={{ columns: "2", width: "1000px", margin: "auto" }}>
-            {" "}
-            {followingList.map((item, index) => (
-              <div
-                style={{
-                  padding: " 10px 0px",
-                }}
-              >
-                <EuCard
-                  title={item.name}
-                  src={item.profile_pic}
-                  thethingyintheplace={index}
-                />
-              </div>
-            ))}
+  return (
+    <div className={styles["followers-container"]}>
+      <div className={styles["tabContainer"]}>
+        <div className={styles.Tabs}>
+          <div style={{ display: "flex", width: "100%" }}>{tabs}</div>
+          <div style={{ cursor: "pointer" }}>
+            {/* <button>filter</button> */}
+            <p
+              className={styles["tab-container-link"]}
+              onClick={() => history.goBack()}
+            >
+              Back to Profile
+            </p>
           </div>
-        </Card>
-      )}
+        </div>
+        {selectedTab === 0 && (
+          <div>
+            <div className={styles["followers-listing"]}>
+              {" "}
+              {followersList.map((item) => (
+                <Link
+                  style={{ textDecoration: "none" }}
+                  key={item.profile_id}
+                  to={"/Profile/" + item.profile_id}
+                >
+                  <div
+                    style={{
+                      padding: " 10px 0px",
+                    }}
+                  >
+                    <FollowerCard
+                      title={item.display_name}
+                      src={item.profile_pic_link}
+                    />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {selectedTab === 1 && (
+          <div>
+            <div className={styles["followers-listing"]}>
+              {" "}
+              {followingList.map((item) => (
+                <Link
+                  style={{ textDecoration: "none" }}
+                  key={item.profile_id}
+                  to={"/Profile/" + item.profile_id}
+                >
+                  <div
+                    style={{
+                      padding: " 10px 0px",
+                    }}
+                  >
+                    <FollowerCard
+                      title={item.display_name}
+                      src={item.profile_pic_link}
+                    />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
