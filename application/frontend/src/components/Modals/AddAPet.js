@@ -12,7 +12,7 @@ import axios from 'axios';
 //component
 import ButtonLoader from '../UI/Spinner/ButtonLoader';
 
-function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,colorOptions,sizeOptions,ageOptions}) {
+function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,colorOptions,sizeOptions,ageOptions,update}) {
 
     //States to be set and sent to db
     const [petName,setPetName] = useState('');
@@ -62,9 +62,11 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
             console.log('/api/create-pet-profile',response);
             setLoading(false);
             onClose();
+            update()
         })
         .catch(err =>{
             setLoading(false);
+            update()
             console.log(err);
             //display error to user
         })
@@ -103,6 +105,7 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
                             options={typeOptions}
                             theme={customTheme}
                             value={petType}
+                            required
                             placeholder="Select Pet Type"
                             isSearchable
                         />
@@ -116,6 +119,7 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
                             options={ colorOptions}
                             theme={customTheme}
                             value={petColor}
+                            required
                             placeholder="Select Pet Color(s)"
                             isSearchable
                             isMulti
@@ -129,6 +133,7 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
                             options={ageOptions}
                             theme={customTheme}
                             value={petAge}
+                            required
                             placeholder="Select Pet Age"
                             isSearchable
                         />
@@ -141,6 +146,7 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
                             options={ sizeOptions}
                             theme={customTheme}
                             value={petSize}
+                            required
                             placeholder="Select Pet Size"
                             isSearchable
                         />
@@ -154,6 +160,7 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
                             theme={customTheme}
                             placeholder="Select Dog Breed"
                             isSearchable
+                            required
                             isMulti
                             components={animatedComponents}
                         />
@@ -167,6 +174,7 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
                             theme={customTheme}
                             placeholder="Select Cat Breed"
                             isSearchable
+                            required
                             isMulti
                             components={animatedComponents}
                         />

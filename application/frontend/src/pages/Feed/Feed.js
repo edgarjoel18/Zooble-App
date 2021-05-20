@@ -339,7 +339,10 @@ function Feed() {
                         <div className={styles["follower-feed-new-post-attach-image-container"]}  {...getRootProps()}>
                             <input  {...getInputProps()} />
                             {myFiles.length === 0 && <div className={styles["follower-feed-new-post-attach-image-info"]}>Drag and Drop or Click to Select Image</div>}
-                            {myFiles.length > 0 && <img className={styles["follower-feed-new-post-attach-image-preview"]} src={myFiles[0].preview} onClick={removeAll}/>}
+                            {myFiles.length > 0 && <>
+                                <img className={styles["follower-feed-new-post-attach-image-preview"]} src={myFiles[0].preview} onClick={removeAll}/>
+                                <button className={styles["follower-feed-new-post-attach-image-container-button"]} onClick={removeAll} >remove</button>
+                            </>}
                         </div>
                     </section>
                     <button className={styles["follower-feed-new-post-submit"]} type='submit'>{loading ? <ButtonLoader /> : 'Submit'}</button>
@@ -361,7 +364,7 @@ function Feed() {
                         <div className={styles["follower-feed-post-timestamp"]}>{new Date(feedPost.timestamp).toLocaleString()}</div>
                         <div className={styles["follower-feed-post-admin-flags"]}>
                             <span className={styles["follower-feed-post-like-count"]}>{feedPost.like_count}</span>
-                            <img className={styles["follower-feed-post-like-icon"]} src={LikeIcon} onClick={(event) => likePost(event,feedPost.post_id)}/>
+                            <img className={styles["follower-feed-post-like-icon"]} src={LikeIcon} onClick={(event) => likePost(event,feedPost.post_id, index)}/>
                         </div>
                         <span className={styles['follower-feed-post-flag']} onClick={(event) => flagPost(event,feedPost.post_id)}>Flag</span>
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}

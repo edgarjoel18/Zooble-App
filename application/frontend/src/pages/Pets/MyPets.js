@@ -38,6 +38,8 @@ function MyPets() {
 
     const [loading, setLoading] = useState(false);
 
+    const [update, setUpdate] = useState(false);
+
     //const redirectContext = useContext(RedirectPathContext);
     const history = useHistory();
 
@@ -71,7 +73,7 @@ function MyPets() {
         .catch(err =>{
             console.log(err);
         }) 
-    }, [])
+    }, [update])
 
 
     function deletePet(){
@@ -117,7 +119,17 @@ function MyPets() {
             </div>
         </div>
         <ConfirmPetDeletion display={deletionModalDisplay} onClose={() => setDeletionModalDisplay(false)} selectedPet={selectedPet} deleteAction={deletePet}/>
-        <AddAPet display={additionModalDisplay} onClose={() => setAdditionModalDisplay(false)} typeOptions={typeOptions} dogBreedOptions={dogBreedOptions} catBreedOptions={catBreedOptions} colorOptions={colorOptions} sizeOptions={sizeOptions} ageOptions={ageOptions}/>
+        <AddAPet 
+            display={additionModalDisplay} 
+            onClose={() => setAdditionModalDisplay(false)} 
+            typeOptions={typeOptions} 
+            dogBreedOptions={dogBreedOptions} 
+            catBreedOptions={catBreedOptions} 
+            colorOptions={colorOptions} 
+            sizeOptions={sizeOptions} 
+            ageOptions={ageOptions}
+            update={() => setUpdate(!update)}
+        />
         </>
     )
 }

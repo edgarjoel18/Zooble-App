@@ -345,14 +345,14 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                             </button>
                             <ul className={styles.DropdownContent}>
                                 <li><NavLink className={styles.DropdownItem} to={`/Followers/${profile.profile_id}`}>Followers</NavLink></li>
-                                <li><NavLink className={styles.DropdownItem} to="/Profile/PetOwnerId=2">My Owner</NavLink></li>
+                                <li><NavLink className={styles.DropdownItem} to={"/Profile/" + profile.reg_user_id}>My Owner</NavLink></li>
                             </ul>
                         </div>
                         ):
                         (   
                             <React.Fragment>
                                 <button className={styles.FristButton} onClick={() => history.push(`/Followers/${profile.profile_id}`)}>Followers</button>
-                                <button className={styles.Button} onClick={() => history.push('/Profile/PetOwnerId=2')} >My Owner</button>
+                                <button className={styles.Button} onClick={() => history.push("/Profile/" + profile.reg_user_id)} >My Owner</button>
                             </React.Fragment>
                         )
                     }
