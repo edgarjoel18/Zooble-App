@@ -100,7 +100,7 @@ and (-webkit-min-device-pixel-ratio: 1) {
 
   /* ----------- Responsive ----------- */
 
-@media (400px <= width <= 749px) {
+@media only screen and (min-width: 360px) and (max-width: 768px) {
 
   .right-side{
     width: 100%;
@@ -108,7 +108,7 @@ and (-webkit-min-device-pixel-ratio: 1) {
   }
 }
 
-@media (750px <= width <= 1200px) {
+@media only screen and (min-width: 769px) and (max-width: 1200px) {
   .right-side{
     width: 100%;
     margin: auto;  
