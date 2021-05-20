@@ -42,6 +42,7 @@ function ProfileContent({photoPosts, pets, profile, isSelfView, updateProfile, t
                 </div>
             )
             break;
+        case 'Admin':
         case 'PetOwner':
             imageContainer = (
                 <div className={styles.ImageContainerTwoRows} >

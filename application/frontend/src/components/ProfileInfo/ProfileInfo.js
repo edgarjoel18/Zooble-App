@@ -22,7 +22,7 @@ import axios from 'axios';
 //make this into environment variable before deploying!
 const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL'
 
-function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStatus}) {
+function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStatus, isAdminView}) {
 
     //image upload array
     console.log(profile.display_name);
@@ -345,14 +345,14 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                             </button>
                             <ul className={styles.DropdownContent}>
                                 <li><NavLink className={styles.DropdownItem} to={`/Followers/${profile.profile_id}`}>Followers</NavLink></li>
-                                <li><NavLink className={styles.DropdownItem} to="/Profile/PetOwnerId=2">My Owner</NavLink></li>
+                                <li><NavLink className={styles.DropdownItem} to={"/Profile/" + profile.reg_user_id}>My Owner</NavLink></li>
                             </ul>
                         </div>
                         ):
                         (   
                             <React.Fragment>
                                 <button className={styles.FristButton} onClick={() => history.push(`/Followers/${profile.profile_id}`)}>Followers</button>
-                                <button className={styles.Button} onClick={() => history.push('/Profile/PetOwnerId=2')} >My Owner</button>
+                                <button className={styles.Button} onClick={() => history.push("/Profile/" + profile.reg_user_id)} >My Owner</button>
                             </React.Fragment>
                         )
                     }
@@ -414,7 +414,10 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                         </EditButton>
                     }
                 </div>
+                <div style={{display: 'flex'}}>
                 {displayAccountInfo}
+                {isAdminView && !isSelfView && <button className={styles['ban-button']} >Ban this user</button>}
+                </div>
             </div>
             <SendProfileMessage display={sendAMessageDisplay} profile={profile} onClose={()=> setSendAMessageDisplay(false)}/>
             <LoginRequired display={loginRequiredDisplay} onClose={() =>setLoginRequiredDisplay(false)} redirect={location.pathname} />    

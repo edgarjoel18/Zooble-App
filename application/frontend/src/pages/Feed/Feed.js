@@ -339,7 +339,10 @@ function Feed() {
                         <div className={styles["follower-feed-new-post-attach-image-container"]}  {...getRootProps()}>
                             <input  {...getInputProps()} />
                             {myFiles.length === 0 && <div className={styles["follower-feed-new-post-attach-image-info"]}>Drag and Drop or Click to Select Image</div>}
-                            {myFiles.length > 0 && <img className={styles["follower-feed-new-post-attach-image-preview"]} src={myFiles[0].preview} onClick={removeAll}/>}
+                            {myFiles.length > 0 && <>
+                                <img className={styles["follower-feed-new-post-attach-image-preview"]} src={myFiles[0].preview} onClick={removeAll}/>
+                                <button className={styles["follower-feed-new-post-attach-image-container-button"]} onClick={removeAll} >remove</button>
+                            </>}
                         </div>
                     </section>
                     <button className={styles["follower-feed-new-post-submit"]} type='submit'>{loading ? <ButtonLoader /> : 'Submit'}</button>

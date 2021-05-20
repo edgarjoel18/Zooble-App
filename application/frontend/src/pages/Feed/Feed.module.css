@@ -210,6 +210,7 @@
 
 .follower-feed-new-post-attach-image-container{
     display: flex;
+    position: relative;
     align-items: center;
     justify-content: center;
     height: 100%;
@@ -228,6 +229,21 @@
     object-fit: contain;
 }
 
+.follower-feed-new-post-attach-image-container-button{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    white-space: nowrap;
+    background-color: rgb(221, 220, 220);
+}
+
+
+.follower-feed-new-post-attach-image-container-button:hover {
+    background-color: #ccc;
+}
 
 
 .follower-feed-new-post-submit{
