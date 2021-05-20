@@ -164,7 +164,7 @@ function SearchBar() {
         <ComboboxInput 
           className={styles['searchbar-term-input']} 
           onChange={(event) => setSearchTerm(event.target.value)}  //set search term
-          placeholder= {"Enter Search Term"}
+          placeholder= {"Search " + searchCategory }
           onKeyPress={event => {  //handle enter button press
             if(event.key === 'Enter'){
               search();
