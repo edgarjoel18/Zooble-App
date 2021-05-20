@@ -61,13 +61,6 @@ function SignUpPage() {
 
     function signUp(event) {
         event.preventDefault();
-        console.log(email)
-        console.log(uname)
-        console.log(firstName)
-        console.log(lastName)
-        console.log(password)
-        console.log(redonePassword)
-        console.log(acceptTerms)
         // if(email && uname && firstName && lastName && password && redonePassword && acceptTerms){
             Axios.post('/api/sign-up', {
                     email: email,
@@ -77,8 +70,6 @@ function SignUpPage() {
                     password: password,
                     redonePassword: redonePassword
             },{withCredentials:true}).then(response => {
-                console.log(response);
-                console.log(response.data);
                 if(response.data.affectedRows === 1){
                     history.push("/SignUpSuccess");
                 }

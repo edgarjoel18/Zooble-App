@@ -27,7 +27,6 @@ function UserProfileCard({ followersList, followingList }) {
   const [selectedTab, setSelectedTab] = useState(0);
 
   const onTabClicked = (value) => {
-    console.log("[Tag] " + value + " is clicked");
     setSelectedTab(value);
   };
 

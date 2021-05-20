@@ -15,7 +15,7 @@
 }
 
 .Container {
-    width: 733px;
+    max-width: 733px;
     height: 585px;
     padding: 20px;
     border-radius: 0px 25px 25px 25px;
@@ -109,4 +109,10 @@
 }
 
 .hours-table-cell{
+}
+
+@media (max-width: 800px) {
+    .AboutMe {
+        display: none;
+    }
 }

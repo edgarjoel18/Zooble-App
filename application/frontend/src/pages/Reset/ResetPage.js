@@ -37,7 +37,6 @@ function ResetPage() {
 
     function reset(event) {
         event.preventDefault();
-        console.log(email)
 
         // if(email && uname && firstName && lastName && password && redonePassword && acceptTerms){
             Axios.post('/api/reset/:token', {
@@ -45,23 +44,17 @@ function ResetPage() {
                     password: password,
                     redonePassword: redonePassword
             },{withCredentials:true}).then(response => {
-                console.log(response);
-                console.log(response.data);
                 if(response.data.affectedRows === 1){
-                    console.log("Success")
                 //    history.push("/SignUpSuccess");
                 }
  
             }).catch(error => {
                 if (error.response.data === "passwords not matching"){
                     setError("The Passwords Entered Do Not Match");
-                    console.log(error);
                 }
                 else if (error.response.data === "password requirements"){
                     setError("Your Password Must Have: 8-50 Characters and Contain: 1 Capital Letter, 1 Number, 1 Special Character");
-                    console.log(error);
                 }
-                console.log(error);
             })
         // }
     }

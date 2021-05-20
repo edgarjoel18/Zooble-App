@@ -79,7 +79,6 @@ function MyPets() {
     function deletePet(){
         axios.post('/api/delete-pet', {petProfileID: selectedPet.profile_id})
         .then((res)=>{
-            console.log(res.data)
             setDeletionModalDisplay(false);
         })
         .catch((err) =>{

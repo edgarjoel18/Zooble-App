@@ -62,7 +62,6 @@ function ShelterSignUpPage2(props) { //recieve form data from sign up page 1
     //to get form data from sign up page 1
     const location = useLocation();
     let state = props.location.state;
-    console.log(state);
 
     //Modal Display States
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
@@ -137,18 +136,6 @@ function ShelterSignUpPage2(props) { //recieve form data from sign up page 1
 
     function signUpShelter(event){
         event.preventDefault();
-        console.log('Email: ', state.email)
-        console.log('FirstName: ', state.firstName)
-        console.log('LastName: ', state.lastName)
-        console.log('Username: ', state.username)
-        console.log('Password: ', state.password)
-        console.log('RedonePassword: ', state.redonePassword)
-        console.log('Shelter Name: ', name)
-        console.log('Shelter Phone Number: ', phoneNumber)
-        console.log('Address: ', address)
-        console.log('Latitude: ', latitude)
-        console.log('Longitude: ', longitude)
-        console.log('Pet Types: ', selectedPetTypes)
         Axios.post('/api/sign-up/shelter', { 
             email: state.email,
             firstName: state.firstName,
@@ -164,8 +151,6 @@ function ShelterSignUpPage2(props) { //recieve form data from sign up page 1
             petTypes: selectedPetTypes
         },{withCredentials:true})
         .then(response => {
-            console.log(response);
-            console.log(response.data);
             if(response.data.affectedRows === 1){
                 history.push("/SignUpSuccess");
             }
@@ -232,13 +217,11 @@ function ShelterSignUpPage2(props) { //recieve form data from sign up page 1
                     try{
                         const results = await getGeocode({address});
                         const{lat,lng} = await getLatLng(results[0]);
-                        console.log(lat,lng);
                         setLatitude(lat);
                         setLongitude(lng);
                     } catch(error){
                         console.log("error!")
                     }
-                        console.log(address)
                         setAddress(address);
                     }}
                 >

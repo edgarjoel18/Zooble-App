@@ -7,10 +7,12 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
 import styles from './EditPetDetails.module.css'
+import axios from 'axios';
 
 function EditPetDetails(props) {
 
     //full version should recieve pet types and breeds from db and display in dropdown
+    const [petName, setPetName] = useState('');
     const [petType,setPetType] = useState([]);  //set this to already existing pet type stored in db for real version
     const [dogBreed, setDogBreed] = useState([]);
     const [petColors, setPetColors] = useState([]);
@@ -41,10 +43,19 @@ function EditPetDetails(props) {
             }
         }
     }
+
+    // function updatePet(){
+    //     axios.post('/api/edit-pet',{})
+    //     .then((response) =>{
+
+    //     })
+    //     .catch((err) =>{
+
+    //     })
+    // }
     
     const animatedComponents = makeAnimated();
 
-    console.log(petColors)
 
 
     return (

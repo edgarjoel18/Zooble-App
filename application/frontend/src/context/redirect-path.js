@@ -12,13 +12,11 @@ function RedirectPathContextProvider(props) {
     const [loading, setLoading] = useState(false);
 
     function redirectHandler(newPath) {
-        console.log('[redirect path]' + newPath);
         setPath(newPath);
     };
 
     // accept true or false
     function updateLoadingHandler(val) {
-        console.log('[On loading]');
         setLoading(val);
     };
 

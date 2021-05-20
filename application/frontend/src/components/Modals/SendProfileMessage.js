@@ -5,8 +5,6 @@ import Modal from './Modal.js'
 import styles from './SendMessage.module.css';
 
 function SendProfileMessage({display,onClose, profile}) {
-    console.log("SendAMessage: ",profile)
-
     const [sendSuccess,setSendSuccess] = useState(false);
 
     const [subject, setSubject] = useState('');
@@ -14,7 +12,6 @@ function SendProfileMessage({display,onClose, profile}) {
 
     function sendMessage(event){
         event.preventDefault();
-        console.log('sendMessage')
 
         axios.post("/api/message-profile",{
             messageSubject: subject,

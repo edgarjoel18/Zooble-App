@@ -62,8 +62,6 @@ function Reviews(props) {
         displayReviews = <div className={styles.EmptyReviews} ><h2>Don't have any reviews yet</h2></div>
     }
 
-    console.log(props.reviews);
-
     return (  
         <div className={styles.Container} >      
             {displayReviews}

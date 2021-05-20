@@ -9,17 +9,8 @@ function LoginRequired({display, onClose, redirect}) {
     const redirectContext = useContext(RedirectPathContext);
 
     useEffect(() => {
-        console.log('[LoginRequired: redirect] ' + redirect);
         redirectContext.redirectTo(redirect);
-        console.log(redirectContext.redirectPath)
     }, [display])
-
-    // function onLoginHandler() {
-    //     console.log('[LoginRequired: redirect] ' + redirect);
-    //     redirectContext.redirectTo(redirect);
-    //     console.log(redirectContext.redirectPath)
-    //     history.push('/login-page');
-    // }
 
     if(!display) return null;
     return (

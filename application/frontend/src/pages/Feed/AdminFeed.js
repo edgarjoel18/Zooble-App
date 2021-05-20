@@ -35,12 +35,10 @@ function AdminFeed({appUser}) {
         if(observer.current) observer.current.disconnect()
         observer.current = new IntersectionObserver(entries =>{
             if(entries[0].isIntersecting ){
-                console.log('intersecting')
                 setOffset(prevOffset => prevOffset + 10)
             }
         })
         if(node) observer.current.observe(node)
-        console.log('node:',node)
     }, [postsLoading, hasMore])
 
     const [selectedPost, setSelectedPost] = useState({});
@@ -61,7 +59,6 @@ function AdminFeed({appUser}) {
         if (!event) var event = window.event;
         event.cancelBubble = true;
         if (event.stopPropagation) event.stopPropagation();
-        console.log(feedPost);
         setSelectedPost(feedPost);
         setPostModalDisplay(true);
         return
@@ -72,7 +69,6 @@ function AdminFeed({appUser}) {
     }
 
     function goToProfile(event,profileID){
-        console.log()
         //stop from opening post modal
         if (!event) var event = window.event;
         event.cancelBubble = true;
@@ -97,7 +93,6 @@ function AdminFeed({appUser}) {
             postID: selectedPost.post_id
         })
         .then(response =>{
-            console.log(response)
             setDeletionModalDisplay(false)
         })
         .catch(err =>{

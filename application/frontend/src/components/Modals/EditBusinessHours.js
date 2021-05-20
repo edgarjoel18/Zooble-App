@@ -46,10 +46,6 @@ const Select = props => (
 
 function EditBusinessHours({display,onClose, hours, setHours}){
     //convert hours into hour options usable as values for react-select
-    console.log('hours: ', hours)
-    console.log('hours.sun_open', hours.sun_open)
-
-
     const [sundayStart, setSundayStart] = useState(hours.sun_open);
     const [mondayStart, setMondayStart] = useState(hours.mon_open);
     const [tuesdayStart, setTuesdayStart] = useState(hours.tue_open);
@@ -65,10 +61,6 @@ function EditBusinessHours({display,onClose, hours, setHours}){
     const [thursdayEnd, setThursdayEnd] = useState(hours.thu_close);
     const [fridayEnd, setFridayEnd] = useState(hours.fri_close);
     const [saturdayEnd, setSaturdayEnd] = useState(hours.sat_close);
-
-
-
-    // console.log(hourOptions)
 
     function customTheme(theme){
         return {
@@ -99,8 +91,6 @@ function EditBusinessHours({display,onClose, hours, setHours}){
             newSatClose: saturdayEnd['value']
         })
         .then(response =>{
-            console.log(response);
-            console.log('sundayStart: ',sundayStart);
             setHours({
                 sun_open: sundayStart,
                 sun_close: sundayEnd,

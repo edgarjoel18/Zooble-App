@@ -10,8 +10,6 @@ import styles from './SendMessage.module.css';
 const {Option} = components
 
 function SendMessage({display,onClose, profile, recipientOptions}) {
-    console.log("SendAMessage: ",profile)
-    console.log("Recipient Options: ", recipientOptions)
 
     const [sendSuccess,setSendSuccess] = useState(false);
 
@@ -22,9 +20,6 @@ function SendMessage({display,onClose, profile, recipientOptions}) {
 
     function sendMessage(event){
         event.preventDefault();
-        console.log('sendMessage')
-
-        console.log("recipient: ", recipient);
 
         axios.post("/api/message",{
             messageSubject: subject,

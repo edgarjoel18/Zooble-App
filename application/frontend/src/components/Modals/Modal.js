@@ -15,7 +15,6 @@ function Modal({display,children, onClose}) {
         }
     },[display]) //if display changes
 
-    // console.log("Children: " + {children});
     if(!display) return null
     return ReactDom.createPortal(
         <>

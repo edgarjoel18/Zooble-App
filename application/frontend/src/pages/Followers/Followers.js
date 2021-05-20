@@ -9,7 +9,6 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 function Followers() {
 
   const {profileID} = useParams();
-  console.log("profileID: ",profileID);
 
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
@@ -25,14 +24,12 @@ function Followers() {
     setLoading(true);
     Promise.all([getFollowers, getFollowing])
     .then((responses)=>{
-      console.log("responses: ", responses);
       setFollowers(responses[0].data);
       setFollowing(responses[1].data);
       setLoading(false);
     })
     .catch((err) =>{
       setLoading(false);
-      console.log(err)
     })
   },[profileID])
 

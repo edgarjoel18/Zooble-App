@@ -10,7 +10,6 @@ import axios from 'axios'
 function Pets() {
 
     const {profileID} = useParams(); 
-    console.log('profileID: ',profileID)
 
     const [pets,setPets] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -19,12 +18,10 @@ function Pets() {
         setLoading(true)
         axios.get('/api/pets',{params:{profileID}})
         .then(response =>{
-            console.log(response.data);
             setPets(response.data);
             setLoading(false);
         })
         .catch(err =>{
-            console.log(err);
         })
     },[profileID])
 
