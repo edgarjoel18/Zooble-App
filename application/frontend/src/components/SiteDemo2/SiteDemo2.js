@@ -23,17 +23,18 @@ function SiteDemo2() {
 
   return (
     <div className={styles['site-demo2-container']}>
-      <div className={styles['left-side']}>
-        <img className={styles['left-side-map']} src={MapSearchPreview} />
-      </div>
       <div className={styles['right-side']}>
-        <div className={styles['right-side-text']}>
-            Use our location search tool to find a pet-friendly small businesses near you 
+      <div className={styles['right-side-text']}>
+            <p className={styles['side-text']}>Use our location search tool to find a pet-friendly small businesses near you </p>
             <button className={styles['site-demo2-button']} onClick={searchLocalBusinesses}>
             {text}
         </button>
         </div>
+        {/* <img className={styles['left-side-map']} src={MapSearchPreview} /> */}
       </div>
+      {/* <div className={styles['right-side']}>
+        
+      </div> */}
     </div>
   );
 }
