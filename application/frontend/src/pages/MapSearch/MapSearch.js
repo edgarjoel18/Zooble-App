@@ -54,7 +54,6 @@ const distanceOptions = [
 
 function MapSearch(props) {
     let state = props.location.state;
-    console.log("State from searchbar: ",state);
 
     //For storing filter states
     const [businessCategoryFilters,setBusinessCategoryFilters] = useState([]);
@@ -72,7 +71,6 @@ function MapSearch(props) {
     let history = useHistory();
 
     const panTo = useCallback(({lat,lng}) =>{
-        console.log({lat,lng});
         mapRef.current.panTo({lat,lng});
         mapRef.current.setZoom(18);
     },[]);
@@ -160,40 +158,20 @@ function search(){
         // const searchResultsContainerNode = searchResultsContainerRef.current
         // if(state.searchCategoryParam === 'Pet Owners'){ //change to pet owner results layout
         //     if(searchResultsContainerNode){
-        //         console.log('searchResultsContainerNode',searchResultsContainerNode)
         //         searchResultsContainerNode.classList.remove(styles['map-search-results-container'])
-        //         console.log('removed collapsed')
         //         searchResultsContainerNode.classList.add(styles['map-search-results-container-petOwners'])
-        //         console.log('added expanded')
         //     }
         // }
         // else{
         //     if(searchResultsContainerNode){
-        //         console.log('searchResultsContainerNode',searchResultsContainerNode)
         //         searchResultsContainerNode.classList.remove(styles['map-search-results-container-petOwners'])
-        //         console.log('removed expanded')
         //         searchResultsContainerNode.classList.add(styles['map-search-results-container'])
-        //         console.log('added collapsed')
         //     }
         // }
 
         
         
         if(state.searchTermParam || state.searchCategoryParam || state.prefilter){
-            console.log('state.prefilter: ',state.prefilter)
-            console.log("pet type filters", petTypeFilters);
-            console.log("dog breed filters", dogBreedFilters);
-            console.log("search start")
-            console.log('Fetching Search Results');
-            console.log('Search Category: '+ state.searchCategoryParam);
-            console.log('Search Term: ' + state.searchTermParam);
-            console.log('Search Distance: ', searchDistance.value);
-            console.log('Business Category Filters: ', businessCategoryFilters);
-            console.log('Current Page: ', currentPage);
-            console.log(typeof businessCategoryFilters);
-
-            
-
 
             setSearchCategory(state.searchCategoryParam);
             setSearchTerm(state.searchTermParam);
@@ -235,7 +213,6 @@ function search(){
                         businessCategoryFilterValues.push(businessCategoryFilters[i].value);
                     }
 
-                    console.log("Switch: Businesses")
                     searchParams = {
                         searchTerm: state.searchTermParam,
                         searchCategory:state.searchCategoryParam,
@@ -245,7 +222,6 @@ function search(){
                         searchPage: currentPage,
                         searchBizCategories : businessCategoryFilterValues
                     }
-                    console.log("Business Search Params: ", searchParams)
                     break
                 case 'Shelters':
                     let shelterTypeFilterValues = [];
@@ -348,48 +324,38 @@ function search(){
                 
             }
 
-            console.log("Search Params: ", searchParams)
 
 
             Axios.get('/api/search', {params: searchParams})
             .then(response =>{
-                console.log("response: ",response)
-                console.log("response.data: ",response.data)
                 if(response.data.length !== 0){
                     setMaxResultsPages(Math.ceil(response.data[0].results_count/10))
                 }
-                console.log(response.data)
                 
                 setRecievedSearchResults(response.data);
                 displaySearchResults();
-                console.log("Recieved Search Results: ", recievedSearchResults)
-                console.log("Recieved Search Results Length: ", recievedSearchResults.length)
+
                 setLoading(false);
-                // console.log("Results Count: ", response.data.resultsCount);
                 // setOverlayDisplay(true);
             })
             .catch(err =>{
                 console.log(err);
             })
         }
-        console.log("search end")
     }
 
     useEffect(()=>{
-        console.log('useEffect search')
         search();
     },[state, currentPage]);  //only fetch results when search params or filters or page changes
 
 
     //toggle display of filter overlay
     function displayFilterOverlay(){
-        // console.log("Filter overlay display turning on")
         setFilterOverlayDisplay('flex');
         setSearchResultsDisplay('none');
     }
 
     function displaySearchResults(){
-        // console.log("Filter overlay display turning off")
         setFilterOverlayDisplay('none');
         setSearchResultsDisplay('block');
     }
@@ -400,24 +366,16 @@ function search(){
     }
 
     function nextPage(){
-        console.log("On page ", currentPage)
-        console.log("Going to next page");
         setCurrentPage(prevCurrentPage => prevCurrentPage + 1);
-        console.log("On page ", currentPage);
         // search();
     }
 
     function previousPage(){
-        console.log("On page ", currentPage)
         if(currentPage > 1){
-            console.log("Going to previous page");
             setCurrentPage(prevCurrentPage => prevCurrentPage - 1);
-            console.log("On page ", currentPage);
             // search();
         }
         else{
-            console.log("On the first page already!");
-            console.log("On page ", currentPage);
         }
     }
 
@@ -436,7 +394,6 @@ function search(){
 
 
     
-    // console.log(petTypeFilters);
 
 
     return (

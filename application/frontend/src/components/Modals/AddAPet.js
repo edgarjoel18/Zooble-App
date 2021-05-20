@@ -59,7 +59,6 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
             size: petSize
         })
         .then(response =>{
-            console.log('/api/create-pet-profile',response);
             setLoading(false);
             onClose();
             update()
@@ -67,7 +66,6 @@ function AddAPet({display,onClose, typeOptions,dogBreedOptions,catBreedOptions,c
         .catch(err =>{
             setLoading(false);
             update()
-            console.log(err);
             //display error to user
         })
         // remove later when the setLoading is working in the then block 

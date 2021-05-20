@@ -12,7 +12,6 @@ import axios from 'axios'
 
 function MyPhotos() {
     const {profileID} = useParams();  //get profileID from '/Photos/:profileID url
-    console.log("profileID: ",profileID);
 
     const [name, setName] = useState('');
     const [photos, setPhotos] = useState([])
@@ -32,18 +31,14 @@ function MyPhotos() {
     const [selectedPhotoId, setSelectedPhotoId] = useState({});
 
     function closePostModal(){
-        console.log('exit button clicked')
         setPostModalDisplay(false);
     }
     function presentPostModal(post){
-        console.log(post);
         setSelectedPost(post);
-        console.log('clicked on image');
         setPostModalDisplay(true);
     }
 
     function deletePhoto(id) {
-        console.log('[deletePhoto] ' + id);
         // display modal here
         let tempPhotos = photos.filter(photo => photo.post_id != id);
         setPhotos(tempPhotos);
@@ -61,7 +56,6 @@ function MyPhotos() {
     )
 
     if (editing) {
-        console.log('editing');
         displayEditing  = (
             <div className={styles.PhotosContainer} >
                 {photos.map((photo, index) => (

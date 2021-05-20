@@ -44,7 +44,6 @@ function EditPetDetails(props) {
     
     const animatedComponents = makeAnimated();
 
-    console.log(petColors)
 
 
     return (

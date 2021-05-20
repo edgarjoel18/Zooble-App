@@ -27,16 +27,12 @@ function LoginPage({appUser, updateLoginState}) {
 
     function loginHandler(event) {
         event.preventDefault();
-        console.log(username);
-        console.log(password);
             
-            console.log("AppUser in Login Handler: " + appUser);
             Axios.post('/api/login', {
                     username: username,
                     password: password,
                 },{withCredentials:true})
                 .then(response => {
-                    console.log(response.data)
 
                     if(response.data){
                         updateLoginState(true,response.data);
@@ -51,7 +47,6 @@ function LoginPage({appUser, updateLoginState}) {
     }
 
     if(appUser){
-         console.log('User is Logged In');
         return <Redirect to={redirectContext.redirectPath} />
     }
 

@@ -2,7 +2,6 @@ import {useState,useEffect} from 'react'
 import axios from 'axios';
 
 function useFeed(offset, admin) {
-    console.log('admin: ', admin)
     const [feedPosts, setFeedPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false)
@@ -21,7 +20,6 @@ function useFeed(offset, admin) {
                 })
                 setHasMore(res.data.length > 0);
                 setLoading(false)
-                console.log(res.data)
             })
             .catch(res =>{
                 setError(true)
@@ -35,7 +33,6 @@ function useFeed(offset, admin) {
                 })
                 setHasMore(res.data.length > 0);
                 setLoading(false)
-                console.log(res.data)
             })
             .catch(res =>{
                 setError(true)

@@ -45,14 +45,12 @@ function Messages() {
 
     Promise.all([getRecievedMessages, getSentMessages])
       .then((responses) => {
-        console.log("responses: ", responses);
         setRecievedMessages(responses[0].data);
         setSentMessages(responses[1].data);
         setLoding(false);
       })
       .catch((err) => {
         setLoding(false);
-        console.log(err);
       });
   }
 
@@ -61,13 +59,11 @@ function Messages() {
     const getFollows = axios.get("/api/following");
 
     Promise.all([getFollowers, getFollows]).then((responses) => {
-      console.log("responses: ", responses);
 
       const followers = responses[0].data;
       const follows = responses[1].data;
 
       let followersAndFollows = followers.concat(follows);
-      console.log("Followers And Follows: ", followersAndFollows);
 
       let recipients = [];
       let recipientSet = new Set();
@@ -80,11 +76,9 @@ function Messages() {
         }
         recipientSet.add(personJSON);
       }
-      console.log("recipients: ", recipients);
       //create array compatible with react-select
       let recipientOptions = [];
       for (const recipient of recipients) {
-        console.log("recipient: ", recipient);
         recipientOptions.push({
           value: recipient.profile_id,
           label: recipient.display_name,
@@ -92,7 +86,6 @@ function Messages() {
         });
       }
 
-      console.log("recipientOptions: ", recipientOptions);
 
       setPossibleMessageRecipients(recipientOptions);
     });
@@ -106,15 +99,12 @@ function Messages() {
     //retrieve messages on refresh
     getMessages();
     getMessageRecipients();
-    console.log("sentMessages: ", sentMessages);
-    console.log("recievedMessages: ", recievedMessages);
     // getFollowers(); //get followers/followed to populate dropdown in send message modal
   }, []);
 
   const [selectedTab, setSelectedTab] = useState(0);
 
   const onTabClicked = (value) => {
-    console.log("Tab " + value + " was clicked");
     setSelectedTab(value);
   };
 

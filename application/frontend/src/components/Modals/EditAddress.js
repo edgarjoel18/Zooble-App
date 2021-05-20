@@ -34,7 +34,6 @@ function EditAddress({display, onClose, setAddressState}) {
             newLongitude: longitude
         })
         .then(response =>{
-            console.log(response);
             setAddressState(address)
             onClose()
         })
@@ -70,13 +69,11 @@ function EditAddress({display, onClose, setAddressState}) {
                         try{
                             const results = await getGeocode({address});
                             const{lat,lng} = await getLatLng(results[0]);
-                            console.log(lat,lng);
                             setLatitude(lat);
                             setLongitude(lng);
                         } catch(error){
                             console.log("error!")
                         }
-                            console.log(address)
                             setAddress(address);
                         }}
                     >

@@ -16,7 +16,6 @@ const businessProfileTabs = ["About", "Business Info"]//, "Recent Posts"]
 const petOwnerProfileTabs = ["About"]//, "Recent Posts"]
 
 function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phoneNumber, hours, profileID}) {
-    console.log("profile: ", profile)
 
     //not sure if these need to have state yet
     let latitude; 
@@ -35,8 +34,6 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
     const [location, setLocation] = useState();
     const [hoursState, setHoursState] = useState({});
 
-    console.log('location is ' + address);
-    console.log('phone is ' + phone);
 
     let hoursLabels = [];
 
@@ -44,58 +41,28 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
         if(profile.type === "Business"){
             axios.get('/api/hours',{params: {profileID: profileID}})
             .then(response =>{
-                console.log('/api/hours: ',response.data);
                 setHoursState(response.data);
-                console.log('hoursState: ', hoursState)
             })
             .catch(err =>{
-                console.log(err);
             })
 
             axios.get('/api/business-address',{params: {profileID: profileID}})
             .then(response =>{
-                console.log('/api/business-address: ',response.data.address);
                 setLocation(response.data.address);
             })
             .catch(err =>{
-                console.log(err);
             })
 
             axios.get('/api/business-phone-number',{params: {profileID: profileID}})
             .then(response =>{
-                console.log('/api/business-phone-number: ', response.data);
                 setPhone(response.data.phone_num);
             })
             .catch(err =>{
-                console.log(err);
             })
         }
     },[profileID])
 
-    // limited time editing
-    // useEffect(() => {
-    //     const timer = setTimeout(() => {
-    //         console.log('Finished typing')
-    //         setChanging(false);
-    //     }, 3000)
-
-    //     return (() => {
-    //         clearTimeout(timer);
-    //     });
-
-    // useEffect(()=>{
-    //     let hoursLabels = ['Sunday: ','Sunday: ', 'Monday: ','Monday: ', 'Tuesday: ', 'Tuesday: ', 'Wednesday: ','Wednesday: ', 'Thursday: ', 'Thursday: ','Friday: ','Friday: ', 'Saturday: ', 'Saturday: '];
-    //     for(let i = 0; i < hours.length; i+=2){
-    //         hoursDisplay.push(<li>{hoursLabels[i]}: {hours[i]}-{hours[i+1]}</li>)
-    //     }
-    //     console.log('hoursDisplay: ', hoursDisplay);
-    // }, [])
-
-
-    // }, [address, phone, changing])
-
     function submitAboutMeEdit(){
-        console.log('about me content is ' + aboutMeContent)
         axios.post("/api/about-me",{
             newAboutMe: aboutMeContent,
             profileID: profile.profile_id
@@ -112,7 +79,6 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
 
 
     function submitPhoneEdit(){
-        console.log('updatedPhone is ' + phone)
         axios.post("/api/phone-number",{
             newPhoneNumber: phone
         })
@@ -131,20 +97,16 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
     function changingInfoHandler(label) {
         setChanging(true);
         setLabelSelected(label);
-        console.log(label)
     }
 
     function cancelEditingHandler() {
-        console.log("cancel editing handler");
         setChanging(false);
         setLabelSelected('');
-        console.log('cancel')
     }
 
     function autoGrowHandler(event) {
         let address = document.getElementById('tab-address');
         address.style.height = '45px';
-        console.log(address.scrollHeight);
         if (address.scrollHeight < 105) {
             setLocation(event.target.value);
             address.style.height = address.scrollHeight + 'px' 
@@ -183,7 +145,6 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
         <Tab key={tab} id={tab} section={tab} selected={selected} clicked={onTabClickHandler} accountType={profile.type} />
     ))
 
-    console.log('hours is ' + JSON.stringify(hours));
     let content = null; 
     switch (selected) {
         case 'About':
@@ -291,14 +252,10 @@ function AboutMe({aboutMeBody, profile, updateProfile, isSelfView, address, phon
                         </div>
                         <table className={styles['hours-table']} >
                             {Object.keys(hoursState).map((key, index) => {
-                                console.log('mapping hoursState')
-                                console.log('hoursState[key]: ',hoursState[key])
-
                                 if (index % 2 === 1)
                                     return null;
                                 
                                 let day = key.substr(0, 3);
-                                console.log(day)
                         
                                 return <tr className={styles['hours-table-row']} key={key}>
                                     <th className={styles['hours-table-header']} >{day[0].toUpperCase() + day.substring(1)}: </th>                              

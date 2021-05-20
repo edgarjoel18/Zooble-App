@@ -4,9 +4,7 @@ import Modal from './Modal.js'
 
 import styles from './ForgotPassword.module.css';
 
-function ForgotPassword({display,onClose}) {
-    console.log("Forgot password ")
-    
+function ForgotPassword({display,onClose}) {    
     const [email, setEmail] = useState('');
 
     function resetPassword(){

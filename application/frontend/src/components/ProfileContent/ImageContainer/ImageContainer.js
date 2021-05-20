@@ -8,8 +8,6 @@ import PostModal from '../../Modals/PostModal'
 import useWindowDimensions from './useWindowDimensions';
 
 function ImageContainer({previews, profile, title, selfView}) {
-    console.log("previews: ",previews);
-    console.log("previews.length: ",previews.length);
 
     const [postModalDisplay, setPostModalDisplay] = useState(false);
     const [imageStack, setImageStack] = useState();
@@ -19,25 +17,20 @@ function ImageContainer({previews, profile, title, selfView}) {
     let history = useHistory();
 
     function closePostModal(){
-        console.log('exit button clicked')
         setPostModalDisplay(false);
     }
     function presentPostModal(index){
         setSelectedPost(previews[index])
-        console.log('clicked on image');
         setPostModalDisplay(true);
     }
 
     useEffect (() => {
-        console.log("ImageContainer useEffect");
         setImageStack(displayImageStack(previews.length, profile.type));
-        console.log(profile)
     }, [previews])
 
     //display a given number of pictures
     const displayImageStack = (val, accountType) => {
-        console.log('displayImageStack', previews);
-        console.log("val: ",val)
+
         if (val === 0) {
             if (title === 'Photos'  || title === 'My Photos' )
                 return (

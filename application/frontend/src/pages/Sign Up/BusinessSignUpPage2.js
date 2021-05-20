@@ -51,7 +51,6 @@ function BusinessSignUpPage2(props) {
     
     const location = useLocation();
     let state = props.location.state;
-    console.log(state);
     
     const [termsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState(false);
     const [privacyPolicyDisplay, setPrivacyPolicyDisplay] = useState(false);
@@ -123,18 +122,6 @@ function BusinessSignUpPage2(props) {
 
     function signUpBusiness(event){
         event.preventDefault();
-        console.log('Email: ', state.email)
-        console.log('FirstName: ', state.firstName)
-        console.log('LastName: ', state.lastName)
-        console.log('Username: ', state.username)
-        console.log('Password: ', state.password)
-        console.log('RedonePassword: ', state.redonePassword)
-        console.log('Shelter Name: ', name)
-        console.log('Shelter Phone Number: ', phoneNumber)
-        console.log('Address: ', address)
-        console.log('Latitude: ', latitude)
-        console.log('Longitude: ', longitude)
-        console.log('Business Type: ', selectedBusinessType.value)
         Axios.post('/api/sign-up/business', { 
             email: state.email,
             firstName: state.firstName,
@@ -149,8 +136,6 @@ function BusinessSignUpPage2(props) {
             longitude: longitude,
             type: selectedBusinessType.value
         },{withCredentials:true}).then(response => {
-            console.log(response);
-            console.log(response.data);
             // if(response.data.affectedRows === 1){
                 history.push("/SignUpSuccess");
             // }
@@ -202,13 +187,11 @@ function BusinessSignUpPage2(props) {
                             try{
                                 const results = await getGeocode({address});
                                 const{lat,lng} = await getLatLng(results[0]);
-                                console.log(lat,lng);
                                 setLatitude(lat);
                                 setLongitude(lng);
                             } catch(error){
                                 console.log("error!")
                             }
-                                console.log(address)
                                 setAddress(address);
                             }}
                             >

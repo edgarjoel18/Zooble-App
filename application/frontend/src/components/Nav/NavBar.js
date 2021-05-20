@@ -7,9 +7,7 @@ import { NavLink } from 'react-router-dom';
 import styles from './NavBar.module.css'
 
 function NavBar({appUser, updateLoginState}) {
-    console.log(appUser);
     useEffect(() => {
-        console.log('AppUser in Navbar changed to: ', appUser)
     }, [appUser])
     
     return (

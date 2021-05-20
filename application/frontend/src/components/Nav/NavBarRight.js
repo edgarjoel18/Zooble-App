@@ -39,10 +39,7 @@ function NavBarRight({appUser, updateLoginState}) {
 
   function logoutHandler(){
     axios.post("/api/logout", {withCredentials: true}).then((response) =>{
-      console.log(response.data.loggedIn);
-      console.log(response.data.user);
       updateLoginState(response.data.loggedIn,response.data.user);
-      console.log("App User after Logout:", appUser);
       history.push('/');
     })
     .catch((err) =>{

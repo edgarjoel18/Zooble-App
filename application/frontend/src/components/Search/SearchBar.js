@@ -70,8 +70,6 @@ function SearchBar() {
 
   function search(){
     // let prefilterObject = matchPrefilter(selectedPrefilter);
-    console.log('selectedPrefilter',selectedPrefilter)
-    console.log('prefilterObject: ',prefilterObject)
     if(searchLocationLat == null || searchLocationLng == null){
       navigator.geolocation.getCurrentPosition((position)=>{
         const location = {
@@ -110,11 +108,9 @@ function SearchBar() {
   },[])
 
   useEffect(() => {
-    console.log(searchLocationLat, searchLocationLng);
   }, [searchLocationLat, searchLocationLng])
 
   const results = useCategoryMatch(searchTerm);
-  // console.log(results);
 
   function useCategoryMatch(searchTerm){
     const throttledTerm = useThrottle(searchTerm, 100);  //need to throttle function because it runs whenever searchTerm is set
@@ -122,8 +118,6 @@ function SearchBar() {
     if(searchCategory == 'Pets'){
       //set autocompletable prefilters to pet type and breed
       filters = typeOptions.concat(dogBreedOptions,catBreedOptions);
-      console.log('filters: ', filters)
-      // console.log("Filters: ",filters);
     }
     if(searchCategory == 'Shelters'){
       //set autocompletable prefilters to pet type
@@ -157,7 +151,6 @@ function SearchBar() {
       <Combobox
         className={styles['div-term-searchbar-input']}
         onSelect={(value) => {
-            console.log(prefilterObject.current[value])
             setSelectedPrefilter(prefilterObject.current[value])  //set prefilter to selected one to pass to mapsearch page
             setSearchTerm("");
         }}>
@@ -175,7 +168,6 @@ function SearchBar() {
             {results.length > 0 ? (
               <ComboboxList className={styles['combobox-list']}>
                  {results.slice(0, 5).map((result) => {
-                   console.log('result: ',result)
                    const value = result.label;
 
                    prefilterObject.current[value] = result;
@@ -196,17 +188,13 @@ function SearchBar() {
                 setValue(address,false);
                 clearSuggestions();
                 try{
-                    console.log(address);
                     const results = await getGeocode({address});
                     const{lat,lng} = await getLatLng(results[0]);
-                    console.log(lat,lng);
                     setSearchLocationLat(lat);
                     setSearchLocationLng(lng);
                 } catch(error){
                     console.log("error!")
                 }
-
-                console.log(address)
             }}
         >
           {/* Input Box */}
@@ -215,7 +203,6 @@ function SearchBar() {
             placeholder= {searchCategory !== 'Pet Owners' && "Near Current Location"}
             onChange={(e)=> {
               setValue(e.target.value);
-              console.log('e.target.value: ',e.target.value);
               // setSearchTerm(e.target.value);
             }}
             disabled={!ready }

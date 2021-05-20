@@ -16,7 +16,6 @@ import { RedirectPathContext } from '../../context/redirect-path';
 
 function Photos() {
     const {profileID} = useParams();  //get profileID from '/Photos/:profileID url
-    console.log("profileID: ",profileID);
 
     const [name, setName] = useState('');
     const [photos, setPhotos] = useState([])
@@ -31,7 +30,6 @@ function Photos() {
 
         Promise.all([getPhotos, getDisplayName])
         .then((responses)=>{
-            console.log("responses: ", responses);
             setPhotos(responses[0].data)
             setName(responses[1].data.display_name);
             redirectContext.updateLoading(false);
@@ -51,13 +49,10 @@ function Photos() {
     const [selectedPost, setSelectedPost] = useState({});
 
     function closePostModal(){
-        console.log('exit button clicked')
         setPostModalDisplay(false);
     }
     function presentPostModal(post){
-        console.log(post);
         setSelectedPost(post);
-        console.log('clicked on image');
         setPostModalDisplay(true);
     }
 

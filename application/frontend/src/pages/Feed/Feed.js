@@ -24,8 +24,6 @@ import FlagIcon from '../../images/Third Party Icons/icons8-empty-flag.png'
 const apiGatewayURL = process.env.REACT_APP_API_GATEWAY;
 
 function Feed({appUser}) {
-    console.log('feed appUser', appUser)
-    console.log(appUser.role)
     const history = useHistory()
     if(appUser.role == 4){
         history.push('/AdminFeed')
@@ -70,12 +68,10 @@ function Feed({appUser}) {
         if(observer.current) observer.current.disconnect()
         observer.current = new IntersectionObserver(entries =>{
             if(entries[0].isIntersecting ){
-                console.log('intersecting')
                 setOffset(prevOffset => prevOffset + 10)
             }
         })
         if(node) observer.current.observe(node)
-        console.log('node:',node)
     }, [postsLoading, hasMore])
 
     function customTheme(theme) { //move this a separate file and import maybe?
@@ -101,7 +97,6 @@ function Feed({appUser}) {
 
     //runs on refresh
     useEffect(() => { //get profile pic and name of user  //
-        console.log('useEffect and refresh')
         redirectContext.updateLoading(true);
 
         const getFeedUser = axios.get('/api/feed-user')
@@ -129,10 +124,8 @@ function Feed({appUser}) {
 
     // //runs whenever the user creates a post
     // useEffect(()=>{
-    //     console.log('/api/posts');
     //     axios.get('/api/posts')
     //     .then(response =>{
-    //         console.log(response.data);
     //         setFeedPosts(response.data);
     //     })
     // },[])
@@ -144,7 +137,6 @@ function Feed({appUser}) {
     
 
     useEffect(() => () => {
-        console.log('revoking object urls');
         //revoke the data urls to avoid memory leaks
         myFiles.forEach(file => URL.revokeObjectURL(file.preview));
       }, [myFiles]);
@@ -153,7 +145,6 @@ function Feed({appUser}) {
         setMyFiles(acceptedFiles.map(file => Object.assign(file, {
             preview: URL.createObjectURL(file)
         })))
-        console.log(myFiles)
     }, [myFiles])
     
     const removeAll = () => {
@@ -168,7 +159,6 @@ function Feed({appUser}) {
     })
 
     function likePost(event,feedPostID,index){
-        console.log('The liked post id is ' + index)
         if (!event) var event = window.event;
         event.cancelBubble = true;
         if (event.stopPropagation) event.stopPropagation();
@@ -176,19 +166,14 @@ function Feed({appUser}) {
             postToLike: feedPostID
         })
         .then((response) => {
-            console.log(response.data)
             let updatedPosts = [...feedPosts];
             if (response.data === 'like') {
-            console.log("Like count is " + updatedPosts[index].like_count)
             updatedPosts[index].like_count++;
             setPosts(updatedPosts);
-            console.log(response);
             }
             else {
-                console.log("Like count is " + updatedPosts[index].like_count)
                 updatedPosts[index].like_count--;
                 setPosts(updatedPosts);
-                console.log(response);
             }
         })
         .catch((err)=>{
@@ -234,21 +219,13 @@ function Feed({appUser}) {
             //try to upload photo first
             axios.get(apiGatewayURL)  //first get the presigned s3 url
             .then((response) =>{
-                console.log(response)
-                console.log(response.data)
                 let presignedFileURL =  'https://csc648groupproject.s3-us-west-2.amazonaws.com/' + response.data.photoFilename;  //save this url to add to database later
-                console.log(myFiles[0]);
                 axios.put(response.data.uploadURL, myFiles[0],config).then((response) =>{  //upload the file to s3
-                    console.log(response);
-                    console.log(response.data);
-                    console.log("Created Post Body: ", createdPostBody);
-                    console.log("Presigned File URL: ", presignedFileURL);
                     axios.post('/api/upload-post',{
                         postBody: createdPostBody,
                         photoLink: presignedFileURL,
                         taggedPets: taggedPets
                     }).then((response) =>{
-                        console.log(response.data);
                         removeAll();
                         setCreatedPostBody('');
                         setTaggedPets([]);
@@ -256,12 +233,10 @@ function Feed({appUser}) {
                     })
                     .catch((err) =>{
                         setLoading(false);
-                        console.log(err);
                     })
                 })
                 .catch((err) =>{
                     setLoading(false);
-                    console.log(err);
                     if(err.response.status == 403){
                         //display error message to user
                     }
@@ -270,7 +245,6 @@ function Feed({appUser}) {
             })
             .catch((err) =>{
                 setLoading(false);
-                console.log(err);
             })
 
             //refresh feed after posting
@@ -284,14 +258,12 @@ function Feed({appUser}) {
                 postBody: createdPostBody,
                 taggedPets: taggedPets
             }).then((response) =>{
-                console.log(response.data);
                 setCreatedPostBody('');
                 setTaggedPets([]);
                 setLoading(false);
             })
             .catch((err) =>{
                 setLoading(false);
-                console.log(err);
             })
 
             //refresh feed after posting
@@ -305,14 +277,12 @@ function Feed({appUser}) {
         if (!event) var event = window.event;
         event.cancelBubble = true;
         if (event.stopPropagation) event.stopPropagation();
-        console.log(feedPost);
         setSelectedPost(feedPost);
         setPostModalDisplay(true);
         return
     }
 
     function goToProfile(event,profileID){
-        console.log()
         //stop from opening post modal
         if (!event) var event = window.event;
         event.cancelBubble = true;

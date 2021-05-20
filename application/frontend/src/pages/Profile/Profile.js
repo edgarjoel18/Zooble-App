@@ -12,7 +12,6 @@ import styles from './Profile.module.css'
 import axios from 'axios';
 
 function Profile({appUser}) {
-    console.log("appUser: ", appUser);
 
     const [fetchedProfile,setFetchedProfile] = useState({});
     const [fetchedPhotoPosts, setFetchedPhotoPosts] = useState([]);
@@ -27,12 +26,10 @@ function Profile({appUser}) {
     const redirectContext = useContext(RedirectPathContext);
 
     const {profileID} = useParams();
-    console.log("profileID: ",profileID);
 
     const [userProfile, setUserProfile] = useState();
     const [selfView, setSelfView] = useState(false);
     const [adminView,setAdminView] = useState(false);
-    console.log('adminView: ', adminView)
 
     const history = useHistory()
 
@@ -47,10 +44,7 @@ function Profile({appUser}) {
 
         Promise.all([getProfile,getPhotoPosts, getCurrentUserPets,getTaggedPosts, getIsFollowing])
         .then((responses) =>{
-            console.log("responses: ", responses)
-            console.log('responses[0].data: ',responses[0].data);
             if(!responses[0].data.profile){ //if the profile doesn't exist, redirect user
-                console.log('profile object empty')
                 history.push('/Feed')
             }
             setFetchedProfile(responses[0].data.profile)
@@ -64,18 +58,15 @@ function Profile({appUser}) {
         })
         .catch((err) =>{
             redirectContext.updateLoading(false);
-            console.log(err)
             //display error message to user
         })
     },[profileID])
 
     
-    // console.log(appUser);
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
 
     function updateProfileHandler(type, value) {
         if (type === 'address' || type === 'phone' || type === 'hours') {
-            // console.log('value is ' + value + 'type is ' + type);
             setUserProfile(() => ({
                 ...userProfile,
                 contactInfo: {
@@ -85,13 +76,11 @@ function Profile({appUser}) {
             }));
         }
         else {
-            // console.log('[value] is ' + value + ' and [type] is ' + type);
             setUserProfile(() => ({
                 ...userProfile,
                 [type]: value
             }));
         }
-        // console.log('updateProfileHandler');
     }
 
     function toggleSelfViewHandler() {
@@ -100,7 +89,6 @@ function Profile({appUser}) {
         selfView ? button.className = styles.SwitchSelf : button.className = styles.SwitchVistor;
     }
 
-    // console.log(userProfile);
 
     let displayProfile = <Spinner />
 

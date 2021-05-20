@@ -26,17 +26,12 @@ const apiGatewayURL = process.env.REACT_APP_API_GATEWAY;
 function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStatus, isAdminView}) {
 
     //image upload array
-    console.log(profile.display_name);
-    console.log(profile.profile_pic_link);
-    console.log(followingStatus);
     
-    console.log(appUser);
     //const [profile.profile_pic_link, setprofile.profile_pic_link] = useState('');
     //const [profileTitle, setProfileTitle] = useState('');
     const [editing, setEditing] = useState(false);
     
     const [follow, setFollow] = useState(followingStatus); // update this from backend
-    console.log('follow: ',follow);
     // const [showBackdrop, setShowBackdrop] = useState(false);
 
     const [petType, setPetType] = useState({});
@@ -69,8 +64,6 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
     // const [myFiles, setMyFiles] = useState([])
 
     const onDrop = useCallback(acceptedFile => {
-        console.log("onDrop");
-        console.log("acceptedFile: ",acceptedFile[0]);
         let config = {
             headers: {
                 'Content-type': 'image/jpeg'  //configure headers for put request to s3 bucket
@@ -82,31 +75,22 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
         setLoading(true);
         axios.get(apiGatewayURL)  //first get the presigned s3 url
             .then((response) =>{
-                console.log(response)
-                console.log(response.data)
                 let presignedFileURL =  'https://csc648groupproject.s3-us-west-2.amazonaws.com/' + response.data.photoFilename;  //save this url to add to database later
-                console.log(acceptedFile[0]);
                 axios.put(response.data.uploadURL, acceptedFile[0],config).then((response) =>{  //upload the file to s3
-                    console.log(response);
-                    console.log(response.data);
-                    console.log("Presigned File URL: ", presignedFileURL);
                     axios.post('/api/profile-pic',{
                         photoLink: presignedFileURL,
                         profileID: profile.profile_id,
                         profileType: profile.type
                     }).then((response) =>{
-                        console.log(response.data);
                         setProfilePic(presignedFileURL);
                         setLoading(false);
                     })
                     .catch((err) =>{
                         setLoading(false);
-                        console.log(err);
                     })
                 })
                 .catch((err) =>{
                     setLoading(false);
-                    console.log(err);
                     if(err.response.status == 403){
                         //display error message to user
                     }
@@ -115,7 +99,6 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
             })
             .catch((err) =>{
                 setLoading(false);
-                console.log(err);
             })
     })
 
@@ -126,8 +109,6 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
         multiple: false
     })
 
-    console.log("Profile Type: ", profileType);
-
     function openEditModal(){
         profileType === 'Pet' ?
         setEditPetDetailsDisplay(true) :
@@ -135,12 +116,10 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
     }
 
     function cancelEditHandler() {
-        console.log('cancel editing')
         axios.post('/api/name',{
             newFirstName: 'Bob'
         })
         .then((res) =>{
-            console.log(res.data);
         })
 
         setEditing(false);
@@ -160,7 +139,6 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
             profileID: profile.profile_id
         })
         .then((res) =>{
-            console.log(res.data)
             setDeletionModalDisplay(false);
             history.push('/Feed')
         })
@@ -173,10 +151,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
 
 
     function onFollowHandler() {
-        console.log('Follow button clicked')
         if(appUser){
-            console.log('POST /api/follow-unfollow-user')
-            console.log('profile.account_id: ',profile.account_id)
             axios.post('/api/follow-unfollow-user',{
                 accountId: profile.account_id
             })

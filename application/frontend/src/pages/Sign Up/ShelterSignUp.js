@@ -56,12 +56,6 @@ function ShelterSignUpPage() {
 
     function signUp(event) {
         event.preventDefault();
-        console.log(email)
-        console.log(uname)
-        console.log(firstName)
-        console.log(lastName)
-        console.log(password)
-        console.log(redonePassword)
 
         const ShelterSignUpPage2 = {
             pathname: '/shelter-signup2',

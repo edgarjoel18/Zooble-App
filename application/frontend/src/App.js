@@ -43,29 +43,20 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  console.log("rerendering app");
-
   useEffect(() => {
     axios.get("/api/login",{withCredentials: true}).then((response) =>{
-      console.log(response.data);
       setAppUser(response.data);
       setLoggedIn(true)
       setLoading(false)
-      console.log('appUser: ',appUser);
     })
     .catch((err) =>{
       setLoading(false)
-      console.log(err);
     })
-    console.log('AppUser in App changed to: ', appUser)
   },[])
 
 
   function updateLoginState(loggedIn, user){
-    console.log("Updating Login State");
-    console.log(loggedIn);
     setAppUser(user);
-    console.log(user);
   }
 
   function PrivateRoute({children, ...rest}){
