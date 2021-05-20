@@ -135,6 +135,15 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
     }
 
     function cancelEditHandler() {
+        console.log('cancel editing')
+        axios.post('/api/name',{
+            newFirstName: 'John',
+            profileID: profile.profile_id
+        })
+        .then((res) =>{
+            console.log(res.data);
+        })
+
         setEditing(false);
     }
 

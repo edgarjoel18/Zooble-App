@@ -179,4 +179,58 @@ router.get("/api/is-following", (req,res) =>{
     )
 })
 
+router.post('/api/name',(req, res)=>{
+    console.log('POST /api/name')
+    const {newFirstName,profileID} = req.body
+    console.log('newFirstName: ', newFirstName)
+    console.log('profileID: ', profileID)
+    connection.getConnection(function(err,conn){
+        if(err){
+            console.log(err)
+            res.status(500).json(err);
+        }
+        conn.beginTransaction(function(err){
+            if(err){
+                console.log(err);
+                res.status(500).json(err);
+            }
+            conn.query(`
+            UPDATE Profile
+            SET Profile.display_name = '${newFirstName}'
+            WHERE Profile.profile_id = ${profileID}`,
+            function(err,result){
+                if(err){
+                    return conn.rollback(function(){
+                        throw err;
+                    })
+                }
+                console.log('display name updated')
+                conn.query(`
+                UPDATE User
+                JOIN Account ON Account.user_id = User.user_id
+                JOIN Profile ON Profile.account_id = Account.account_id
+                SET User.first_name = '${newFirstName}'
+                WHERE Profile.profile_id = ${profileID}`,
+                function(err,result){
+                    if(err){
+                        return conn.rollback(function(){
+                            throw err;
+                        })
+                    }
+                    console.log('updated user first name')
+                    conn.commit(function(err){
+                        if(err){
+                            return conn.rollback(function(){
+                                throw err;
+                            })
+                        }
+                        console.log('success!')
+                        res.status(200).json('success')
+                    })
+                })
+            })
+        })
+    })
+})
+
 module.exports = router
