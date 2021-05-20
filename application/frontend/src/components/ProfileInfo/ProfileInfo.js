@@ -18,6 +18,7 @@ import Loader from '../UI/Spinner/ButtonLoader';
 import { RedirectPathContext } from '../../context/redirect-path';
 
 import axios from 'axios';
+import ConfirmDeletion from '../Modals/ConfirmDeletion';
 
 //make this into environment variable before deploying!
 const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL'
@@ -46,6 +47,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
     const [sendAMessageDisplay,setSendAMessageDisplay] = useState(false);
     const[editPetDetailsDisplay, setEditPetDetailsDisplay] = useState(false);
     const [loginRequiredDisplay, setLoginRequiredDisplay] = useState(false);
+    const [deletionModalDisplay, setDeletionModalDisplay] = useState(false);
 
     const history = useHistory();
     const location = useLocation();
@@ -145,29 +147,19 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
         }
     }
 
-    // function uploadPhotoHandler(rowFiles) {
-    //     const files = Array.from(rowFiles)
-    //     const formData = new FormData()
+    function banUser(){
+        axios.post('/api/ban-user',{
+            profileID: profile.profile_id
+        })
+        .then((res) =>{
+            console.log(res.data)
+            setDeletionModalDisplay(false);
+        })
+        .catch((err) =>{
+            console.log(err)
+        })
+    }
 
-    //     files.forEach((file, i) => {
-    //     formData.append(i, file)
-    //     })
-    //     setprofilePic(formData);
-
-    //     console.log(files);
-    // }
-
-    // function showDropdown() {
-    //     setShowBackdrop(true);
-    //     let dropDownContent = document.getElementById('dropDownContent');
-    //     dropDownContent.className = styles.DropdownContent;
-    // }
-
-    // function closeDropdown() {
-    //     setShowBackdrop(false);
-    //     let dropDownContent = document.getElementById('dropDownContent');
-    //     dropDownContent.className = styles.DropdownHidden;
-    // }
 
 
 
@@ -416,11 +408,12 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                 </div>
                 <div style={{display: 'flex'}}>
                 {displayAccountInfo}
-                {isAdminView && !isSelfView && <button className={styles['ban-button']} >Ban this user</button>}
+                {isAdminView && !isSelfView && <button className={styles['ban-button']} onClick={()=>setDeletionModalDisplay(true)}>Ban User</button>}
                 </div>
             </div>
             <SendProfileMessage display={sendAMessageDisplay} profile={profile} onClose={()=> setSendAMessageDisplay(false)}/>
-            <LoginRequired display={loginRequiredDisplay} onClose={() =>setLoginRequiredDisplay(false)} redirect={location.pathname} />    
+            <LoginRequired display={loginRequiredDisplay} onClose={() =>setLoginRequiredDisplay(false)} redirect={location.pathname}/>
+            <ConfirmDeletion display={deletionModalDisplay} onClose={() => setDeletionModalDisplay(false)} message={'Ban ' + profile.display_name +"'s account ?"} deleteAction={banUser}/> 
         </div>
     );
 }

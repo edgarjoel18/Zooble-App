@@ -49,7 +49,7 @@ router.get("/api/profile", (req,res) =>{
                      selfViewFlag = true
                  }
              }
-             if(req.session.role === 3){ //if the logged in user is an admin
+             if(req.session.role === 4){ //if the logged in user is an admin
                 adminViewFlag = true
              }
              let response = {
