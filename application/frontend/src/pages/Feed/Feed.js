@@ -55,6 +55,7 @@ function Feed() {
 
     const [offset, setOffset] = useState(0)
     const {feedPosts, hasMore, postsLoading,error} = useFeed(offset, false); //custom hook for loading posts
+    const [posts, setPosts] = useState([...feedPosts])
 
     const observer = useRef()
 
@@ -96,6 +97,7 @@ function Feed() {
 
     //runs on refresh
     useEffect(() => { //get profile pic and name of user  //
+        console.log('useEffect and refresh')
         redirectContext.updateLoading(true);
 
         const getFeedUser = axios.get('/api/feed-user')
@@ -171,11 +173,19 @@ function Feed() {
         })
         .then((response) => {
             console.log(response.data)
-            // let updatedPosts = [...feedPosts];
-            // console.log("Like count is " + updatedPosts[index].like_count)
-            // updatedPosts[index].like_count++;
-            // setFeedPosts(updatedPosts);
-            // console.log(response);
+            let updatedPosts = [...feedPosts];
+            if (response.data === 'like') {
+            console.log("Like count is " + updatedPosts[index].like_count)
+            updatedPosts[index].like_count++;
+            setPosts(updatedPosts);
+            console.log(response);
+            }
+            else {
+                console.log("Like count is " + updatedPosts[index].like_count)
+                updatedPosts[index].like_count--;
+                setPosts(updatedPosts);
+                console.log(response);
+            }
         })
         .catch((err)=>{
             console.log(err);
@@ -240,7 +250,6 @@ function Feed() {
                         setCreatedPostBody('');
                         setTaggedPets([]);
                         setLoading(false);
-                        setUpdate(!update);
                     })
                     .catch((err) =>{
                         setLoading(false);
@@ -264,6 +273,7 @@ function Feed() {
             //refresh feed after posting
             // getPosts();
             // setFeedPosts([...feedPosts, ])
+            setUpdate(!update);
 
         }
         else{
@@ -357,8 +367,8 @@ function Feed() {
                         Search for a User and Follow them to see their posts here
                     </div>
                     </>}
-                {feedPosts && feedPosts.map((feedPost, index) => {
-                    if(feedPosts.length === index + 1){
+                {posts && feedPosts.map((feedPost, index) => {
+                    if(posts.length === index + 1){
                         return (
                             <div ref={lastPostElementRef} key={feedPost.post_id} className={styles["follower-feed-post"]} onClick={(event) => openPostModal(event,feedPost)} >
                                 <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic_link} onClick={(event) => goToProfile(event,feedPost.profile_id)}/>
@@ -366,7 +376,7 @@ function Feed() {
                                 <div className={styles["follower-feed-post-timestamp"]}>{new Date(feedPost.timestamp).toLocaleString()}</div>
                                 <div className={styles["follower-feed-post-admin-flags"]}>
                                     <span className={styles["follower-feed-post-like-count"]}>{feedPost.like_count}</span>
-                                    <img className={styles["follower-feed-post-like-icon"]} src={LikeIcon} onClick={(event) => likePost(event,feedPost.post_id)}/>
+                                    <img className={styles["follower-feed-post-like-icon"]} src={LikeIcon} onClick={(event) => likePost(event,feedPost.post_id,index)}/>
                                 </div>
                                 <span className={styles['follower-feed-post-flag']} onClick={(event) => flagPost(event,feedPost.post_id)}>Flag</span>
                                 {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
@@ -383,7 +393,7 @@ function Feed() {
                                 <div className={styles["follower-feed-post-timestamp"]}>{new Date(feedPost.timestamp).toLocaleString()}</div>
                                 <div className={styles["follower-feed-post-admin-flags"]}>
                                     <span className={styles["follower-feed-post-like-count"]}>{feedPost.like_count}</span>
-                                    <img className={styles["follower-feed-post-like-icon"]} src={LikeIcon} onClick={(event) => likePost(event,feedPost.post_id)}/>
+                                    <img className={styles["follower-feed-post-like-icon"]} src={LikeIcon} onClick={(event) => likePost(event,feedPost.post_id,index)}/>
                                 </div>
                                 <span className={styles['follower-feed-post-flag']} onClick={(event) => flagPost(event,feedPost.post_id)}>Flag</span>
                                 {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
