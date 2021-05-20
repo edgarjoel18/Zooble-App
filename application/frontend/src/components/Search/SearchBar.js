@@ -141,8 +141,8 @@ function SearchBar() {
   }
 
   return (
-    <>
-      <div className={styles["searchbar"]}>
+  <>
+    <div className={styles["searchbar"]}>
       <span className={styles["search-category-dropdown"]}>
         <select name="search-category" id="search-category" onChange= {e => setSearchCategory(e.target.value)}>
           <option value="Pets">Pets</option>
@@ -152,6 +152,7 @@ function SearchBar() {
         </select>
       </span>
       <Combobox
+        className={styles['div-term-searchbar-input']}
         onSelect={(prefilter) => {
             console.log(prefilter);
             setSelectedPrefilter(prefilter)  //set prefilter to selected one to pass to mapsearch page
@@ -160,6 +161,7 @@ function SearchBar() {
         <ComboboxInput 
           className={styles['searchbar-term-input']} 
           onChange={(event) => setSearchTerm(event.target.value)}  //set search term
+          placeholder= {"Enter Search Term"}
           onKeyPress={event => {  //handle enter button press
             if(event.key === 'Enter'){
               search();
@@ -183,8 +185,9 @@ function SearchBar() {
             )}
           </ComboboxPopover>)}
       </Combobox>
-      <span className={styles["searchbar-input"]}>
-        <Combobox className={styles['searchbar-location-input']}
+      
+      {/* <span className={styles["div-searchbar-input"]}> */}
+        <Combobox className={styles['div-map-searchbar-input']}
             onSelect={async (address)=>{
                 setValue(address,false);
                 clearSuggestions();
@@ -203,7 +206,7 @@ function SearchBar() {
             }}
         >
           {/* Input Box */}
-          {searchCategory !== "Pet Owners" && <ComboboxInput  
+          {searchCategory !== "Pet Owners" && <ComboboxInput
             value={value}
             placeholder= {searchCategory !== 'Pet Owners' && "Near Current Location"}
             onChange={(e)=> {
@@ -230,7 +233,7 @@ function SearchBar() {
           
 
       
-      </span>
+      {/* </span> */}
 
       
       <button  
