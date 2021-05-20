@@ -52,7 +52,7 @@ function HeroContainer() {
         </div>
       </div>
 
-      <div className={styles['right-side']}>
+      <div className={styles['left-side']}>
         <img className={styles['left-side-dog']} src={DogOwnerImage} />
       </div>
 
