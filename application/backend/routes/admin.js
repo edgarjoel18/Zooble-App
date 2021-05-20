@@ -56,11 +56,12 @@ router.post("/api/delete-post",(req,res)=>{
     }
 })
 
-router.post("/api/delete-user",(req,res) =>{
-    console.log("POST /api/delete-user");
+router.post("/api/ban-user",(req,res) =>{
+    console.log("POST /api/ban-user");
     const {profileID} = req.body
+    console.log(profileID)
 
-    if(req.session.role === 3){ //check if logged in user has admin privileges
+    if(req.session.role === 4){ //check if logged in user has admin privileges
         connection.query(
             `DELETE User
              FROM User
@@ -69,15 +70,17 @@ router.post("/api/delete-user",(req,res) =>{
              WHERE Profile.profile_id = ${profileID}
             `,
             function(err, result){
-                if(err)
+                if(err){
                     console.log(err);
+                    res.status(500).json(err);
+                }
                 else{
+                    console.log(result);
                     res.status(200).json(result);
                 }
             }
         )
     }
-    
 })
 
 module.exports = router

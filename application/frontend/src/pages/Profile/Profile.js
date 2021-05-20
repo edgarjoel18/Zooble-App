@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import {useLocation, useParams} from 'react-router-dom';
+import {useHistory, useLocation, useParams} from 'react-router-dom';
 
 // Import components
 import ProfileInfo from '../../components/ProfileInfo/ProfileInfo'
@@ -34,6 +34,8 @@ function Profile({appUser}) {
     const [adminView,setAdminView] = useState(false);
     console.log('adminView: ', adminView)
 
+    const history = useHistory()
+
     useEffect(() =>{
         redirectContext.updateLoading(true);
 
@@ -46,6 +48,11 @@ function Profile({appUser}) {
         Promise.all([getProfile,getPhotoPosts, getCurrentUserPets,getTaggedPosts, getIsFollowing])
         .then((responses) =>{
             console.log("responses: ", responses)
+            console.log('responses[0].data: ',responses[0].data);
+            if(!responses[0].data.profile){ //if the profile doesn't exist, redirect user
+                console.log('profile object empty')
+                history.push('/Feed')
+            }
             setFetchedProfile(responses[0].data.profile)
             setSelfView(responses[0].data.selfView)
             setAdminView(responses[0].data.adminView)
