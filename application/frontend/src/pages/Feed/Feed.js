@@ -195,7 +195,6 @@ function Feed({appUser}) {
             console.log(err);
         })
     }
-
     function flagPost(event,feedPostID){
         if (!event) var event = window.event;
         event.cancelBubble = true;
