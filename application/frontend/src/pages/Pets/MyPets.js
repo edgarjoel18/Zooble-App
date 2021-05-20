@@ -7,14 +7,14 @@ import axios from 'axios'
 import AddIcon from '../../images/Created Icons/Add.svg'
 
 import DeleteIcon from  '../../images/Created Icons/Exit-Cancel.svg'
-import ConfirmPetDeletion from '../../components/Modals/ConfirmPetDeletion';
+import ConfirmDeletion from '../../components/Modals/ConfirmDeletion';
 
 import AddAPet from '../../components/Modals/AddAPet';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 import {RedirectPathContext} from '../../context/redirect-path'
 
-function MyPets(){
+function MyPets() {
 
     const [deletionModalDisplay,setDeletionModalDisplay] = useState(false);
     const [additionModalDisplay, setAdditionModalDisplay] = useState(false);
@@ -46,14 +46,6 @@ function MyPets(){
         setDeletionModalDisplay(true);
     }
 
-
-
-    function profileClicked(profile){
-        console.log(profile);
-        console.log("Profile Clicked");
-        history.push(profile);
-    }
-
     useEffect(() => {
         setLoading(true);
 
@@ -81,6 +73,18 @@ function MyPets(){
         }) 
     }, [])
 
+
+    function deletePet(){
+        axios.post('/api/delete-pet', {petProfileID: selectedPet.profile_id})
+        .then((res)=>{
+            console.log(res.data)
+            setDeletionModalDisplay(false);
+        })
+        .catch((err) =>{
+            console.log(err);
+        })
+    }
+
     let displayMyPets = <Spinner />
 
     if (!loading)
@@ -106,13 +110,13 @@ function MyPets(){
         <div className={styles['my-pets-container']}>
             <div className={styles['my-pets-header']}>
                 My Pets
-                <span onClick={() => history.push('/feed')} >To feed posts</span>
+                <span onClick={() => history.goBack()} >Back to Profile</span>
             </div>
             <div className={styles['my-pets-container-pets']}>
                 {displayMyPets}
             </div>
         </div>
-        <ConfirmPetDeletion display={deletionModalDisplay} onClose={() => setDeletionModalDisplay(false)} selectedPet={selectedPet}/>
+        <ConfirmDeletion display={deletionModalDisplay} onClose={() => setDeletionModalDisplay(false)} selectedPet={selectedPet} deleteAction={deletePet}/>
         <AddAPet display={additionModalDisplay} onClose={() => setAdditionModalDisplay(false)} typeOptions={typeOptions} dogBreedOptions={dogBreedOptions} catBreedOptions={catBreedOptions} colorOptions={colorOptions} sizeOptions={sizeOptions} ageOptions={ageOptions}/>
         </>
     )

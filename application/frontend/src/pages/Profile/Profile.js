@@ -29,12 +29,17 @@ function Profile({appUser}) {
     const {profileID} = useParams();
     console.log("profileID: ",profileID);
 
+    const [userProfile, setUserProfile] = useState();
+    const [selfView, setSelfView] = useState(false);
+    const [adminView,setAdminView] = useState(false);
+    console.log('adminView: ', adminView)
+
     useEffect(() =>{
         redirectContext.updateLoading(true);
 
         const getProfile = axios.get('/api/profile',{params: {profileID: profileID}})
         const getPhotoPosts = axios.get('/api/photo-posts',{params: {profileID: profileID}})
-        const getCurrentUserPets = axios.get('/api/current-user-pets',{params: {profileID: profileID}})
+        const getCurrentUserPets = axios.get('/api/pets',{params: {profileID: profileID}})
         const getTaggedPosts = axios.get('/api/tagged-posts',{params: {profileID: profileID}})
         const getIsFollowing = axios.get('/api/is-following',{params: {profileID: profileID}})
 
@@ -43,6 +48,7 @@ function Profile({appUser}) {
             console.log("responses: ", responses)
             setFetchedProfile(responses[0].data.profile)
             setSelfView(responses[0].data.selfView)
+            setAdminView(responses[0].data.adminView)
             setFetchedPhotoPosts(responses[1].data)
             setFetchedPets(responses[2].data)
             setTaggedPosts(responses[3].data)
@@ -59,8 +65,7 @@ function Profile({appUser}) {
     
     // console.log(appUser);
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
-    const [userProfile, setUserProfile] = useState();
-    const [selfView, setSelfView] = useState(false);
+
 
     function updateProfileHandler(type, value) {
         if (type === 'address' || type === 'phone' || type === 'hours') {
