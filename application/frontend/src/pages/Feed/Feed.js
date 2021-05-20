@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useContext } from 'react'
+import { useState, useEffect, useCallback, useContext, useRef } from 'react'
 import {Link, useHistory } from "react-router-dom";
 import {useDropzone} from 'react-dropzone'
 import axios from 'axios';
@@ -9,6 +9,8 @@ import styles from './Feed.module.css'
 import PostModal from '../../components/Modals/PostModal'
 import Spinner from '../../components/UI/Spinner/Spinner';
 import ButtonLoader from '../../components/UI/Spinner/ButtonLoader';
+
+import useFeed from './useFeed'
 
 import { RedirectPathContext } from '../../context/redirect-path';
 
@@ -24,7 +26,7 @@ const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/de
 function Feed() {
 
     const [postModalDisplay, setPostModalDisplay] = useState(false);
-    const [feedPosts, setFeedPosts] = useState([]);
+    // const [feedPosts, setFeedPosts] = useState([]);
 
     //creating a post display
     const [createPostDisplayName, setCreatePostDisplayName] = useState('');
@@ -50,6 +52,25 @@ function Feed() {
     const [update, setUpdate] = useState(false);
 
     const redirectContext = useContext(RedirectPathContext);
+
+
+    const [offset, setOffset] = useState(0)
+    const {feedPosts, hasMore, postsLoading,error} = useFeed(offset); //custom hook for loading posts
+
+    const observer = useRef()
+
+    const lastPostElementRef = useCallback((node) =>{
+        if(postsLoading) return
+        if(observer.current) observer.current.disconnect()
+        observer.current = new IntersectionObserver(entries =>{
+            if(entries[0].isIntersecting ){
+                console.log('intersecting')
+                setOffset(prevOffset => prevOffset + 10)
+            }
+        })
+        if(node) observer.current.observe(node)
+        console.log('node:',node)
+    }, [postsLoading, hasMore])
 
     const history = useHistory()
 
@@ -89,17 +110,17 @@ function Feed() {
             console.log(err);
         })
 
-        console.log('/api/get-feed-posts');
-        axios.get('/api/get-feed-posts')
-        .then(response =>{
-            console.log("Feed Posts: ", response.data);
-            setFeedPosts(response.data);
-        })
-        .catch(err =>{
-            redirectContext.updateLoading(false);
-            console.log("Error: ");
-            console.log(err);
-        })
+        // console.log('/api/posts');
+        // axios.get('/api/posts')
+        // .then(response =>{
+        //     console.log("Feed Posts: ", response.data);
+        //     setFeedPosts(response.data);
+        // })
+        // .catch(err =>{
+        //     redirectContext.updateLoading(false);
+        //     console.log("Error: ");
+        //     console.log(err);
+        // })
 
         axios.get('/api/current-user-pets')
         .then(response =>{
@@ -123,8 +144,8 @@ function Feed() {
 
     // //runs whenever the user creates a post
     // useEffect(()=>{
-    //     console.log('/api/get-feed-posts');
-    //     axios.get('/api/get-feed-posts')
+    //     console.log('/api/posts');
+    //     axios.get('/api/posts')
     //     .then(response =>{
     //         console.log(response.data);
     //         setFeedPosts(response.data);
@@ -198,9 +219,9 @@ function Feed() {
     }
 
     function getPosts(){
-        axios.get('/api/get-feed-posts')
+        axios.get('/api/posts')
         .then(response =>{
-            setFeedPosts(response.data);
+            // setFeedPosts(response.data);
         })
         .catch(err =>{
             console.log("Error: ");
@@ -354,21 +375,42 @@ function Feed() {
                         Search for a User and Follow them to see their posts here
                     </div>
                     </>}
-                {feedPosts && feedPosts.map((feedPost, index) => (
-                    <div key={feedPost.post_id} className={styles["follower-feed-post"]} onClick={(event) => openPostModal(event,feedPost)} >
-                        <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic_link} onClick={(event) => goToProfile(event,feedPost.profile_id)}/>
-                        <div className={styles["follower-feed-post-name"]} onClick={(event) => goToProfile(event,feedPost.profile_id)}>{feedPost.display_name}</div>
-                        <div className={styles["follower-feed-post-timestamp"]}>{new Date(feedPost.timestamp).toLocaleString()}</div>
-                        <div className={styles["follower-feed-post-admin-flags"]}>
-                            <span className={styles["follower-feed-post-like-count"]}>{feedPost.like_count}</span>
-                            <img className={styles["follower-feed-post-like-icon"]} src={LikeIcon} onClick={(event) => likePost(event,feedPost.post_id)}/>
-                        </div>
-                        <span className={styles['follower-feed-post-flag']} onClick={(event) => flagPost(event,feedPost.post_id)}>Flag</span>
-                        {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
-                        <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
-                        {feedPost.link && <img className={styles["follower-feed-post-pic"]} src={feedPost.link} />}
-                    </div>
-                ))}
+                {feedPosts && feedPosts.map((feedPost, index) => {
+                    if(feedPosts.length === index + 1){
+                        return (
+                            <div ref={lastPostElementRef} key={feedPost.post_id} className={styles["follower-feed-post"]} onClick={(event) => openPostModal(event,feedPost)} >
+                                <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic_link} onClick={(event) => goToProfile(event,feedPost.profile_id)}/>
+                                <div className={styles["follower-feed-post-name"]} onClick={(event) => goToProfile(event,feedPost.profile_id)}>{feedPost.display_name}</div>
+                                <div className={styles["follower-feed-post-timestamp"]}>{new Date(feedPost.timestamp).toLocaleString()}</div>
+                                <div className={styles["follower-feed-post-admin-flags"]}>
+                                    <span className={styles["follower-feed-post-like-count"]}>{feedPost.like_count}</span>
+                                    <img className={styles["follower-feed-post-like-icon"]} src={LikeIcon} onClick={(event) => likePost(event,feedPost.post_id)}/>
+                                </div>
+                                <span className={styles['follower-feed-post-flag']} onClick={(event) => flagPost(event,feedPost.post_id)}>Flag</span>
+                                {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
+                                <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
+                                {feedPost.link && <img className={styles["follower-feed-post-pic"]} src={feedPost.link} />}
+                            </div>
+                        )
+                    }
+                    else{
+                        return (
+                            <div key={feedPost.post_id} className={styles["follower-feed-post"]} onClick={(event) => openPostModal(event,feedPost)} >
+                                <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic_link} onClick={(event) => goToProfile(event,feedPost.profile_id)}/>
+                                <div className={styles["follower-feed-post-name"]} onClick={(event) => goToProfile(event,feedPost.profile_id)}>{feedPost.display_name}</div>
+                                <div className={styles["follower-feed-post-timestamp"]}>{new Date(feedPost.timestamp).toLocaleString()}</div>
+                                <div className={styles["follower-feed-post-admin-flags"]}>
+                                    <span className={styles["follower-feed-post-like-count"]}>{feedPost.like_count}</span>
+                                    <img className={styles["follower-feed-post-like-icon"]} src={LikeIcon} onClick={(event) => likePost(event,feedPost.post_id)}/>
+                                </div>
+                                <span className={styles['follower-feed-post-flag']} onClick={(event) => flagPost(event,feedPost.post_id)}>Flag</span>
+                                {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
+                                <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
+                                {feedPost.link && <img className={styles["follower-feed-post-pic"]} src={feedPost.link} />}
+                            </div>
+                        )
+                    }
+                })}
             </div>
     )
 

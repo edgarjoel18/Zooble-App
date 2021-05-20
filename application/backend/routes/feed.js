@@ -22,8 +22,10 @@ router.get("/api/feed-user",(req,res)=>{
     )
 })
 
-router.get("/api/get-feed-posts",(req,res)=>{
-    console.log("/api/get-feed-posts");
+router.get("/api/posts",(req,res)=>{
+    const {offset} = req.query
+    console.log(offset)
+    console.log("/api/posts");
     let username = req.session.username;
     let postsWithLikes = []; //array for holding objects with posts and likes
     connection.query(
@@ -47,11 +49,14 @@ router.get("/api/get-feed-posts",(req,res)=>{
           )
           AND Profile.pet_id IS NULL
           ORDER BY Post.timestamp DESC
+          LIMIT 10
+          OFFSET ${offset}
         `,
         function(err, posts){
             if(err)
                 console.log(err);
             else{
+                console.log(posts)
                 res.status(200).json(posts);
             }
         }

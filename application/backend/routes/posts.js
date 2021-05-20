@@ -19,14 +19,14 @@ router.post('/api/flag-unflag', (req,res) =>{
                         `DELETE FROM PostFlag
                         WHERE (PostFlag.reg_user_id = '${req.session.reg_user_id}'
                         AND PostFlag.post_id = '${postToFlag}')`,
-                        function(err,result){
+                        function(err,deleteResult){
                             if(err){
                                 console.log(err);
                             }
                             else{
                                 console.log('Unflagged the Post')
-                                console.log(result);
-                                res.status(200).json(result)
+                                console.log(deleteResult);
+                                res.status(200).json('unflag')
                             }
                         }
                     )
@@ -34,7 +34,7 @@ router.post('/api/flag-unflag', (req,res) =>{
             }
             else{
                 console.log('Successfully flagged the post')
-                res.status(200).json(result)
+                res.status(200).json('unflag')
                 console.log(result);
             }
         }
