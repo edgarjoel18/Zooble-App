@@ -13,6 +13,11 @@
     font-family: inherit;
     font-weight: initial;
     cursor: pointer;
+    
+}
+
+.my-pets-header span:hover{
+    color:rgb(20, 160, 160);
 }
 
 .my-pets-container{
