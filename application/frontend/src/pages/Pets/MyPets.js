@@ -118,7 +118,7 @@ function MyPets() {
                 {displayMyPets}
             </div>
         </div>
-        <ConfirmPetDeletion display={deletionModalDisplay} onClose={() => setDeletionModalDisplay(false)} selectedPet={selectedPet} deleteAction={deletePet}/>
+        <ConfirmDeletion display={deletionModalDisplay} onClose={() => setDeletionModalDisplay(false)} selectedPet={selectedPet} deleteAction={deletePet}/>
         <AddAPet 
             display={additionModalDisplay} 
             onClose={() => setAdditionModalDisplay(false)} 
