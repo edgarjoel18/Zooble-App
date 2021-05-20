@@ -24,14 +24,10 @@ import MyPets from './pages/Pets/MyPets'
 import Pets from './pages/Pets/Pets'
 import ResetPage from './pages/Reset/ResetPage'
 
-import ProfileTest from './pages/Profile/ProfileTest'
-
 import AdminFeed from './pages/Feed/AdminFeed.js';
 import Feed from './pages/Feed/Feed.js'
 import Photos from './pages/Photos/Photos';
-// import MyPhotos from './pages/Photos/MyPhotos';
 import Followers from './pages/Followers/Followers';
-// import ExploreUsers from './pages/ExploreUsers/ExploreUsers';
 
 import SignUpSuccess from './pages/Sign Up/SignUpSuccess'
 
