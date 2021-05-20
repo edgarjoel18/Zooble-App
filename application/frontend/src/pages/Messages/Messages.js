@@ -208,7 +208,9 @@ function Messages() {
         <div className={styles["tabs-container"]}>
           <div className={styles["tabs"]}>
             <div className={styles["messages-header"]}>Messages</div>
-            <div className= "double-tabs" style={{ display: "flex", width: "100%" }}>{tabs}</div>
+            <div className="double-tabs" style={{ display: "flex" }}>
+              {tabs}
+            </div>
           </div>
         </div>
         <div className={styles["recieved-messages-container"]}>
