@@ -53,9 +53,6 @@ function Feed({appUser}) {
     //loading UI
     const [loading, setLoading] = useState(false);
 
-    //update UI after submitting post
-    const [update, setUpdate] = useState(false);
-
     const redirectContext = useContext(RedirectPathContext);
 
 
@@ -125,7 +122,7 @@ function Feed({appUser}) {
             console.log(err);
             //display error message to the user
         })
-    }, [update])
+    }, [])
 
     // //runs whenever the user creates a post
     // useEffect(()=>{
@@ -253,6 +250,9 @@ function Feed({appUser}) {
                         setCreatedPostBody('');
                         setTaggedPets([]);
                         setLoading(false);
+                        setTimeout(() => {
+                            history.push('/');
+                        }, 1000)
                     })
                     .catch((err) =>{
                         setLoading(false);
@@ -276,7 +276,6 @@ function Feed({appUser}) {
             //refresh feed after posting
             // getPosts();
             // setFeedPosts([...feedPosts, ])
-            setUpdate(!update);
 
         }
         else{
@@ -288,6 +287,9 @@ function Feed({appUser}) {
                 setCreatedPostBody('');
                 setTaggedPets([]);
                 setLoading(false);
+                setTimeout(() => {
+                    history.push('/');
+                }, 2000)
             })
             .catch((err) =>{
                 setLoading(false);
@@ -296,7 +298,6 @@ function Feed({appUser}) {
 
             //refresh feed after posting
             //getPosts();
-            setUpdate(!update);
         }
 
     }
