@@ -1,9 +1,10 @@
 .map-search-results-container{
     display:grid;
-    grid-template-areas: 'map map map map search-results search-results';
-    grid-template-columns: repeat(4, 1fr) repeat(2, 1fr);
+    grid-template-areas: 'map map map map search-results';
+    grid-template-columns: repeat(5, 1fr), 2fr;
     width: 100%;
-    height: calc(100vh - 100px); /*Need to find a better way to make container fill whole screen*/
+    height: calc(100vh - 100px); 
+    transition: 2s;
 }
 
 /* MAP */
@@ -107,11 +108,19 @@
       text-decoration: none;
   }
 
-  .search-result-name{
-      padding-left: 15px;
-      font-family: var(--ff-primary);
-      font-size: var(--h2);
+
+
+  .search-result-name-address{
+    font-family: var(--ff-primary);
+    margin-left:10px;
   }
+  .search-result-name{
+    font-size: var(--h2);
+}
+.search-result-address{
+    font-size: var(--h4);
+}
+
   
   /* .map-search-results-text {
     display:inline-block;
@@ -209,4 +218,44 @@
 .map-search-results-page-navigation-back:hover{
     color:var(--reversed-txt-clr);
     background-color: var(--primary-clr);
+}
+
+@media all and (max-width: 1000px){
+    .map-search-results-container{
+        display:grid;
+        grid-template-areas: "map"
+                             "search-results";
+        width: 100%;
+        grid-template-rows: auto 300px;
+    }
+
+    .map-search-results-text-list {
+        display: inline-block;
+        overflow-x: auto;
+        white-space: nowrap;
+        overflow-y: hidden;
+    } 
+
+    .search-result{
+        display: flex;
+        width: 95%;
+    }
+
+    .search-result-pic{
+        width: 50px;
+        height: 50px;
+    }
+
+    .search-result-name{
+        font-size: var(--h3);
+    }
+
+    .search-result-address{
+        font-size: var(--h4);
+    }
+
+    .search-result-marker{
+        width: 30px;
+        height: 30px;
+    }
 }

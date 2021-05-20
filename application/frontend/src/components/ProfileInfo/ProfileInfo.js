@@ -21,7 +21,7 @@ import axios from 'axios';
 import ConfirmDeletion from '../Modals/ConfirmDeletion';
 
 //make this into environment variable before deploying!
-const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL'
+const apiGatewayURL = process.env.REACT_APP_API_GATEWAY;
 
 function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStatus, isAdminView}) {
 
@@ -135,6 +135,14 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
     }
 
     function cancelEditHandler() {
+        console.log('cancel editing')
+        axios.post('/api/name',{
+            newFirstName: 'Bob'
+        })
+        .then((res) =>{
+            console.log(res.data);
+        })
+
         setEditing(false);
     }
 

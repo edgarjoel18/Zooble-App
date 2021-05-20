@@ -24,14 +24,10 @@ import MyPets from './pages/Pets/MyPets'
 import Pets from './pages/Pets/Pets'
 import ResetPage from './pages/Reset/ResetPage'
 
-import ProfileTest from './pages/Profile/ProfileTest'
-
 import AdminFeed from './pages/Feed/AdminFeed.js';
 import Feed from './pages/Feed/Feed.js'
 import Photos from './pages/Photos/Photos';
-// import MyPhotos from './pages/Photos/MyPhotos';
 import Followers from './pages/Followers/Followers';
-// import ExploreUsers from './pages/ExploreUsers/ExploreUsers';
 
 import SignUpSuccess from './pages/Sign Up/SignUpSuccess'
 
@@ -51,7 +47,6 @@ const App = () => {
 
   useEffect(() => {
     axios.get("/api/login",{withCredentials: true}).then((response) =>{
-      console.log(response.data);
       console.log(response.data);
       setAppUser(response.data);
       setLoggedIn(true)
@@ -76,14 +71,14 @@ const App = () => {
   function PrivateRoute({children, ...rest}){
     return (
     <Route {...rest} render={()=>{
-      return appUser ? children : children
+      return appUser ? children : <Redirect to={'/login-page'}/>
     }}/>)
   }
 
   function AdminRoute({children, ...rest}){
     return (
     <Route {...rest} render={()=>{
-      return appUser ? children : children
+      return appUser ? children :  <Redirect to={'/login-page'}/>
     }}/>)
   }
 
@@ -149,7 +144,7 @@ const App = () => {
         <Route path="/reset/:token" component={ResetPage}/>
 
         <Route path="/AdminFeed">
-          <AdminFeed/>
+          <AdminFeed appUser={appUser}/>
         </Route>
 
         {/* <Redirect to="/" /> */}

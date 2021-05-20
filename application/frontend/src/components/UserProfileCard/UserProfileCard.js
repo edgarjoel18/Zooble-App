@@ -1,128 +1,114 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-
-import Tab from './Tab/Tab';
-
+import Tab from "./Tab/Tab";
 import styles from "./UserProfileCard.module.css";
 
-function UserProfileCard({followersList, followingList}) {
-
+/****************************************************************************
+ * File name: UserProfileCard.js
+ * Description: The code below will utilize css modules and hooks in order
+ * to format the Followers page for the website.
+ * Expected Output: The page will have two tabs (e.g. following, followers)
+ * which will show a column of users that correspond to  their respective
+ * tab. It will display a back to profile link at a screen size that is
+ * greater than 415px. Otherwise it will be hidden for smaller mobile phones.
+ ***************************************************************************/
+function UserProfileCard({ followersList, followingList }) {
   let history = useHistory();
 
-  const FollowerCard = ({ title, src, key}) => {
+  const FollowerCard = ({ title, src, key }) => {
     return (
-        <div className={styles['follower-card']}>
-            <img src={src} className={styles['follower-card-pic']} />
-            <div className={styles['follower-card-name']}>{title}</div>
-        </div>
+      <div className={styles["follower-card"]}>
+        <img src={src} className={styles["follower-card-pic"]} />
+        <div className={styles["follower-card-name"]}>{title}</div>
+      </div>
     );
   };
 
   const [selectedTab, setSelectedTab] = useState(0);
 
   const onTabClicked = (value) => {
-    console.log('[Tag] ' + value + ' is clicked')
+    console.log("[Tag] " + value + " is clicked");
     setSelectedTab(value);
   };
 
-  let tabs = ['Followers', 'Following'].map((tab, index) => (
-    <Tab key={tab} id={index} section={tab} selected={selectedTab} length={index === 0 ? followersList.length : followingList.length} clicked={onTabClicked}/>
+  let tabs = ["Followers", "Following"].map((tab, index) => (
+    <Tab
+      key={tab}
+      id={index}
+      section={tab}
+      selected={selectedTab}
+      length={index === 0 ? followersList.length : followingList.length}
+      clicked={onTabClicked}
+    />
   ));
 
   return (
-    <div className={styles['followers-container']}>
-    <div className={styles["tabContainer"]}>
-      <div className={styles.Tabs} >
-        <div style={{display: 'flex'}} >
-          {tabs}
-        </div>
-        <div style={{cursor: 'pointer'}}  >
+    <div className={styles["followers-container"]}>
+      <div className={styles["tabContainer"]}>
+        <div className={styles.Tabs}>
+          <div style={{ display: "flex", width: "100%" }}>{tabs}</div>
+          <div style={{ cursor: "pointer" }}>
             {/* <button>filter</button> */}
-            <p onClick={() => history.goBack()} >Back to Profile</p>
-        </div>
-      </div>
-      {selectedTab === 0 && (
-        <div>
-          <div
-            style={{
-              // columns: "2",
-              width: '100%',
-              height: 'calc(100vh - 344px)',
-              // maxHeight: 'calc(100vh - 344px)',
-              // overflowX: 'scroll',
-              overflowY: 'auto',
-              margin: "1px auto",
-              boxShadow: 'var(--elevation-2)',
-              borderRadius: '0 0 7.5px 7.5px',
-              padding:'16px',
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
-            {" "}
-            {followersList.map((item) => (
-              <Link
-                style={{ textDecoration: "none" }}
-                key={item.profile_id}
-                to={"/Profile/" + item.profile_id}
-              >
-                <div
-                  style={{
-                    padding: " 10px 0px",
-                  }}
-                >
-                  <FollowerCard
-                    title={item.display_name}
-                    src={item.profile_pic_link}
-                  />
-                </div>
-              </Link>
-            ))}
+            <p
+              className={styles["tab-container-link"]}
+              onClick={() => history.goBack()}
+            >
+              Back to Profile
+            </p>
           </div>
         </div>
-      )}
+        {selectedTab === 0 && (
+          <div>
+            <div className={styles["followers-listing"]}>
+              {" "}
+              {followersList.map((item) => (
+                <Link
+                  style={{ textDecoration: "none" }}
+                  key={item.profile_id}
+                  to={"/Profile/" + item.profile_id}
+                >
+                  <div
+                    style={{
+                      padding: " 10px 0px",
+                    }}
+                  >
+                    <FollowerCard
+                      title={item.display_name}
+                      src={item.profile_pic_link}
+                    />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
-      {selectedTab === 1 && (
-        <div>
-          <div
-            style={{
-              // columns: "2",
-              width: '100%',
-              height: 'calc(100vh - 344px)',
-              // maxHeight: 'calc(100vh - 344px)',
-              // overflowX: 'scroll',
-              overflowY: 'auto',
-              margin: "1px auto",
-              boxShadow: 'var(--elevation-2)',
-              borderRadius: '0 0 7.5px 7.5px',
-              padding:'16px',
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
-            {" "}
-            {followingList.map((item) => (
-              <Link
-                style={{ textDecoration: "none" }}
-                key={item.profile_id}
-                to={"/Profile/" + item.profile_id}
-              >
-                <div
-                  style={{
-                    padding: " 10px 0px",
-                  }}
+        {selectedTab === 1 && (
+          <div>
+            <div className={styles["followers-listing"]}>
+              {" "}
+              {followingList.map((item) => (
+                <Link
+                  style={{ textDecoration: "none" }}
+                  key={item.profile_id}
+                  to={"/Profile/" + item.profile_id}
                 >
-                  <FollowerCard
-                    title={item.display_name}
-                    src={item.profile_pic_link}
-                  />
-                </div>
-              </Link>
-            ))}
+                  <div
+                    style={{
+                      padding: " 10px 0px",
+                    }}
+                  >
+                    <FollowerCard
+                      title={item.display_name}
+                      src={item.profile_pic_link}
+                    />
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
     </div>
   );
 }

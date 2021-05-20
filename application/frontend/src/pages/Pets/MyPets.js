@@ -112,7 +112,7 @@ function MyPets() {
         <div className={styles['my-pets-container']}>
             <div className={styles['my-pets-header']}>
                 My Pets
-                <span onClick={() => history.goBack()} >Back to Profile</span>
+                <span onClick={() => history.goBack()} > Back to Profile</span>
             </div>
             <div className={styles['my-pets-container-pets']}>
                 {displayMyPets}
