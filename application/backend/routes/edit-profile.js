@@ -45,6 +45,7 @@ router.post('/api/address',(req,res)=>{
 router.post('/api/hours', (req,res) =>{
     const {newSunOpen, newSunClose, newMonOpen, newMonClose,newTueOpen, newTueClose, newWedOpen, newWedClose, newThuOpen, newThuClose, newFriOpen, newFriClose, newSatOpen, newSatClose} = req.body;
     console.log('newSunOpen' +newSunOpen);
+    
     const query = 
     `UPDATE HoursOfOperation
      JOIN Business ON HoursOfOperation.business_id = Business.business_id

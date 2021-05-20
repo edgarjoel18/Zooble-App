@@ -21,7 +21,7 @@ import FlagIcon from '../../images/Third Party Icons/icons8-empty-flag.png'
 // import ClipLoader from "react-spinners/ClipLoader";
 
 //make this into environment variable before deploying!
-const apiGatewayURL = process.env.REACT_APP_API_GATEWAY;
+const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL';
 
 function Feed({appUser}) {
     console.log('feed appUser', appUser)

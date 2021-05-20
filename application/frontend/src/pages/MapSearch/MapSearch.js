@@ -478,7 +478,7 @@ function search(){
                          <div className={styles['map-search-header']}>
                              <span><span className={styles['map-search-header-text']}>Results</span><button className={styles['map-search-results-header-action']} onClick={displayFilterOverlay}>Filter</button></span>
                              <div className={styles['sort-dropdown']}>
-                                 <span className={styles['sort-dropdown-label']}>Sort By:</span>
+                                 {/* <span className={styles['sort-dropdown-label']}>Sort By:</span> */}
                                  <select className={styles['sort-dropdown-select']}  name="search-category" id="search-category" onChange= {e => setResultsSortOption(e.target.value)}>
                                      <option value="Account Age">Newly Added</option>
                                      <option value="Distance">Distance</option>
