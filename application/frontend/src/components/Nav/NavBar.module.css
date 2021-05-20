@@ -5,10 +5,10 @@
     height: 100px;
     align-items: center;
     position: relative;
-    column-gap: 50px;
-    padding-left: 25px;
-    padding-right: 25px;
-    justify-content: center;
+    /* column-gap: auto; */
+    padding-left: 1%;
+    /* padding-right: 25px; */
+    /* justify-content: center; */
     /* z-index:2; */
 }
 
@@ -175,7 +175,7 @@ select {
     flex-shrink: 2;
     background-color: white;
     /* grid-column: 3 /span 1; */
-    /* margin: 0 auto; */
+    margin: 0 auto;
     width: 75%;
 
   }
@@ -370,9 +370,9 @@ padding-bottom: 10%; */
         grid-row: 2 / span 1;
         width: 90%;
         padding: 2% 2% 0 2%;
-        margin-top: 2%;
-        margin-right: auto;
-        margin-left: auto;
+        /* margin-top: 2%;
+        margin-right: 0;
+        margin-left: auto; */
        
       }
 
@@ -395,12 +395,12 @@ padding-bottom: 10%; */
         border-bottom-width: 1px;
         border-bottom-color: var(--nav-bar-color);
       }
-
-    .search-category-dropdown {
-        grid-column: 1 / span 1;
+   .search-category-dropdown {
+        grid-column: 2 / span 1;
         grid-row: 1;
         /* width: 30%; */
     }
+ 
     .div-term-searchbar-input{
         grid-column: 1/ span 2;
         grid-row: 2 / span 1;
@@ -412,8 +412,8 @@ padding-bottom: 10%; */
     .searchbar-search {  
         grid-column: 2 / span 1;
         grid-row: 1 ;
-        margin-left: 40%;
-        margin-top: 5%;
+        /* margin-left: 40%; */
+        margin-bottom: 5%;
       }
 
 
@@ -446,14 +446,14 @@ padding-bottom: 10%; */
         display:grid;
         grid-auto-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr;
-        grid-column: 1 / span 5;
+        grid-column: 1 / span 6;
         grid-row: 2 / span 1;
 
         width: 90%;
-        padding: 2% 2% 0 2%;
-        margin-top: 2%;
-        margin-right: auto;
-        margin-left: auto;
+        padding: 2%;
+        /* margin-top: 2%; */
+        /* margin-right: auto;
+        margin-left: auto; */
        
       }
       .navbar-left {
@@ -486,15 +486,15 @@ padding-bottom: 10%; */
         grid-row: 3 / span 1;
     }
     .searchbar-search {  
-        grid-column: 1 / span 1;
-        grid-row: 2 ;
-        margin-left: 85%;
+        grid-column: 2 / span 1;
+        grid-row: 3 ;
+        /* margin-left: 85%; */
         border-style: solid;
         border-color: black;
         border-radius: 20% 20% 20% 0;
         border-color: var(--accent-color-2);
         border-width: 1px;
-        width: 10%;
+        /* width: 30%; */
       }
 
 }
