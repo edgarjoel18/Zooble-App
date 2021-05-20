@@ -1,4 +1,4 @@
-.follower-feed-container{
+.follower-feed-container {
     display: flex;
     flex-direction: column;
     width: 50%;
@@ -10,7 +10,7 @@
     margin: 10px 0 10px 40px;
 }
 
-.follower-feed-header-profile:hover{
+.follower-feed-header-profile:hover {
     opacity: .75;
 }
 
@@ -23,7 +23,7 @@
     margin-right: 15px;
 }
 
-.follower-feed-header-profile-name{
+.follower-feed-header-profile-name {
     display: block;
     grid-area: 1/ 2/ span 1 / span 1;
     font-size: var(--h2);
@@ -31,14 +31,14 @@
     font-weight: 500;
 }
 
-.follower-feed-header{
+.follower-feed-header {
     margin: 5px;
     font-size: var(--h0);
     font-family: var(--ff-tertiary);
     font-weight: 600;
 }
 
-.follower-feed-post{
+.follower-feed-post {
     display: grid;
     padding: 15px;
     width: 100%;
@@ -55,7 +55,7 @@
     cursor: pointer;
 }
 
-.follower-feed-post-prof_pic{
+.follower-feed-post-prof_pic {
     width:100px;
     height:100px;
     object-fit: cover;
@@ -63,7 +63,7 @@
     border-radius: 7.5px;
 }
 
-.follower-feed-post-name{
+.follower-feed-post-name {
     margin-left: 15px;
     grid-area: post-name;
     font-size: var(--h2);
@@ -73,18 +73,18 @@
     line-height: 34px;
 }
 
-.follower-feed-post-name:hover{
+.follower-feed-post-name:hover {
     opacity: .75;
 }
 
-.follower-feed-post-timestamp{
+.follower-feed-post-timestamp {
     align-self: flex-end;
     margin-left: 15px;
     grid-area: post-timestamp;
     font-family: var(--ff-primary);
 }
 
-.follower-feed-post-flags{
+.follower-feed-post-flags {
     grid-area: 2 / 3 / span 1 / span 1;
     font-family: var(--ff-primary);
     text-align: center;
@@ -92,36 +92,36 @@
 }
 
 .follower-feed-post-likes,
-.follower-feed-post-admin-flags{
+.follower-feed-post-admin-flags {
     grid-area: post-likes-flags;
 }
 
 .follower-feed-post-like-count,
-.follower-feed-post-flag-count{
+.follower-feed-post-flag-count {
     line-height: 34px;
 }
 
 
 .follower-feed-post-like-icon,
-.follower-feed-post-admin-flag-icon{
+.follower-feed-post-admin-flag-icon {
     height: 34px;
     width:34px;
 }
 
 .follower-feed-post-flag,
-.follower-feed-post-admin-delete{
+.follower-feed-post-admin-delete {
     grid-area: post-flag-delete;
     align-self: flex-end;
     color: var(--inactive-txt-clr);
 }
 
 .follower-feed-post-flag:hover,
-.follower-feed-post-admin-delete:hover{
+.follower-feed-post-admin-delete:hover {
     color: var(--cancel-delete-exit-color);
 }
 
 
-.follower-feed-post-like:hover{
+.follower-feed-post-like:hover {
     opacity: .75;
 }
 
@@ -129,13 +129,13 @@
     grid-area: 3 /  3 / span 1 / span 1;
 } */
 
-.follower-feed-post-body{
+.follower-feed-post-body {
     margin-top: 10px;
     grid-area: post-body;
     font-family: var(--ff-primary);
 }
 
-.follower-feed-post-pic{
+.follower-feed-post-pic {
     margin-top: 15px;
     width:100%;
     height: calc(100%-15px);
@@ -148,7 +148,7 @@
     opacity: .75;
 }
 
-.follower-feed-new-post{
+.follower-feed-new-post {
     /* position: sticky;
     position: -webkit-sticky;  */
     margin: auto;
@@ -168,11 +168,11 @@
     margin-bottom: 15px;
 }
 
-.follower-feed-new-post-prof_pic{
+.follower-feed-new-post-prof_pic {
     transition: .15s ease-in-out;
 }
 
-.follower-feed-new-post-pic{
+.follower-feed-new-post-pic {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -180,14 +180,14 @@
     border-radius: 7.5px;
 }
 
-.follower-feed-new-post-name{
+.follower-feed-new-post-name {
     font-size: var(--h2);
     font-family: var(--ff-primary);
     font-weight: 600;
     grid-area: user;
 }
 
-.follower-feed-new-post-body{
+.follower-feed-new-post-body {
     border: 1px solid var(--inactive-txt-clr);
     border-radius: 7.5px;
     padding: 10px;
@@ -196,7 +196,7 @@
     font-family: var(--ff-primary);
 }
 
-.follower-feed-new-post-attach-image{
+.follower-feed-new-post-attach-image {
     grid-area: image;
     border-radius: 7.5px;
     border: 2px var(--primary-clr) dashed;
@@ -208,7 +208,7 @@
     transition: .15s ease-in-out;
 }
 
-.follower-feed-new-post-attach-image-container{
+.follower-feed-new-post-attach-image-container {
     display: flex;
     position: relative;
     align-items: center;
@@ -216,20 +216,20 @@
     height: 100%;
 }
 
-.follower-feed-new-post-attach-image-info{
+.follower-feed-new-post-attach-image-info {
     font-size: var(--h4);
     color: var(--inactive-txt-clr);
     width: 50%;
     text-align: center;
 }
 
-.follower-feed-new-post-attach-image-preview{
+.follower-feed-new-post-attach-image-preview {
     width: 315px;
     height: 200px;
     object-fit: contain;
 }
 
-.follower-feed-new-post-attach-image-container-button{
+.follower-feed-new-post-attach-image-container-button {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -246,7 +246,7 @@
 }
 
 
-.follower-feed-new-post-submit{
+.follower-feed-new-post-submit {
     grid-area: submit;
     background-color: var(--primary-clr);
     color: var(--reversed-txt-clr);
@@ -262,33 +262,40 @@
     transition: .15s ease-in-out;
 }
 
-.follower-feed-new-post-submit:hover{
+.follower-feed-new-post-submit:hover {
     opacity: .75;
 }
 
-@media all and (max-width: 876px){
-    .follower-feed-post{
-        width: 90%;
-    }
-}
-
-.follower-feed-no-posts-placeholder-header{
+.follower-feed-no-posts-placeholder-header {
     margin: 25px auto 10px auto;
     font-family: var(--ff-tertiary);
     font-size: var(--h1);
     color: var(--inactive-txt-clr);
 }
 
-.follower-feed-no-posts-placeholder-detail{
+.follower-feed-no-posts-placeholder-detail {
     margin: 0 auto 25px auto;
     font-family: var(--ff-primary);
     font-size: var(--h2);
     color: var(--inactive-txt-clr);
 }
 
-.follower-feed-new-post-tag-dropdown{
+.follower-feed-new-post-tag-dropdown {
     grid-area: dropdown;
 }
 
+@media all and (max-width: 1120px) {
+    .follower-feed-container {
+        margin: 25% auto;
+    }
+    .follower-feed-new-post {
+        display: flex;
+        flex-direction: column;
+    }
 
+    .follower-feed-post {
+        display: flex;
+        flex-direction: column;
+    }
+}
 
