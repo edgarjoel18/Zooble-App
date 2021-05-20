@@ -278,7 +278,6 @@ padding-bottom: 10%; */
         display:grid;
         height: 150px;
         width: 100%;
-
     }
 
     .login-link{
@@ -341,15 +340,18 @@ padding-bottom: 10%; */
   and (-webkit-min-device-pixel-ratio: 3) { 
     .navbar{
         /* display:inline-block; */
+        height: 300px;
         display:grid;
-        /* grid-auto-columns: 1fr 1fr !important;
-        grid-template-rows: 1fr 1fr !important; */
+        grid-auto-columns: 1fr 1fr !important;
+        /*grid-auto-rows: 1fr 1fr !important; */
         grid-auto-flow: column;
-        height: 150px;
+        /* height: 150px; */
         width: 100%;
-        padding-left: 4%;
-        padding-right: 4%;
+        /* padding-left: 4%;
+        padding-right: 4%; */
         /* margin: 0; */
+
+         padding:0 auto;
         
     }
 
@@ -364,19 +366,26 @@ padding-bottom: 10%; */
         display:grid;
         grid-auto-columns: 1fr 1fr;
         grid-template-rows: 1fr 1fr 1fr;
-        
-        grid-column: 1/ span 1;
+        grid-column: 1/ span 5;
         grid-row: 2 / span 1;
-
-        width: 70%;
-        /* padding: 2% 2% 0 2%; */
+        width: 90%;
+        padding: 2% 2% 0 2%;
         margin-top: 2%;
+        margin-right: auto;
+        margin-left: auto;
        
       }
+
+      .div-term-searchbar-input, .div-map-searchbar-input {
+        /* background-color: black; */
+        width: 75%;
+        padding: auto;
+        margin: auto;
+    }
       .navbar-left {
-            width: fit-content;
-            grid-column: 1 / span 1;
-            grid-row: 1 / span 1;
+        width: fit-content;
+        grid-column: 2 / span 1;
+        grid-row: 1 / span 1;
       }
 
     .searchbar input{
