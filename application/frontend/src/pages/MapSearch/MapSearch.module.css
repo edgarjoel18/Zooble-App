@@ -1,9 +1,10 @@
 .map-search-results-container{
     display:grid;
-    grid-template-areas: 'map map map map search-results search-results';
-    grid-template-columns: repeat(4, 1fr) repeat(2, 1fr);
+    grid-template-areas: 'map map map map search-results';
+    grid-template-columns: repeat(5, 1fr), 2fr;
     width: 100%;
     height: calc(100vh - 100px); /*Need to find a better way to make container fill whole screen*/
+    transition: 2s;
 }
 
 /* MAP */
@@ -107,11 +108,19 @@
       text-decoration: none;
   }
 
-  .search-result-name{
-      padding-left: 15px;
-      font-family: var(--ff-primary);
-      font-size: var(--h2);
+
+
+  .search-result-name-address{
+    font-family: var(--ff-primary);
+    margin-left:10px;
   }
+  .search-result-name{
+    font-size: var(--h2);
+}
+.search-result-address{
+    font-size: var(--h4);
+}
+
   
   /* .map-search-results-text {
     display:inline-block;
@@ -210,3 +219,15 @@
     color:var(--reversed-txt-clr);
     background-color: var(--primary-clr);
 }
+
+
+/* .map-search-results-container-petOwners{
+    display:grid;
+    grid-template-areas: 'map map map map search-results search-results';
+    grid-template-columns: repeat(4, 10px) repeat(2, 1fr);
+    width: 100%;
+    transition: 2s;
+    height: calc(100vh - 100px); 
+} */
+
+
