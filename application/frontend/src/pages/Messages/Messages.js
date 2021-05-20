@@ -113,7 +113,7 @@ function Messages() {
         setSelectedTab(value);
     };
 
-    let tabs = ['Recieved', 'Sent'].map((tab, index) => (
+    let tabs = ['Received', 'Sent'].map((tab, index) => (
         <Tab key={tab} id={index} section={tab} selected={selectedTab} length={index === 0 ? recievedMessages.length : sentMessages.length} clicked={onTabClicked}/>
     ));
 
@@ -160,7 +160,7 @@ function Messages() {
             <div className={styles['tabs-container']}>
                 <div className={styles['tabs']}>
                     <div className={styles['messages-header']}>Messages</div>
-                    <div style={{display: 'flex'}}>
+                    <div style={{display: 'flex', width: '100%'}}>
                         {tabs}
                     </div>
                 </div>
