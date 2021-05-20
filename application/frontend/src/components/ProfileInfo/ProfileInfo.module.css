@@ -200,3 +200,13 @@
     box-shadow: var(--elevation-1);
     cursor: pointer;
 }
+
+.ban-button {
+    margin-left: 30px;
+    color: white;
+    background-color: red;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+}

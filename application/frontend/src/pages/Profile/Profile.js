@@ -66,7 +66,6 @@ function Profile({appUser}) {
     // console.log(appUser);
     // switch profile type by changing the userProfile Ex: shelterProfile, businessProfile, newBusinessProfile and petOwnerProfile
 
-
     function updateProfileHandler(type, value) {
         if (type === 'address' || type === 'phone' || type === 'hours') {
             // console.log('value is ' + value + 'type is ' + type);
@@ -107,6 +106,7 @@ function Profile({appUser}) {
                     profile={fetchedProfile}
                     updateProfile={updateProfileHandler}
                     followingStatus={followingStatus}
+                    isAdminView={adminView}
                 />
                 <div className={styles.Bottom}>
                     <AboutMe
