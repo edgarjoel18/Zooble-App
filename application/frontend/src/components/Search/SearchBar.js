@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect, useMemo, useState} from "react";
+import React, {useEffect, useLayoutEffect, useMemo, useState, useRef} from "react";
 import {Link, Switch, Route, Redirect, useHistory} from "react-router-dom";
 import Axios from "axios";
 import {useThrottle} from '@react-hook/throttle'
@@ -47,12 +47,13 @@ function SearchBar() {
   const history = useHistory();
   const [searchTerm, setSearchTerm] = useState('')
   const [searchCategory, setSearchCategory] = useState('Pets');
-  const [recievedSearchResults, setRecievedSearchResults] = useState([]);
 
   const [searchLocationLat, setSearchLocationLat] = useState(null);
   const [searchLocationLng, setSearchLocationLng] = useState(null);
 
   const [selectedPrefilter, setSelectedPrefilter] = useState({});
+
+  const prefilterObject = useRef({})
 
   const {
     ready, 
@@ -68,6 +69,9 @@ function SearchBar() {
   });
 
   function search(){
+    // let prefilterObject = matchPrefilter(selectedPrefilter);
+    console.log('selectedPrefilter',selectedPrefilter)
+    console.log('prefilterObject: ',prefilterObject)
     if(searchLocationLat == null || searchLocationLng == null){
       navigator.geolocation.getCurrentPosition((position)=>{
         const location = {
@@ -83,9 +87,7 @@ function SearchBar() {
         state: {lat:searchLocationLat, lng:searchLocationLng, searchTermParam: searchTerm, searchCategoryParam: searchCategory,  prefilter: selectedPrefilter}
       }
       history.push(location)
-    }
-
-    
+    }    
   }
 
   useEffect(() =>{
@@ -120,6 +122,7 @@ function SearchBar() {
     if(searchCategory == 'Pets'){
       //set autocompletable prefilters to pet type and breed
       filters = typeOptions.concat(dogBreedOptions,catBreedOptions);
+      console.log('filters: ', filters)
       // console.log("Filters: ",filters);
     }
     if(searchCategory == 'Shelters'){
@@ -153,9 +156,9 @@ function SearchBar() {
       </span>
       <Combobox
         className={styles['div-term-searchbar-input']}
-        onSelect={(prefilter) => {
-            console.log(prefilter);
-            setSelectedPrefilter(prefilter)  //set prefilter to selected one to pass to mapsearch page
+        onSelect={(value) => {
+            console.log(prefilterObject.current[value])
+            setSelectedPrefilter(prefilterObject.current[value])  //set prefilter to selected one to pass to mapsearch page
             setSearchTerm("");
         }}>
         <ComboboxInput 
@@ -171,12 +174,13 @@ function SearchBar() {
           <ComboboxPopover className={styles['combobox-popover']}>
             {results.length > 0 ? (
               <ComboboxList className={styles['combobox-list']}>
-                 {results.slice(0, 5).map((result) => (
-                   <ComboboxOption
-                     key={result.label}
-                     value={result.label}
-                   />
-                 ))}
+                 {results.slice(0, 5).map((result) => {
+                   console.log('result: ',result)
+                   const value = result.label;
+
+                   prefilterObject.current[value] = result;
+                   return (<ComboboxOption key={result.label} value={result.label}/>)
+                  })}
                </ComboboxList>
             ) : (
               <span style={{display: 'block', margin: 8}}>
@@ -211,6 +215,7 @@ function SearchBar() {
             placeholder= {searchCategory !== 'Pet Owners' && "Near Current Location"}
             onChange={(e)=> {
               setValue(e.target.value);
+              console.log('e.target.value: ',e.target.value);
               // setSearchTerm(e.target.value);
             }}
             disabled={!ready }

@@ -53,7 +53,7 @@ const distanceOptions = [
 
 function MapSearch(props) {
     let state = props.location.state;
-    console.log("State: ",state);
+    console.log("State from searchbar: ",state);
 
     //For storing filter states
     const [businessCategoryFilters,setBusinessCategoryFilters] = useState([]);
@@ -64,7 +64,8 @@ function MapSearch(props) {
     const [petSizeFilters, setPetSizeFilters] = useState([]);
     const [petAgeFilters, setPetAgeFilters] = useState([]);
     const [shelterPetTypeFilters, setShelterPetTypeFilters] = useState([]);
-    
+
+
     
     const location = useLocation();
     let history = useHistory();
@@ -148,13 +149,8 @@ function MapSearch(props) {
 
 
 function search(){
-        if(state.searchTermParam || state.searchCategoryParam){
-
-
-            if(state.prefilter && Object.keys(state.prefilter).length !== 0){  //make sure object is not empty
-                 applyPreFilters();
-            }
-
+        if(state.searchTermParam || state.searchCategoryParam || state.prefilter){
+            console.log('state.prefilter: ',state.prefilter)
             console.log("pet type filters", petTypeFilters);
             console.log("dog breed filters", dogBreedFilters);
             console.log("search start")
@@ -170,13 +166,42 @@ function search(){
             setSearchTerm(state.searchTermParam);
 
             let searchParams = {};
+            let typePrefilter = {};
+            let dogBreedPrefilter = {};
+            let catBreedPrefilter = {};
+            let businessCategoryPrefilter = {};
+
+            if(searchCategory === 'Pets'){
+                if(typeOptions.some(petType => petType.label === state.prefilter.label)){
+                    typePrefilter = state.prefilter
+                }
+                else if(dogBreedOptions.some(dogBreed => dogBreed.label === state.prefilter.label)){
+                    dogBreedPrefilter = state.prefilter
+                }
+                else if(catBreedOptions.some(catBreed => catBreed.label === state.prefilter.label)){
+                    catBreedPrefilter = state.prefilter
+                }
+            }
+            else if(searchCategory === 'Businesses'){
+                businessCategoryPrefilter = state.prefilter
+            }
+            else if(searchCategory === 'Shelters'){
+                typePrefilter = state.prefilter
+            }
+
 
             switch(state.searchCategoryParam){
                 case 'Businesses':
                     let businessCategoryFilterValues = [];
+
+                    if (Object.keys(businessCategoryPrefilter).length !== 0){
+                        businessCategoryFilterValues.push(businessCategoryPrefilter.value)
+                    }
+
                     for(let i = 0; i < businessCategoryFilters.length; i++){
                         businessCategoryFilterValues.push(businessCategoryFilters[i].value);
                     }
+
                     console.log("Switch: Businesses")
                     searchParams = {
                         searchTerm: state.searchTermParam,
@@ -191,9 +216,15 @@ function search(){
                     break
                 case 'Shelters':
                     let shelterTypeFilterValues = [];
+
+                    if (Object.keys(typePrefilter).length !== 0){
+                        shelterTypeFilterValues.push(typePrefilter.value)
+                    }                        
                     for(let i = 0; i < shelterPetTypeFilters.length; i++){
                         shelterTypeFilterValues.push(shelterPetTypeFilters[i].value);
                     }
+
+                    
                     searchParams = {
                         searchTerm: state.searchTermParam,
                         searchCategory:state.searchCategoryParam,
@@ -211,9 +242,15 @@ function search(){
                     let petAgeFilterValues = [];
                     let dogBreedFilterValues = [];
                     let catBreedFilterValues = [];
+
+                    if (Object.keys(typePrefilter).length !== 0){
+                        petTypeFilterValues.push(typePrefilter.value)
+                    }
+
                     for(let i = 0; i < petTypeFilters.length; i++){
                         petTypeFilterValues.push(petTypeFilters[i].value);
                     }
+
                     for(let i = 0; i < petColorFilters.length; i++){
                         petColorFilterValues.push(petColorFilters[i].value);
                     }
@@ -223,12 +260,24 @@ function search(){
                     for(let i = 0; i < petAgeFilters.length; i++){
                         petAgeFilterValues.push(petAgeFilters[i].value);
                     }
+
+                    if (Object.keys(dogBreedPrefilter).length !== 0){
+                        dogBreedFilterValues.push(dogBreedPrefilter.value)
+                    }
+
                     for(let i = 0; i < dogBreedFilters.length; i++){
                         dogBreedFilterValues.push(dogBreedFilters[i].value);
                     }
+
+                    if (Object.keys(catBreedPrefilter).length !== 0){
+                        catBreedFilterValues.push(catBreedPrefilter.value)
+                    }
+
                     for(let i = 0; i < catBreedFilters.length; i++){
                         catBreedFilterValues.push(catBreedFilters[i].value);
                     }
+                        
+
 
                     if(petTypeFilters.length > 0 && !petTypeFilters.some(petType => petType.label == "Cat")){
                         catBreedFilterValues = [];
@@ -292,72 +341,8 @@ function search(){
         console.log("search end")
     }
 
-    function applyPreFilters(){
-        console.log("applyPreFilters start");
-        console.log("Applying preFilter if present")
-        console.log("Prefilter: ", state.prefilter);
-        if(state.searchCategoryParam === "Pets"){
-            console.log("searchcategory: pets")
-            Object.keys(typeOptions).forEach(function(key) {
-                var option = typeOptions[key];
-                console.log("Prefilter: ", state.prefilter);
-                if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
-                    console.log("Found Match!");
-                    console.log("Option: ", option);
-                    setPetTypeFilters([option]);
-                }
-            })
-
-            Object.keys(dogBreedOptions).forEach(function(key) {
-                var option = dogBreedOptions[key];
-                console.log("Prefilter: ", state.prefilter);
-                if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
-                    console.log("Found Match!");
-                    console.log("Option: ",option);
-                    setDogBreedFilters([option]);
-                }
-            })
-
-            Object.keys(catBreedOptions).forEach(function(key) {
-                var option = catBreedOptions[key];
-                console.log("Prefilter: ", state.prefilter);
-                if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
-                    console.log("Found Match!");
-                    console.log("Option: ",option);
-                    setCatBreedFilters([option]);
-                }
-            })      
-        }
-        
-        if(state.searchCategoryParam === "Shelters"){
-            console.log("searchcategory: shelters")
-            Object.keys(typeOptions).forEach(function(key) {
-                var option = typeOptions[key];
-                console.log("Prefilter: ", state.prefilter);
-                if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
-                    console.log("Found Match!");
-                    console.log("Option: ",option);
-                    setPetTypeFilters([option]);
-                }
-            })
-        }
-        if(state.searchCategoryParam === "Businesses"){
-            console.log("searchcategory: businesses")
-            Object.keys(businessCategoryOptions).forEach(function(key) {
-                var option = businessCategoryOptions[key];
-
-                console.log("Prefilter: ", state.prefilter);
-                if((state.prefilter).toLowerCase() === (option.label).toLowerCase()){
-                    console.log("Found Match!");
-                    console.log("Option: ",option);
-                    setBusinessCategoryFilters([option]);
-                }
-            })
-        }
-        console.log("applyPreFilters end")
-    }
-
     useEffect(()=>{
+        console.log('useEffect search')
         search();
     },[state, currentPage]);  //only fetch results when search params or filters or page changes
 
