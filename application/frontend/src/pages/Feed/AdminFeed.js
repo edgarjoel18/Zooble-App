@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback,useRef } from 'react'
-import {Link, useHistory } from "react-router-dom";
+import {Link, Redirect, useHistory } from "react-router-dom";
 import axios from 'axios';
 
 import styles from './Feed.module.css'
@@ -15,7 +15,11 @@ import ConfirmDeletion from '../../components/Modals/ConfirmDeletion';
 
 import useFeed from './useFeed'
 
-function AdminFeed() {
+function AdminFeed({appUser}) {
+    const history = useHistory()
+    if(appUser.role !== 4){
+        history.push('/Feed')
+    }
     const [postModalDisplay, setPostModalDisplay] = useState(false);
     const [deletionModalDisplay,setDeletionModalDisplay] = useState(false);
 
@@ -38,8 +42,6 @@ function AdminFeed() {
         if(node) observer.current.observe(node)
         console.log('node:',node)
     }, [postsLoading, hasMore])
-
-    const history = useHistory();
 
     const [selectedPost, setSelectedPost] = useState({});
     const [createPostOverlayDisplayBool, setCreatePostOverlayDisplayBool] = useState(true);

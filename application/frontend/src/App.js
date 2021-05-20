@@ -52,7 +52,6 @@ const App = () => {
   useEffect(() => {
     axios.get("/api/login",{withCredentials: true}).then((response) =>{
       console.log(response.data);
-      console.log(response.data);
       setAppUser(response.data);
       setLoggedIn(true)
       setLoading(false)
@@ -76,14 +75,14 @@ const App = () => {
   function PrivateRoute({children, ...rest}){
     return (
     <Route {...rest} render={()=>{
-      return appUser ? children : children
+      return appUser ? children : <Redirect to={'/login-page'}/>
     }}/>)
   }
 
   function AdminRoute({children, ...rest}){
     return (
     <Route {...rest} render={()=>{
-      return appUser ? children : children
+      return appUser ? children :  <Redirect to={'/login-page'}/>
     }}/>)
   }
 
@@ -149,7 +148,7 @@ const App = () => {
         <Route path="/reset/:token" component={ResetPage}/>
 
         <Route path="/AdminFeed">
-          <AdminFeed/>
+          <AdminFeed appUser={appUser}/>
         </Route>
 
         {/* <Redirect to="/" /> */}
