@@ -170,7 +170,7 @@ function SearchBar() {
               search();
             }
           }}/>
-        {results && (
+        {results && searchCategory !== 'Pet Owners' && (
           <ComboboxPopover className={styles['combobox-popover']}>
             {results.length > 0 ? (
               <ComboboxList className={styles['combobox-list']}>
