@@ -154,6 +154,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
         .then((res) =>{
             console.log(res.data)
             setDeletionModalDisplay(false);
+            history.push('/Feed')
         })
         .catch((err) =>{
             console.log(err)
