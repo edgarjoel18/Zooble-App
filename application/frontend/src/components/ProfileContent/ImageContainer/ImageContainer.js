@@ -65,9 +65,6 @@ function ImageContainer({previews, profile, title, selfView}) {
                 );
         }
 
-        if (width < 800) {
-            val = 1
-        }
         // set limited amount of photos displayed 
         let marginToRight = null;
         if (accountType === 'Shelter') {
@@ -78,7 +75,11 @@ function ImageContainer({previews, profile, title, selfView}) {
             marginToRight = 67.6;
             val = Math.min(val, 6);
         }
-        //accountType === 'Shelter' ? marginToRight = 40 : marginToRight = 67.6;
+
+        if (width < 800) {
+            val = 1
+        }
+
         let imageStack = [];
         for (let i = 0; i < val; i++) {
             imageStack.push(i);
