@@ -65,4 +65,16 @@ router.post("/api/delete-pet",(req,res) =>{
     )
 })
 
+// router.post("/api/edit-pet",(req,res) =>{
+//     const {petProfileID, newName, new} = req.body
+//     console.log("POST /api/edit-pet");
+
+//     connection.query(
+//         `UPDATE Pet
+//          JOIN Profile ON Profile.profile_id = ${petProfileID} 
+//          SET Pet.name =`
+//     )
+
+// })
+
 module.exports = router

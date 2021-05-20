@@ -95,7 +95,7 @@ function PostModal({display,onClose,selectedPost}) {
                                 {selectedPost.likes}
                                 
                             </div>
-                            <button className={styles["post-detail-like"]}/>
+                            {/* <button className={styles["post-detail-like"]}/> */}
                             {/* <div className={styles["post-detail-comments-count"]}>{comments.length} comments</div>  */} 
                             <div className={styles["post-detail-body"]}>{selectedPost.body}</div>
                         </div>
@@ -120,7 +120,7 @@ function PostModal({display,onClose,selectedPost}) {
                             {selectedPost.likes}
                             
                         </div>
-                        <button className={styles["post-detail-like"]}/>
+                        {/* <button className={styles["post-detail-like"]}/> */}
                         {/* <div className={styles["post-detail-comments-count"]}>{comments.length} comments</div>  */} 
                         <div className={styles["post-detail-body"]}>{selectedPost.body}</div>
                     </div>

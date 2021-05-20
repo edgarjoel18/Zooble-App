@@ -21,7 +21,7 @@ import FlagIcon from '../../images/Third Party Icons/icons8-empty-flag.png'
 // import ClipLoader from "react-spinners/ClipLoader";
 
 //make this into environment variable before deploying!
-const apiGatewayURL = process.env.REACT_APP_API_GATEWAY;
+const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL';
 
 function Feed({appUser}) {
     const history = useHistory()
@@ -50,9 +50,6 @@ function Feed({appUser}) {
 
     //loading UI
     const [loading, setLoading] = useState(false);
-
-    //update UI after submitting post
-    const [update, setUpdate] = useState(false);
 
     const redirectContext = useContext(RedirectPathContext);
 
@@ -120,7 +117,7 @@ function Feed({appUser}) {
             console.log(err);
             //display error message to the user
         })
-    }, [update])
+    }, [])
 
     // //runs whenever the user creates a post
     // useEffect(()=>{
@@ -230,6 +227,9 @@ function Feed({appUser}) {
                         setCreatedPostBody('');
                         setTaggedPets([]);
                         setLoading(false);
+                        setTimeout(() => {
+                            history.push('/');
+                        }, 1000)
                     })
                     .catch((err) =>{
                         setLoading(false);
@@ -250,7 +250,6 @@ function Feed({appUser}) {
             //refresh feed after posting
             // getPosts();
             // setFeedPosts([...feedPosts, ])
-            setUpdate(!update);
 
         }
         else{
@@ -261,6 +260,9 @@ function Feed({appUser}) {
                 setCreatedPostBody('');
                 setTaggedPets([]);
                 setLoading(false);
+                setTimeout(() => {
+                    history.push('/');
+                }, 2000)
             })
             .catch((err) =>{
                 setLoading(false);
@@ -268,7 +270,6 @@ function Feed({appUser}) {
 
             //refresh feed after posting
             //getPosts();
-            setUpdate(!update);
         }
 
     }
@@ -347,10 +348,10 @@ function Feed({appUser}) {
                                 <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic_link} onClick={(event) => goToProfile(event,feedPost.profile_id)}/>
                                 <div className={styles["follower-feed-post-name"]} onClick={(event) => goToProfile(event,feedPost.profile_id)}>{feedPost.display_name}</div>
                                 <div className={styles["follower-feed-post-timestamp"]}>{new Date(feedPost.timestamp).toLocaleString()}</div>
-                                <div className={styles["follower-feed-post-admin-flags"]}>
+                                {/* <div className={styles["follower-feed-post-admin-flags"]}>
                                     <span className={styles["follower-feed-post-like-count"]}>{feedPost.like_count}</span>
                                     <img className={styles["follower-feed-post-like-icon"]} src={LikeIcon} onClick={(event) => likePost(event,feedPost.post_id,index)}/>
-                                </div>
+                                </div> */}
                                 <span className={styles['follower-feed-post-flag']} onClick={(event) => flagPost(event,feedPost.post_id)}>Flag</span>
                                 {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
                                 <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>
@@ -364,10 +365,10 @@ function Feed({appUser}) {
                                 <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic_link} onClick={(event) => goToProfile(event,feedPost.profile_id)}/>
                                 <div className={styles["follower-feed-post-name"]} onClick={(event) => goToProfile(event,feedPost.profile_id)}>{feedPost.display_name}</div>
                                 <div className={styles["follower-feed-post-timestamp"]}>{new Date(feedPost.timestamp).toLocaleString()}</div>
-                                <div className={styles["follower-feed-post-admin-flags"]}>
+                                {/* <div className={styles["follower-feed-post-admin-flags"]}>
                                     <span className={styles["follower-feed-post-like-count"]}>{feedPost.like_count}</span>
                                     <img className={styles["follower-feed-post-like-icon"]} src={LikeIcon} onClick={(event) => likePost(event,feedPost.post_id,index)}/>
-                                </div>
+                                </div> */}
                                 <span className={styles['follower-feed-post-flag']} onClick={(event) => flagPost(event,feedPost.post_id)}>Flag</span>
                                 {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
                                 <div className={styles["follower-feed-post-body"]}>{feedPost.body}</div>

@@ -117,7 +117,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
 
     function cancelEditHandler() {
         axios.post('/api/name',{
-            newFirstName: 'Bob'
+            newFirstName: displayName
         })
         .then((res) =>{
         })
@@ -253,7 +253,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                         value={displayName} 
                         readOnly={!editing}
                         maxLength = "25"
-                        onChange={event => updateProfile('userName', event.target.value)} 
+                        onChange={event => setDisplayName(event.target.value)} 
                     />
                 </h1> 
             )
@@ -289,11 +289,11 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                 <React.Fragment>
                     <div style={{display: 'flex'}} >
                         <h1 className={styles.UserName}>{displayName ? displayName : 'Name of Your Pet'}</h1>
-                        <h3 style={{marginLeft: '10px'}} >
+                        {/* <h3 style={{marginLeft: '10px'}} >
                             {petType.value ? petType.value : 'Type'}
                             /
                             {petBreeds[0].value ? petBreeds[0].value : 'Breed'}
-                        </h3>
+                        </h3> */}
                     </div>
                     <EditPetDetails 
                         display={editPetDetailsDisplay} 
@@ -357,8 +357,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
             <div className={styles.SideContainer} >
                 <div className={styles['SideContainer-namvDiv']}>
                     {
-                        isSelfView && !editing && 
-                        //<button className={styles.EditButton} onClick={() => openEditModal()}  >edit</button>
+                        isSelfView && !editing && profileType !== 'Pet' &&
                         <EditButton 
                             style={{
                                 alignSelf: 'center',
