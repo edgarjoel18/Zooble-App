@@ -23,7 +23,13 @@ import FlagIcon from '../../images/Third Party Icons/icons8-empty-flag.png'
 //make this into environment variable before deploying!
 const apiGatewayURL = 'https://5gdyytvwb5.execute-api.us-west-2.amazonaws.com/default/getPresignedURL' 
 
-function Feed() {
+function Feed({appUser}) {
+    console.log('feed appUser', appUser)
+    console.log(appUser.role)
+    const history = useHistory()
+    if(appUser.role == 4){
+        history.push('/AdminFeed')
+    }
 
     const [postModalDisplay, setPostModalDisplay] = useState(false);
 
@@ -71,8 +77,6 @@ function Feed() {
         if(node) observer.current.observe(node)
         console.log('node:',node)
     }, [postsLoading, hasMore])
-
-    const history = useHistory()
 
     function customTheme(theme) { //move this a separate file and import maybe?
         return {
