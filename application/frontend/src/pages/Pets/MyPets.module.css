@@ -16,6 +16,12 @@
     
 }
 
+@media only screen and (max-width: 600px) { 
+    .my-pets-header span { 
+      display: none; 
+    } 
+  }
+
 .my-pets-header span:hover{
     color:rgb(20, 160, 160);
 }
