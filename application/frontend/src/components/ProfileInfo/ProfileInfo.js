@@ -372,7 +372,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                 </div>}
             </div>
             <div className={styles.SideContainer} >
-                <div style={{display: 'flex', justifyItems: 'center'}}>
+                <div className={styles['SideContainer-namvDiv']}>
                     {
                         isSelfView && !editing && 
                         //<button className={styles.EditButton} onClick={() => openEditModal()}  >edit</button>
@@ -407,7 +407,7 @@ function ProfileInfo({profile, appUser, isSelfView, updateProfile, followingStat
                         </EditButton>
                     }
                 </div>
-                <div style={{display: 'flex'}}>
+                <div className={styles['SideContainer-contaniner']}>
                 {displayAccountInfo}
                 {isAdminView && !isSelfView && <button className={styles['ban-button']} onClick={()=>setDeletionModalDisplay(true)}>Ban User</button>}
                 </div>

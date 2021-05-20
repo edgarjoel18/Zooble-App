@@ -5,6 +5,7 @@ import styles from './ImageContainer.module.css';
 import styled from 'styled-components';
 
 import PostModal from '../../Modals/PostModal'
+import useWindowDimensions from './useWindowDimensions';
 
 function ImageContainer({previews, profile, title, selfView}) {
     console.log("previews: ",previews);
@@ -12,8 +13,8 @@ function ImageContainer({previews, profile, title, selfView}) {
 
     const [postModalDisplay, setPostModalDisplay] = useState(false);
     const [imageStack, setImageStack] = useState();
-
     const [selectedPost,setSelectedPost] = useState({});
+    const { width } = useWindowDimensions()
 
     let history = useHistory();
 
@@ -37,7 +38,7 @@ function ImageContainer({previews, profile, title, selfView}) {
     const displayImageStack = (val, accountType) => {
         console.log('displayImageStack', previews);
         console.log("val: ",val)
-        if (val === 0)
+        if (val === 0) {
             if (title === 'Photos'  || title === 'My Photos' )
                 return (
                     <Link>
@@ -62,6 +63,11 @@ function ImageContainer({previews, profile, title, selfView}) {
                         </div>
                     </Link>
                 );
+        }
+
+        if (width < 800) {
+            val = 1
+        }
         // set limited amount of photos displayed 
         let marginToRight = null;
         if (accountType === 'Shelter') {

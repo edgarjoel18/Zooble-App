@@ -367,8 +367,8 @@ function Feed() {
                         Search for a User and Follow them to see their posts here
                     </div>
                     </>}
-                {posts && feedPosts.map((feedPost, index) => {
-                    if(posts.length === index + 1){
+                {feedPosts && feedPosts.map((feedPost, index) => {
+                    if(feedPosts.length === index + 1){
                         return (
                             <div ref={lastPostElementRef} key={feedPost.post_id} className={styles["follower-feed-post"]} onClick={(event) => openPostModal(event,feedPost)} >
                                 <img className={styles["follower-feed-post-prof_pic"]} src={feedPost.profile_pic_link} onClick={(event) => goToProfile(event,feedPost.profile_id)}/>

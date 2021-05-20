@@ -40,5 +40,9 @@
         align-content: center;
         flex-wrap: wrap;
     }
+
+    .ProfileContent {
+        min-width: none;
+    }
 }
 
