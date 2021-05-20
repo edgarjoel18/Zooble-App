@@ -177,23 +177,31 @@ select {
     flex-shrink: 2;
     background-color: white;
     /* grid-column: 3 /span 1; */
-    margin: 0 auto;
+    /* margin: 0 auto; */
+    width: 75%;
+
   }
   
   .searchbar input{
-    border: none;
+    /* border: none; */
+    border-left: none;
+    border-bottom: none;
+    border-top: none;
+    border-color: var(--nav-bar-color);
     /* flex-grow:2; */
     font-size: 1.5em;
     text-overflow: ellipsis;
-    width: 435px;
-    margin-left:15px;
-    margin-top: 5px;
+    width: 100%;
+    margin:0;
+    /* margin-left:15px;
+    margin-top: 5px; */
   }
 
 /* Searchbar button */
 .searchbar-search {  
   width: 100px;
   height: 50px;
+  float: right;
   display:inline-flex;
   border: none;
   padding: 0;
@@ -201,48 +209,21 @@ select {
 padding-bottom: 10%; */
   /* background-size: 100%; */
   background: url("../../images/Created\ Icons/Search.svg") 50% no-repeat;
-  margin-left:auto;
+  
+  /* margin-left:100px; */
   transition: .15s ease-in-out;
 }
+.div-term-searchbar-input, .div-map-searchbar-input {
+    /* background-color: black; */
+    width: 75%;
+    padding: 0;
+    margin: 0;
+}
+
 
 .searchbar-search:hover{
     opacity:.75;
 }
-
-
-/* tablet */
-/* @media all and (max-width: 1280px){
-    .navbar{
-        height: auto;
-        display: grid;
-        grid-template-rows: 110px 75px;
-        grid-template-columns: auto auto 75px 75px;
-      
-    }
-
-    .logo-img{
-        grid-area: 1 / 1 / span 1 / span 1;
-      
-    }
-
-    .messages-menu{
-        grid-area: 1 / 3 / span 1 / span 1;
-        width: 50px;
-        height: 50px;
-      
-        background: url('../../images/Created\ Icons/Messages.svg') no-repeat;
-    }
-
-    .account-menu-dropdown{
-        grid-area: 1 / 4 / span 1 / span 1;
-    }
-
-    .account-menu-dropdown-button{
-        width: 50px;
-        height: 50px;
-        background: url('../../images/Created\ Icons/Account.svg') 50% no-repeat;
-    }
-} */
 
 
 .combobox-popover{
@@ -280,5 +261,176 @@ padding-bottom: 10%; */
 
 
 
+/* ----------- iPad Pro 12.9" ----------- */
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 1024px) 
+  and (max-device-width: 1366px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+}
+
+/* ----------- iPad 3, 4 and Pro 9.7" ----------- */
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .navbar{
+        /* display:inline-block; */
+        display:grid;
+        height: 150px;
+        width: 100%;
+
+    }
+
+    .login-link{
+        /* grid-column: 2;
+        grid-row: 1 / span 1; */
+        width: 100px;
+        float: left;
+    }
+
+    .searchbar{
+        grid-column: 1 / span 5;
+        grid-row: 2 / span 1;
+        width: 100%;
+      }
+      .navbar-left {
+            width: fit-content;
+            grid-column: 1 / span 1;
+            grid-row: 1 / span 1;
+      }
+}
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+    .navbar{
+        /* display:inline-block; */
+        display:grid;
+        height: 150px;
+        width: 100%;
+
+    }
+
+    .login-link{
+        /* grid-column: 2;
+        grid-row: 1 / span 1; */
+        width: 100px;
+        float: left;
+    }
+
+    .searchbar{
+        grid-column: 1 / span 5;
+        grid-row: 2 / span 1;
+        width: 100%;
+      }
+      .navbar-left {
+            width: fit-content;
+            grid-column: 1 / span 1;
+            grid-row: 1 / span 1;
+      }
+
+}
 
 
+/* ----------- Responsive ----------- */
+
+@media (400px <= width <= 749px) {
+    .navbar{
+        /* display:inline-block; */
+        display:grid;
+        grid-auto-columns: 1fr;
+        grid-auto-flow: column;
+        height: 150px;
+        width: 100%;
+        padding:0 auto;
+        
+    }
+
+    .login-link{
+        /* grid-column: 2;
+        grid-row: 1 / span 1; */
+        width: 100px;
+        float: left;
+    }
+
+    .searchbar{
+        display:grid;
+        grid-auto-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-column: 1 / span 5;
+        grid-row: 2 / span 1;
+
+        width: 100%;
+        padding: 2% 2% 0 2%;
+        margin-top: 2%;
+       
+      }
+      .navbar-left {
+            width: fit-content;
+            grid-column: 1 / span 1;
+            grid-row: 1 / span 1;
+      }
+
+    .searchbar input{
+        margin-top: 1%;
+        border-right: none;
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+        border-bottom-color: var(--nav-bar-color);
+       
+
+      }
+
+    .search-category-dropdown {
+        grid-column: 1 / span 1;
+        grid-row: 1;
+        width: 30%;
+    }
+    .div-term-searchbar-input{
+        grid-column: 1;
+        grid-row: 2 / span 1;
+    }
+    .div-map-searchbar-input{
+        grid-column: 1;
+        grid-row: 3 / span 1;
+    }
+    .searchbar-search {  
+        grid-column: 1 / span 1;
+        grid-row: 1 ;
+        margin-left: 40%;
+      }
+
+}
+@media (750px <= width <= 1180px) {
+  
+    .navbar{
+        /* display:inline-block; */
+        display:grid;
+        height: 150px;
+        width: 100%;
+
+    }
+
+    .login-link{
+        /* grid-column: 2;
+        grid-row: 1 / span 1; */
+        width: 100px;
+        float: left;
+    }
+
+    .searchbar{
+        grid-column: 1 / span 5;
+        grid-row: 2 / span 1;
+        width: 100%;
+      }
+      .navbar-left {
+            width: fit-content;
+            grid-column: 1 / span 1;
+            grid-row: 1 / span 1;
+      }
+}

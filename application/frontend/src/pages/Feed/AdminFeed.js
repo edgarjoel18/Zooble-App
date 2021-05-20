@@ -11,8 +11,12 @@ import DeleteIcon from  '../../images/Created Icons/Exit-Cancel.svg'
 
 import FlagIcon from '../../images/Third Party Icons/icons8-empty-flag.png'
 
+import ConfirmDeletion from '../../components/Modals/ConfirmDeletion';
+
 function AdminFeed() {
     const [postModalDisplay, setPostModalDisplay] = useState(false);
+    const [deletionModalDisplay,setDeletionModalDisplay] = useState(false);
+
     const [adminFeedPosts, setAdminFeedPosts] = useState([]);
 
     const history = useHistory();
@@ -71,16 +75,21 @@ function AdminFeed() {
           history.push(location);
     }
 
-    function removePost(event,postID){
+    function openDeletionModal(event, feedPost){
         if (!event) var event = window.event;
         event.cancelBubble = true;
         if (event.stopPropagation) event.stopPropagation();
-        
+        setSelectedPost(feedPost);
+        setDeletionModalDisplay(true)
+    }
+
+    function removePost(){
         axios.post('/api/delete-post',{
-            postID: postID
+            postID: selectedPost.post_id
         })
         .then(response =>{
             console.log(response)
+            setDeletionModalDisplay(false)
         })
         .catch(err =>{
             console.log(err)
@@ -110,7 +119,7 @@ function AdminFeed() {
                             <span className={styles["follower-feed-post-flag-count"]}>{adminFeedPost.flag_count}</span>
                             <img className={styles["follower-feed-post-admin-flag-icon"]} src={FlagIcon} onClick={(event) => removePost(event,adminFeedPost.post_id)}/>
                         </div>
-                        <span className={styles['follower-feed-post-admin-delete']}  onClick={(event) => removePost(event,adminFeedPost.post_id)}>Delete</span>
+                        <span className={styles['follower-feed-post-admin-delete']}  onClick={(event) => openDeletionModal(event,adminFeedPost)}>Delete</span>
                         {/* <div className={styles["follower-feed-post-comments"]}>10 comments</div> */}
 
                         <div className={styles["follower-feed-post-body"]}>{adminFeedPost.body}</div>
@@ -119,6 +128,7 @@ function AdminFeed() {
                 ))}
             </div>
             <PostModal display={postModalDisplay} onClose={closePostModal} selectedPost={selectedPost}/>
+            <ConfirmDeletion display={deletionModalDisplay} onClose={() => setDeletionModalDisplay(false)} message={'Delete post by ' + selectedPost.display_name +'?'} deleteAction={removePost}/>
         </>
     )
 }

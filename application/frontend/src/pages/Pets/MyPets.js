@@ -7,7 +7,7 @@ import axios from 'axios'
 import AddIcon from '../../images/Created Icons/Add.svg'
 
 import DeleteIcon from  '../../images/Created Icons/Exit-Cancel.svg'
-import ConfirmPetDeletion from '../../components/Modals/ConfirmPetDeletion';
+import ConfirmDeletion from '../../components/Modals/ConfirmDeletion';
 
 import AddAPet from '../../components/Modals/AddAPet';
 import Spinner from '../../components/UI/Spinner/Spinner';

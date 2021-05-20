@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from './ConfirmPetDeletion.module.css'
+import styles from './ConfirmDeletion.module.css'
 
 import Modal from './Modal'
 

@@ -15,14 +15,14 @@ router.post("/api/like-unlike", (req,res) =>{
                         `DELETE FROM PostLike 
                          WHERE (PostLike.reg_user_id = '${req.session.reg_user_id}' 
                          AND PostLike.post_id = '${postToLike}')`,
-                         function(err, result){
+                         function(err, deleteResult){
                              if(err){
                                  console.log(err);
                              }
                              else{
                                 console.log('Unliked the post')
-                                console.log(result);
-                                res.status(200).json(result)
+                                console.log(deleteResult);
+                                res.status(200).json('unlike')
                              }
                          }
                     )
@@ -32,7 +32,7 @@ router.post("/api/like-unlike", (req,res) =>{
              else{
                 console.log('Successfully liked the post')
                  console.log(result);
-                 res.status(200).json(result)
+                 res.status(200).json('like')
              }
          }
     )
