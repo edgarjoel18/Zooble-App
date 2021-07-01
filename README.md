@@ -1,5 +1,5 @@
 # Zooble
-- [Live app](#https://zoou.app/)
+- [Live app](https://zoou.app/)
 
 
 ---
