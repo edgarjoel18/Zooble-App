@@ -16,7 +16,7 @@ You're sections headers will be used to reference location of destination.
 
 ## Description
 
-A social networking application for pet owners, pets, and pet businesses hosted on AWS EC2. A general user can browse a user's profile, a user's pets' profile, search for pet services, and look at the a pet service's profile as well. In order to send a message, comment, or interact with a profile. A user must create an account.
+A social networking application for pet owners, pets, and pet businesses hosted on AWS EC2. A general user can browse a user's profile, a user's pets' profile, search for pet services, and look at the pet service's profile as well. In order to send a message, comment, or interact with a profile a user must create an account.
  
 
 ---
